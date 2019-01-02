@@ -1,14 +1,10 @@
 <template>
-  <div>
-    <vo-basic :data="chartData"></vo-basic>
-  </div>
+  <vo-basic :data="chartData" :pan="true" :zoom="true"></vo-basic>
 </template>
 
 <script>
-import { VoBasic } from 'vue-orgchart'
 export default {
-  components: { VoBasic },
-  created () {
+  created() {
     this.chartData = {
       name: 'JavaScript',
         children: [
@@ -18,11 +14,12 @@ export default {
             children: [{ name: 'Preact' }]
           },
           {
+
             name: 'Vue',
             children: [{ name: 'Moon' }]
           }
         ]
     }
-}
+  }
 }
 </script>
