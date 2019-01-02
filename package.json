@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
+    "vue-orgchart": "^1.1.7",
     "vuetify": "^1.3.0"
   },
   "devDependencies": {
