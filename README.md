@@ -1,7 +1,5 @@
 # sat-hr
 
-# hello-world
-
 ## Project setup
 ```
 yarn install
