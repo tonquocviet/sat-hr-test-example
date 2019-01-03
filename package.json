@@ -10,6 +10,7 @@
   "dependencies": {
     "vue": "2.5.21",
     "vue-orgchart": "1.1.7",
+    "vue-loader": "^15.4.2",
     "vuetify": "^1.3.0"
   },
   "devDependencies": {
