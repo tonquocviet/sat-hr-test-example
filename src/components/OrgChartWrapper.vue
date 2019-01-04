@@ -38,12 +38,18 @@
             <v-list-tile-title>Modal for structure</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-divider></v-divider>
+        <v-container>
+          <BranchForm/>
+        </v-container>
       </v-list>
     </v-navigation-drawer>
   </v-content>
 </template>
 <script>
+import BranchForm from "../components/forms/BranchForm";
 export default {
+  components: { BranchForm },
   data: () => ({
     drawer: true,
     select: { state: "Corporate Structure", abbr: "cor" },
