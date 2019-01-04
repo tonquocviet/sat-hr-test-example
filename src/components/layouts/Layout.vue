@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="navigator" :mini-variant="mini">
+    <v-navigation-drawer app fixed clipped v-model="navigator" :mini-variant="mini">
       <v-list class="pa-1">
         <v-list-tile avatar tag="div">
           <v-list-tile-avatar>
@@ -22,7 +22,14 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
+    <v-toolbar
+      clipped-left
+      clipped-right
+      color="blue darken-3"
+      dark
+      app
+      fixed
+    >
       <v-toolbar-title style="width: 100px">
         <v-list-tile-avatar>
           <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg">

@@ -26,7 +26,7 @@
       </v-btn>
     </v-toolbar>
     <slot></slot>
-    <v-navigation-drawer v-model="drawer" fixed floating right width="400">
+    <v-navigation-drawer v-model="drawer" fixed app clipped right width="400">
       <v-list class="pa-1">
         <v-list-tile avatar tag="div">
           <v-list-tile-action>
