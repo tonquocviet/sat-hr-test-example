@@ -1,18 +1,18 @@
 <template>
   <v-app>
     <v-content>
-      <HelloWorld/>
+      <OrgChartWrapper/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import OrgChartWrapper from './components/OrgChartWrapper'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    OrgChartWrapper
   },
   data () {
     return {
