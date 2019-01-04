@@ -1,43 +1,122 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field>
-    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-    <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'Item is required']"
-      label="Item"
-      required
-    ></v-select>
-
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
-      required
-    ></v-checkbox>
-    <v-btn color="primary">Save</v-btn>
-    <v-btn color="default">Cancel</v-btn>
+    <v-container>
+      <v-text-field
+        v-model="object.name"
+        :rules="nameRules"
+        label="Branch Name"
+        required
+        class="mt-0 pt-0"
+      ></v-text-field>
+      <v-layout>
+        <v-flex xs12>
+          <v-text-field v-model="object.address" :rules="addressRules" label="Address" required></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex xs6>
+          <v-select
+            v-model="object.country"
+            item-text="name"
+            item-value="id"
+            :items="countries"
+            :rules="[v => !!v || 'Country is required']"
+            label="Contry"
+            required
+          ></v-select>
+        </v-flex>
+        <v-flex xs6>
+          <v-select
+            v-model="object.city"
+            :items="cities"
+            :rules="[v => !!v || 'City is required']"
+            item-text="name"
+            item-value="id"
+            label="City"
+            required
+          ></v-select>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex xs6>
+          <v-text-field v-model="object.zipCode" :rules="zipCodeRules" label="Zip Code" required></v-text-field>
+        </v-flex>
+        <v-flex xs6></v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex xs12>
+          <v-text-field
+            v-model="object.telephone"
+            :rules="telephoneRules"
+            label="Phone number"
+            required
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex xs12>
+          <v-combobox
+            v-model="object.contactPersonnel"
+            item-text="name"
+            item-value="id"
+            :items="contacts"
+            :rules="[v => !!v || 'Please choose Contact Personnel']"
+            label="Contact Personnel"
+          ></v-combobox>
+        </v-flex>
+      </v-layout>
+      <v-btn color="primary">Save</v-btn>
+      <v-btn color="default">Cancel</v-btn>
+    </v-container>
   </v-form>
 </template>
 <script>
 export default {
   props: {
     object: {
-      name: String,
-      address: String,
-      city: String,
-      country: String,
-      zipCode: String,
-      telephone: String,
-      contactPersonnel: String,
-      nodePosition: String
+      type: Object,
+      default: function() {
+        return {
+          name: "",
+          address: "",
+          city: "",
+          country: "",
+          zipCode: "",
+          telephone: "",
+          contactPersonnel: "",
+          nodePosition: ""
+        };
+      }
+    },
+    countries: {
+      type: Array,
+      default: function() {
+        return [{ id: "usa", name: "USA" }];
+      }
+    },
+    cities: {
+      type: Array,
+      default: function() {
+        return [{ id: "tx", name: "Texas" }];
+      }
+    },
+    contacts: {
+      type: Array,
+      default: function() {
+        return [
+          { id: 1, name: "John Doe" },
+          { id: 2, name: "Steven Kan" },
+          { id: 3, name: "Kelvin Manc" }
+        ];
+      }
     }
   },
   data: () => ({
     valid: true,
     nameRules: [v => !!v || "Name is required"],
-    addressRules: [v => !!v || "Address is required"]
+    addressRules: [v => !!v || "Address is required"],
+    zipCodeRules: [v => !!v || "Zip code is required"],
+    telephoneRules: [v => !!v || "Phone number is required"]
   }),
 
   methods: {

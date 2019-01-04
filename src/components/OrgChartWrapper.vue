@@ -39,9 +39,7 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <v-container>
-          <BranchForm/>
-        </v-container>
+        <BranchForm/>
       </v-list>
     </v-navigation-drawer>
   </v-content>
