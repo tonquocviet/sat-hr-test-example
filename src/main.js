@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
-import 'vue-orgchart/dist/style.min.css'
 
 Vue.config.productionTip = false
 
