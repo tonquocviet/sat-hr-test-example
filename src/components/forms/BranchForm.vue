@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" v-model="valid" lazy-validation class="right-form">
     <v-container>
       <v-text-field
         v-model="object.name"
@@ -65,6 +65,18 @@
           ></v-combobox>
         </v-flex>
       </v-layout>
+      <v-layout>
+        <v-flex xs12>
+          <v-combobox
+            v-model="object.parent"
+            item-text="name"
+            item-value="id"
+            :items="nodes"
+            :rules="[v => !!v || 'Please choose position']"
+            label="Node position"
+          ></v-combobox>
+        </v-flex>
+      </v-layout>
       <v-btn color="primary">Save</v-btn>
       <v-btn color="default">Cancel</v-btn>
     </v-container>
@@ -109,6 +121,16 @@ export default {
           { id: 3, name: "Kelvin Manc" }
         ];
       }
+    },
+    nodes: {
+      type: Array,
+      default: function() {
+        return [
+          { id: 1, name: "Branch Texas" },
+          { id: 2, name: "Branch Nothing" },
+          { id: 3, name: "Branch Bank North" }
+        ];
+      }
     }
   },
   data: () => ({
@@ -134,3 +156,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.right-form .v-text-field{
+  padding-top: 0px;
+  margin-top: 0px;
+}
+</style>
