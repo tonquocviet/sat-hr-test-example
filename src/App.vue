@@ -15,9 +15,7 @@ export default {
     Layout
   },
   data() {
-    return {
-      //
-    };
+    return {};
   }
 };
 </script>
