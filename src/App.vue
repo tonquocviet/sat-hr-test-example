@@ -1,18 +1,22 @@
 <template>
   <Layout>
-    <OrgChartWrapper/>
+    <OrgChartWrapper>
+      <HierarchyContainer/>
+    </OrgChartWrapper>
   </Layout>
 </template>
 
 <script>
 import OrgChartWrapper from "./components/OrgChartWrapper";
 import Layout from "./components/layouts/Layout";
+import HierarchyContainer from "./components/hierarchy/HierarchyContainer";
 
 export default {
   name: "App",
   components: {
     OrgChartWrapper,
-    Layout
+    Layout,
+    HierarchyContainer
   },
   data() {
     return {
