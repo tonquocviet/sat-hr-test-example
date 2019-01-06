@@ -16,7 +16,12 @@ import ConnectionLinesContainer from "./ConnectionLinesContainer";
 import CardNodesContainer from "./CardNodesContainer";
 import NodeCard from "../cards/NodeCard";
 import { hierarchy, tree } from "d3-hierarchy";
-import { nodeWidth, nodeHeight } from "../../config";
+import {
+  nodeWidth,
+  nodeHeight,
+  defaultNodeDensityX,
+  defaultNodeDensityY
+} from "../../config";
 import { dragscroll } from "vue-dragscroll";
 var dataForTesting = {
   name: "A1",
@@ -84,6 +89,8 @@ export default {
   props: {
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
+    nodeDensityX: { type: Number, default: defaultNodeDensityX },
+    nodeDensityY: { type: Number, default: defaultNodeDensityY },
     dataForHierarchy: {
       type: Object,
       default: () => dataForTesting
@@ -98,7 +105,10 @@ export default {
     toD3Hierarchy: function(treeData) {
       let root = hierarchy(treeData);
       let treeLayout = tree();
-      treeLayout.nodeSize([this.nodeWidth * 2, this.nodeHeight * 2]);
+      treeLayout.nodeSize([
+        this.nodeWidth * this.nodeDensityX,
+        this.nodeHeight * this.nodeDensityY
+      ]);
       treeLayout(root);
       return root;
     }
