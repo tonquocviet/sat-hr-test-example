@@ -14,8 +14,15 @@
         ></v-select>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-slider style="max-width:100px" color="grey" v-model="zoom" hide-details></v-slider>
-      <v-btn @click="btnZoomUp" icon>
+      <v-slider
+        style="max-width:100px"
+        :max="max"
+        :min="min"
+        color="grey"
+        v-model="zoom"
+        hide-details
+      ></v-slider>
+      <v-btn icon>
         <v-icon>add</v-icon>
       </v-btn>
       <v-btn icon>
@@ -54,10 +61,10 @@ export default {
   watch: {
     zoom: function(newZoom, oldZoom) {
       if (newZoom > oldZoom) {
-        this.zoomIn();
+        this.zoomOut();
       }
       if (newZoom < oldZoom) {
-        this.zoomOut();
+        this.zoomIn();
       }
     }
   },
@@ -75,35 +82,27 @@ export default {
         }
       }
     },
-    btnZoomUp: function() {
-      this.scale += 4 / 100;
-      this.zoom += this.scale + 1;
-      return {
-        scale: this.scale,
-        zoom: this.zoom
-      };
-    },
     mouseWheel: function(e) {
-      var delta = e.deltaY * (1 / 100);
-      this.scale += delta * (4 / 100);
+      var delta = (e.deltaY + 50) * ((3/2) / 150);
+      this.scale += delta * ((3/2) / 150);
       this.zoom += delta * (this.scale + 1);
     },
     zoomOut: function() {
-      this.scale = this.zoom * (4 / 100);
-      return {
-        scale: this.scale
-      };
+      const zoom = this.zoom;
+      if (zoom === 0) {
+        return (this.scale = 0.1);
+      }
     },
     zoomIn: function() {
-      this.scale = this.zoom * (4 / 100);
-      return {
-        scale: this.scale
-      };
+      const zoom = this.zoom;
+      return (this.scale = zoom * ((3/2) / 150));
     }
   },
   data: () => ({
     drawer: true,
     scale: scaleValue,
+    min: 13,
+    max: 100,
     zoom: zoomValue,
     select: { state: "Corporate Structure", abbr: "cor" },
     itemsSelect: [
