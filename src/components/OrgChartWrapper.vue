@@ -61,10 +61,9 @@ export default {
   watch: {
     zoom: function(newZoom, oldZoom) {
       if (newZoom > oldZoom) {
-        this.zoomOut();
-      }
-      if (newZoom < oldZoom) {
         this.zoomIn();
+      }else {
+        this.zoomOut();
       }
     }
   },
@@ -84,8 +83,8 @@ export default {
     },
     mouseWheel: function(e) {
       var delta = (e.deltaY + 50) * ((3/2) / 150);
-      this.scale += delta * ((3/2) / 150);
-      this.zoom += delta * (this.scale + 1);
+      this.scale -= delta * ((3/2) / 150);
+      this.zoom -= delta * (this.scale + 1);
     },
     zoomOut: function() {
       const zoom = this.zoom;
