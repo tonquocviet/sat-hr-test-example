@@ -14,14 +14,14 @@
         ></v-select>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-slider style="max-width:100px" color="grey" v-model="ex3.val" hide-details></v-slider>
-      <v-btn icon>
+      <v-slider style="max-width:100px" color="grey" v-model="zoom" hide-details></v-slider>
+      <v-btn @click="btnZoomUp" icon>
         <v-icon>add</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>more_horiz</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon @click.stop="fullScreen">
         <v-icon>fullscreen</v-icon>
       </v-btn>
     </v-toolbar>
@@ -40,19 +40,77 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
   </v-content>
 </template>
 <script>
+import { scaleValue, zoomValue } from "../config";
+import HierarchyContainer from "./hierarchy/HierarchyContainer";
+
 export default {
+  components: {
+    HierarchyContainer
+  },
+  watch: {
+    zoom: function(newZoom, oldZoom) {
+      if (newZoom > oldZoom) {
+        this.zoomIn();
+      }
+      if (newZoom < oldZoom) {
+        this.zoomOut();
+      }
+    }
+  },
+  props: {
+    scaleValue: { type: Number, default: scaleValue },
+    zoomValue: { type: Number, default: zoomValue }
+  },
+  methods: {
+    fullScreen: function() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    },
+    btnZoomUp: function() {
+      this.scale += 4 / 100;
+      this.zoom += this.scale + 1;
+      return {
+        scale: this.scale,
+        zoom: this.zoom
+      };
+    },
+    mouseWheel: function(e) {
+      var delta = e.deltaY * (1 / 100);
+      this.scale += delta * (4 / 100);
+      this.zoom += delta * (this.scale + 1);
+    },
+    zoomOut: function() {
+      this.scale = this.zoom * (4 / 100);
+      return {
+        scale: this.scale
+      };
+    },
+    zoomIn: function() {
+      this.scale = this.zoom * (4 / 100);
+      return {
+        scale: this.scale
+      };
+    }
+  },
   data: () => ({
     drawer: true,
+    scale: scaleValue,
+    zoom: zoomValue,
     select: { state: "Corporate Structure", abbr: "cor" },
     itemsSelect: [
       { state: "Department Structure", abbr: "dep" },
       { state: "Branch Structure", abbr: "bra" },
       { state: "Corporate Structure", abbr: "cor" }
-    ],
-    ex3: { val: 50, color: "red" }
+    ]
   })
 };
 </script>
