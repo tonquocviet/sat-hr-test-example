@@ -1,11 +1,24 @@
 <template>
-  <div class="nodes-container"></div>
+  <div class="nodes-container">
+    <div v-for="node in nodes" :key="node.id">
+      <component v-bind:is="nodeTemplate" :nodeData="node"/>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    nodes: Array
+    nodes: Array,
+    nodeTemplate: Object,
+    nodeWidth: {
+      type: Number,
+      default: 300
+    },
+    nodeHeight: {
+      type: Number,
+      default: 300
+    }
   }
 };
 </script>
