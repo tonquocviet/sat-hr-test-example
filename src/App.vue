@@ -1,5 +1,9 @@
 <template>
-  <hierarchy-container/>
+  <Layout>
+    <OrgChartWrapper>
+      <HierarchyContainer/>
+    </OrgChartWrapper>
+  </Layout>
 </template>
 
 <script>
