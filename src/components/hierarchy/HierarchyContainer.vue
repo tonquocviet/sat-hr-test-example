@@ -1,5 +1,5 @@
 <template>
-  <div v-dragscroll class="hierarchy-scrollable">
+  <div @mousewheel="mouseWheel" v-dragscroll class="hierarchy-scrollable">
     <div class="hierarchy-container" :style="containerStyle">
       <card-nodes-container
         :nodes="nodes"
@@ -87,6 +87,10 @@ export default {
     dragscroll
   },
   props: {
+    mouseWheel: {
+      default: () => mouseWheel
+    },
+    scale: Number,
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
     nodeDensityX: { type: Number, default: defaultNodeDensityX },
@@ -139,7 +143,7 @@ export default {
     },
     containerStyle: function() {
       return {
-        transform: "scale(0.3)",
+        transform: `scale(${this.scale})`,
         transformOrigin: "0 0",
         width: this.containerProperties.wrapperWidth,
         height: this.containerProperties.wrapperHeight
