@@ -1,11 +1,13 @@
 <template>
-  <div class="hierarchy-container" :style="{transform: 'scale(0.3)'}">
-    <card-nodes-container
-      :nodes="nodes"
-      :node-template="nodeTemplate"
-      :containerProperties="containerProperties"
-    />
-    <connection-lines-container :lines="lines" :containerProperties="containerProperties"></connection-lines-container>
+  <div v-dragscroll class="hierarchy-scrollable">
+    <div class="hierarchy-container" :style="containerStyle">
+      <card-nodes-container
+        :nodes="nodes"
+        :node-template="nodeTemplate"
+        :containerProperties="containerProperties"
+      />
+      <connection-lines-container :lines="lines" :containerProperties="containerProperties"></connection-lines-container>
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,7 @@ import CardNodesContainer from "./CardNodesContainer";
 import NodeCard from "../cards/NodeCard";
 import { hierarchy, tree } from "d3-hierarchy";
 import { nodeWidth, nodeHeight } from "../../config";
+import { dragscroll } from "vue-dragscroll";
 var dataForTesting = {
   name: "A1",
   children: [
@@ -75,6 +78,9 @@ export default {
     CardNodesContainer,
     NodeCard
   },
+  directives: {
+    dragscroll
+  },
   props: {
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
@@ -120,6 +126,14 @@ export default {
         wrapperWidth: translateX + Math.max(...nodes.map(x => x.x)) + 200,
         wrapperHeight: translateY + Math.max(...nodes.map(x => x.y)) + 150
       };
+    },
+    containerStyle: function() {
+      return {
+        transform: "scale(0.3)",
+        transformOrigin: "0 0",
+        width: this.containerProperties.wrapperWidth,
+        height: this.containerProperties.wrapperHeight
+      };
     }
   }
 };
@@ -129,7 +143,11 @@ export default {
 .hierarchy-container {
   display: block;
   position: absolute;
-  width: 1px;
-  height: 1px;
+}
+.hierarchy-scrollable {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 </style>
