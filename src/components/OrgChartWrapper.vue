@@ -74,7 +74,8 @@ export default {
     zoom: function(newZoom, oldZoom) {
       if (newZoom > oldZoom) {
         this.zoomIn();
-      }else {
+      }
+      if (newZoom < oldZoom) {
         this.zoomOut();
       }
     }
@@ -111,9 +112,7 @@ export default {
     },
     zoomOut: function() {
       const zoom = this.zoom;
-      if (zoom === 0) {
-        return (this.scale = 0.1);
-      }
+      return (this.scale = zoom * ((3/2) / 150));
     },
     zoomIn: function() {
       const zoom = this.zoom;
