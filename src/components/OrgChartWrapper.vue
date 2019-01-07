@@ -4,6 +4,7 @@
       <v-flex xs3>
         <v-select
           v-model="select"
+          v-on:change="change"
           :items="itemsSelect"
           item-text="state"
           item-value="abbr"
@@ -46,7 +47,9 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm/>
+        <BranchForm v-if="id === 1" />
+        <CorporateForm v-if="id === 2" />
+        <DepartmentForm v-if="id === 3" />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
@@ -55,12 +58,16 @@
 <script>
 
 import BranchForm from "../components/forms/BranchForm";
+import CorporateForm from "../components/forms/CorporateForm";
+import DepartmentForm from "../components/forms/DepartmentForm";
 import { scaleValue, zoomValue } from "../config";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 
 export default {
   components: {
     HierarchyContainer,
+    CorporateForm,
+    DepartmentForm,
     BranchForm
   },
   watch: {
@@ -77,6 +84,20 @@ export default {
     zoomValue: { type: Number, default: zoomValue }
   },
   methods: {
+    change: function (e) {
+      if (e.abbr === 'bra') {
+        this.id = 1;
+        return { id: this.id }
+      }
+      if (e.abbr === 'cor') {
+        this.id = 2;
+        return { id: this.id }
+      }
+      if (e.abbr === 'dep') {
+        this.id = 3
+        return { cc: this.id }
+      }
+    },
     fullScreen: function() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
@@ -106,13 +127,14 @@ export default {
     drawer: true,
     scale: scaleValue,
     min: 13,
+    id: 1,
     max: 100,
     zoom: zoomValue,
-    select: { state: "Corporate Structure", abbr: "cor" },
+    select: { state: "Branch Structure", abbr: "bra" },
     itemsSelect: [
-      { state: "Department Structure", abbr: "dep" },
       { state: "Branch Structure", abbr: "bra" },
-      { state: "Corporate Structure", abbr: "cor" }
+      { state: "Corporate Structure", abbr: "cor" },
+      { state: "Department Structure", abbr: "dep" }
     ]
   })
 };
