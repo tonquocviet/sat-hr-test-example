@@ -47,9 +47,9 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm v-if="id === 1" />
-        <CorporateForm v-if="id === 2" />
-        <DepartmentForm v-if="id === 3" />
+        <BranchForm v-if="selectValue === 1" />
+        <CorporateForm v-if="selectValue === 2" />
+        <DepartmentForm v-if="selectValue === 3" />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
@@ -86,16 +86,13 @@ export default {
   methods: {
     change: function (e) {
       if (e.abbr === 'bra') {
-        this.id = 1;
-        return { id: this.id }
+        this.selectValue = 1;
       }
       if (e.abbr === 'cor') {
-        this.id = 2;
-        return { id: this.id }
+        this.selectValue = 2;
       }
       if (e.abbr === 'dep') {
-        this.id = 3
-        return { cc: this.id }
+        this.selectValue = 3
       }
     },
     fullScreen: function() {
@@ -127,7 +124,7 @@ export default {
     drawer: true,
     scale: scaleValue,
     min: 13,
-    id: 1,
+    selectValue: 1,
     max: 100,
     zoom: zoomValue,
     select: { state: "Branch Structure", abbr: "bra" },
