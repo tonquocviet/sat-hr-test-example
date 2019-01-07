@@ -103,10 +103,11 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
+      const { name, nodePosition, company } = this.object;
       const data = {
-        name: this.object.name.name,
-        company: this.object.company.name,
-        nodePosition: this.object.nodePosition.name
+        name: name.name,
+        company: company.name,
+        nodePosition: nodePosition.name
       };
     },
     onCancel() {

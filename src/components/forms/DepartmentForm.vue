@@ -80,9 +80,10 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
+      const { name, nodePosition } = this.object;
       const data = {
-        name: this.object.name.name,
-        nodePosition: this.object.nodePosition.name
+        name: name.name,
+        nodePosition: nodePosition.name
       };
     },
     onCancel() {

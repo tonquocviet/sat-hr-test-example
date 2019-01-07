@@ -155,12 +155,7 @@ export default {
     },
     onSave() {
       const data = {
-        name: this.object.name,
-        address: this.object.address,
-        city: this.object.city,
-        country: this.object.country,
-        zipCode: this.object.zipCode,
-        telephone: this.object.telephone,
+        ...this.object,
         contactPersonnel: this.object.contactPersonnel.name,
         nodePosition: this.object.nodePosition.name
       };
