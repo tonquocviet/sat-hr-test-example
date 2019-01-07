@@ -45,18 +45,23 @@
             <v-list-tile-title>Modal for structure</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-divider></v-divider>
+        <BranchForm/>
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
   </v-content>
 </template>
 <script>
+
+import BranchForm from "../components/forms/BranchForm";
 import { scaleValue, zoomValue } from "../config";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 
 export default {
   components: {
-    HierarchyContainer
+    HierarchyContainer,
+    BranchForm
   },
   watch: {
     zoom: function(newZoom, oldZoom) {
