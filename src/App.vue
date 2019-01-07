@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <OrgChartWrapper/>
+    <OrgChartWrapper />
   </Layout>
 </template>
 
@@ -15,9 +15,7 @@ export default {
     Layout
   },
   data() {
-    return {
-      //
-    };
+    return {};
   }
 };
 </script>
