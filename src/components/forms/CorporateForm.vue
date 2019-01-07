@@ -37,8 +37,8 @@
           ></v-combobox>
         </v-flex>
       </v-layout>
-      <v-btn color="primary">Save</v-btn>
-      <v-btn color="default">Cancel</v-btn>
+      <v-btn v-on:click="onSave" color="primary">Save</v-btn>
+      <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
   </v-form>
 </template>
@@ -101,6 +101,16 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    onSave() {
+      const data = {
+        name: this.object.name.name,
+        company: this.object.company.name,
+        nodePosition: this.object.nodePosition.name
+      };
+    },
+    onCancel() {
+      
     }
   }
 };

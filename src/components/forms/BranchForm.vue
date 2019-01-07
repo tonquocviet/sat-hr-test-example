@@ -68,7 +68,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.parent"
+            v-model="object.nodePosition"
             item-text="name"
             item-value="id"
             :items="nodes"
@@ -77,8 +77,8 @@
           ></v-combobox>
         </v-flex>
       </v-layout>
-      <v-btn color="primary">Save</v-btn>
-      <v-btn color="default">Cancel</v-btn>
+      <v-btn v-on:click="onSave" color="primary">Save</v-btn>
+      <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
   </v-form>
 </template>
@@ -152,13 +152,28 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    onSave() {
+      const data = {
+        name: this.object.name,
+        address: this.object.address,
+        city: this.object.city,
+        country: this.object.country,
+        zipCode: this.object.zipCode,
+        telephone: this.object.telephone,
+        contactPersonnel: this.object.contactPersonnel.name,
+        nodePosition: this.object.nodePosition.name
+      };
+    },
+    onCancel() {
+      
     }
   }
 };
 </script>
 
 <style scoped>
-.right-form .v-text-field{
+.right-form .v-text-field {
   padding-top: 0px;
   margin-top: 0px;
 }
