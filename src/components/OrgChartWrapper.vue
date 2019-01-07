@@ -71,13 +71,8 @@ export default {
     BranchForm
   },
   watch: {
-    zoom: function(newZoom, oldZoom) {
-      if (newZoom > oldZoom) {
-        this.zoomIn();
-      }
-      if (newZoom < oldZoom) {
-        this.zoomOut();
-      }
+    zoom: function() {
+      this.zoomSlider();
     }
   },
   props: {
@@ -110,11 +105,7 @@ export default {
       this.scale -= delta * ((3/2) / 150);
       this.zoom -= delta * (this.scale + 1);
     },
-    zoomOut: function() {
-      const zoom = this.zoom;
-      return (this.scale = zoom * ((3/2) / 150));
-    },
-    zoomIn: function() {
+    zoomSlider: function() {
       const zoom = this.zoom;
       return (this.scale = zoom * ((3/2) / 150));
     }
