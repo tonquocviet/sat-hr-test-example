@@ -6,24 +6,11 @@
       <div class="v-line"></div>
     </v-card-title>
     <v-card-actions class="mb-1">
-      <v-list-tile class="grow">
-        <v-list-tile-avatar color="grey img-avatar">
-          <v-img
-            class="elevation-6"
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          ></v-img>
-        </v-list-tile-avatar>
-        <v-list-tile-avatar color="img-avatar img-avatar-after secondary">
-          <v-img
-            class="elevation-6"
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          ></v-img>
-        </v-list-tile-avatar>
-        <v-layout align-center justify-end>
-          <v-icon class="mr-1">people</v-icon>
-          <span class="subheading">45</span>
-        </v-layout>
-      </v-list-tile>
+      <avatars-list :members="members"/>
+      <v-layout align-center justify-end>
+        <v-icon class="mr-1">people</v-icon>
+        <span class="subheading">45</span>
+      </v-layout>
     </v-card-actions>
     <v-card-actions>
       <v-list-tile class="grow">
@@ -34,20 +21,35 @@
 </template>
 
 <script>
+import AvatarsList from "../avatars/AvatarsList";
 export default {
-  data: () => ({})
+  data: () => ({
+    members: [
+      {
+        id: 1,
+        name: "Steve Hanson",
+        imageUrl:
+          "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+      },
+      {
+        id: 2,
+        name: "Rock Storm",
+        imageUrl:
+          "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+      },
+      {
+        id: 3,
+        name: "Java Learning"
+      }
+    ]
+  }),
+  components: {
+    AvatarsList
+  }
 };
 </script>
 
 <style>
-.img-avatar {
-  min-width: 40px;
-  z-index: 10;
-}
-.img-avatar-after {
-  margin-left: -30px;
-  z-index: 9;
-}
 .v-line {
   width: 100%;
   padding-top: 20px;
