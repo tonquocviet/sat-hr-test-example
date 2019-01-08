@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" width="100%" height="100%">
     <v-card-title class="success--text">
-      <span class="font-weight-bold headline">Axa Insurance Holdings</span>
+      <span class="font-weight-bold headline">{{nodeData.name}}</span>
       <span class="font-weight-light text">Paris, France</span>
       <div class="v-line"></div>
     </v-card-title>
@@ -22,6 +22,9 @@
 import AvatarsList from "../avatars/AvatarsList";
 import RoleTag from "../tags/RoleTag";
 export default {
+  props: {
+    nodeData: Object
+  },
   data: () => ({
     members: [
       {

@@ -127,7 +127,9 @@ export default {
     },
     nodes: function() {
       let root = this.toD3Hierarchy(this.dataForHierarchy);
-      return root.descendants().map(x => ({ x: x.x, y: x.y }));
+      return root
+        .descendants()
+        .map(x => ({ x: x.x, y: x.y, nodeData: x.data }));
     },
     containerProperties: function() {
       let root = this.toD3Hierarchy(this.dataForHierarchy);
