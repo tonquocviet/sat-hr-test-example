@@ -4,6 +4,7 @@
       <v-flex xs3>
         <v-select
           v-model="select"
+          v-on:change="change"
           :items="itemsSelect"
           item-text="state"
           item-value="abbr"
@@ -46,7 +47,9 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm/>
+        <BranchForm v-if="selectValue === 1" />
+        <CorporateForm v-if="selectValue === 2" />
+        <DepartmentForm v-if="selectValue === 3" />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
@@ -55,21 +58,21 @@
 <script>
 
 import BranchForm from "../components/forms/BranchForm";
+import CorporateForm from "../components/forms/CorporateForm";
+import DepartmentForm from "../components/forms/DepartmentForm";
 import { scaleValue, zoomValue } from "../config";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 
 export default {
   components: {
     HierarchyContainer,
+    CorporateForm,
+    DepartmentForm,
     BranchForm
   },
   watch: {
-    zoom: function(newZoom, oldZoom) {
-      if (newZoom > oldZoom) {
-        this.zoomIn();
-      }else {
-        this.zoomOut();
-      }
+    zoom: function() {
+      this.zoomSlider();
     }
   },
   props: {
@@ -77,6 +80,17 @@ export default {
     zoomValue: { type: Number, default: zoomValue }
   },
   methods: {
+    change: function (e) {
+      if (e.abbr === 'bra') {
+        this.selectValue = 1;
+      }
+      if (e.abbr === 'cor') {
+        this.selectValue = 2;
+      }
+      if (e.abbr === 'dep') {
+        this.selectValue = 3
+      }
+    },
     fullScreen: function() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
@@ -91,13 +105,7 @@ export default {
       this.scale -= delta * ((3/2) / 150);
       this.zoom -= delta * (this.scale + 1);
     },
-    zoomOut: function() {
-      const zoom = this.zoom;
-      if (zoom === 0) {
-        return (this.scale = 0.1);
-      }
-    },
-    zoomIn: function() {
+    zoomSlider: function() {
       const zoom = this.zoom;
       return (this.scale = zoom * ((3/2) / 150));
     }
@@ -106,13 +114,14 @@ export default {
     drawer: true,
     scale: scaleValue,
     min: 13,
+    selectValue: 1,
     max: 100,
     zoom: zoomValue,
-    select: { state: "Corporate Structure", abbr: "cor" },
+    select: { state: "Branch Structure", abbr: "bra" },
     itemsSelect: [
-      { state: "Department Structure", abbr: "dep" },
       { state: "Branch Structure", abbr: "bra" },
-      { state: "Corporate Structure", abbr: "cor" }
+      { state: "Corporate Structure", abbr: "cor" },
+      { state: "Department Structure", abbr: "dep" }
     ]
   })
 };
