@@ -82,9 +82,10 @@ export default {
     onSave() {
       const { name, nodePosition } = this.object;
       const data = {
-        name: name.name,
-        nodePosition: nodePosition.name
+        name: name.id,
+        nodePosition: nodePosition.id
       };
+      return data;
     },
     onCancel() {
       

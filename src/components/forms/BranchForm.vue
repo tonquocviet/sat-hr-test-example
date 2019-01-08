@@ -156,9 +156,10 @@ export default {
     onSave() {
       const data = {
         ...this.object,
-        contactPersonnel: this.object.contactPersonnel.name,
-        nodePosition: this.object.nodePosition.name
+        contactPersonnel: this.object.contactPersonnel.id,
+        nodePosition: this.object.nodePosition.id
       };
+      return data;
     },
     onCancel() {
       

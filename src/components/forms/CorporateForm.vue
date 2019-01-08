@@ -105,10 +105,11 @@ export default {
     onSave() {
       const { name, nodePosition, company } = this.object;
       const data = {
-        name: name.name,
-        company: company.name,
-        nodePosition: nodePosition.name
+        name: name.id,
+        company: company.id,
+        nodePosition: nodePosition.id
       };
+      return data;
     },
     onCancel() {
       
