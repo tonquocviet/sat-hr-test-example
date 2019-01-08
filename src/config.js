@@ -4,3 +4,11 @@ export const scaleValue = 0.5;
 export const zoomValue = 26;
 export const defaultNodeDensityX = 1.2;
 export const defaultNodeDensityY = 1.5;
+export const colorsListForAvatars = ['primary',
+    'secondary',
+    'accent',
+    'error',
+    'warning',
+    'info',
+    'success',
+    'grey'];
