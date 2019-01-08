@@ -13,15 +13,14 @@
       </v-layout>
     </v-card-actions>
     <v-card-actions>
-      <v-list-tile class="grow">
-        <v-btn color="warning " class="secondary--text font-weight-bold">HUMAN RESOURCES</v-btn>
-      </v-list-tile>
+      <role-tag :tag-type="0"/>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import AvatarsList from "../avatars/AvatarsList";
+import RoleTag from "../tags/RoleTag";
 export default {
   data: () => ({
     members: [
@@ -44,7 +43,8 @@ export default {
     ]
   }),
   components: {
-    AvatarsList
+    AvatarsList,
+    RoleTag
   }
 };
 </script>
