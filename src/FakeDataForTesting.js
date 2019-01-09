@@ -328,3 +328,28 @@ export const dataForTesting = {
     }
   ]
 };
+
+export const FakeBranchData = {
+  id: 1,
+  name: "ConocoPhillips",
+  address: "Chicago, Illinois, USA",
+  city: { id: "tx", name: "Texas" },
+  country: { id: "usa", name: "USA" },
+  zipCode: 550000,
+  telephone: 14632222409,
+  contactPersonnel: { id: 1, name: "John Doe" },
+  nodePosition: { id: 2, name: "Branch Nothing" }
+};
+
+export const FakeCorporateData = {
+  id: 1,
+  name: { id: 1, name: "Wells Fargo" },
+  company: { id: 1, name: "Louisiana Street, Houston, Texas" },
+  nodePosition: { id: 1, name: "Branch Texas" }
+};
+
+export const FakeDepartmentData = {
+  id: 1,
+  name: { id: 3, name: "Berkshire Hathaway" },
+  nodePosition: { id: 2, name: "Branch Nothing" }
+};

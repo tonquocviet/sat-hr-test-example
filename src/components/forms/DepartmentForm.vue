@@ -31,14 +31,21 @@
   </v-form>
 </template>
 <script>
+import { FakeDepartmentData } from "../../FakeDataForTesting";
+
 export default {
   props: {
+    FakeDepartmentData: {
+      type: Object,
+      default: () => FakeDepartmentData
+    },
     object: {
       type: Object,
       default: function() {
+        const data = this.FakeDepartmentData;
         return {
-          name: "",
-          nodePosition: ""
+          name: "" || data.name,
+          nodePosition: "" || data.nodePosition
         };
       }
     },
@@ -87,9 +94,7 @@ export default {
       };
       return data;
     },
-    onCancel() {
-      
-    }
+    onCancel() {}
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" width="100%" height="100%">
+  <v-card class="mx-auto" width="100%" height="100%" @click="detailNodeCard">
     <v-card-title class="success--text">
       <span class="font-weight-bold headline v-cardTitle">{{nodeData.cardTitle}}</span>
       <span class="font-weight-light text v-cardSubTitle">{{nodeData.cardSubTitle}}</span>
@@ -26,17 +26,25 @@ export default {
     nodeData: {
       cardTitle: String,
       cardSubTitle: String,
-      avatarList: Array, 
+      avatarList: Array,
       numberOfMember: Number,
       tagTypes: Number
-    }
+    },
+    openModal: { default: () => openModal }
   },
   data: () => ({
-    
+    drawer: true
   }),
   components: {
     AvatarsList,
     RoleTag
+  },
+  methods: {
+    detailNodeCard() {
+      const nodeDataDetail = this.nodeData;
+      this.$emit("emitCardNodeContainer", nodeDataDetail);
+      this.openModal();
+    }
   }
 };
 </script>

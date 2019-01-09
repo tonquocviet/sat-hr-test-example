@@ -5,6 +5,8 @@
         :nodes="nodes"
         :node-template="nodeTemplate"
         :containerProperties="containerProperties"
+        :openModal="openModal"
+        @emitHierarchy="receiveEmitNodeData"
       />
       <connection-lines-container :lines="lines" :containerProperties="containerProperties"></connection-lines-container>
     </div>
@@ -34,9 +36,8 @@ export default {
     dragscroll
   },
   props: {
-    mouseWheel: {
-      default: () => mouseWheel
-    },
+    mouseWheel: { default: () => mouseWheel },
+    openModal: { default: () => openModal },
     scale: Number,
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
@@ -59,6 +60,10 @@ export default {
       ]);
       treeLayout(root);
       return root;
+    },
+    receiveEmitNodeData: function(event) {
+      this.nodeDataDetail = event;
+      this.$emit("emitOrgChartWrapper", this.nodeDataDetail);
     }
   },
   computed: {

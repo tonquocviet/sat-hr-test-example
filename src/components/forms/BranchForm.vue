@@ -83,20 +83,28 @@
   </v-form>
 </template>
 <script>
+import { FakeBranchData } from "../../FakeDataForTesting";
+
 export default {
   props: {
+    nodeDataDetail: Object,
+    FakeBranchData: {
+      type: Object,
+      default: () => FakeBranchData
+    },
     object: {
       type: Object,
       default: function() {
+        const data = this.FakeBranchData;
         return {
-          name: "",
-          address: "",
-          city: "",
-          country: "",
-          zipCode: "",
-          telephone: "",
-          contactPersonnel: "",
-          nodePosition: ""
+          name: "" || data.name,
+          address: "" || data.address,
+          city: "" || data.city.id,
+          country: "" || data.country.id,
+          zipCode: "" || data.zipCode,
+          telephone: "" || data.telephone,
+          contactPersonnel: "" || data.contactPersonnel,
+          nodePosition: "" || data.nodePosition
         };
       }
     },
@@ -161,9 +169,7 @@ export default {
       };
       return data;
     },
-    onCancel() {
-      
-    }
+    onCancel() {}
   }
 };
 </script>

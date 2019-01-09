@@ -43,15 +43,22 @@
   </v-form>
 </template>
 <script>
+import { FakeCorporateData } from "../../FakeDataForTesting";
+
 export default {
   props: {
+    FakeCorporateData: {
+      type: Object,
+      default: () => FakeCorporateData
+    },
     object: {
       type: Object,
       default: function() {
+        const data = this.FakeCorporateData;
         return {
-          name: "",
-          company: "",
-          nodePosition: ""
+          name: "" || data.name,
+          company: "" || data.company,
+          nodePosition: "" || data.nodePosition
         };
       }
     },
@@ -111,9 +118,7 @@ export default {
       };
       return data;
     },
-    onCancel() {
-      
-    }
+    onCancel() {}
   }
 };
 </script>
