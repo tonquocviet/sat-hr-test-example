@@ -1,19 +1,19 @@
 <template>
   <v-card class="mx-auto" width="100%" height="100%">
     <v-card-title class="success--text">
-      <span class="font-weight-bold headline">Axa Insurance Holdings</span>
-      <span class="font-weight-light text">Paris, France</span>
+      <span class="font-weight-bold headline v-cardTitle">{{nodeData.cardTitle}}</span>
+      <span class="font-weight-light text v-cardSubTitle">{{nodeData.cardSubTitle}}</span>
       <div class="v-line"></div>
     </v-card-title>
     <v-card-actions class="mb-1">
-      <avatars-list :members="members"/>
+      <avatars-list :members="nodeData.avatarList"/>
       <v-layout align-center justify-end>
         <v-icon class="mr-1">people</v-icon>
-        <span class="subheading">45</span>
+        <span class="subheading">{{nodeData.numberOfMember}}</span>
       </v-layout>
     </v-card-actions>
     <v-card-actions>
-      <role-tag :tag-type="0"/>
+      <role-tag :tag-type="nodeData.tagType"/>
     </v-card-actions>
   </v-card>
 </template>
@@ -22,25 +22,17 @@
 import AvatarsList from "../avatars/AvatarsList";
 import RoleTag from "../tags/RoleTag";
 export default {
+  props: {
+    nodeData: {
+      cardTitle: String,
+      cardSubTitle: String,
+      avatarList: Array, 
+      numberOfMember: Number,
+      tagTypes: Number
+    }
+  },
   data: () => ({
-    members: [
-      {
-        id: 1,
-        name: "Steve Hanson",
-        imageUrl:
-          "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-      },
-      {
-        id: 2,
-        name: "Rock Storm",
-        imageUrl:
-          "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-      },
-      {
-        id: 3,
-        name: "Java Learning"
-      }
-    ]
+    
   }),
   components: {
     AvatarsList,
@@ -54,5 +46,23 @@ export default {
   width: 100%;
   padding-top: 20px;
   border-bottom: 1px solid #7575757d;
+}
+
+.v-cardTitle {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.v-cardSubTitle {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 </style>

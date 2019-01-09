@@ -23,60 +23,7 @@ import {
   defaultNodeDensityY
 } from "../../config";
 import { dragscroll } from "vue-dragscroll";
-var dataForTesting = {
-  name: "A1",
-  children: [
-    {
-      name: "B1",
-      children: [
-        {
-          name: "C1",
-          value: 100
-        },
-        {
-          name: "C2",
-          value: 300
-        },
-        {
-          name: "C3",
-          value: 200
-        }
-      ]
-    },
-    {
-      name: "B2",
-      value: 200,
-      children: [
-        {
-          name: "T1",
-          value: 100
-        },
-        {
-          name: "T2",
-          value: 300
-        },
-        {
-          name: "T3",
-          value: 200,
-          children: [
-            {
-              name: "X1",
-              value: 100
-            },
-            {
-              name: "X2",
-              value: 300
-            },
-            {
-              name: "X3",
-              value: 200
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
+
 export default {
   components: {
     ConnectionLinesContainer,
@@ -95,10 +42,7 @@ export default {
     nodeHeight: { type: Number, default: nodeHeight },
     nodeDensityX: { type: Number, default: defaultNodeDensityX },
     nodeDensityY: { type: Number, default: defaultNodeDensityY },
-    dataForHierarchy: {
-      type: Object,
-      default: () => dataForTesting
-    }
+    dataForHierarchy: Object
   },
   data: function() {
     return {
@@ -127,7 +71,9 @@ export default {
     },
     nodes: function() {
       let root = this.toD3Hierarchy(this.dataForHierarchy);
-      return root.descendants().map(x => ({ x: x.x, y: x.y }));
+      return root
+        .descendants()
+        .map(x => ({ x: x.x, y: x.y, nodeData: x.data }));
     },
     containerProperties: function() {
       let root = this.toD3Hierarchy(this.dataForHierarchy);
