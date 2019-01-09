@@ -52,15 +52,16 @@
         <DepartmentForm v-if="selectValue === 3"/>
       </v-list>
     </v-navigation-drawer>
-    <HierarchyContainer :mouseWheel="mouseWheel" :scale="scale"/>
+    <HierarchyContainer :data-for-hierarchy="dataForHierarchy" :mouseWheel="mouseWheel" :scale="scale"/>
   </v-content>
 </template>
 <script>
 import BranchForm from "../components/forms/BranchForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
-import { scaleValue, zoomValue } from "../config";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
+import { dataForTesting } from '../FakeDataForTesting';
+import { scaleValue, zoomValue } from "../config";
 
 export default {
   components: {
@@ -82,6 +83,10 @@ export default {
   props: {
     scaleValue: { type: Number, default: scaleValue },
     zoomValue: { type: Number, default: zoomValue },
+    dataForHierarchy: {
+      type: Object,
+      default: () => dataForTesting
+    },
     apiEndPoints: Object
   },
   methods: {

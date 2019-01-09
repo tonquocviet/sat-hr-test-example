@@ -6,7 +6,7 @@
       v-for="node in nodes"
       :key="node.id"
     >
-      <component v-bind:is="nodeTemplate" :nodeData="node"/>
+      <component v-bind:is="nodeTemplate" :nodeData="node.nodeData"/>
     </div>
   </div>
 </template>
