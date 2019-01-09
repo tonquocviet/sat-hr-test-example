@@ -47,16 +47,15 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm v-if="selectValue === 1" />
-        <CorporateForm v-if="selectValue === 2" />
-        <DepartmentForm v-if="selectValue === 3" />
+        <BranchForm v-if="selectValue === 1"/>
+        <CorporateForm v-if="selectValue === 2"/>
+        <DepartmentForm v-if="selectValue === 3"/>
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer :data-for-hierarchy="dataForHierarchy" :mouseWheel="mouseWheel" :scale="scale"/>
   </v-content>
 </template>
 <script>
-
 import BranchForm from "../components/forms/BranchForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
@@ -76,24 +75,30 @@ export default {
       this.zoomSlider();
     }
   },
+  mounted() {
+    this.$http.get(this.apiEndPoints.loadHierarchyData).then(function() {
+      console.log("11111111111111111");
+    });
+  },
   props: {
     scaleValue: { type: Number, default: scaleValue },
     zoomValue: { type: Number, default: zoomValue },
     dataForHierarchy: {
       type: Object,
       default: () => dataForTesting
-    }
+    },
+    apiEndPoints: Object
   },
   methods: {
-    change: function (e) {
-      if (e.abbr === 'bra') {
+    change: function(e) {
+      if (e.abbr === "bra") {
         this.selectValue = 1;
       }
-      if (e.abbr === 'cor') {
+      if (e.abbr === "cor") {
         this.selectValue = 2;
       }
-      if (e.abbr === 'dep') {
-        this.selectValue = 3
+      if (e.abbr === "dep") {
+        this.selectValue = 3;
       }
     },
     fullScreen: function() {
@@ -106,13 +111,13 @@ export default {
       }
     },
     mouseWheel: function(e) {
-      var delta = (e.deltaY + 50) * ((3/2) / 150);
-      this.scale -= delta * ((3/2) / 150);
+      var delta = (e.deltaY + 50) * (3 / 2 / 150);
+      this.scale -= delta * (3 / 2 / 150);
       this.zoom -= delta * (this.scale + 1);
     },
     zoomSlider: function() {
       const zoom = this.zoom;
-      return (this.scale = zoom * ((3/2) / 150));
+      return (this.scale = zoom * (3 / 2 / 150));
     }
   },
   data: () => ({

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <OrgChartWrapper />
+    <OrgChartWrapper :apiEndPoints="apiEndPoints"/>
   </Layout>
 </template>
 
@@ -15,7 +15,12 @@ export default {
     Layout
   },
   data() {
-    return {};
+    const baseUrl = "https://testingabc.com/api";
+    return {
+      apiEndPoints: {
+        loadHierarchyData: `${baseUrl}/hierarchy-chart/`
+      }
+    };
   }
 };
 </script>
