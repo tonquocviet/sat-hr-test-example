@@ -47,12 +47,18 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm v-if="selectValue === 1"/>
-        <CorporateForm v-if="selectValue === 2"/>
-        <DepartmentForm v-if="selectValue === 3"/>
+        <BranchForm :node-data-detail="nodeDataDetail" v-if="selectValue === 1"/>
+        <CorporateForm :node-data-detail="nodeDataDetail" v-if="selectValue === 2"/>
+        <DepartmentForm :node-data-detail="nodeDataDetail" v-if="selectValue === 3"/>
       </v-list>
     </v-navigation-drawer>
-    <HierarchyContainer :data-for-hierarchy="dataForHierarchy" :mouseWheel="mouseWheel" :scale="scale"/>
+    <HierarchyContainer
+      :openModal="openModal"
+      @emitOrgChartWrapper="receiveEmitNodeData"
+      :data-for-hierarchy="dataForHierarchy"
+      :mouseWheel="mouseWheel"
+      :scale="scale"
+    />
   </v-content>
 </template>
 <script>
@@ -60,7 +66,7 @@ import BranchForm from "../components/forms/BranchForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
-import { dataForTesting } from '../FakeDataForTesting';
+import { dataForTesting } from "../FakeDataForTesting";
 import { scaleValue, zoomValue } from "../config";
 
 export default {
@@ -118,11 +124,18 @@ export default {
     zoomSlider: function() {
       const zoom = this.zoom;
       return (this.scale = zoom * (3 / 2 / 150));
+    },
+    receiveEmitNodeData: function(event) {
+      this.nodeDataDetail = event;
+    },
+    openModal: function() {
+      this.drawer = true;
     }
   },
   data: () => ({
-    drawer: true,
+    drawer: false,
     scale: scaleValue,
+    nodeDataDetail: null,
     min: 13,
     selectValue: 1,
     max: 100,

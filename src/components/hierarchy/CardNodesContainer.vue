@@ -6,7 +6,12 @@
       v-for="node in nodes"
       :key="node.id"
     >
-      <component v-bind:is="nodeTemplate" :nodeData="node.nodeData"/>
+      <component
+        :openModal="openModal"
+        @emitCardNodeContainer="receiveEmitNodeData"
+        v-bind:is="nodeTemplate"
+        :nodeData="node.nodeData"
+      />
     </div>
   </div>
 </template>
@@ -17,6 +22,7 @@ export default {
   props: {
     nodes: Array,
     nodeTemplate: Object,
+    openModal: { default: () => openModal },
     nodeWidth: {
       type: Number,
       default: nodeWidth
@@ -37,6 +43,10 @@ export default {
         width: this.nodeWidth + "px",
         height: this.nodeHeight + "px"
       };
+    },
+    receiveEmitNodeData: function(event) {
+      this.nodeDataDetail = event;
+      this.$emit("emitHierarchy", this.nodeDataDetail);
     }
   },
   computed: {
