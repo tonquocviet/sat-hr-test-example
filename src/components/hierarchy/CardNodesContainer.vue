@@ -11,6 +11,7 @@
         @emitCardNodeContainer="receiveEmitNodeData"
         v-bind:is="nodeTemplate"
         :nodeData="node.nodeData"
+        :currentType="currentType"
       />
     </div>
   </div>
@@ -21,6 +22,7 @@ import { nodeWidth, nodeHeight } from "../../config";
 export default {
   props: {
     nodes: Array,
+    currentType: Number,
     nodeTemplate: Object,
     openModal: { default: () => openModal },
     nodeWidth: {

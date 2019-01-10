@@ -6,6 +6,7 @@
         :node-template="nodeTemplate"
         :containerProperties="containerProperties"
         :openModal="openModal"
+        :current-type="currentType"
         @emitHierarchy="receiveEmitNodeData"
       />
       <connection-lines-container :lines="lines" :containerProperties="containerProperties"></connection-lines-container>
@@ -39,6 +40,7 @@ export default {
     mouseWheel: { default: () => mouseWheel },
     openModal: { default: () => openModal },
     scale: Number,
+    currentType: Number,
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
     nodeDensityX: { type: Number, default: defaultNodeDensityX },

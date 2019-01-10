@@ -49,25 +49,21 @@
         <v-divider></v-divider>
         <BranchForm
           :close-modal="closeModal"
-          :id-node-card="idNodeCard"
           :node-data-detail="nodeDataDetail"
           v-if="selectValue === 1"
         />
         <CorporateForm
           :close-modal="closeModal"
-          :id-node-card="idNodeCard"
           :node-data-detail="nodeDataDetail"
           v-if="selectValue === 2"
         />
         <DepartmentForm
           :close-modal="closeModal"
-          :id-node-card="idNodeCard"
           :node-data-detail="nodeDataDetail"
           v-if="selectValue === 3"
         />
         <BoardStructureForm
           :close-modal="closeModal"
-          :id-node-card="idNodeCard"
           :node-data-detail="nodeDataDetail"
           v-if="selectValue === 4"
         />
@@ -79,6 +75,7 @@
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
       :scale="scale"
+      :current-type="currentType"
     />
   </v-content>
 </template>
@@ -132,6 +129,7 @@ export default {
       if (e.abbr === "boa") {
         this.selectValue = 4;
       }
+      this.currentType = this.selectValue;
     },
     fullScreen: function() {
       if (!document.fullscreenElement) {
@@ -156,7 +154,6 @@ export default {
     },
     openModal: function() {
       this.drawer = true;
-      this.idNodeCard = "";
     },
     closeModal: function() {
       this.drawer = false;
@@ -164,9 +161,9 @@ export default {
   },
   data: () => ({
     drawer: false,
-    idNodeCard: null,
     scale: scaleValue,
     nodeDataDetail: null,
+    currentType: null,
     min: 13,
     selectValue: 1,
     max: 100,

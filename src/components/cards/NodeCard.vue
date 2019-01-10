@@ -12,7 +12,7 @@
         <span class="subheading">{{nodeData.numberOfMember}}</span>
       </v-layout>
     </v-card-actions>
-    <v-card-actions>
+    <v-card-actions v-if="currentType !== 2">
       <role-tag :tag-type="nodeData.tagType"/>
     </v-card-actions>
   </v-card>
@@ -30,6 +30,7 @@ export default {
       numberOfMember: Number,
       tagTypes: Number
     },
+    currentType: Number,
     openModal: { default: () => openModal }
   },
   data: () => ({
