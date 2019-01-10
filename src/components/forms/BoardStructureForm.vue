@@ -4,36 +4,36 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.name"
+            v-model="object.employeeName"
             item-text="name"
             item-value="id"
             :items="name"
-            :rules="[v => !!v || 'Please choose Corporate name']"
-            label="Corporate Name"
+            :rules="[v => !!v || 'Please employee name']"
+            label="Employee name"
           ></v-combobox>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.company"
+            v-model="object.boardTitle"
             item-text="name"
             item-value="id"
-            :items="company"
-            :rules="[v => !!v || 'Please choose Company Position']"
-            label="Company Position"
+            :items="title"
+            :rules="[v => !!v || 'Please Board title']"
+            label="Board title"
           ></v-combobox>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.nodePosition"
+            v-model="object.nodeLocation"
             item-text="name"
             item-value="id"
-            :items="nodes"
-            :rules="[v => !!v || 'Please choose position']"
-            label="Node position"
+            :items="location"
+            :rules="[v => !!v || 'Please node location']"
+            label="Node location"
           ></v-combobox>
         </v-flex>
       </v-layout>
@@ -43,24 +43,24 @@
   </v-form>
 </template>
 <script>
-import { FakeCorporateData } from "../../FakeDataForTesting";
+import { FakeBoardStructure } from "../../FakeDataForTesting";
 
 export default {
   props: {
-    FakeCorporateData: {
+    FakeBoardStructure: {
       type: Object,
-      default: () => FakeCorporateData
+      default: () => FakeBoardStructure
     },
     idNodeCard: String,
     closeModal: { default: () => closeModal },
     object: {
       type: Object,
       default: function() {
-        const data = this.FakeCorporateData;
+        const data = this.FakeBoardStructure;
         return {
-          name: data ? data.name : "",
-          company: data ? data.company : "",
-          nodePosition: data ? data.nodePosition : ""
+          employeeName: data ? data.employeeName : "",
+          boardTitle: data ? data.boardTitle : "",
+          nodeLocation: data ? data.nodeLocation : ""
         };
       }
     },
@@ -68,29 +68,29 @@ export default {
       type: Array,
       default: function() {
         return [
-          { id: 1, name: "Wells Fargo" },
-          { id: 2, name: "JPMorgan Chase" },
-          { id: 3, name: "Berkshire Hathaway" }
+          { id: 1, name: "John Doe" },
+          { id: 2, name: "Steven Kan" },
+          { id: 3, name: "Kelvin Manc" }
         ];
       }
     },
-    company: {
+    title: {
       type: Array,
       default: function() {
         return [
-          { id: 1, name: "Louisiana Street, Houston, Texas" },
-          { id: 2, name: "Travis Street, Houston, Texas" },
-          { id: 3, name: "RHJ3+XM Northside, Houston, Texas" }
+          { id: 1, name: "Administrators" },
+          { id: 2, name: "Leader" },
+          { id: 3, name: "Personnel" }
         ];
       }
     },
-    nodes: {
+    location: {
       type: Array,
       default: function() {
         return [
-          { id: 1, name: "Branch Texas" },
-          { id: 2, name: "Branch Nothing" },
-          { id: 3, name: "Branch Bank North" }
+          { id: 1, name: "5513 Maple Ave, Dallas, TX 75235" },
+          { id: 2, name: "Stemmons Fwy, Dallas, TX 75219" },
+          { id: 3, name: "2414 Wycliff Ave, Dallas, TX 75219" }
         ];
       }
     }
@@ -112,11 +112,11 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
-      const { name, nodePosition, company } = this.object;
+      const { employeeName, boardTitle, nodeLocation } = this.object;
       const data = {
-        name: name.id,
-        company: company.id,
-        nodePosition: nodePosition.id
+        employeeName: employeeName.id,
+        boardTitle: boardTitle.id,
+        nodeLocation: nodeLocation.id
       };
       return data;
     },
