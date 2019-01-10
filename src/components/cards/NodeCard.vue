@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" width="100%" height="100%" @click="detailNodeCard">
+  <v-card class="mx-auto v-cardContainer" width="100%" height="100%" @click="detailNodeCard">
     <v-card-title class="success--text">
       <span class="font-weight-bold headline v-cardTitle">{{nodeData.cardTitle}}</span>
       <span class="font-weight-light text v-cardSubTitle">{{nodeData.cardSubTitle}}</span>
@@ -50,6 +50,10 @@ export default {
 </script>
 
 <style>
+.v-cardContainer {
+  cursor: pointer;
+}
+
 .v-line {
   width: 100%;
   padding-top: 20px;

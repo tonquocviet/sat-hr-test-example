@@ -39,13 +39,15 @@ export default {
       type: Object,
       default: () => FakeDepartmentData
     },
+    idNodeCard: String,
+    closeModal: { default: () => closeModal },
     object: {
       type: Object,
       default: function() {
         const data = this.FakeDepartmentData;
         return {
-          name: "" || data.name,
-          nodePosition: "" || data.nodePosition
+          name: data ? data.name : "",
+          nodePosition: data ? data.nodePosition : ""
         };
       }
     },
@@ -94,7 +96,9 @@ export default {
       };
       return data;
     },
-    onCancel() {}
+    onCancel() {
+      this.closeModal();
+    }
   }
 };
 </script>

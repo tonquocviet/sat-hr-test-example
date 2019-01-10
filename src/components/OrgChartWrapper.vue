@@ -4,7 +4,7 @@
       <v-flex xs3>
         <v-select
           v-model="select"
-          v-on:change="change"
+          v-on:change="changeDropdownOrgChart"
           :items="itemsSelect"
           item-text="state"
           item-value="abbr"
@@ -23,7 +23,7 @@
         v-model="zoom"
         hide-details
       ></v-slider>
-      <v-btn icon>
+      <v-btn @click="openModal" icon>
         <v-icon>add</v-icon>
       </v-btn>
       <v-btn icon>
@@ -47,9 +47,30 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
-        <BranchForm :node-data-detail="nodeDataDetail" v-if="selectValue === 1"/>
-        <CorporateForm :node-data-detail="nodeDataDetail" v-if="selectValue === 2"/>
-        <DepartmentForm :node-data-detail="nodeDataDetail" v-if="selectValue === 3"/>
+        <BranchForm
+          :close-modal="closeModal"
+          :id-node-card="idNodeCard"
+          :node-data-detail="nodeDataDetail"
+          v-if="selectValue === 1"
+        />
+        <CorporateForm
+          :close-modal="closeModal"
+          :id-node-card="idNodeCard"
+          :node-data-detail="nodeDataDetail"
+          v-if="selectValue === 2"
+        />
+        <DepartmentForm
+          :close-modal="closeModal"
+          :id-node-card="idNodeCard"
+          :node-data-detail="nodeDataDetail"
+          v-if="selectValue === 3"
+        />
+        <BoardStructureForm
+          :close-modal="closeModal"
+          :id-node-card="idNodeCard"
+          :node-data-detail="nodeDataDetail"
+          v-if="selectValue === 4"
+        />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer
@@ -63,6 +84,7 @@
 </template>
 <script>
 import BranchForm from "../components/forms/BranchForm";
+import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
@@ -74,7 +96,8 @@ export default {
     HierarchyContainer,
     CorporateForm,
     DepartmentForm,
-    BranchForm
+    BranchForm,
+    BoardStructureForm
   },
   watch: {
     zoom: function() {
@@ -96,7 +119,7 @@ export default {
     apiEndPoints: Object
   },
   methods: {
-    change: function(e) {
+    changeDropdownOrgChart: function(e) {
       if (e.abbr === "bra") {
         this.selectValue = 1;
       }
@@ -105,6 +128,9 @@ export default {
       }
       if (e.abbr === "dep") {
         this.selectValue = 3;
+      }
+      if (e.abbr === "boa") {
+        this.selectValue = 4;
       }
     },
     fullScreen: function() {
@@ -130,10 +156,15 @@ export default {
     },
     openModal: function() {
       this.drawer = true;
+      this.idNodeCard = "";
+    },
+    closeModal: function() {
+      this.drawer = false;
     }
   },
   data: () => ({
     drawer: false,
+    idNodeCard: null,
     scale: scaleValue,
     nodeDataDetail: null,
     min: 13,
@@ -143,6 +174,7 @@ export default {
     select: { state: "Branch Structure", abbr: "bra" },
     itemsSelect: [
       { state: "Branch Structure", abbr: "bra" },
+      { state: "Board Structure", abbr: "boa" },
       { state: "Corporate Structure", abbr: "cor" },
       { state: "Department Structure", abbr: "dep" }
     ]

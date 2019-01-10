@@ -353,3 +353,10 @@ export const FakeDepartmentData = {
   name: { id: 3, name: "Berkshire Hathaway" },
   nodePosition: { id: 2, name: "Branch Nothing" }
 };
+
+export const FakeBoardStructure = {
+  id: 1,
+  employeeName: { id: 2, name: "Steven Kan" },
+  boardTitle: { id: 1, name: "Administrators" },
+  nodeLocation: { id: 1, name: "5513 Maple Ave, Dallas, TX 75235" }
+};

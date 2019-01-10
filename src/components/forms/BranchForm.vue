@@ -92,19 +92,21 @@ export default {
       type: Object,
       default: () => FakeBranchData
     },
+    idNodeCard: String,
+    closeModal: { default: () => closeModal },
     object: {
       type: Object,
       default: function() {
         const data = this.FakeBranchData;
         return {
-          name: "" || data.name,
-          address: "" || data.address,
-          city: "" || data.city.id,
-          country: "" || data.country.id,
-          zipCode: "" || data.zipCode,
-          telephone: "" || data.telephone,
-          contactPersonnel: "" || data.contactPersonnel,
-          nodePosition: "" || data.nodePosition
+          name: data ? data.name : "",
+          address: data ? data.address : "",
+          city: data ? data.city.id : "",
+          country: data ? data.country.id : "",
+          zipCode: data ? data.zipCode : "",
+          telephone: data ? data.telephone : "",
+          contactPersonnel: data ? data.contactPersonnel : "",
+          nodePosition: data ? data.nodePosition : ""
         };
       }
     },
@@ -169,7 +171,9 @@ export default {
       };
       return data;
     },
-    onCancel() {}
+    onCancel() {
+      this.closeModal();
+    }
   }
 };
 </script>
