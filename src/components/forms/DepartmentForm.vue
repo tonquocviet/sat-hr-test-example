@@ -39,7 +39,6 @@ export default {
       type: Object,
       default: () => FakeDepartmentData
     },
-    idNodeCard: String,
     closeModal: { default: () => closeModal },
     object: {
       type: Object,

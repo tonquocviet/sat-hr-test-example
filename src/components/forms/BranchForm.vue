@@ -92,7 +92,6 @@ export default {
       type: Object,
       default: () => FakeBranchData
     },
-    idNodeCard: String,
     closeModal: { default: () => closeModal },
     object: {
       type: Object,
