@@ -75,7 +75,6 @@
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
       :scale="scale"
-      :current-type="currentType"
     />
   </v-content>
 </template>
@@ -129,7 +128,6 @@ export default {
       if (e.abbr === "boa") {
         this.selectValue = 4;
       }
-      this.currentType = this.selectValue;
     },
     fullScreen: function() {
       if (!document.fullscreenElement) {
@@ -163,7 +161,6 @@ export default {
     drawer: false,
     scale: scaleValue,
     nodeDataDetail: null,
-    currentType: null,
     min: 13,
     selectValue: 1,
     max: 100,
