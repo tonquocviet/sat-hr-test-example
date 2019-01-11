@@ -84,6 +84,7 @@
   </v-content>
 </template>
 <script>
+import _ from "lodash";
 import BranchForm from "../components/forms/BranchForm";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
@@ -145,6 +146,17 @@ export default {
       return (this.scale = zoom * (3 / 2 / 150));
     },
     receiveEmitNodeData: function(event) {
+      _.forIn(this.dataForHierarchy, function(val, key) {
+        console.log(val, key);
+        if (_.isArray(val)) {
+          val.forEach(e => {
+            if (_.isObject(e.children)) {
+              console.log(e.children);
+            }
+          });
+        }
+      });
+
       this.isLoadingDetails = true;
       this.nodeDataDetail = this.nodeDataDetail || {};
       this.$http
