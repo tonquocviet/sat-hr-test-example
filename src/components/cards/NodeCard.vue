@@ -12,7 +12,7 @@
         <span class="subheading">{{nodeData.numberOfMember}}</span>
       </v-layout>
     </v-card-actions>
-    <v-card-actions>
+    <v-card-actions v-if="nodeData.tagType !== null">
       <role-tag :tag-type="nodeData.tagType"/>
     </v-card-actions>
   </v-card>

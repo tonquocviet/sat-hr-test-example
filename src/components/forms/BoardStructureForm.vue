@@ -51,7 +51,6 @@ export default {
       type: Object,
       default: () => FakeBoardStructure
     },
-    idNodeCard: String,
     closeModal: { default: () => closeModal },
     object: {
       type: Object,
