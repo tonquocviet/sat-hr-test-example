@@ -23,7 +23,7 @@
         v-model="zoom"
         hide-details
       ></v-slider>
-      <v-btn icon>
+      <v-btn icon @click.stop="showFormAddNew">
         <v-icon>add</v-icon>
       </v-btn>
       <v-btn icon>
@@ -50,26 +50,28 @@
         <v-container v-if="isLoadingDetails">
           <v-progress-circular :width="3" indeterminate></v-progress-circular>
         </v-container>
-        <BranchForm
-          @closeModal="closeModal"
-          :node-data-detail="nodeDataDetail"
-          v-if="!isLoadingDetails && select.value === 1"
-        />
-        <CorporateForm
-          @closeModal="closeModal"
-          :node-data-detail="nodeDataDetail"
-          v-if="!isLoadingDetails && select.value === 2"
-        />
-        <DepartmentForm
-          @closeModal="closeModal"
-          :node-data-detail="nodeDataDetail"
-          v-if="!isLoadingDetails && select.value === 3"
-        />
-        <BoardStructureForm
-          @closeModal="closeModal"
-          :node-data-detail="nodeDataDetail"
-          v-if="!isLoadingDetails && select.value === 4"
-        />
+        <template v-if="!isLoadingDetails && !!nodeDataDetail">
+          <BranchForm
+            @closeModal="closeModal"
+            :node-data-detail="nodeDataDetail"
+            v-if="select.value === 1"
+          />
+          <CorporateForm
+            @closeModal="closeModal"
+            :node-data-detail="nodeDataDetail"
+            v-if="select.value === 2"
+          />
+          <DepartmentForm
+            @closeModal="closeModal"
+            :node-data-detail="nodeDataDetail"
+            v-if="select.value === 3"
+          />
+          <BoardStructureForm
+            @closeModal="closeModal"
+            :node-data-detail="nodeDataDetail"
+            v-if="select.value === 4"
+          />
+        </template>
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer
@@ -154,6 +156,11 @@ export default {
     },
     closeModal: function() {
       this.nodeDataDetail = null;
+    },
+    showFormAddNew: function() {
+      this.nodeDataDetail = {
+        id: 0
+      };
     }
   },
   data: () => ({

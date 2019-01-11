@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.name"
+            v-model="nodeDataDetail.name"
             item-text="name"
             item-value="id"
             :items="name"
@@ -16,7 +16,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.nodePosition"
+            v-model="nodeDataDetail.nodePosition"
             item-text="name"
             item-value="id"
             :items="nodes"
@@ -31,24 +31,9 @@
   </v-form>
 </template>
 <script>
-import { FakeDepartmentData } from "../../FakeDataForTesting";
-
 export default {
   props: {
-    FakeDepartmentData: {
-      type: Object,
-      default: () => FakeDepartmentData
-    },
-    object: {
-      type: Object,
-      default: function() {
-        const data = this.FakeDepartmentData;
-        return {
-          name: data ? data.name : "",
-          nodePosition: data ? data.nodePosition : ""
-        };
-      }
-    },
+    nodeDataDetail: Object,
     name: {
       type: Array,
       default: function() {
