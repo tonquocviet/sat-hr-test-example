@@ -15,10 +15,10 @@ export default {
     Layout
   },
   data() {
-    const baseUrl = "https://testingabc.com/api";
+    const baseUrl = "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
     return {
       apiEndPoints: {
-        loadHierarchyData: `${baseUrl}/hierarchy-chart/`
+        loadHierarchyData: `${baseUrl}/hierarchy-chart`
       }
     };
   }

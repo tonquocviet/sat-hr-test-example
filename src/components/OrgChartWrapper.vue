@@ -50,26 +50,27 @@
         <BranchForm
           :close-modal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="selectValue === 1"
+          v-if="select.value === 1"
         />
         <CorporateForm
           :close-modal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="selectValue === 2"
+          v-if="select.value === 2"
         />
         <DepartmentForm
           :close-modal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="selectValue === 3"
+          v-if="select.value === 3"
         />
         <BoardStructureForm
           :close-modal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="selectValue === 4"
+          v-if="select.value === 4"
         />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer
+      v-if="!!dataForHierarchy"
       :openModal="openModal"
       @emitOrgChartWrapper="receiveEmitNodeData"
       :data-for-hierarchy="dataForHierarchy"
@@ -101,33 +102,25 @@ export default {
     }
   },
   mounted() {
-    this.$http.get(this.apiEndPoints.loadHierarchyData).then(function() {
-      console.log("11111111111111111");
-    });
+    const typeId = this.select.value;
+    this.getAndShowData(typeId);
   },
   props: {
     scaleValue: { type: Number, default: scaleValue },
     zoomValue: { type: Number, default: zoomValue },
-    dataForHierarchy: {
-      type: Object,
-      default: () => dataForTesting
-    },
     apiEndPoints: Object
   },
   methods: {
+    getAndShowData(typeId) {
+      this.$http
+        .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
+        .then(res => {
+          this.dataForHierarchy = res.data;
+        });
+    },
     changeDropdownOrgChart: function(e) {
-      if (e.abbr === "bra") {
-        this.selectValue = 1;
-      }
-      if (e.abbr === "cor") {
-        this.selectValue = 2;
-      }
-      if (e.abbr === "dep") {
-        this.selectValue = 3;
-      }
-      if (e.abbr === "boa") {
-        this.selectValue = 4;
-      }
+      const typeId = e.value;
+      this.getAndShowData(typeId);
     },
     fullScreen: function() {
       if (!document.fullscreenElement) {
@@ -158,19 +151,19 @@ export default {
     }
   },
   data: () => ({
+    dataForHierarchy: null,
     drawer: false,
     scale: scaleValue,
     nodeDataDetail: null,
     min: 13,
-    selectValue: 1,
     max: 100,
     zoom: zoomValue,
-    select: { state: "Branch Structure", abbr: "bra" },
+    select: { state: "Branch Structure", value: 1 },
     itemsSelect: [
-      { state: "Branch Structure", abbr: "bra" },
-      { state: "Board Structure", abbr: "boa" },
-      { state: "Corporate Structure", abbr: "cor" },
-      { state: "Department Structure", abbr: "dep" }
+      { state: "Branch Structure", value: 1 },
+      { state: "Board Structure", value: 4 },
+      { state: "Corporate Structure", value: 2 },
+      { state: "Department Structure", value: 3 }
     ]
   })
 };
