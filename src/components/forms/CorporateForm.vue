@@ -51,7 +51,6 @@ export default {
       type: Object,
       default: () => FakeCorporateData
     },
-    closeModal: { default: () => closeModal },
     object: {
       type: Object,
       default: function() {
@@ -120,7 +119,7 @@ export default {
       return data;
     },
     onCancel() {
-      this.closeModal();
+      this.$emit("closeModal");
     }
   }
 };

@@ -23,7 +23,7 @@
         v-model="zoom"
         hide-details
       ></v-slider>
-      <v-btn @click="openModal" icon>
+      <v-btn icon>
         <v-icon>add</v-icon>
       </v-btn>
       <v-btn icon>
@@ -34,11 +34,11 @@
       </v-btn>
     </v-toolbar>
     <slot></slot>
-    <v-navigation-drawer v-model="drawer" fixed app clipped right width="400">
+    <v-navigation-drawer :value="drawer" fixed app clipped right width="400">
       <v-list class="pa-1">
         <v-list-tile avatar tag="div">
           <v-list-tile-action>
-            <v-btn icon @click.stop="drawer = false">
+            <v-btn icon @click.stop="closeModal">
               <v-icon>close</v-icon>
             </v-btn>
           </v-list-tile-action>
@@ -47,31 +47,33 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
+        <v-container v-if="isLoadingDetails">
+          <v-progress-circular :width="3" indeterminate></v-progress-circular>
+        </v-container>
         <BranchForm
-          :close-modal="closeModal"
+          @closeModal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="select.value === 1"
+          v-if="!isLoadingDetails && select.value === 1"
         />
         <CorporateForm
-          :close-modal="closeModal"
+          @closeModal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="select.value === 2"
+          v-if="!isLoadingDetails && select.value === 2"
         />
         <DepartmentForm
-          :close-modal="closeModal"
+          @closeModal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="select.value === 3"
+          v-if="!isLoadingDetails && select.value === 3"
         />
         <BoardStructureForm
-          :close-modal="closeModal"
+          @closeModal="closeModal"
           :node-data-detail="nodeDataDetail"
-          v-if="select.value === 4"
+          v-if="!isLoadingDetails && select.value === 4"
         />
       </v-list>
     </v-navigation-drawer>
     <HierarchyContainer
       v-if="!!dataForHierarchy"
-      :openModal="openModal"
       @emitOrgChartWrapper="receiveEmitNodeData"
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
@@ -141,18 +143,22 @@ export default {
       return (this.scale = zoom * (3 / 2 / 150));
     },
     receiveEmitNodeData: function(event) {
-      this.nodeDataDetail = event;
-    },
-    openModal: function() {
-      this.drawer = true;
+      this.isLoadingDetails = true;
+      this.nodeDataDetail = this.nodeDataDetail || {};
+      this.$http
+        .get(`${this.apiEndPoints.loadStructureDetails}/${event.id}`)
+        .then(res => {
+          this.nodeDataDetail = res.data;
+          this.isLoadingDetails = false;
+        });
     },
     closeModal: function() {
-      this.drawer = false;
+      this.nodeDataDetail = null;
     }
   },
   data: () => ({
+    isLoadingDetails: false,
     dataForHierarchy: null,
-    drawer: false,
     scale: scaleValue,
     nodeDataDetail: null,
     min: 13,
@@ -165,7 +171,12 @@ export default {
       { state: "Corporate Structure", value: 2 },
       { state: "Department Structure", value: 3 }
     ]
-  })
+  }),
+  computed: {
+    drawer: function() {
+      return !!this.nodeDataDetail;
+    }
+  }
 };
 </script>
 

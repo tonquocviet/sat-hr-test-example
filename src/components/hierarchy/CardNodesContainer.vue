@@ -7,7 +7,6 @@
       :key="node.id"
     >
       <component
-        :openModal="openModal"
         @emitCardNodeContainer="receiveEmitNodeData"
         v-bind:is="nodeTemplate"
         :nodeData="node.nodeData"
@@ -22,7 +21,6 @@ export default {
   props: {
     nodes: Array,
     nodeTemplate: Object,
-    openModal: { default: () => openModal },
     nodeWidth: {
       type: Number,
       default: nodeWidth

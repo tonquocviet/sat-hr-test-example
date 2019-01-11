@@ -29,8 +29,7 @@ export default {
       avatarList: Array,
       numberOfMember: Number,
       tagTypes: Number
-    },
-    openModal: { default: () => openModal }
+    }
   },
   data: () => ({
     drawer: true
@@ -43,7 +42,6 @@ export default {
     detailNodeCard() {
       const nodeDataDetail = this.nodeData;
       this.$emit("emitCardNodeContainer", nodeDataDetail);
-      this.openModal();
     }
   }
 };
