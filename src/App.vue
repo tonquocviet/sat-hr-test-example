@@ -15,10 +15,12 @@ export default {
     Layout
   },
   data() {
-    const baseUrl = "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
+    const baseUrl =
+      "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
     return {
       apiEndPoints: {
-        loadHierarchyData: `${baseUrl}/hierarchy-chart`
+        loadHierarchyData: `${baseUrl}/hierarchy-chart`,
+        loadStructureDetails: `${baseUrl}/structure-details`
       }
     };
   }

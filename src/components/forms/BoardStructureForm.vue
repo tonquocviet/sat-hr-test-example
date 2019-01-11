@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.employeeName"
+            v-model="nodeDataDetail.employeeName"
             item-text="name"
             item-value="id"
             :items="name"
@@ -16,7 +16,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.boardTitle"
+            v-model="nodeDataDetail.boardTitle"
             item-text="name"
             item-value="id"
             :items="title"
@@ -28,7 +28,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.nodeLocation"
+            v-model="nodeDataDetail.nodeLocation"
             item-text="name"
             item-value="id"
             :items="location"
@@ -43,26 +43,9 @@
   </v-form>
 </template>
 <script>
-import { FakeBoardStructure } from "../../FakeDataForTesting";
-
 export default {
   props: {
-    FakeBoardStructure: {
-      type: Object,
-      default: () => FakeBoardStructure
-    },
-    closeModal: { default: () => closeModal },
-    object: {
-      type: Object,
-      default: function() {
-        const data = this.FakeBoardStructure;
-        return {
-          employeeName: data ? data.employeeName : "",
-          boardTitle: data ? data.boardTitle : "",
-          nodeLocation: data ? data.nodeLocation : ""
-        };
-      }
-    },
+    nodeDataDetail: Object,
     name: {
       type: Array,
       default: function() {
@@ -120,7 +103,7 @@ export default {
       return data;
     },
     onCancel() {
-      this.closeModal();
+      this.$emit("closeModal");
     }
   }
 };

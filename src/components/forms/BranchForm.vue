@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation class="right-form">
     <v-container>
       <v-text-field
-        v-model="object.name"
+        v-model="nodeDataDetail.name"
         :rules="nameRules"
         label="Branch Name"
         required
@@ -10,13 +10,13 @@
       ></v-text-field>
       <v-layout>
         <v-flex xs12>
-          <v-text-field v-model="object.address" :rules="addressRules" label="Address" required></v-text-field>
+          <v-text-field v-model="nodeDataDetail.address" :rules="addressRules" label="Address" required></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs6>
           <v-select
-            v-model="object.country"
+            v-model="nodeDataDetail.country"
             item-text="name"
             item-value="id"
             :items="countries"
@@ -27,7 +27,7 @@
         </v-flex>
         <v-flex xs6>
           <v-select
-            v-model="object.city"
+            v-model="nodeDataDetail.city"
             :items="cities"
             :rules="[v => !!v || 'City is required']"
             item-text="name"
@@ -39,14 +39,14 @@
       </v-layout>
       <v-layout>
         <v-flex xs6>
-          <v-text-field v-model="object.zipCode" :rules="zipCodeRules" label="Zip Code" required></v-text-field>
+          <v-text-field v-model="nodeDataDetail.zipCode" :rules="zipCodeRules" label="Zip Code" required></v-text-field>
         </v-flex>
         <v-flex xs6></v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
           <v-text-field
-            v-model="object.telephone"
+            v-model="nodeDataDetail.telephone"
             :rules="telephoneRules"
             label="Phone number"
             required
@@ -56,7 +56,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.contactPersonnel"
+            v-model="nodeDataDetail.contactPersonnel"
             item-text="name"
             item-value="id"
             :items="contacts"
@@ -68,7 +68,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.nodePosition"
+            v-model="nodeDataDetail.nodePosition"
             item-text="name"
             item-value="id"
             :items="nodes"
@@ -88,27 +88,6 @@ import { FakeBranchData } from "../../FakeDataForTesting";
 export default {
   props: {
     nodeDataDetail: Object,
-    FakeBranchData: {
-      type: Object,
-      default: () => FakeBranchData
-    },
-    closeModal: { default: () => closeModal },
-    object: {
-      type: Object,
-      default: function() {
-        const data = this.FakeBranchData;
-        return {
-          name: data ? data.name : "",
-          address: data ? data.address : "",
-          city: data ? data.city.id : "",
-          country: data ? data.country.id : "",
-          zipCode: data ? data.zipCode : "",
-          telephone: data ? data.telephone : "",
-          contactPersonnel: data ? data.contactPersonnel : "",
-          nodePosition: data ? data.nodePosition : ""
-        };
-      }
-    },
     countries: {
       type: Array,
       default: function() {
@@ -171,7 +150,7 @@ export default {
       return data;
     },
     onCancel() {
-      this.closeModal();
+      this.$emit("closeModal");
     }
   }
 };

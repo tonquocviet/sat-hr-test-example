@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.name"
+            v-model="nodeDataDetail.name"
             item-text="name"
             item-value="id"
             :items="name"
@@ -16,7 +16,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.company"
+            v-model="nodeDataDetail.company"
             item-text="name"
             item-value="id"
             :items="company"
@@ -28,7 +28,7 @@
       <v-layout>
         <v-flex xs12>
           <v-combobox
-            v-model="object.nodePosition"
+            v-model="nodeDataDetail.nodePosition"
             item-text="name"
             item-value="id"
             :items="nodes"
@@ -47,22 +47,7 @@ import { FakeCorporateData } from "../../FakeDataForTesting";
 
 export default {
   props: {
-    FakeCorporateData: {
-      type: Object,
-      default: () => FakeCorporateData
-    },
-    closeModal: { default: () => closeModal },
-    object: {
-      type: Object,
-      default: function() {
-        const data = this.FakeCorporateData;
-        return {
-          name: data ? data.name : "",
-          company: data ? data.company : "",
-          nodePosition: data ? data.nodePosition : ""
-        };
-      }
-    },
+    nodeDataDetail: Object,
     name: {
       type: Array,
       default: function() {
@@ -120,7 +105,7 @@ export default {
       return data;
     },
     onCancel() {
-      this.closeModal();
+      this.$emit("closeModal");
     }
   }
 };
