@@ -20,7 +20,8 @@ export default {
     return {
       apiEndPoints: {
         loadHierarchyData: `${baseUrl}/hierarchy-chart`,
-        loadStructureDetails: `${baseUrl}/structure-details`
+        loadStructureDetails: `${baseUrl}/structure-details`,
+        loadCoporateNames: `${baseUrl}/get-coporates`
       }
     };
   }

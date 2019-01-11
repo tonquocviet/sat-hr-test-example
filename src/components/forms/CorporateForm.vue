@@ -3,14 +3,18 @@
     <v-container>
       <v-layout>
         <v-flex xs12>
-          <v-combobox
+          <v-autocomplete
             v-model="nodeDataDetail.name"
+            cache-items
+            :async-loading="corporateLoading"
             item-text="name"
             item-value="id"
-            :items="name"
+            :items="corporates"
             :rules="[v => !!v || 'Please choose Corporate name']"
+            :search-input.sync="corporateSearch"
+            return-object
             label="Corporate Name"
-          ></v-combobox>
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-layout>
@@ -48,16 +52,7 @@ import { FakeCorporateData } from "../../FakeDataForTesting";
 export default {
   props: {
     nodeDataDetail: Object,
-    name: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Wells Fargo" },
-          { id: 2, name: "JPMorgan Chase" },
-          { id: 3, name: "Berkshire Hathaway" }
-        ];
-      }
-    },
+    apiEndPoints: Object,
     company: {
       type: Array,
       default: function() {
@@ -79,9 +74,14 @@ export default {
       }
     }
   },
-  data: () => ({
-    valid: true
-  }),
+  data() {
+    return {
+      valid: true,
+      corporateLoading: false,
+      corporates: [this.nodeDataDetail.name],
+      corporateSearch: null
+    };
+  },
 
   methods: {
     validate() {
@@ -96,16 +96,29 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
-      const { name, nodePosition, company } = this.object;
+      const { name, nodePosition, company } = this.nodeDataDetail;
       const data = {
         name: name.id,
         company: company.id,
         nodePosition: nodePosition.id
       };
-      return data;
+      console.log(data);
     },
     onCancel() {
       this.$emit("closeModal");
+    }
+  },
+  watch: {
+    corporateSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.loadCoporateNames}`, {
+            params: {
+              s: val
+            }
+          })
+          .then(res => (this.corporates = res.data));
+      }
     }
   }
 };

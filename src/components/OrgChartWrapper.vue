@@ -60,6 +60,7 @@
             @closeModal="closeModal"
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 2"
+            :apiEndPoints="apiEndPoints"
           />
           <DepartmentForm
             @closeModal="closeModal"
