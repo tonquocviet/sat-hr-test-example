@@ -84,13 +84,21 @@
   </v-content>
 </template>
 <script>
-import _ from "lodash";
 import BranchForm from "../components/forms/BranchForm";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue, zoomValue } from "../config";
+
+function inactiveAllNodes(node) {
+  node.isActive = false;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      inactiveAllNodes(node.children[i]);
+    }
+  }
+}
 
 export default {
   components: {
@@ -119,6 +127,7 @@ export default {
       this.$http
         .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
         .then(res => {
+          inactiveAllNodes(res.data);
           this.dataForHierarchy = res.data;
         });
     },
@@ -145,16 +154,8 @@ export default {
       return (this.scale = zoom * (3 / 2 / 150));
     },
     receiveEmitNodeData: function(event) {
-      _.forIn(this.dataForHierarchy, function(val, key) {
-        console.log(val, key);
-        if (_.isArray(val)) {
-          val.forEach(e => {
-            if (_.isObject(e.children)) {
-              console.log(e.children);
-            }
-          });
-        }
-      });
+      inactiveAllNodes(this.dataForHierarchy);
+      event.isActive = true;
 
       this.isLoadingDetails = true;
       this.nodeDataDetail = this.nodeDataDetail || {};

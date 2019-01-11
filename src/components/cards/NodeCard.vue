@@ -1,5 +1,10 @@
 <template>
-  <v-card class="mx-auto v-cardContainer" :style="cardConatainerStyle" @click="detailNodeCard">
+  <v-card
+    :class="`mx-auto v-cardContainer ${nodeData.isActive ? 'card-active' : ''}`"
+    width="100%"
+    height="100%"
+    @click="detailNodeCard"
+  >
     <v-card-title class="success--text">
       <span class="font-weight-bold headline v-cardTitle">{{nodeData.cardTitle}}</span>
       <span class="font-weight-light text v-cardSubTitle">{{nodeData.cardSubTitle}}</span>
@@ -43,24 +48,18 @@ export default {
       const nodeDataDetail = this.nodeData;
       this.$emit("emitCardNodeContainer", nodeDataDetail);
     }
-  },
-  computed: {
-    cardConatainerStyle: function() {
-      return {
-        width: "100%",
-        height: "100%",
-        borderRadius: "0.5rem",
-        borderColor: "#2DB61E",
-        borderStyle: "solid"
-      };
-    }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .v-cardContainer {
   cursor: pointer;
+  border-radius: 6px;
+  border-style: solid;
+}
+.card-active {
+  border-color: #24b314;
 }
 
 .v-line {
