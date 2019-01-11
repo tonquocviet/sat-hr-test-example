@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     nameSymbol: function() {
-      if (!!this.imageUrl) return null;
+      if (this.imageUrl) return null;
       if (!this.name.trim().length) return "";
       let words = this.name.split(" ");
       if (words.length == 1) {
