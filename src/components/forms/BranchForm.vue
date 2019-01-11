@@ -83,8 +83,6 @@
   </v-form>
 </template>
 <script>
-import { FakeBranchData } from "../../FakeDataForTesting";
-
 export default {
   props: {
     nodeDataDetail: Object,

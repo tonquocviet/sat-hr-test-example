@@ -43,8 +43,6 @@
   </v-form>
 </template>
 <script>
-import { FakeCorporateData } from "../../FakeDataForTesting";
-
 export default {
   props: {
     nodeDataDetail: Object,

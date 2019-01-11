@@ -89,7 +89,6 @@ import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
-import { dataForTesting } from "../FakeDataForTesting";
 import { scaleValue, zoomValue } from "../config";
 
 export default {
