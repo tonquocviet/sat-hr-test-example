@@ -28,14 +28,13 @@ import { dragscroll } from "vue-dragscroll";
 export default {
   components: {
     ConnectionLinesContainer,
-    CardNodesContainer,
-    NodeCard
+    CardNodesContainer
   },
   directives: {
     dragscroll
   },
   props: {
-    mouseWheel: { default: () => mouseWheel },
+    mouseWheel: Function,
     scale: Number,
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
