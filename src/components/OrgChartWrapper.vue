@@ -19,8 +19,9 @@
         style="max-width:100px"
         :max="max"
         :min="min"
+        :step="0.05"
         color="grey"
-        v-model="zoom"
+        v-model="scale"
         hide-details
       ></v-slider>
       <v-btn icon @click.stop="showFormAddNew">
@@ -92,7 +93,7 @@ import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
-import { scaleValue, zoomValue } from "../config";
+import { scaleValue } from "../config";
 
 function inactiveAllNodes(node) {
   node.isActive = false;
@@ -111,18 +112,11 @@ export default {
     BranchForm,
     BoardStructureForm
   },
-  watch: {
-    zoom: function() {
-      this.zoomSlider();
-    }
-  },
   mounted() {
     const typeId = this.select.value;
     this.getAndShowData(typeId);
   },
   props: {
-    scaleValue: { type: Number, default: scaleValue },
-    zoomValue: { type: Number, default: zoomValue },
     apiEndPoints: Object
   },
   methods: {
@@ -148,13 +142,9 @@ export default {
       }
     },
     mouseWheel: function(e) {
-      var delta = (e.deltaY + 50) * (3 / 2 / 150);
-      this.scale -= delta * (3 / 2 / 150);
-      this.zoom -= delta * (this.scale + 1);
-    },
-    zoomSlider: function() {
-      const zoom = this.zoom;
-      return (this.scale = zoom * (3 / 2 / 150));
+      let delta = e.deltaY;
+      delta = Math.max(-1, Math.min(1, delta)); // cap the delta to [-1,1] for cross browser consistency
+      this.scale -= delta * 0.05;
     },
     receiveEmitNodeData: function(event) {
       inactiveAllNodes(this.dataForHierarchy);
@@ -197,9 +187,8 @@ export default {
     dataForHierarchy: null,
     scale: scaleValue,
     nodeDataDetail: null,
-    min: 13,
-    max: 100,
-    zoom: zoomValue,
+    min: 0.2,
+    max: 1.0,
     select: { state: "Branch Structure", value: 1 },
     itemsSelect: [
       { state: "Branch Structure", value: 1 },
