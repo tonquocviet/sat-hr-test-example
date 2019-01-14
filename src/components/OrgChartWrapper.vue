@@ -164,8 +164,7 @@ export default {
           object,
           type
         })
-        .then(res => {
-          console.log(res.data);
+        .then(() => {
           this.closeModal();
           this.getAndShowData(this.select.value);
         });
