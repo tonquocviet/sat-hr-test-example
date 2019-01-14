@@ -7,7 +7,12 @@
   >
     <div v-if="typeId === 4">
       <v-card-actions class="mb-1 v-img-container">
-        <img v-bind:src="nodeData.avatarList[0].imageUrl" class="v-image-user">
+        <user-avatar
+          :imageUrl="nodeData.avatar.imageUrl"
+          :name="nodeData.avatar.name"
+          class="v-image-user"
+          :typeId="typeId"
+        />
       </v-card-actions>
       <v-card-title class="success--text">
         <span
@@ -42,6 +47,7 @@
 
 <script>
 import AvatarsList from "../avatars/AvatarsList";
+import UserAvatar from "../avatars/Avatar";
 import RoleTag from "../tags/RoleTag";
 export default {
   props: {
@@ -59,6 +65,7 @@ export default {
   }),
   components: {
     AvatarsList,
+    UserAvatar,
     RoleTag
   },
   methods: {
@@ -109,6 +116,8 @@ export default {
   height: 130px;
   border-radius: 65px;
   background: blue;
+  justify-content: center;
+  align-items: center;
 }
 
 .v-img-container {
