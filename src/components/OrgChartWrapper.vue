@@ -80,6 +80,7 @@
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
       :scale="scale"
+      :typeId="select.value"
     />
   </v-content>
 </template>
