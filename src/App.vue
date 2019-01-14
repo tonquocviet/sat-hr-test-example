@@ -25,7 +25,9 @@ export default {
         getLocations: `${baseUrl}/query-locations`,
         getNodePositions: `${baseUrl}/get-node-positions`,
         updateStructure: `${baseUrl}/update-structure`,
-        getFullCoporates: `${baseUrl}/get-full-coporates`
+        getFullCoporates: `${baseUrl}/get-full-coporates`,
+        getBoardNames: `${baseUrl}/get-board-names`,
+        getEmployees: `${baseUrl}/get-employees`
       }
     };
   }
