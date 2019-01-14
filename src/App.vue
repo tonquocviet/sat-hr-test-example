@@ -24,7 +24,8 @@ export default {
         loadCoporateNames: `${baseUrl}/get-coporates`,
         getLocations: `${baseUrl}/query-locations`,
         getNodePositions: `${baseUrl}/get-node-positions`,
-        updateStructure: `${baseUrl}/update-structure`
+        updateStructure: `${baseUrl}/update-structure`,
+        getFullCoporates: `${baseUrl}/get-full-coporates`
       }
     };
   }
