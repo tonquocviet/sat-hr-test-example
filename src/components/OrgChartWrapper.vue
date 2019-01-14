@@ -66,7 +66,7 @@
           />
           <DepartmentForm
             @closeModal="closeModal"
-             @saveDetails="saveDepartmentDetails"
+            @saveDetails="saveDepartmentDetails"
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 3"
             :apiEndPoints="apiEndPoints"
@@ -74,7 +74,9 @@
           <BoardStructureForm
             @closeModal="closeModal"
             :node-data-detail="nodeDataDetail"
+            @saveDetails="saveBoardDetails"
             v-if="select.value === 4"
+            :apiEndPoints="apiEndPoints"
           />
         </template>
       </v-list>
@@ -168,6 +170,9 @@ export default {
     },
     saveDepartmentDetails: function(object) {
       this.saveDetails(object, "department");
+    },
+    saveBoardDetails: function(object) {
+      this.saveDetails(object, "board");
     },
     saveDetails: function(object, type) {
       this.$http

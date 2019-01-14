@@ -3,38 +3,49 @@
     <v-container>
       <v-layout>
         <v-flex xs12>
-          <v-combobox
+          <v-autocomplete
             v-model="nodeDataDetail.employeeName"
+            cache-items
+            :async-loading="employeeNameLoading"
             item-text="name"
             item-value="id"
-            :items="name"
+            :items="employeeNames"
             :rules="[v => !!v || 'Please employee name']"
             label="Employee name"
-          ></v-combobox>
+            :search-input.sync="employeeNameSearch"
+            return-object
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
           <v-combobox
             v-model="nodeDataDetail.boardTitle"
+            cache-items
+            :async-loading="titleLoading"
             item-text="name"
             item-value="id"
-            :items="title"
+            :items="boardTitles"
             :rules="[v => !!v || 'Please Board title']"
+            :search-input.sync="nameBoardSearch"
             label="Board title"
           ></v-combobox>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
-          <v-combobox
+          <v-autocomplete
             v-model="nodeDataDetail.nodeLocation"
+            cache-items
+            :async-loading="nodeLocationLoading"
             item-text="name"
             item-value="id"
-            :items="location"
+            :items="nodeLocations"
             :rules="[v => !!v || 'Please node location']"
+            :search-input.sync="nodeLocationSearch"
+            return-object
             label="Node location"
-          ></v-combobox>
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-btn v-on:click="onSave" color="primary">Save</v-btn>
@@ -46,41 +57,26 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    name: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "John Doe" },
-          { id: 2, name: "Steven Kan" },
-          { id: 3, name: "Kelvin Manc" }
-        ];
-      }
-    },
-    title: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Administrators" },
-          { id: 2, name: "Leader" },
-          { id: 3, name: "Personnel" }
-        ];
-      }
-    },
-    location: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "5513 Maple Ave, Dallas, TX 75235" },
-          { id: 2, name: "Stemmons Fwy, Dallas, TX 75219" },
-          { id: 3, name: "2414 Wycliff Ave, Dallas, TX 75219" }
-        ];
-      }
-    }
+    apiEndPoints: Object
   },
-  data: () => ({
-    valid: true
-  }),
-
+  data() {
+    return {
+      valid: true,
+      nameBoardSearch: null,
+      titleLoading: false,
+      boardTitles: [],
+      nodeLocationLoading: false,
+      nodeLocations: this.nodeDataDetail.nodeLocation
+        ? [this.nodeDataDetail.nodeLocation]
+        : [],
+      nodeLocationSearch: null,
+      employeeNameSearch: null,
+      employeeNameLoading: false,
+      employeeNames: this.nodeDataDetail.employeeName
+        ? [this.nodeDataDetail.employeeName]
+        : []
+    };
+  },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
@@ -94,16 +90,53 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
-      const { employeeName, boardTitle, nodeLocation } = this.object;
-      const data = {
-        employeeName: employeeName.id,
-        boardTitle: boardTitle.id,
-        nodeLocation: nodeLocation.id
-      };
-      return data;
+      if (this.$refs.form.validate()) {
+        const { employeeName, boardTitle, nodeLocation } = this.nodeDataDetail;
+        const data = {
+          employeeName: employeeName.name,
+          boardTitle: boardTitle,
+          nodeLocation: nodeLocation
+        };
+        this.$emit("saveDetails", data);
+      }
     },
     onCancel() {
       this.$emit("closeModal");
+    }
+  },
+  watch: {
+    nodeLocationSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getNodePositions}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.nodeLocations = res.data));
+      }
+    },
+    employeeNameSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getEmployees}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.employeeNames = res.data));
+      }
+    },
+    nameBoardSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getBoardNames}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.boardTitles = res.data));
+      }
     }
   }
 };
