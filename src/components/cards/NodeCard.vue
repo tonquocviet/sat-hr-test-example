@@ -7,7 +7,7 @@
   >
     <div v-if="typeId === 4">
       <v-card-actions class="mb-1 v-img-container">
-        <img v-bind:src="avtBoardStruct" class="v-image-user" :style="imgUser">
+        <img v-bind:src="nodeData.avatarList[0].imageUrl" class="v-image-user">
       </v-card-actions>
       <v-card-title class="success--text">
         <span
@@ -55,9 +55,7 @@ export default {
     typeId: Number
   },
   data: () => ({
-    drawer: true,
-    avtBoardStruct:
-      "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+    drawer: true
   }),
   components: {
     AvatarsList,
@@ -67,13 +65,6 @@ export default {
     detailNodeCard() {
       const nodeDataDetail = this.nodeData;
       this.$emit("emitCardNodeContainer", nodeDataDetail);
-    }
-  },
-  computed: {
-    imgUser: function() {
-      return {
-        background: "blue"
-      };
     }
   }
 };
@@ -117,6 +108,7 @@ export default {
   width: 130px;
   height: 130px;
   border-radius: 65px;
+  background: blue;
 }
 
 .v-img-container {
