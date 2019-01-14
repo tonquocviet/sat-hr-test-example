@@ -1,5 +1,5 @@
 <template>
-  <div @mousewheel="mouseWheel" v-dragscroll class="hierarchy-scrollable">
+  <div @wheel="mouseWheel" v-dragscroll class="hierarchy-scrollable">
     <div class="hierarchy-container" :style="containerStyle">
       <card-nodes-container
         :nodes="nodes"
