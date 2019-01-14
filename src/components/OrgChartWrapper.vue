@@ -91,6 +91,15 @@ import DepartmentForm from "../components/forms/DepartmentForm";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue, zoomValue } from "../config";
 
+function inactiveAllNodes(node) {
+  node.isActive = false;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      inactiveAllNodes(node.children[i]);
+    }
+  }
+}
+
 export default {
   components: {
     HierarchyContainer,
@@ -118,6 +127,7 @@ export default {
       this.$http
         .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
         .then(res => {
+          inactiveAllNodes(res.data);
           this.dataForHierarchy = res.data;
         });
     },
@@ -144,6 +154,9 @@ export default {
       return (this.scale = zoom * (3 / 2 / 150));
     },
     receiveEmitNodeData: function(event) {
+      inactiveAllNodes(this.dataForHierarchy);
+      event.isActive = true;
+
       this.isLoadingDetails = true;
       this.nodeDataDetail = this.nodeDataDetail || {};
       this.$http
