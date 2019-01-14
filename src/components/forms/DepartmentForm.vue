@@ -13,6 +13,7 @@
             :rules="[v => !!v || 'Please choose Corporate name']"
             :search-input.sync="corporateSearch"
             label="Corporate Name"
+            return-object
           ></v-autocomplete>
         </v-flex>
       </v-layout>
