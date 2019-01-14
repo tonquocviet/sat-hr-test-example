@@ -130,11 +130,13 @@ export default {
       this.$http
         .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
         .then(res => {
+          this.closeModal();
           inactiveAllNodes(res.data);
           this.dataForHierarchy = res.data;
         });
     },
     changeDropdownOrgChart: function(e) {
+      this.closeModal();
       const typeId = e.value;
       this.getAndShowData(typeId);
     },
