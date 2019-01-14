@@ -66,7 +66,6 @@ export default {
   methods: {
     detailNodeCard() {
       const nodeDataDetail = this.nodeData;
-      console.log(nodeDataDetail)
       this.$emit("emitCardNodeContainer", nodeDataDetail);
     }
   },
