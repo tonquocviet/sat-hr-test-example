@@ -58,8 +58,10 @@
           />
           <CorporateForm
             @closeModal="closeModal"
+            @saveDetails="saveCorporateDetails"
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 2"
+            :apiEndPoints="apiEndPoints"
           />
           <DepartmentForm
             @closeModal="closeModal"
@@ -165,6 +167,20 @@ export default {
         .then(res => {
           this.nodeDataDetail = res.data;
           this.isLoadingDetails = false;
+        });
+    },
+    saveCorporateDetails: function(object) {
+      this.saveDetails(object, "corporate");
+    },
+    saveDetails: function(object, type) {
+      this.$http
+        .post(`${this.apiEndPoints.updateStructure}`, {
+          object,
+          type
+        })
+        .then(() => {
+          this.closeModal();
+          this.getAndShowData(this.select.value);
         });
     },
     closeModal: function() {

@@ -5,10 +5,12 @@
         <v-flex xs12>
           <v-combobox
             v-model="nodeDataDetail.name"
-            item-text="name"
-            item-value="id"
-            :items="name"
-            :rules="[v => !!v || 'Please choose Corporate name']"
+            cache-items
+            :async-loading="corporateLoading"
+            :items="corporates"
+            :rules="[v => !!v || 'Please enter Corporate name']"
+            :search-input.sync="corporateSearch"
+            return-object
             label="Corporate Name"
           ></v-combobox>
         </v-flex>
@@ -17,24 +19,29 @@
         <v-flex xs12>
           <v-combobox
             v-model="nodeDataDetail.company"
-            item-text="name"
-            item-value="id"
-            :items="company"
-            :rules="[v => !!v || 'Please choose Company Position']"
-            label="Company Position"
+            cache-items
+            :async-loading="companyLoading"
+            :items="companies"
+            :rules="[v => !!v || 'Please enter Company Position']"
+            :search-input.sync="companySearch"
+            label="Company Location"
           ></v-combobox>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
-          <v-combobox
+          <v-autocomplete
             v-model="nodeDataDetail.nodePosition"
+            cache-items
+            :async-loading="nodePositionLoading"
             item-text="name"
             item-value="id"
-            :items="nodes"
-            :rules="[v => !!v || 'Please choose position']"
-            label="Node position"
-          ></v-combobox>
+            :items="nodePositions"
+            :rules="[v => !!v || 'Please choose Parrent Node']"
+            :search-input.sync="nodePositionSearch"
+            return-object
+            label="Node Position"
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-btn v-on:click="onSave" color="primary">Save</v-btn>
@@ -46,40 +53,24 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    name: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Wells Fargo" },
-          { id: 2, name: "JPMorgan Chase" },
-          { id: 3, name: "Berkshire Hathaway" }
-        ];
-      }
-    },
-    company: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Louisiana Street, Houston, Texas" },
-          { id: 2, name: "Travis Street, Houston, Texas" },
-          { id: 3, name: "RHJ3+XM Northside, Houston, Texas" }
-        ];
-      }
-    },
-    nodes: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Branch Texas" },
-          { id: 2, name: "Branch Nothing" },
-          { id: 3, name: "Branch Bank North" }
-        ];
-      }
-    }
+    apiEndPoints: Object
   },
-  data: () => ({
-    valid: true
-  }),
+  data() {
+    return {
+      valid: true,
+      corporateLoading: false,
+      corporates: [],
+      corporateSearch: null,
+      companyLoading: false,
+      companies: [],
+      companySearch: null,
+      nodePositionLoading: false,
+      nodePositions: this.nodeDataDetail.nodePosition
+        ? [this.nodeDataDetail.nodePosition]
+        : [],
+      nodePositionSearch: null
+    };
+  },
 
   methods: {
     validate() {
@@ -94,16 +85,52 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
-      const { name, nodePosition, company } = this.object;
+      const { name, nodePosition, company } = this.nodeDataDetail;
       const data = {
-        name: name.id,
-        company: company.id,
-        nodePosition: nodePosition.id
+        name: name,
+        company: company,
+        nodePosition: nodePosition
       };
-      return data;
+      this.$emit("saveDetails", data);
     },
     onCancel() {
       this.$emit("closeModal");
+    }
+  },
+  watch: {
+    corporateSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.loadCoporateNames}`, {
+            params: {
+              s: val
+            }
+          })
+          .then(res => (this.corporates = res.data));
+      }
+    },
+    companySearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getLocations}`, {
+            params: {
+              q: val,
+              t: "com"
+            }
+          })
+          .then(res => (this.companies = res.data));
+      }
+    },
+    nodePositionSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getNodePositions}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.nodePositions = res.data));
+      }
     }
   }
 };
