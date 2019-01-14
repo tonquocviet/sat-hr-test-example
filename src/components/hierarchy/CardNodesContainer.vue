@@ -10,6 +10,7 @@
         @emitCardNodeContainer="receiveEmitNodeData"
         v-bind:is="nodeTemplate"
         :nodeData="node.nodeData"
+        :typeId="typeId"
       />
     </div>
   </div>
@@ -20,6 +21,7 @@ import { nodeWidth, nodeHeight } from "../../config";
 export default {
   props: {
     nodes: Array,
+    typeId: Number,
     nodeTemplate: Object,
     nodeWidth: {
       type: Number,

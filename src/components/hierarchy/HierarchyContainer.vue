@@ -3,6 +3,7 @@
     <div class="hierarchy-container" :style="containerStyle">
       <card-nodes-container
         :nodes="nodes"
+        :typeId="typeId"
         :node-template="nodeTemplate"
         :containerProperties="containerProperties"
         @emitHierarchy="receiveEmitNodeData"
@@ -35,6 +36,7 @@ export default {
   },
   props: {
     mouseWheel: Function,
+    typeId: Number,
     scale: Number,
     nodeWidth: { type: Number, default: nodeWidth },
     nodeHeight: { type: Number, default: nodeHeight },
