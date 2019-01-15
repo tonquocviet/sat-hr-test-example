@@ -29,7 +29,7 @@ export default {
         getBoardNames: `${baseUrl}/get-board-names`,
         getEmployees: `${baseUrl}/get-employees`,
         getCountries: `${baseUrl}/get-countries`,
-        getCitiesByCountryId: `${baseUrl}/get-cities-by-country-id/:countryId`,
+        getCitiesByCountryId: `${baseUrl}/get-cities-by-country-id`,
         getContactPersonnels: `${baseUrl}/get-contact-personels`
       }
     };

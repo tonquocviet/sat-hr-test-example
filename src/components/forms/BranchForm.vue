@@ -111,7 +111,6 @@ export default {
   },
   mounted() {
     this.countrySearch();
-    this.citySearch();
   },
   data() {
     return {
@@ -120,6 +119,8 @@ export default {
       nodes: this.nodeDataDetail.nodePosition
         ? [this.nodeDataDetail.nodePosition]
         : [],
+      cities: [],
+      countries:[],
       nodePositionSearch: null,
       contactPersonnelLoading: false,
       contacts: this.nodeDataDetail.contactPersonnel
@@ -141,6 +142,7 @@ export default {
     },
     changeCountry(nodeDataDetail) {
       this.idCountry = nodeDataDetail.country.id;
+      this.citySearch();
     },
     reset() {
       this.$refs.form.reset();
@@ -159,20 +161,12 @@ export default {
     },
     countrySearch() {
       this.$http
-        .get(`${this.apiEndPoints.getCountries}`, {
-          params: {
-            q: null
-          }
-        })
+        .get(`${this.apiEndPoints.getCountries}`)
         .then(res => (this.countries = res.data));
     },
     citySearch() {
       this.$http
-        .get(`${this.apiEndPoints.getCitiesByCountryId}`, {
-          params: {
-            q: this.idCountry
-          }
-        })
+        .get(`${this.apiEndPoints.getCitiesByCountryId}/${this.idCountry}`)
         .then(res => (this.cities = res.data));
     }
   },
