@@ -93,7 +93,7 @@ export default {
       if (this.$refs.form.validate()) {
         const { employeeName, boardTitle, nodeLocation } = this.nodeDataDetail;
         const data = {
-          employeeName: employeeName.name,
+          employeeName: employeeName,
           boardTitle: boardTitle,
           nodeLocation: nodeLocation
         };
