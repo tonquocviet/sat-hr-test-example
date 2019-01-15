@@ -22,7 +22,7 @@
         <v-flex xs6>
           <v-autocomplete
             v-model="nodeDataDetail.country"
-            @change="changeCountry(nodeDataDetail)"
+            @change="changeCountry"
             cache-items
             item-text="name"
             item-value="id"
@@ -140,8 +140,8 @@ export default {
         this.snackbar = true;
       }
     },
-    changeCountry(nodeDataDetail) {
-      this.idCountry = nodeDataDetail.country.id;
+    changeCountry() {
+      this.idCountry = this.nodeDataDetail.country.id;
       this.citySearch();
     },
     reset() {
