@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs12>
           <v-autocomplete
-            v-model="nodeDataDetail.employeeName"
+            v-model="nodeDataDetail.name"
             cache-items
             :async-loading="employeeNameLoading"
             item-text="name"
@@ -35,7 +35,7 @@
       <v-layout>
         <v-flex xs12>
           <v-autocomplete
-            v-model="nodeDataDetail.nodeLocation"
+            v-model="nodeDataDetail.nodePosition"
             cache-items
             :async-loading="nodeLocationLoading"
             item-text="name"
@@ -66,15 +66,13 @@ export default {
       titleLoading: false,
       boardTitles: [],
       nodeLocationLoading: false,
-      nodeLocations: this.nodeDataDetail.nodeLocation
-        ? [this.nodeDataDetail.nodeLocation]
+      nodeLocations: this.nodeDataDetail.nodePosition
+        ? [this.nodeDataDetail.nodePosition]
         : [],
       nodeLocationSearch: null,
       employeeNameSearch: null,
       employeeNameLoading: false,
-      employeeNames: this.nodeDataDetail.employeeName
-        ? [this.nodeDataDetail.employeeName]
-        : []
+      employeeNames: this.nodeDataDetail.name ? [this.nodeDataDetail.name] : []
     };
   },
   methods: {
@@ -91,11 +89,11 @@ export default {
     },
     onSave() {
       if (this.$refs.form.validate()) {
-        const { employeeName, boardTitle, nodeLocation } = this.nodeDataDetail;
+        const { name, boardTitle, nodePosition } = this.nodeDataDetail;
         const data = {
-          employeeName: employeeName,
+          employeeName: name,
           boardTitle: boardTitle,
-          nodeLocation: nodeLocation
+          nodeLocation: nodePosition
         };
         this.$emit("saveDetails", data);
       }
