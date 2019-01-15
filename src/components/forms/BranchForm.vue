@@ -98,7 +98,7 @@
           ></v-autocomplete>
         </v-flex>
       </v-layout>
-      <v-btn v-on:click="countrySearch" color="primary">Save</v-btn>
+      <v-btn v-on:click="onSave" color="primary">Save</v-btn>
       <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
   </v-form>
@@ -116,9 +116,6 @@ export default {
   data() {
     return {
       valid: true,
-      countries: this.nodeDataDetail.country
-        ? [this.nodeDataDetail.country]
-        : [],
       nodePositionLoading: false,
       nodes: this.nodeDataDetail.nodePosition
         ? [this.nodeDataDetail.nodePosition]
@@ -129,7 +126,6 @@ export default {
         ? [this.nodeDataDetail.contactPersonnel]
         : [],
       contactPersonnelSearch: null,
-      cities: this.nodeDataDetail.city ? [this.nodeDataDetail.city] : [],
       nameRules: [v => !!v || "Name is required"],
       addressRules: [v => !!v || "Address is required"],
       zipCodeRules: [v => !!v || "Zip code is required"],
