@@ -22,13 +22,12 @@
         <v-flex xs6>
           <v-autocomplete
             v-model="nodeDataDetail.country"
+            @change="changeCountry(nodeDataDetail)"
             cache-items
-            :async-loading="countryLoading"
             item-text="name"
             item-value="id"
             :items="countries"
             :rules="[v => !!v || 'Country is required']"
-            :search-input.sync="countrySearch"
             label="Contry"
             return-object
           ></v-autocomplete>
@@ -42,8 +41,6 @@
             item-value="id"
             label="City"
             cache-items
-            :async-loading="cityLoading"
-            :search-input.sync="citySearch"
             return-object
           ></v-autocomplete>
         </v-flex>
@@ -101,7 +98,7 @@
           ></v-autocomplete>
         </v-flex>
       </v-layout>
-      <v-btn v-on:click="onSave" color="primary">Save</v-btn>
+      <v-btn v-on:click="countrySearch" color="primary">Save</v-btn>
       <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
   </v-form>
@@ -112,11 +109,13 @@ export default {
     nodeDataDetail: Object,
     apiEndPoints: Object
   },
+  mounted() {
+    this.countrySearch();
+    this.citySearch();
+  },
   data() {
     return {
       valid: true,
-      countryLoading: false,
-      countrySearch: null,
       countries: this.nodeDataDetail.country
         ? [this.nodeDataDetail.country]
         : [],
@@ -130,8 +129,6 @@ export default {
         ? [this.nodeDataDetail.contactPersonnel]
         : [],
       contactPersonnelSearch: null,
-      cityLoading: false,
-      citySearch: null,
       cities: this.nodeDataDetail.city ? [this.nodeDataDetail.city] : [],
       nameRules: [v => !!v || "Name is required"],
       addressRules: [v => !!v || "Address is required"],
@@ -145,6 +142,9 @@ export default {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
       }
+    },
+    changeCountry(nodeDataDetail) {
+      this.idCountry = nodeDataDetail.country.id;
     },
     reset() {
       this.$refs.form.reset();
@@ -160,20 +160,27 @@ export default {
     },
     onCancel() {
       this.$emit("closeModal");
+    },
+    countrySearch() {
+      this.$http
+        .get(`${this.apiEndPoints.getCountries}`, {
+          params: {
+            q: null
+          }
+        })
+        .then(res => (this.countries = res.data));
+    },
+    citySearch() {
+      this.$http
+        .get(`${this.apiEndPoints.getCitiesByCountryId}`, {
+          params: {
+            q: this.idCountry
+          }
+        })
+        .then(res => (this.cities = res.data));
     }
   },
   watch: {
-    countrySearch(val) {
-      if (val) {
-        this.$http
-          .get(`${this.apiEndPoints.getCountries}`, {
-            params: {
-              q: val
-            }
-          })
-          .then(res => (this.countries = res.data));
-      }
-    },
     nodePositionSearch(val) {
       if (val) {
         this.$http
@@ -194,17 +201,6 @@ export default {
             }
           })
           .then(res => (this.contacts = res.data));
-      }
-    },
-    citySearch(val) {
-      if (val) {
-        this.$http
-          .get(`${this.apiEndPoints.getCitiesByCountryId}`, {
-            params: {
-              q: val
-            }
-          })
-          .then(res => (this.cities = res.data));
       }
     }
   }
