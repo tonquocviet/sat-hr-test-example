@@ -141,7 +141,6 @@ export default {
       }
     },
     changeCountry() {
-      this.idCountry = this.nodeDataDetail.country.id;
       this.citySearch();
     },
     reset() {
@@ -166,7 +165,7 @@ export default {
     },
     citySearch() {
       this.$http
-        .get(`${this.apiEndPoints.getCitiesByCountryId}/${this.idCountry}`)
+        .get(`${this.apiEndPoints.getCitiesByCountryId}/${this.nodeDataDetail.country.id}`)
         .then(res => (this.cities = res.data));
     }
   },
