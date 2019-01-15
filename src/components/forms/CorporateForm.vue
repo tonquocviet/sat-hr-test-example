@@ -86,12 +86,7 @@ export default {
     },
     onSave() {
       if (this.$refs.form.validate()) {
-        const { name, nodePosition, company } = this.nodeDataDetail;
-        const data = {
-          name: name,
-          company: company,
-          nodePosition: nodePosition
-        };
+        const data = { ...this.nodeDataDetail };
         this.$emit("saveDetails", data);
       }
     },

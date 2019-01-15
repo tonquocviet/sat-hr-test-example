@@ -89,10 +89,11 @@ export default {
     },
     onSave() {
       if (this.$refs.form.validate()) {
-        const { name, boardTitle, nodePosition } = this.nodeDataDetail;
+        const { name, boardTitle, nodePosition, id } = this.nodeDataDetail;
         const data = {
+          id,
+          boardTitle,
           employeeName: name,
-          boardTitle: boardTitle,
           nodeLocation: nodePosition
         };
         this.$emit("saveDetails", data);
