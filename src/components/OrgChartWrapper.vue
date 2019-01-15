@@ -54,8 +54,10 @@
         <template v-if="!isLoadingDetails && !!nodeDataDetail">
           <BranchForm
             @closeModal="closeModal"
+            @saveDetails="saveBranch"
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 1"
+            :apiEndPoints="apiEndPoints"
           />
           <CorporateForm
             @closeModal="closeModal"
@@ -164,6 +166,9 @@ export default {
           this.nodeDataDetail = res.data;
           this.isLoadingDetails = false;
         });
+    },
+    saveBranch: function(object) {
+      this.saveDetails(object, "branch");
     },
     saveCorporateDetails: function(object) {
       this.saveDetails(object, "corporate");
