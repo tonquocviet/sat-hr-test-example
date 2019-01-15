@@ -10,36 +10,52 @@
       ></v-text-field>
       <v-layout>
         <v-flex xs12>
-          <v-text-field v-model="nodeDataDetail.address" :rules="addressRules" label="Address" required></v-text-field>
+          <v-text-field
+            v-model="nodeDataDetail.address"
+            :rules="addressRules"
+            label="Address"
+            required
+          ></v-text-field>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs6>
-          <v-select
+          <v-autocomplete
             v-model="nodeDataDetail.country"
+            cache-items
+            :async-loading="countryLoading"
             item-text="name"
             item-value="id"
             :items="countries"
             :rules="[v => !!v || 'Country is required']"
+            :search-input.sync="countrySearch"
             label="Contry"
-            required
-          ></v-select>
+            return-object
+          ></v-autocomplete>
         </v-flex>
         <v-flex xs6>
-          <v-select
+          <v-autocomplete
             v-model="nodeDataDetail.city"
             :items="cities"
             :rules="[v => !!v || 'City is required']"
             item-text="name"
             item-value="id"
             label="City"
-            required
-          ></v-select>
+            cache-items
+            :async-loading="cityLoading"
+            :search-input.sync="citySearch"
+            return-object
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs6>
-          <v-text-field v-model="nodeDataDetail.zipCode" :rules="zipCodeRules" label="Zip Code" required></v-text-field>
+          <v-text-field
+            v-model="nodeDataDetail.zipCode"
+            :rules="zipCodeRules"
+            label="Zip Code"
+            required
+          ></v-text-field>
         </v-flex>
         <v-flex xs6></v-flex>
       </v-layout>
@@ -57,24 +73,32 @@
         <v-flex xs12>
           <v-combobox
             v-model="nodeDataDetail.contactPersonnel"
+            cache-items
+            :async-loading="contactPersonnelLoading"
             item-text="name"
             item-value="id"
             :items="contacts"
             :rules="[v => !!v || 'Please choose Contact Personnel']"
             label="Contact Personnel"
+            :search-input.sync="contactPersonnelSearch"
+            return-object
           ></v-combobox>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12>
-          <v-combobox
+          <v-autocomplete
             v-model="nodeDataDetail.nodePosition"
+            cache-items
+            :async-loading="nodePositionLoading"
             item-text="name"
             item-value="id"
             :items="nodes"
             :rules="[v => !!v || 'Please choose position']"
             label="Node position"
-          ></v-combobox>
+            :search-input.sync="nodePositionSearch"
+            return-object
+          ></v-autocomplete>
         </v-flex>
       </v-layout>
       <v-btn v-on:click="onSave" color="primary">Save</v-btn>
@@ -86,46 +110,35 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    countries: {
-      type: Array,
-      default: function() {
-        return [{ id: "usa", name: "USA" }];
-      }
-    },
-    cities: {
-      type: Array,
-      default: function() {
-        return [{ id: "tx", name: "Texas" }];
-      }
-    },
-    contacts: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "John Doe" },
-          { id: 2, name: "Steven Kan" },
-          { id: 3, name: "Kelvin Manc" }
-        ];
-      }
-    },
-    nodes: {
-      type: Array,
-      default: function() {
-        return [
-          { id: 1, name: "Branch Texas" },
-          { id: 2, name: "Branch Nothing" },
-          { id: 3, name: "Branch Bank North" }
-        ];
-      }
-    }
+    apiEndPoints: Object
   },
-  data: () => ({
-    valid: true,
-    nameRules: [v => !!v || "Name is required"],
-    addressRules: [v => !!v || "Address is required"],
-    zipCodeRules: [v => !!v || "Zip code is required"],
-    telephoneRules: [v => !!v || "Phone number is required"]
-  }),
+  data() {
+    return {
+      valid: true,
+      countryLoading: false,
+      countrySearch: null,
+      countries: this.nodeDataDetail.country
+        ? [this.nodeDataDetail.country]
+        : [],
+      nodePositionLoading: false,
+      nodes: this.nodeDataDetail.nodePosition
+        ? [this.nodeDataDetail.nodePosition]
+        : [],
+      nodePositionSearch: null,
+      contactPersonnelLoading: false,
+      contacts: this.nodeDataDetail.contactPersonnel
+        ? [this.nodeDataDetail.contactPersonnel]
+        : [],
+      contactPersonnelSearch: null,
+      cityLoading: false,
+      citySearch: null,
+      cities: this.nodeDataDetail.city ? [this.nodeDataDetail.city] : [],
+      nameRules: [v => !!v || "Name is required"],
+      addressRules: [v => !!v || "Address is required"],
+      zipCodeRules: [v => !!v || "Zip code is required"],
+      telephoneRules: [v => !!v || "Phone number is required"]
+    };
+  },
 
   methods: {
     validate() {
@@ -140,15 +153,59 @@ export default {
       this.$refs.form.resetValidation();
     },
     onSave() {
-      const data = {
-        ...this.object,
-        contactPersonnel: this.object.contactPersonnel.id,
-        nodePosition: this.object.nodePosition.id
-      };
-      return data;
+      if (this.$refs.form.validate()) {
+        const data = { ...this.nodeDataDetail };
+        this.$emit("saveDetails", data);
+      }
     },
     onCancel() {
       this.$emit("closeModal");
+    }
+  },
+  watch: {
+    countrySearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getCountries}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.countries = res.data));
+      }
+    },
+    nodePositionSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getNodePositions}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.nodes = res.data));
+      }
+    },
+    contactPersonnelSearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getContactPersonnels}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.contacts = res.data));
+      }
+    },
+    citySearch(val) {
+      if (val) {
+        this.$http
+          .get(`${this.apiEndPoints.getCitiesByCountryId}`, {
+            params: {
+              q: val
+            }
+          })
+          .then(res => (this.cities = res.data));
+      }
     }
   }
 };

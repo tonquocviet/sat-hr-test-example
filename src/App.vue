@@ -27,7 +27,10 @@ export default {
         updateStructure: `${baseUrl}/update-structure`,
         getFullCoporates: `${baseUrl}/get-full-coporates`,
         getBoardNames: `${baseUrl}/get-board-names`,
-        getEmployees: `${baseUrl}/get-employees`
+        getEmployees: `${baseUrl}/get-employees`,
+        getCountries: `${baseUrl}/get-countries`,
+        getCitiesByCountryId: `${baseUrl}/get-cities-by-country-id/:countryId`,
+        getContactPersonnels: `${baseUrl}/get-contact-personels`
       }
     };
   }
