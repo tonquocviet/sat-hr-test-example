@@ -130,6 +130,19 @@ function expandFirst3Levels(node, level) {
   }
 }
 
+function mapCollapseExpandStatus(target, source) {
+  if (!target || !source) return;
+  target.isCollapse = source.isCollapse;
+  if (target.children && source.children) {
+    for (let i = 0; i < target.children.length; i++) {
+      mapCollapseExpandStatus(
+        target.children[i],
+        source.children.filter(x => x.id === target.children[i].id)[0]
+      );
+    }
+  }
+}
+
 export default {
   components: {
     HierarchyContainer,
@@ -146,21 +159,25 @@ export default {
     apiEndPoints: Object
   },
   methods: {
-    getAndShowData(typeId) {
+    getAndShowData(typeId, resetCollapseExpandLevel) {
       this.$http
         .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
         .then(res => {
           this.closeModal();
           inactiveAllNodes(res.data);
           collapseAllNodes(res.data);
-          expandFirst3Levels(res.data, 0);
+          if (resetCollapseExpandLevel || !this.dataForHierarchy) {
+            expandFirst3Levels(res.data, 0);
+          } else {
+            mapCollapseExpandStatus(res.data, this.dataForHierarchy);
+          }
           this.dataForHierarchy = res.data;
         });
     },
     changeDropdownOrgChart: function(e) {
       this.closeModal();
       const typeId = e.value;
-      this.getAndShowData(typeId);
+      this.getAndShowData(typeId, true);
     },
     fullScreen: function() {
       if (!document.fullscreenElement) {
