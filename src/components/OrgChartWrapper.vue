@@ -44,7 +44,7 @@
             </v-btn>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Modal for structure</v-list-tile-title>
+            <v-list-tile-title>{{select.slideInfo}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
@@ -206,12 +206,28 @@ export default {
     nodeDataDetail: null,
     min: 0.2,
     max: 1.0,
-    select: { state: "Branch Structure", value: 1 },
+    select: {
+      state: "Branch Structure",
+      slideInfo: "Branch Information",
+      value: 1
+    },
     itemsSelect: [
-      { state: "Branch Structure", value: 1 },
-      { state: "Board Structure", value: 4 },
-      { state: "Corporate Structure", value: 2 },
-      { state: "Department Structure", value: 3 }
+      { state: "Branch Structure", slideInfo: "Branch Information", value: 1 },
+      {
+        state: "Board Structure",
+        slideInfo: "Board Member Information",
+        value: 4
+      },
+      {
+        state: "Corporate Structure",
+        slideInfo: "Corporation Information",
+        value: 2
+      },
+      {
+        state: "Department Structure",
+        slideInfo: "Structure Information",
+        value: 3
+      }
     ]
   }),
   computed: {
