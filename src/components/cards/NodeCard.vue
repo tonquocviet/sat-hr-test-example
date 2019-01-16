@@ -25,7 +25,7 @@
         >{{nodeData.cardSubTitle}}
         
         </span>
-        <button @click.prevent="toggleNode" class="btn-drop-show" >
+        <button @click.prevent="toggleNode" class="btn-drop-show" v-if="this.nodeData.children">
           <v-icon>{{ nodeData.isCollapse ? "expand_less" : "expand_more"}}</v-icon>
         </button>
       </v-card-title>
@@ -48,7 +48,7 @@
         <role-tag :tag-type="nodeData.tagType"/>
         
       </v-card-actions>
-      <button @click.prevent="toggleNode" class="btn-drop-show">
+      <button @click.prevent="toggleNode" class="btn-drop-show" v-if="this.nodeData.children">
           <v-icon>{{ nodeData.isCollapse ? "expand_less" : "expand_more"}}</v-icon>
       </button>
     </div>
