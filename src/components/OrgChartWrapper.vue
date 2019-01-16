@@ -86,6 +86,7 @@
     <HierarchyContainer
       v-if="!!dataForHierarchy"
       @emitOrgChartWrapper="receiveEmitNodeData"
+      @collapseOrExpandNode="collapseOrExpandNode"
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
       :scale="scale"
@@ -106,6 +107,25 @@ function inactiveAllNodes(node) {
   if (node.children) {
     for (let i = 0; i < node.children.length; i++) {
       inactiveAllNodes(node.children[i]);
+    }
+  }
+}
+
+function collapseAllNodes(node) {
+  node.isCollapse = true;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      collapseAllNodes(node.children[i]);
+    }
+  }
+}
+
+function expandFirst3Levels(node, level) {
+  if (level == 2) return;
+  node.isCollapse = false;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      expandFirst3Levels(node.children[i], level + 1);
     }
   }
 }
@@ -132,6 +152,8 @@ export default {
         .then(res => {
           this.closeModal();
           inactiveAllNodes(res.data);
+          collapseAllNodes(res.data);
+          expandFirst3Levels(res.data, 0);
           this.dataForHierarchy = res.data;
         });
     },
@@ -197,6 +219,9 @@ export default {
       this.nodeDataDetail = {
         id: 0
       };
+    },
+    collapseOrExpandNode(eventArgs) {
+      eventArgs.isCollapse = !eventArgs.isCollapse;
     }
   },
   data: () => ({

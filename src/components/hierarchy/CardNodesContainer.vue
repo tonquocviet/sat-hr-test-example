@@ -8,6 +8,7 @@
     >
       <component
         @emitCardNodeContainer="receiveEmitNodeData"
+        @collapseOrExpandNode="collapseOrExpandNode"
         v-bind:is="nodeTemplate"
         :nodeData="node.nodeData"
         :typeId="typeId"
@@ -47,6 +48,9 @@ export default {
     receiveEmitNodeData: function(event) {
       this.nodeDataDetail = event;
       this.$emit("emitHierarchy", this.nodeDataDetail);
+    },
+    collapseOrExpandNode: function(eventArgs) {
+      this.$emit("collapseOrExpandNode", eventArgs);
     }
   },
   computed: {

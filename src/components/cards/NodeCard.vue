@@ -41,6 +41,7 @@
       <v-card-actions v-if="nodeData.tagType !== null">
         <role-tag :tag-type="nodeData.tagType"/>
       </v-card-actions>
+      <button @click.prevent="toggleNode">{{nodeData.isCollapse ? "đang đóng":"đang mở"}}</button>
     </div>
   </v-card>
 </template>
@@ -72,6 +73,9 @@ export default {
     detailNodeCard() {
       const nodeDataDetail = this.nodeData;
       this.$emit("emitCardNodeContainer", nodeDataDetail);
+    },
+    toggleNode() {
+      this.$emit("collapseOrExpandNode", this.nodeData);
     }
   }
 };
