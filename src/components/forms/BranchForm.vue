@@ -120,7 +120,7 @@ export default {
         ? [this.nodeDataDetail.nodePosition]
         : [],
       cities: [],
-      countries:[],
+      countries: [],
       nodePositionSearch: null,
       contactPersonnelLoading: false,
       contacts: this.nodeDataDetail.contactPersonnel
@@ -165,7 +165,11 @@ export default {
     },
     citySearch() {
       this.$http
-        .get(`${this.apiEndPoints.getCitiesByCountryId}/${this.nodeDataDetail.country.id}`)
+        .get(
+          `${this.apiEndPoints.getCitiesByCountryId}/${
+            this.nodeDataDetail.country.id
+          }`
+        )
         .then(res => (this.cities = res.data));
     }
   },
