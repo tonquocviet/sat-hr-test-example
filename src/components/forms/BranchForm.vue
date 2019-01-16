@@ -23,7 +23,6 @@
           <v-autocomplete
             v-model="nodeDataDetail.country"
             @change="changeCountry"
-            cache-items
             item-text="name"
             item-value="id"
             :items="countries"
@@ -40,7 +39,6 @@
             item-text="name"
             item-value="id"
             label="City"
-            cache-items
             return-object
           ></v-autocomplete>
         </v-flex>
@@ -111,6 +109,9 @@ export default {
   },
   mounted() {
     this.countrySearch();
+    if (this.nodeDataDetail && this.nodeDataDetail.country) {
+      this.citySearch();
+    }
   },
   data() {
     return {
