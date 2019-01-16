@@ -22,8 +22,14 @@
         <span
           style="text-align: center;"
           class="font-weight-light text v-cardSubTitle"
-        >{{nodeData.cardSubTitle}}</span>
+        >{{nodeData.cardSubTitle}}
+        
+        </span>
+        <button @click.prevent="toggleNode" class="btn-drop-show" >
+          <v-icon>{{ nodeData.isCollapse ? "expand_less" : "expand_more"}}</v-icon>
+        </button>
       </v-card-title>
+      
     </div>
     <div v-else>
       <v-card-title class="success--text">
@@ -40,8 +46,11 @@
       </v-card-actions>
       <v-card-actions v-if="nodeData.tagType !== null">
         <role-tag :tag-type="nodeData.tagType"/>
+        
       </v-card-actions>
-      <button @click.prevent="toggleNode">{{nodeData.isCollapse ? "đang đóng":"đang mở"}}</button>
+      <button @click.prevent="toggleNode" class="btn-drop-show">
+          <v-icon>{{ nodeData.isCollapse ? "expand_less" : "expand_more"}}</v-icon>
+      </button>
     </div>
   </v-card>
 </template>
@@ -127,5 +136,12 @@ export default {
 .v-img-container {
   justify-content: center;
   align-items: center;
+}
+
+.btn-drop-show {
+  position: ABSOLUTE ;
+  right: 5px;
+  margin-left: 90%;
+  bottom:0
 }
 </style>
