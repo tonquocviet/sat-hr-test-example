@@ -136,7 +136,7 @@ export default {
       telephoneRules: [
         v => !!v || "Phone number is required",
         v =>
-          /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) ||
+          /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || // eslint-disable-line
           "Phone number is required"
       ]
     };
