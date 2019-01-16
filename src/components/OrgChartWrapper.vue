@@ -86,6 +86,7 @@
     <HierarchyContainer
       v-if="!!dataForHierarchy"
       @emitOrgChartWrapper="receiveEmitNodeData"
+      @collapseOrExpandNode="collapseOrExpandNode"
       :data-for-hierarchy="dataForHierarchy"
       :mouseWheel="mouseWheel"
       :scale="scale"
@@ -110,6 +111,38 @@ function inactiveAllNodes(node) {
   }
 }
 
+function collapseAllNodes(node) {
+  node.isCollapse = true;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      collapseAllNodes(node.children[i]);
+    }
+  }
+}
+
+function expandFirst3Levels(node, level) {
+  if (level == 2) return;
+  node.isCollapse = false;
+  if (node.children) {
+    for (let i = 0; i < node.children.length; i++) {
+      expandFirst3Levels(node.children[i], level + 1);
+    }
+  }
+}
+
+function mapCollapseExpandStatus(target, source) {
+  if (!target || !source) return;
+  target.isCollapse = source.isCollapse;
+  if (target.children && source.children) {
+    for (let i = 0; i < target.children.length; i++) {
+      mapCollapseExpandStatus(
+        target.children[i],
+        source.children.filter(x => x.id === target.children[i].id)[0]
+      );
+    }
+  }
+}
+
 export default {
   components: {
     HierarchyContainer,
@@ -126,19 +159,25 @@ export default {
     apiEndPoints: Object
   },
   methods: {
-    getAndShowData(typeId) {
+    getAndShowData(typeId, resetCollapseExpandLevel) {
       this.$http
         .get(`${this.apiEndPoints.loadHierarchyData}/${typeId}`)
         .then(res => {
           this.closeModal();
           inactiveAllNodes(res.data);
+          collapseAllNodes(res.data);
+          if (resetCollapseExpandLevel || !this.dataForHierarchy) {
+            expandFirst3Levels(res.data, 0);
+          } else {
+            mapCollapseExpandStatus(res.data, this.dataForHierarchy);
+          }
           this.dataForHierarchy = res.data;
         });
     },
     changeDropdownOrgChart: function(e) {
       this.closeModal();
       const typeId = e.value;
-      this.getAndShowData(typeId);
+      this.getAndShowData(typeId, true);
     },
     fullScreen: function() {
       if (!document.fullscreenElement) {
@@ -197,6 +236,9 @@ export default {
       this.nodeDataDetail = {
         id: 0
       };
+    },
+    collapseOrExpandNode(eventArgs) {
+      eventArgs.isCollapse = !eventArgs.isCollapse;
     }
   },
   data: () => ({

@@ -7,6 +7,7 @@
         :node-template="nodeTemplate"
         :containerProperties="containerProperties"
         @emitHierarchy="receiveEmitNodeData"
+        @collapseOrExpandNode="collapseOrExpandNode"
       />
       <connection-lines-container :lines="lines" :containerProperties="containerProperties"></connection-lines-container>
     </div>
@@ -50,8 +51,10 @@ export default {
     };
   },
   methods: {
-    toD3Hierarchy: function(treeData) {
-      let root = hierarchy(treeData);
+    toD3Hierarchy: function(treeData, ignoreCollapse) {
+      let root = hierarchy(treeData, d =>
+        !ignoreCollapse && d.isCollapse ? [] : d.children
+      );
       let treeLayout = tree();
       treeLayout.nodeSize([
         this.nodeWidth * this.nodeDensityX,
@@ -63,6 +66,9 @@ export default {
     receiveEmitNodeData: function(event) {
       this.nodeDataDetail = event;
       this.$emit("emitOrgChartWrapper", this.nodeDataDetail);
+    },
+    collapseOrExpandNode: function(eventArgs) {
+      this.$emit("collapseOrExpandNode", eventArgs);
     }
   },
   computed: {
@@ -80,7 +86,7 @@ export default {
         .map(x => ({ x: x.x, y: x.y, nodeData: x.data }));
     },
     containerProperties: function() {
-      let root = this.toD3Hierarchy(this.dataForHierarchy);
+      let root = this.toD3Hierarchy(this.dataForHierarchy, true);
       let nodes = root.descendants().map(x => ({ x: x.x, y: x.y }));
       let translateX = (Math.min(...nodes.map(x => x.x)) - 200) * -1;
       let translateY = (Math.min(...nodes.map(x => x.y)) - 150) * -1;
