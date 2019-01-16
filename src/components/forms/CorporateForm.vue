@@ -20,11 +20,11 @@
           <v-combobox
             v-model="nodeDataDetail.company"
             cache-items
-            :async-loading="companyLoading"
-            :items="companies"
-            :rules="[v => !!v || 'Please enter Company Position']"
-            :search-input.sync="companySearch"
-            label="Company Location"
+            :async-loading="corporationLoading"
+            :items="corporations"
+            :rules="[v => !!v || 'Please enter Corporation Position']"
+            :search-input.sync="corporationSearch"
+            label="Corporation Location"
           ></v-combobox>
         </v-flex>
       </v-layout>
@@ -61,9 +61,9 @@ export default {
       corporateLoading: false,
       corporates: [],
       corporateSearch: null,
-      companyLoading: false,
-      companies: [],
-      companySearch: null,
+      corporationLoading: false,
+      corporations: [],
+      corporationSearch: null,
       nodePositionLoading: false,
       nodePositions: this.nodeDataDetail.nodePosition
         ? [this.nodeDataDetail.nodePosition]
@@ -112,7 +112,7 @@ export default {
           .then(res => (this.corporates = res.data));
       }
     },
-    companySearch(val) {
+    corporationSearch(val) {
       if (val) {
         this.$http
           .get(`${this.apiEndPoints.getLocations}`, {
@@ -121,7 +121,7 @@ export default {
               t: "com"
             }
           })
-          .then(res => (this.companies = res.data));
+          .then(res => (this.corporations = res.data));
       }
     },
     nodePositionSearch(val) {
