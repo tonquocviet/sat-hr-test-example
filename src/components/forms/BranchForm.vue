@@ -129,8 +129,16 @@ export default {
       contactPersonnelSearch: null,
       nameRules: [v => !!v || "Name is required"],
       addressRules: [v => !!v || "Address is required"],
-      zipCodeRules: [v => !!v || "Zip code is required"],
-      telephoneRules: [v => !!v || "Phone number is required"]
+      zipCodeRules: [
+        v => !!v || "Zip code is required",
+        v => /^[0-9]{5}(?:-[0-9]{4})?$/.test(v) || "Zip code is required"
+      ],
+      telephoneRules: [
+        v => !!v || "Phone number is required",
+        v =>
+          /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) ||
+          "Phone number is required"
+      ]
     };
   },
 
