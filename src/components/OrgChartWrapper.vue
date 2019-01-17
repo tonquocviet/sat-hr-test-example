@@ -267,7 +267,7 @@ export default {
     select: {
       state: "Branch Structure",
       slideInfo: "Branch Information",
-      value: 3
+      value: 1
     },
     itemsSelect: [
       { state: "Branch Structure", slideInfo: "Branch Information", value: 1 },
