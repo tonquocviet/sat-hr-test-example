@@ -33,7 +33,7 @@ export default {
         getContactPersonnels: `${baseUrl}/get-contact-personels`
       },
       detailLinks: {
-        forDepartment: "/detail/branch"
+        forDepartment: "/detail/department"
       }
     };
   }
