@@ -74,7 +74,7 @@
             :apiEndPoints="apiEndPoints"
             :isShowModal="isShowModal"
             :editForm="editForm"
-            :departmentId="select.value"
+            :detailLink="detailLinks.forDepartment"
           />
           <BoardStructureForm
             @closeModal="closeModal"
@@ -101,7 +101,7 @@
 import BranchForm from "../components/forms/BranchForm";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
-import DepartmentForm from "../components/forms/DepartmentForm/Editing";
+import DepartmentForm from "../components/forms/DepartmentForm/Form";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue } from "../config";
 
@@ -159,7 +159,8 @@ export default {
     this.getAndShowData(typeId);
   },
   props: {
-    apiEndPoints: Object
+    apiEndPoints: Object,
+    detailLinks: Object
   },
   methods: {
     getAndShowData(typeId, resetCollapseExpandLevel) {

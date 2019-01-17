@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation class="right-form">
-    <v-container v-if="!isShowModal">
+    <v-container>
       <v-layout>
         <v-flex xs12>
           <v-autocomplete
@@ -36,27 +36,13 @@
       <v-btn v-on:click="onSave" color="primary">Save</v-btn>
       <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
-
-    <Preview
-      :editForm="editForm"
-      :departmentId="departmentId"
-      :nodeDataDetail="nodeDataDetail"
-      v-else
-    />
   </v-form>
 </template>
 <script>
-import Preview from "./Preview";
 export default {
-  components: {
-    Preview
-  },
   props: {
     nodeDataDetail: Object,
-    apiEndPoints: Object,
-    isShowModal: Boolean,
-    editForm: Function,
-    departmentId: Number
+    apiEndPoints: Object
   },
   data() {
     return {
@@ -125,10 +111,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.right-form .v-text-field {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-</style>
