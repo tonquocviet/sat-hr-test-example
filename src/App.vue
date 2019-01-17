@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <OrgChartWrapper :apiEndPoints="apiEndPoints"/>
+    <OrgChartWrapper :apiEndPoints="apiEndPoints" :detailLinks="detailLinks"/>
   </Layout>
 </template>
 
@@ -31,6 +31,9 @@ export default {
         getCountries: `${baseUrl}/get-countries`,
         getCitiesByCountryId: `${baseUrl}/get-cities-by-country-id`,
         getContactPersonnels: `${baseUrl}/get-contact-personels`
+      },
+      detailLinks: {
+        forDepartment: "/detail/department"
       }
     };
   }

@@ -111,10 +111,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.right-form .v-text-field {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-</style>

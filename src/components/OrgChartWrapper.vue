@@ -73,6 +73,9 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 3"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forDepartment"
           />
           <BoardStructureForm
             @closeModal="closeModal"
@@ -99,7 +102,7 @@
 import BranchForm from "../components/forms/BranchForm";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
-import DepartmentForm from "../components/forms/DepartmentForm";
+import DepartmentForm from "../components/forms/DepartmentForm/Form";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue } from "../config";
 
@@ -157,7 +160,8 @@ export default {
     this.getAndShowData(typeId);
   },
   props: {
-    apiEndPoints: Object
+    apiEndPoints: Object,
+    detailLinks: Object
   },
   methods: {
     getAndShowData(typeId, resetCollapseExpandLevel) {
@@ -249,10 +253,18 @@ export default {
     },
     collapseOrExpandNode(eventArgs) {
       eventArgs.isCollapse = !eventArgs.isCollapse;
+    },
+    editForm() {
+      if (this.nodeDataDetail) {
+        this.isShowModal = false;
+      } else {
+        this.isShowModal = true;
+      }
     }
   },
   data: () => ({
     isLoadingDetails: false,
+    isShowModal: false,
     dataForHierarchy: null,
     scale: scaleValue,
     nodeDataDetail: null,
