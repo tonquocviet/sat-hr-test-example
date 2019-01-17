@@ -100,7 +100,7 @@
 import BranchForm from "../components/forms/BranchForm";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
-import DepartmentForm from "../components/forms/DepartmentForm";
+import DepartmentForm from "../components/forms/DepartmentForm/Editing";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue } from "../config";
 
@@ -267,7 +267,7 @@ export default {
     select: {
       state: "Branch Structure",
       slideInfo: "Branch Information",
-      value: 1
+      value: 3
     },
     itemsSelect: [
       { state: "Branch Structure", slideInfo: "Branch Information", value: 1 },
