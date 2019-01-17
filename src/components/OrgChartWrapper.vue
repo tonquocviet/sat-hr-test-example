@@ -295,7 +295,6 @@ export default {
         value: 3
       }
     ],
-    isShowModal: false,
   }),
   computed: {
     drawer: function() {
