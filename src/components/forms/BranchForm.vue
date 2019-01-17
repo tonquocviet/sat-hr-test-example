@@ -1,7 +1,7 @@
 <template>
-  <v-container v-if="isShowModal && this.isShowInfo == true">
+  <v-container v-if="isShowModal && isShowInfo">
     <v-layout align-center justify-center>
-      <v-btn  small color="default">Full</v-btn>
+      <v-btn  href="/details/branch/1" target="blank" small color="default">Full</v-btn>
       <v-btn @click="editForm" small color="primary" >Edit</v-btn>
     </v-layout>
     <v-layout>
@@ -171,7 +171,6 @@ export default {
       ]
     };
   },
-
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
