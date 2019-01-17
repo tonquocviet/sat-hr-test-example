@@ -17,12 +17,13 @@
               :imageUrl="nodeDataDetail.avatar.imageUrl"
               :name="nodeDataDetail.avatar.name"
               class="user-img"
+              :imgActive="imgActive"
             />
           </div>
         </v-flex>
       </v-layout>
       <v-layout justify-center>
-        <v-toolbar-title style="color: #6D42C7;">{{nodeDataDetail.avatar.name}}</v-toolbar-title>
+        <v-toolbar-title class="primary--text">{{nodeDataDetail.avatar.name}}</v-toolbar-title>
       </v-layout>
       <v-layout justify-center>
         <span>Position: {{nodeDataDetail.position.name}}</span>
@@ -35,10 +36,15 @@
 </template>
 
 <script>
-import UserAvatar from "./UserAvatar";
+import UserAvatar from "../../avatars/Avatar";
 export default {
   components: {
     UserAvatar
+  },
+  data() {
+    return {
+      imgActive: true
+    };
   },
   props: {
     nodeDataDetail: Object,

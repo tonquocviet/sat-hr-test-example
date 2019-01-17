@@ -2,7 +2,7 @@
   <v-list-tile-avatar :color="`${backgroundColor} img-avatar`" :style="{zIndex:index}">
     <v-img
       v-if="!!imageUrl"
-      :class="typeId === 4 ? 'v-img' : 'elevation-6'"
+      :class="imgActive ? 'v-profile' : (typeId === 4 ? 'v-img' : 'elevation-6')"
       :src="imageUrl"
     ></v-img>
     <span v-if="!imageUrl" class="white--text headline">{{nameSymbol}}</span>
@@ -16,7 +16,8 @@ export default {
     name: String,
     backgroundColor: String,
     index: Number,
-    typeId: Number
+    typeId: Number,
+    imgActive: Boolean
   },
   computed: {
     nameSymbol: function() {
@@ -40,8 +41,12 @@ export default {
   width: 24px;
   min-width: 24px;
 }
+.v-profile {
+  width: 100px;
+  height: 100px;
+}
 .v-img {
-  width: 130px; 
+  width: 130px;
   height: 130px;
 }
 </style>
