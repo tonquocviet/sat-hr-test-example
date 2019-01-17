@@ -59,6 +59,8 @@
             v-if="select.value === 1"
             :apiEndPoints="apiEndPoints"
             :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forBranch"
           />
           <CorporateForm
             @closeModal="closeModal"
@@ -99,7 +101,7 @@
   </v-content>
 </template>
 <script>
-import BranchForm from "../components/forms/BranchForm";
+import BranchForm from "../components/forms/BranchForm/Form";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm/Form";

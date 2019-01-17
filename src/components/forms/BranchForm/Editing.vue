@@ -1,32 +1,5 @@
 <template>
-  <v-container v-if="isShowModal && isShowInfo">
-    <v-layout align-center justify-center>
-      <v-btn  href="/details/branch/1" target="blank" small color="default">Full</v-btn>
-      <v-btn @click="editForm" small color="primary" >Edit</v-btn>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.name}}</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.address}}</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.contactPersonnel.name}}</h4>
-        <h4 class="mt-4">{{nodeDataDetail.telephone}}</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <p class="mt-4">{{nodeDataDetail.description}}</p>
-      </v-flex>
-    </v-layout>
-  </v-container>
-  <v-form ref="form" v-model="valid" lazy-validation class="right-form" v-else>
+  <v-form ref="form" v-model="valid" lazy-validation class="right-form">
     <v-container>
       <v-text-field
         v-model="nodeDataDetail.name"
@@ -132,14 +105,7 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    apiEndPoints: Object,
-    isShowModal: Boolean,
-  },
-  mounted() {
-    this.countrySearch();
-    if (this.nodeDataDetail && this.nodeDataDetail.country) {
-      this.citySearch();
-    }
+    apiEndPoints: Object
   },
   data() {
     return {
@@ -170,6 +136,12 @@ export default {
           "Phone number is invalid"
       ]
     };
+  },
+  mounted() {
+    this.countrySearch();
+    if (this.nodeDataDetail && this.nodeDataDetail.country) {
+      this.citySearch();
+    }
   },
   methods: {
     validate() {
@@ -209,9 +181,6 @@ export default {
         )
         .then(res => (this.cities = res.data));
     },
-    editForm(){
-     this.isShowInfo = false;
-    }
   },
   watch: {
     nodePositionSearch(val) {
@@ -239,10 +208,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.right-form .v-text-field {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-</style>
