@@ -1,5 +1,31 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation class="right-form">
+  <v-container v-if="isShowModal && this.isShowInfo == true">
+    <v-layout align-center justify-center>
+      <v-btn  small color="default">Full</v-btn>
+      <v-btn @click="editForm" small color="primary" >Edit</v-btn>
+    </v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <h4 class="mt-4">{{nodeDataDetail.name}}</h4>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <h4 class="mt-4">{{nodeDataDetail.address}}</h4>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <h4 class="mt-4">{{nodeDataDetail.contactPersonnel.name}}  <span class="ml-5">{{nodeDataDetail.telephone}}</span></h4>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <h4 class="mt-4">{{nodeDataDetail.description}}</h4>
+      </v-flex>
+    </v-layout>
+  </v-container>
+  <v-form ref="form" v-model="valid" lazy-validation class="right-form" v-else>
     <v-container>
       <v-text-field
         v-model="nodeDataDetail.name"
@@ -105,7 +131,8 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    apiEndPoints: Object
+    apiEndPoints: Object,
+    isShowModal: Boolean,
   },
   mounted() {
     this.countrySearch();
@@ -115,6 +142,7 @@ export default {
   },
   data() {
     return {
+      isShowInfo: true,
       valid: true,
       nodePositionLoading: false,
       nodes: this.nodeDataDetail.nodePosition
@@ -180,6 +208,9 @@ export default {
           }`
         )
         .then(res => (this.cities = res.data));
+    },
+    editForm(){
+     this.isShowInfo = false;
     }
   },
   watch: {
@@ -213,5 +244,27 @@ export default {
 .right-form .v-text-field {
   padding-top: 0px;
   margin-top: 0px;
+}
+.v-div-card {
+  width: 100%;
+  height: 230px;
+  background: #f3f4f8;
+}
+.div-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 8px 5px 3px 5px;
+}
+.v-card-title {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
+.v-card {
+  height: 100px;
+  width: 45%;
 }
 </style>

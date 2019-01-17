@@ -58,6 +58,7 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 1"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
           />
           <CorporateForm
             @closeModal="closeModal"
@@ -196,7 +197,7 @@ export default {
     receiveEmitNodeData: function(event) {
       inactiveAllNodes(this.dataForHierarchy);
       event.isActive = true;
-
+      this.isShowModal = true;
       this.isLoadingDetails = true;
       this.nodeDataDetail = this.nodeDataDetail || {};
       this.$http
@@ -231,11 +232,20 @@ export default {
     },
     closeModal: function() {
       this.nodeDataDetail = null;
+      this.isShowModal = true;
     },
     showFormAddNew: function() {
       this.nodeDataDetail = {
         id: 0
       };
+      if (!this.isShowModal && !this.nodeDataDetail) {
+        this.isShowModal = true;
+      } else {
+        this.nodeDataDetail = {
+          id: 0
+        };
+        this.isShowModal = false;
+      }
     },
     collapseOrExpandNode(eventArgs) {
       eventArgs.isCollapse = !eventArgs.isCollapse;
@@ -270,7 +280,8 @@ export default {
         slideInfo: "Structure Information",
         value: 3
       }
-    ]
+    ],
+    isShowModal: false,
   }),
   computed: {
     drawer: function() {
