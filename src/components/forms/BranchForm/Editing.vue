@@ -107,14 +107,9 @@ export default {
     nodeDataDetail: Object,
     apiEndPoints: Object
   },
-  mounted() {
-    this.countrySearch();
-    if (this.nodeDataDetail && this.nodeDataDetail.country) {
-      this.citySearch();
-    }
-  },
   data() {
     return {
+      isShowInfo: true,
       valid: true,
       nodePositionLoading: false,
       nodes: this.nodeDataDetail.nodePosition
@@ -142,7 +137,12 @@ export default {
       ]
     };
   },
-
+  mounted() {
+    this.countrySearch();
+    if (this.nodeDataDetail && this.nodeDataDetail.country) {
+      this.citySearch();
+    }
+  },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
@@ -180,7 +180,7 @@ export default {
           }`
         )
         .then(res => (this.cities = res.data));
-    }
+    },
   },
   watch: {
     nodePositionSearch(val) {
@@ -208,10 +208,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.right-form .v-text-field {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-</style>

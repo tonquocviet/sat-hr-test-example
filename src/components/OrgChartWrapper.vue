@@ -58,6 +58,9 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 1"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forBranch"
           />
           <CorporateForm
             @closeModal="closeModal"
@@ -98,7 +101,7 @@
   </v-content>
 </template>
 <script>
-import BranchForm from "../components/forms/BranchForm";
+import BranchForm from "../components/forms/BranchForm/Form";
 import BoardStructureForm from "../components/forms/BoardStructureForm";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm/Form";
@@ -238,6 +241,9 @@ export default {
       this.isShowModal = true;
     },
     showFormAddNew: function() {
+      this.nodeDataDetail = {
+        id: 0
+      };
       if (!this.isShowModal && !this.nodeDataDetail) {
         this.isShowModal = true;
       } else {
@@ -288,7 +294,7 @@ export default {
         slideInfo: "Structure Information",
         value: 3
       }
-    ]
+    ],
   }),
   computed: {
     drawer: function() {
