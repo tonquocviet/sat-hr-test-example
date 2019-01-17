@@ -5,7 +5,7 @@
       <v-btn @click="editForm" small color="#FCC439" class="v-btn-edit">Edit</v-btn>
     </v-layout>
 
-    <v-container v-if="isShow">
+    <v-container v-if="!isShowModal">
       <v-layout>
         <v-flex xs12>
           <v-autocomplete
@@ -100,12 +100,13 @@
 export default {
   props: {
     nodeDataDetail: Object,
-    apiEndPoints: Object
+    apiEndPoints: Object,
+    isShowModal: Boolean,
+    editForm: Function
   },
   data() {
     return {
       valid: true,
-      isShow: false,
       corporateLoading: false,
       corporates: this.nodeDataDetail.name ? [this.nodeDataDetail.name] : [],
       corporateSearch: null,
@@ -120,9 +121,6 @@ export default {
   methods: {
     openNewTab() {
       
-    },
-    editForm() {
-      this.isShow = true;
     },
     validate() {
       if (this.$refs.form.validate()) {

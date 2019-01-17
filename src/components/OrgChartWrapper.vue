@@ -72,6 +72,8 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 3"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
           />
           <BoardStructureForm
             @closeModal="closeModal"
@@ -196,7 +198,7 @@ export default {
     receiveEmitNodeData: function(event) {
       inactiveAllNodes(this.dataForHierarchy);
       event.isActive = true;
-
+      this.isShowModal = true;
       this.isLoadingDetails = true;
       this.nodeDataDetail = this.nodeDataDetail || {};
       this.$http
@@ -231,18 +233,32 @@ export default {
     },
     closeModal: function() {
       this.nodeDataDetail = null;
+      this.isShowModal = true;
     },
     showFormAddNew: function() {
-      this.nodeDataDetail = {
-        id: 0
-      };
+      if (!this.isShowModal && !this.nodeDataDetail) {
+        this.isShowModal = true;
+      } else {
+        this.nodeDataDetail = {
+          id: 0
+        };
+        this.isShowModal = false;
+      }
     },
     collapseOrExpandNode(eventArgs) {
       eventArgs.isCollapse = !eventArgs.isCollapse;
+    },
+    editForm() {
+      if (this.nodeDataDetail) {
+        this.isShowModal = false;
+      } else {
+        this.isShowModal = true;
+      }
     }
   },
   data: () => ({
     isLoadingDetails: false,
+    isShowModal: false,
     dataForHierarchy: null,
     scale: scaleValue,
     nodeDataDetail: null,
