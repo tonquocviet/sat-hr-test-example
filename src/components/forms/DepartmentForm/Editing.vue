@@ -1,10 +1,5 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation class="right-form">
-    <v-layout align-center justify-center>
-      <v-btn @click="openNewTab" small color="default">Full</v-btn>
-      <v-btn @click="editForm" small color="primary">Edit</v-btn>
-    </v-layout>
-
     <v-container v-if="!isShowModal">
       <v-layout>
         <v-flex xs12>
@@ -42,7 +37,12 @@
       <v-btn v-on:click="onCancel" color="default">Cancel</v-btn>
     </v-container>
 
-    <Preview :nodeDataDetail="nodeDataDetail" v-else/>
+    <Preview
+      :editForm="editForm"
+      :departmentId="departmentId"
+      :nodeDataDetail="nodeDataDetail"
+      v-else
+    />
   </v-form>
 </template>
 <script>
@@ -55,7 +55,8 @@ export default {
     nodeDataDetail: Object,
     apiEndPoints: Object,
     isShowModal: Boolean,
-    editForm: Function
+    editForm: Function,
+    departmentId: Number
   },
   data() {
     return {
@@ -72,7 +73,6 @@ export default {
   },
 
   methods: {
-    openNewTab() {},
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;

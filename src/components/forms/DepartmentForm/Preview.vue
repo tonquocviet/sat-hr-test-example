@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <v-layout align-center justify-center>
+      <v-btn
+        :href="detailsLink.forDepartment + '/' + departmentId"
+        target="blank"
+        small
+        color="default"
+      >Full</v-btn>
+      <v-btn @click="editForm" small color="primary">Edit</v-btn>
+    </v-layout>
     <v-layout>
       <v-flex xs12>
         <h4>{{nodeDataDetail.name.name}}</h4>
@@ -88,7 +97,16 @@
 <script>
 export default {
   props: {
-    nodeDataDetail: Object
+    nodeDataDetail: Object,
+    editForm: Function,
+    departmentId: Number
+  },
+  data() {
+    return {
+      detailsLink: {
+        forDepartment: "/details/department"
+      }
+    };
   }
 };
 </script>

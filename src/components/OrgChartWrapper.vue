@@ -74,6 +74,7 @@
             :apiEndPoints="apiEndPoints"
             :isShowModal="isShowModal"
             :editForm="editForm"
+            :departmentId="select.value"
           />
           <BoardStructureForm
             @closeModal="closeModal"
