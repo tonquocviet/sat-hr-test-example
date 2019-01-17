@@ -6,22 +6,23 @@
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.name}}</h4>
+        <p class="mt-4">{{nodeDataDetail.name}}</p>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.address}}</h4>
+        <p>{{nodeDataDetail.address}}</p>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.contactPersonnel.name}}  <span class="ml-5">{{nodeDataDetail.telephone}}</span></h4>
+        <p>{{nodeDataDetail.contactPersonnel.name}}</p>
+        <span>{{nodeDataDetail.telephone}}</span>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.description}}</h4>
+        <p class="mt-2">{{nodeDataDetail.description}}</p>
       </v-flex>
     </v-layout>
   </v-container>
