@@ -70,11 +70,6 @@ export default {
 </script>
 
 <style scoped >
-.v-div-card {
-  width: 100%;
-  height: 230px;
-  background: #f3f4f8;
-}
 .v-btn-full a {
   top: 8px !important;
 }
