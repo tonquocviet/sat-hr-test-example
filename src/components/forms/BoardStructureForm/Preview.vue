@@ -2,13 +2,33 @@
   <v-form>
     <v-container>
       <v-layout align-center justify-center>
-        <v-btn
-          :href="detailLink + '/' + nodeDataDetail.id"
-          target="blank"
-          small
-          color="default"
-        >Full</v-btn>
-        <v-btn @click="editForm" small color="primary">Edit</v-btn>
+        <div class="btn-in-new">
+          <v-btn
+            absolute
+            light
+            small
+            fab
+            top
+            right
+            :href="detailLink + '/' + nodeDataDetail.id"
+            target="blank"
+          >
+            <v-icon>open_in_new</v-icon>
+          </v-btn>
+        </div>
+        <div class="btn-edit">
+          <v-btn
+            absolute
+            small
+            fab
+            top
+            right
+            color="success"
+            @click="editForm"
+          >
+            <v-icon>create</v-icon>
+          </v-btn>
+        </div>
       </v-layout>
       <v-layout>
         <v-flex class="v-flex-img" xs12>
@@ -71,4 +91,13 @@ export default {
 .user-img {
   justify-content: center;
 }
+
+.btn-in-new a{
+  top: 8px !important
+}
+
+.btn-edit button{
+  top: 70px !important
+}
+
 </style>
