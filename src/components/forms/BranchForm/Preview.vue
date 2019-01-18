@@ -4,20 +4,19 @@
       <div class="v-btn-full">
         <v-btn
           absolute
-          dark
+          light
           small
           fab
           top
           right
-          color="white"
           :href="detailLink + '/' + nodeDataDetail.id"
           target="blank"
         >
-          <v-icon class="black--text">open_in_new</v-icon>
+          <v-icon>open_in_new</v-icon>
         </v-btn>
       </div>
       <div class="v-btn-create">
-        <v-btn @click="editForm" absolute dark small fab top right color="green">
+        <v-btn @click="editForm" absolute small fab top right color="success">
           <v-icon>create</v-icon>
         </v-btn>
       </div>
@@ -26,7 +25,7 @@
       <v-flex xs12>
         <v-layout>
           <v-flex xs12>
-            <h3 class="success--text display-1 v-text-h3">{{nodeDataDetail.name}}</h3>
+            <h3 class="success--text headline font-weight-bold">{{nodeDataDetail.name}}</h3>
           </v-flex>
         </v-layout>
       </v-flex>
