@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-toolbar flat color="transparent" absolute light>
-      <v-flex xs3>
+      <v-flex xs3 class="type-selector-container">
         <v-select
           v-model="select"
           v-on:change="changeDropdownOrgChart"
@@ -68,6 +68,9 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 2"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forCorporate"
           />
           <DepartmentForm
             @closeModal="closeModal"
@@ -85,6 +88,9 @@
             @saveDetails="saveBoardDetails"
             v-if="select.value === 4"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forBoard"
           />
         </template>
       </v-list>
@@ -102,8 +108,8 @@
 </template>
 <script>
 import BranchForm from "../components/forms/BranchForm/Form";
-import BoardStructureForm from "../components/forms/BoardStructureForm";
-import CorporateForm from "../components/forms/CorporateForm";
+import BoardStructureForm from "../components/forms/BoardStructureForm/Form";
+import CorporateForm from "../components/forms/CorporateForm/Form";
 import DepartmentForm from "../components/forms/DepartmentForm/Form";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue } from "../config";
@@ -294,7 +300,7 @@ export default {
         slideInfo: "Structure Information",
         value: 3
       }
-    ],
+    ]
   }),
   computed: {
     drawer: function() {
@@ -304,7 +310,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .button {
   width: 30px;
   height: 30px;
@@ -314,5 +320,8 @@ export default {
   margin-top: 15px;
   margin-left: 10px;
   border-radius: 5px;
+}
+.type-selector-container {
+  max-width: 200px;
 }
 </style>

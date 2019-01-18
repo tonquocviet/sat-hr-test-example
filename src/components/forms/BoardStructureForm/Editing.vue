@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation class="right-form">
+  <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-layout>
         <v-flex xs12>
@@ -140,10 +140,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.right-form .v-text-field {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-</style>
