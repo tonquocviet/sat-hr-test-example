@@ -25,7 +25,7 @@
       </v-layout>
       <v-layout>
         <v-flex xs12>
-          <h3 class="success--text display-1 v-text-h3">Supermodel</h3>
+          <h3 class="success--text display-1 v-text-h3">{{nodeDataDetail.name.name}}</h3>
         </v-flex>
       </v-layout>
       <v-flex xs12>
