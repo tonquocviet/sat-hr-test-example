@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-toolbar flat color="transparent" absolute light>
-      <v-flex xs3>
+      <v-flex xs3 class="type-selector-container">
         <v-select
           v-model="select"
           v-on:change="changeDropdownOrgChart"
@@ -310,7 +310,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .button {
   width: 30px;
   height: 30px;
@@ -320,5 +320,8 @@ export default {
   margin-top: 15px;
   margin-left: 10px;
   border-radius: 5px;
+}
+.type-selector-container {
+  max-width: 200px;
 }
 </style>
