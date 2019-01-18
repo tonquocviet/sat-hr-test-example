@@ -85,6 +85,9 @@
             @saveDetails="saveBoardDetails"
             v-if="select.value === 4"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forBoard"
           />
         </template>
       </v-list>
@@ -102,7 +105,7 @@
 </template>
 <script>
 import BranchForm from "../components/forms/BranchForm/Form";
-import BoardStructureForm from "../components/forms/BoardStructureForm";
+import BoardStructureForm from "../components/forms/BoardStructureForm/Form";
 import CorporateForm from "../components/forms/CorporateForm";
 import DepartmentForm from "../components/forms/DepartmentForm/Form";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
@@ -294,7 +297,7 @@ export default {
         slideInfo: "Structure Information",
         value: 3
       }
-    ],
+    ]
   }),
   computed: {
     drawer: function() {
