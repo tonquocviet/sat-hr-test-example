@@ -1,33 +1,60 @@
 <template>
    <v-container>
     <v-layout align-center justify-center>
-      <v-btn
-        :href="detailLink + '/' + nodeDataDetail.id"
-        target="blank"
-        small
-        color="default"
-      >Full</v-btn>
-      <v-btn @click="editForm" small color="primary" >Edit</v-btn>
+      <div class="v-btn-full">
+        <v-btn
+          absolute
+          dark
+          small
+          fab
+          top
+          right
+          color="white"
+          :href="detailLink + '/' + nodeDataDetail.id"
+          target="blank"
+        >
+          <v-icon class="black--text">open_in_new</v-icon>
+        </v-btn>
+      </div>
+      <div class="v-btn-create">
+        <v-btn @click="editForm" absolute dark small fab top right color="green">
+          <v-icon>create</v-icon>
+        </v-btn>
+      </div>
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.name}}</h4>
+        <v-layout>
+          <v-flex xs12>
+            <h3 class="success--text display-1 v-text-h3">{{nodeDataDetail.name}}</h3>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+    <h3 class="mt-4">
+      <span>
+        <v-icon>location_on</v-icon>
+      </span>
+      {{nodeDataDetail.address}}
+    </h3>
+    <v-layout>
+      <v-flex xs12>
+        <h4 class="mt-4">
+          <span>
+            <v-icon>person</v-icon>
+            {{nodeDataDetail.contactPersonnel.name}}
+          </span>
+          <span class="ml-5">
+            <v-icon>phone</v-icon>
+            {{nodeDataDetail.telephone}}
+          </span>
+        </h4>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.address}}</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <h4 class="mt-4">{{nodeDataDetail.contactPersonnel.name}}</h4>
-        <h4 class="mt-4">{{nodeDataDetail.telephone}}</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs12>
-        <p class="mt-4">{{nodeDataDetail.description}}</p>
+        <h3 class="mt-4">Description</h3>
+        {{nodeDataDetail.description}}
       </v-flex>
     </v-layout>
   </v-container>
@@ -49,31 +76,10 @@ export default {
   height: 230px;
   background: #f3f4f8;
 }
-
-.div-card {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  padding: 8px 5px 3px 5px;
+.v-btn-full a {
+  top: 8px !important;
 }
-
-.v-card-title {
-  justify-content: center;
-  margin-left: 20px;
-  align-items: center;
-  height: 100%;
-  flex-direction: column;
-}
-
-.v-card {
-  height: 100px;
-  width: 45%;
-}
-
-.v-percent {
-  position: absolute;
-  right: 20px;
-  top: 5px;
+.v-btn-create button {
+  top: 70px !important;
 }
 </style>
