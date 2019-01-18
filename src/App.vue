@@ -35,7 +35,8 @@ export default {
       detailLinks: {
         forDepartment: "/detail/department",
         forBranch: "/detail/branch",
-        forBoard: "/detail/board"
+        forBoard: "/detail/board",
+        forCorporate: "/detail/corporate"
       }
     };
   }

@@ -68,6 +68,9 @@
             :node-data-detail="nodeDataDetail"
             v-if="select.value === 2"
             :apiEndPoints="apiEndPoints"
+            :isShowModal="isShowModal"
+            :editForm="editForm"
+            :detailLink="detailLinks.forCorporate"
           />
           <DepartmentForm
             @closeModal="closeModal"
@@ -106,7 +109,7 @@
 <script>
 import BranchForm from "../components/forms/BranchForm/Form";
 import BoardStructureForm from "../components/forms/BoardStructureForm/Form";
-import CorporateForm from "../components/forms/CorporateForm";
+import CorporateForm from "../components/forms/CorporateForm/Form";
 import DepartmentForm from "../components/forms/DepartmentForm/Form";
 import HierarchyContainer from "./hierarchy/HierarchyContainer";
 import { scaleValue } from "../config";
