@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <OrgChartWrapper :apiEndPoints="apiEndPoints" :detailLinks="detailLinks"/>
+    <!-- <OrgChartWrapper :apiEndPoints="apiEndPoints" :detailLinks="detailLinks"/> -->
   </Layout>
 </template>
 
