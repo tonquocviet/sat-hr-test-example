@@ -22,22 +22,16 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
-      clipped-left
-      clipped-right
-      color="blue darken-3"
-      dark
-      app
-      fixed
-    >
+    <v-toolbar clipped-left clipped-right color="blue darken-3" dark app fixed>
       <v-toolbar-title style="width: 100px">
         <v-list-tile-avatar>
           <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg">
         </v-list-tile-avatar>
       </v-toolbar-title>
-      <v-tabs color="transparent">
-        <v-tab v-for="item in itemTabs" :key="item.id">{{ item.text }}</v-tab>
-      </v-tabs>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn v-for="item in itemTabs" flat :key="item.id" :to="item.link">{{ item.text }}</v-btn>
+      </v-toolbar-items>
+      <v-spacer></v-spacer>
       <v-text-field
         flat
         solo-inverted
@@ -76,10 +70,10 @@ export default {
     right: null,
     mini: true,
     itemTabs: [
-      { text: "ABSENCE" },
-      { text: "POLICIES" },
-      { text: "REPORT" },
-      { text: "SETTINGS" }
+      { text: "ABSENCE", link: "/absence" },
+      { text: "POLICIES", link: "/policies" },
+      { text: "REPORT", link: "/report" },
+      { text: "SETTINGS", link: "/settings" }
     ],
     items: [
       { title: "Home", icon: "dashboard" },
