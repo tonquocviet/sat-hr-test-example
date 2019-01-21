@@ -46,6 +46,11 @@ export default {
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+    },
+    viewMore() {
+      if (this.data.length > this.end) {
+        this.end += 3;
+      }
     }
   },
   data() {
@@ -111,13 +116,6 @@ export default {
         }
       ]
     };
-  },
-  methods: {
-    viewMore() {
-      if (this.data.length > this.end) {
-        this.end += 3;
-      }
-    }
   }
 };
 </script>
