@@ -1,13 +1,9 @@
 <template>
-  <v-tabs color="transparent">
-    <v-tab v-for="item in itemTabs" :key="item.id">{{ item.text }}</v-tab>
-    <v-tab-item>
-      <Absence/>
-    </v-tab-item>
-    <v-tab-item></v-tab-item>
-    <v-tab-item></v-tab-item>
-    <v-tab-item></v-tab-item>
-  </v-tabs>
+  <v-content>
+    <v-container fluid class="pa-0">
+      <Absence :viewMode="viewMode" @changeViewMode="onViewModeChange"/>
+    </v-container>
+  </v-content>
 </template>
 <script>
 import Absence from "./Absence/Form";
@@ -17,13 +13,13 @@ export default {
   },
   data() {
     return {
-      itemTabs: [
-        { text: "Absence" },
-        { text: "Policies" },
-        { text: "Report" },
-        { text: "Setting" }
-      ]
+      viewMode: "list"
     };
+  },
+  methods: {
+    onViewModeChange(mode) {
+      this.viewMode = mode;
+    }
   }
 };
 </script>
