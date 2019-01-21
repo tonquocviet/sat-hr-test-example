@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import OrgChartWrapper from "./components/OrgChartWrapper";
+// import OrgChartWrapper from "./components/OrgChartWrapper";
 import Layout from "./components/layouts/Layout";
 
 export default {
   name: "App",
   components: {
-    OrgChartWrapper,
+    // OrgChartWrapper,
     Layout
   },
   data() {
