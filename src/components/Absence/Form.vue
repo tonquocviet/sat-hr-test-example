@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-flex xs12 md9 class="type-selector-container" style="margin-top:20px">
+  <v-layout row>
+    <v-flex md9 style="margin-top:20px">
       <v-flex xs12 right position absolute>
         <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
@@ -27,17 +27,26 @@
         <v-tab-item>Rejected Request</v-tab-item>
       </v-tabs>
     </v-flex>
-    <v-flex xs12 md3></v-flex>
+    <v-flex md3 class="ml-3">
+      <v-container fluid class="pa-0 elevation-2">
+        <AbsenceDetailList :items="data1" :title="this.titleAbsence" :value="value"/>
+        <v-divider/>
+        <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
+      </v-container>
+    </v-flex>
     <ModalListDetail title="Who's on leave" :data="data" :value="value"/>
-  </div>
+  </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
+import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
+import { data } from "./data.js";
 
 export default {
   components: {
     AbsenceList,
+    AbsenceDetailList,
     ModalListDetail
   },
   props: {
@@ -56,63 +65,38 @@ export default {
   data() {
     return {
       value: {
-        isOpen: true,
+        isOpen: false,
         end: 3
       },
+      titleAbsence: "Who are Absencing ?",
+      titleUpcoming: "Upcoming Absence",
       itemList: [
         { text: "Peding Requests" },
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      data: [
+      data,
+      data1: [
         {
-          id: 1,
-          name: "John Leider",
-          work: "Development",
-          start: new Date(2019, 1, 4),
-          end: new Date(2019, 2, 12)
+          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+          name: "Ông nội",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
         },
         {
-          id: 2,
-          name: "Thomas Harry",
-          work: "Development",
-          start: new Date(2019, 1, 12),
-          end: new Date(2019, 3, 12)
+          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+          name: "Cha",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
         },
         {
-          id: 3,
-          name: "James Charlie",
-          work: "Development",
-          start: new Date(2019, 1, 22),
-          end: new Date(2019, 1, 30)
-        },
-        {
-          id: 4,
-          name: "James Harry",
-          work: "Development",
-          start: new Date(2019, 1, 22),
-          end: new Date(2019, 1, 30)
-        },
-        {
-          id: 5,
-          name: "James Jacob",
-          work: "Development",
-          start: new Date(2019, 1, 22),
-          end: new Date(2019, 1, 30)
-        },
-        {
-          id: 6,
-          name: "James Charlie",
-          work: "Development",
-          start: new Date(2019, 1, 22),
-          end: new Date(2019, 1, 30)
-        },
-        {
-          id: 7,
-          name: "James Charlie",
-          work: "Development",
-          start: new Date(2019, 1, 22),
-          end: new Date(2019, 1, 30)
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+          name: "Con",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
         }
       ]
     };
