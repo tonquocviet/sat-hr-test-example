@@ -76,11 +76,10 @@ export default {
     right: null,
     mini: true,
     itemTabs: [
-      { text: "ANNOUNCEMENT" },
-      { text: "ORGANIZATION CHART" },
-      { text: "COMPANY PROFILE" },
-      { text: "EMPLOYEES" },
-      { text: "DEPARTMENTS" }
+      { text: "ABSENCE" },
+      { text: "POLICIES" },
+      { text: "REPORT" },
+      { text: "SETTINGS" }
     ],
     items: [
       { title: "Home", icon: "dashboard" },
