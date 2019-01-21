@@ -22,13 +22,22 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar clipped-left clipped-right color="blue darken-3" dark app fixed>
+    <v-toolbar
+      clipped-left
+      clipped-right
+      color="blue darken-3"
+      dark
+      app
+      fixed
+    >
       <v-toolbar-title style="width: 100px">
         <v-list-tile-avatar>
           <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg">
         </v-list-tile-avatar>
       </v-toolbar-title>
-      <AbsenceWrapper/>
+      <v-tabs color="transparent">
+        <v-tab v-for="item in itemTabs" :key="item.id">{{ item.text }}</v-tab>
+      </v-tabs>
       <v-text-field
         flat
         solo-inverted
@@ -61,15 +70,17 @@
 </template>
 
 <script>
-import AbsenceWrapper from "../AbsenceWrapper";
 export default {
-  components: {
-    AbsenceWrapper
-  },
   data: () => ({
     navigator: null,
     right: null,
     mini: true,
+    itemTabs: [
+      { text: "ABSENCE" },
+      { text: "POLICIES" },
+      { text: "REPORT" },
+      { text: "SETTINGS" }
+    ],
     items: [
       { title: "Home", icon: "dashboard" },
       { title: "About", icon: "question_answer" },

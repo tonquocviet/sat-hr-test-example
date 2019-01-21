@@ -152,9 +152,4 @@ export default {
 };
 </script>
 <style>
-.v-container {
-  position: absolute;
-  top: 30px;
-  width: 100%;
-}
 </style>

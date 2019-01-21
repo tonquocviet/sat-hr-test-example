@@ -1,18 +1,21 @@
 <template>
   <Layout>
     <!-- <OrgChartWrapper :apiEndPoints="apiEndPoints" :detailLinks="detailLinks"/> -->
+    <AbsenceWrapper/>
   </Layout>
 </template>
 
 <script>
 // import OrgChartWrapper from "./components/OrgChartWrapper";
 import Layout from "./components/layouts/Layout";
+import AbsenceWrapper from "./components/AbsenceWrapper";
 
 export default {
   name: "App",
   components: {
     // OrgChartWrapper,
-    Layout
+    Layout,
+    AbsenceWrapper
   },
   data() {
     const baseUrl =

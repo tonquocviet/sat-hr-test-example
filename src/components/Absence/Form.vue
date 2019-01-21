@@ -1,10 +1,6 @@
 <template>
-  <div class="v-container">
-    <v-flex xs12>
-      <v-btn flat small color="primary" right position absolute>List</v-btn>
-      <v-btn flat small color="primary" right position absolute class="v-btn-card">Card</v-btn>
-    </v-flex>
-    <v-flex xs12 class="type-selector-container" style="margin-top:20px">
+  <div>
+    <v-flex xs12 md9 class="type-selector-container" style="margin-top:20px">
       <v-flex xs12 right position absolute>
         <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
@@ -20,6 +16,7 @@
         <v-tab-item>Rejected Request</v-tab-item>
       </v-tabs>
     </v-flex>
+    <v-flex xs12 md3></v-flex>
   </div>
 </template>
 <script>
@@ -40,11 +37,6 @@ export default {
 };
 </script>
 <style>
-.v-container {
-  position: absolute;
-  top: 10px;
-  width: 100%;
-}
 .v-btn-card {
   margin-right: 90px;
 }
