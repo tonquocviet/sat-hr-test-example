@@ -28,7 +28,7 @@
           </v-list>
         </v-card>
       </template>
-      <v-card class="title-card pl-2" >
+      <v-card class="title-card pl-2 border border-white" >
         <v-btn class="view-full-absence mr-3 " color="success">View full</v-btn>
       </v-card>
       <!-- end who are absence -->
@@ -43,7 +43,7 @@
     },
     methods: {
       showDetail(item) {
-        console.log(item);
+        return item;
       }
     }
   }
