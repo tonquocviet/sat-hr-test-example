@@ -21,7 +21,7 @@
       <v-tabs color="transparent" dark slider-color="primary">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
-          <AbsenceList/>
+          <AbsenceDetailList/>
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
@@ -32,9 +32,11 @@
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
+import AbsenceDetailList from "./ListDetail";
 export default {
   components: {
-    AbsenceList
+    AbsenceList,
+    AbsenceDetailList
   },
   props: {
     viewMode: String
