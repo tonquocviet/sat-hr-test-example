@@ -1,6 +1,6 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 sm4 offset-sm3>
+  <v-layout >
+    <v-flex xs12>
       <!-- start who are absence -->
       <v-card class="title-card-view-full">
         <h3>Who are absencing ?</h3>
@@ -12,7 +12,6 @@
                 <v-list-tile-avatar>
                   <img :src="item.avatar ">
                 </v-list-tile-avatar>
-
                 <v-list-tile-sub-title>
                   <span class="name-abcence-customer">{{ item.name }}</span>
                   <v-layout >

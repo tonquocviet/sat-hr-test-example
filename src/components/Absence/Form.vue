@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-flex xs12 md9 class="type-selector-container" style="margin-top:20px">
+  <v-layout row>
+    <v-flex md9  style="margin-top:20px">
       <v-flex xs12 right position absolute>
         <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
@@ -21,14 +21,16 @@
       <v-tabs color="transparent" dark slider-color="primary">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
-          <AbsenceDetailList/>
+          <AbsenceList/>
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
       </v-tabs>
     </v-flex>
-    <v-flex xs12 md3></v-flex>
-  </div>
+    <v-flex md3 class="ml-3">
+      <AbsenceDetailList/>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
