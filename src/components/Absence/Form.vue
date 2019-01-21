@@ -1,6 +1,6 @@
 <template>
   <v-layout row>
-    <v-flex md9  style="margin-top:20px">
+    <v-flex md9 style="margin-top:20px">
       <v-flex xs12 right position absolute>
         <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
@@ -28,14 +28,11 @@
       </v-tabs>
     </v-flex>
     <v-flex md3 class="ml-3">
-      <AbsenceDetailList 
-      :items="data1"
-      :title="this.titleAbsence"
-      />
-      <AbsenceDetailList 
-      :items="data1"
-      :title="this.titleUpcoming"
-      />
+      <v-container fluid class="pa-0 elevation-2">
+        <AbsenceDetailList :items="data1" :title="this.titleAbsence"/>
+        <v-divider/>
+        <AbsenceDetailList :items="data1" :title="this.titleUpcoming"/>
+      </v-container>
     </v-flex>
   </v-layout>
 </template>
@@ -57,8 +54,8 @@ export default {
   },
   data() {
     return {
-      titleAbsence: 'Who are Absencing ?',
-      titleUpcoming: 'Upcoming Absence ?',
+      titleAbsence: "Who are Absencing ?",
+      titleUpcoming: "Upcoming Absence",
       itemList: [
         { text: "Peding Requests" },
         { text: "Approved Request" },
@@ -66,27 +63,27 @@ export default {
       ],
       data1: [
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          name: 'Ông nội',
-          date_start: '25 Agust 1995',
-          date_end: '25 May 1995',
-          description: 'Style hơi chuối xí :D ',
+          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+          name: "Ông nội",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          name: 'Cha',
-          date_start: '25 Agust 1995',
-          date_end: '25 May 1995',
-          description: 'Style hơi chuối xí :D ',
+          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+          name: "Cha",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          name: 'Con',
-          date_start: '25 Agust 1995',
-          date_end: '25 May 1995',
-          description: 'Style hơi chuối xí :D ',
-        },
-      ],
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+          name: "Con",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
+        }
+      ]
     };
   }
 };
