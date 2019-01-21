@@ -1,5 +1,5 @@
 <template>
-  <AbsenceWrapper/>
+  <AbsenceWrapper :apiAbsence="apiAbsence"/>
 </template>
 
 <script>
@@ -10,7 +10,13 @@ export default {
     AbsenceWrapper
   },
   data() {
-    return {};
+    const baseUrl =
+      "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
+    return {
+      apiAbsence: {
+        getPostAbsenceData: `${baseUrl}/absence/filter`
+      }
+    };
   }
 };
 </script>

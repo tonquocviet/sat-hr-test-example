@@ -2,137 +2,81 @@
   <div class="v-container">
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="desserts.list"
       :search="search"
       :pagination.sync="pagination"
       class="elevation-1"
       light
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
+        <td class="text-xs-center">{{ startDate(props.item.startDate) }}</td>
+        <td class="text-xs-center">{{ endDate(props.item.endDate) }}</td>
+        <td class="text-xs-center">{{ props.item.employeeId }}</td>
+        <td class="text-xs-left">{{ props.item.employeeName }}</td>
+        <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
+        <td class="text-xs-left">{{ props.item.leaveType.name }}</td>
+        <td class="text-xs-left">{{ props.item.location }}</td>
       </template>
     </v-data-table>
-    <div class="text-xs-center pt-2">
+    <div class="text-xs-right pt-2">
       <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
     </div>
   </div>
 </template>
 <script>
+import moment from "moment";
 export default {
+  props: {
+    apiAbsence: Object
+  },
+  methods: {
+    datatable() {
+      this.$http.post(`${this.apiAbsence.getPostAbsenceData}`).then(
+        res => (
+          (this.desserts = res.data),
+          (this.pagination = {
+            descending: false,
+            page: 5,
+            rowsPerPage: 10,
+            sortBy: "startDate",
+            totalItems: res.data.totalRecords
+          })
+        )
+      );
+    },
+    startDate(date) {
+      return moment(date).format("DD-MM-YYYY");
+    },
+    endDate(date) {
+      return moment(date).format("DD-MM-YYYY");
+    },
+    onOffDays(start, end) {
+      const startDate = moment(start);
+      const endDate = moment(end);
+      return endDate.diff(startDate, "days") + 1;
+    }
+  },
+  mounted() {
+    this.datatable();
+  },
   data() {
     return {
       search: "",
+      desserts: [],
       pagination: {},
       selected: [],
       headers: [
         {
-          text: "Dessert (100g serving)",
-          align: "left",
-          sortable: false,
-          value: "name"
+          text: "Start Dates",
+          align: "center",
+          value: "startDate"
         },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" }
-      ],
-      desserts: [
-        {
-          value: false,
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          value: false,
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          value: false,
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          value: false,
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          value: false,
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          value: false,
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          value: false,
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          value: false,
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
-        }
+        { text: "End Dates", align: "center", value: "endDate" },
+        { text: "Emp ID", align: "center", value: "empId" },
+        { text: "Emp Name", align: "center", value: "empName" },
+        { text: "No Of Days", align: "center", value: "noOfdays" },
+        { text: "Leave Type", align: "center", value: "leaveType" },
+        { text: "Location", align: "center", value: "location" }
       ]
     };
   },
@@ -143,7 +87,6 @@ export default {
         this.pagination.totalItems == null
       )
         return 0;
-
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
@@ -151,5 +94,3 @@ export default {
   }
 };
 </script>
-<style>
-</style>
