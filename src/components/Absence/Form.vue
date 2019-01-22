@@ -23,10 +23,11 @@
         <v-tab-item>
           <AbsenceList v-if="viewMode === 'list'" :apiAbsence="apiAbsence"/>
           <AbsenceCard
-            :showMoreView="showMoreView"
+            @showMoreView="showMoreView"
             :dataFilterAbsences="dataFilterAbsences"
             :loading="loading"
             :isShowMore="isShowMore"
+            :hasShowMore="hasShowMore"
             v-else
           />
         </v-tab-item>
@@ -67,22 +68,30 @@ export default {
       this.totalRecords = data.totalRecords;
     });
   },
+  computed: {
+    hasShowMore() {
+      return !this.dataFilterAbsences
+        ? 0
+        : this.dataFilterAbsences.length < this.totalRecords;
+    }
+  },
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
     },
     showMoreView() {
-      this.pageSize += 9;
+      this.pageIndex++;
       this.isShowMore = true;
       this.getDataFromApi().then(data => {
-        this.dataFilterAbsences = data.items;
+        this.dataFilterAbsences = this.dataFilterAbsences.concat(data.items);
         this.totalRecords = data.totalRecords;
       });
     },
     getDataFromApi() {
       this.loading = true;
       const filterRequest = {
-        pageSize: this.pageSize
+        pageSize: 9,
+        pageIndex: this.pageIndex
       };
       return new Promise(resolve => {
         this.$http
@@ -105,7 +114,7 @@ export default {
         end: 3
       },
       dataFilterAbsences: [],
-      pageSize: 9,
+      pageIndex: 0,
       loading: true,
       isShowMore: false,
       titleAbsence: "Who are Absencing ?",

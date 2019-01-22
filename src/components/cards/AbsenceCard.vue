@@ -6,7 +6,7 @@
           <v-layout>
             <div class="v-image-user">
               <user-avatar
-                :imageUrl="null"
+                :imageUrl="(item.avatar||{}).imageUrl"
                 :name="item.employeeName"
                 width="unset"
                 class="user-img"

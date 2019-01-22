@@ -13,11 +13,11 @@
         >
           <AbsenceCard :item="item"/>
         </v-flex>
-        <v-flex sm12 style="text-align:center">
-          <v-btn @click="showMoreView" v-if="isShowMore">
+        <v-flex sm12 style="text-align:center" v-if="hasShowMore">
+          <v-btn v-if="isShowMore">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
           </v-btn>
-          <v-btn @click="showMoreView" v-else>View More</v-btn>
+          <v-btn @click="$emit('showMoreView')" v-else>View More</v-btn>
         </v-flex>
       </v-layout>
     </v-card-text>
@@ -31,9 +31,9 @@ export default {
   },
   props: {
     dataFilterAbsences: Array,
-    showMoreView: Function,
     loading: Boolean,
-    isShowMore: Boolean
+    isShowMore: Boolean,
+    hasShowMore: Boolean
   }
 };
 </script>
