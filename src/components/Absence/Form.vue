@@ -35,7 +35,7 @@
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="data" :value="value"/>
+    <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
   </v-layout>
 </template>
 <script>
