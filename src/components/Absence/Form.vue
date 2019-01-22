@@ -34,7 +34,7 @@
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="data" :value="value"/>
+    <ModalListDetail title="Who's on leave" :data="data" :value="value" />
   </v-layout>
 </template>
 <script>
@@ -51,16 +51,6 @@ export default {
   },
   props: {
     viewMode: String
-  },
-  methods: {
-    changeViewMode(isListView) {
-      this.$emit("changeViewMode", isListView ? "list" : "card");
-    },
-    viewMore() {
-      if (this.data.length > this.end) {
-        this.end += 3;
-      }
-    }
   },
   data() {
     return {
