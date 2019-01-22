@@ -41,7 +41,9 @@
               ></v-select>
 
               <p class="font-weight-bold">Select days</p>
-              <v-date-picker ref="picker" v-model="date" :picker-date.sync="pickerDate" full-width></v-date-picker>
+              <vv-card>
+                <v-date-picker ref="picker" v-model="date" :picker-date.sync="pickerDate" full-width></v-date-picker>
+              </vv-card>
             </v-flex>
             <v-flex xs5 offset-xs1>
               <v-layout row wrap>
@@ -138,7 +140,7 @@ export default {
     };
   },
   watch: {
-    pickerDate(val) {
+    pickerDate() {
       this.notes = [
         this.allNotes[Math.floor(Math.random() * 5)],
         this.allNotes[Math.floor(Math.random() * 5)],

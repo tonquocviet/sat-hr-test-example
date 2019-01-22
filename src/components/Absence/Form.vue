@@ -53,7 +53,6 @@ export default {
     AbsenceDetailList,
     AbsenceCreate,
     AbsenceCard,
-    AbsenceDetailList,
     ModalListDetail
   },
   props: {
