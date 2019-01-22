@@ -18,7 +18,7 @@
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
-      <v-tabs color="transparent" dark slider-color="primary">
+      <v-tabs color="transparent" dark slider-color="primary" v-if="viewMode === 'list'">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
           <AbsenceList :apiAbsence="apiAbsence"/>
@@ -26,6 +26,7 @@
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
       </v-tabs>
+      <AbsenceCard :data="data" v-if="viewMode === 'card'"/>
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
@@ -34,11 +35,12 @@
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="data" :value="value" />
+    <ModalListDetail title="Who's on leave" :data="data" :value="value"/>
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
+import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
 import { data } from "./data.js";
@@ -46,12 +48,18 @@ import { data } from "./data.js";
 export default {
   components: {
     AbsenceList,
+    AbsenceCard,
     AbsenceDetailList,
     ModalListDetail
   },
   props: {
     viewMode: String,
     apiAbsence: Object
+  },
+  methods: {
+    changeViewMode(isListView) {
+      this.$emit("changeViewMode", isListView ? "list" : "card");
+    }
   },
   data() {
     return {
