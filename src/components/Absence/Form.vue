@@ -1,7 +1,7 @@
 <template>
   <v-layout row>
-    <v-flex md9 style="margin-top:20px">
-      <v-flex xs12 right position absolute>
+    <v-flex md9 class="mt-2">
+      <v-flex xs12 right class="right-button-container">
         <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
           <v-icon>filter_list</v-icon>
@@ -102,11 +102,9 @@ export default {
   }
 };
 </script>
-<style>
-.v-btn-card {
-  margin-right: 90px;
-}
-.v-btn-add-filter {
-  z-index: 10;
+<style scoped>
+.right-button-container {
+  position: relative;
+  z-index: 0;
 }
 </style>
