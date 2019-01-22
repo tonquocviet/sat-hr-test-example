@@ -34,7 +34,7 @@
         <v-divider/>
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
-      <AbsenceCreate :popup ="popup"></AbsenceCreate>
+      <AbsenceCreate :items="data1" :popup ="popup"></AbsenceCreate>
     </v-flex>
     <ModalListDetail title="Who's on leave" :data="data" :value="value"/>
   </v-layout>
@@ -69,6 +69,7 @@ export default {
     return {
       popup: {
          showCreate: false,
+      },
       value: {
         isOpen: false,
         end: 3
