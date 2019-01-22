@@ -22,7 +22,14 @@
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
           <AbsenceList v-if="viewMode === 'list'" :apiAbsence="apiAbsence"/>
-          <AbsenceCard :dataFilterAbsences="dataFilterAbsences" v-else/>
+          <AbsenceCard
+            @showMoreView="showMoreView"
+            :dataFilterAbsences="dataFilterAbsences"
+            :loading="loading"
+            :isShowMore="isShowMore"
+            :hasShowMore="hasShowMore"
+            v-else
+          />
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
@@ -43,7 +50,6 @@ import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
-import { dataFilterAbsences } from "./data.js";
 
 export default {
   components: {
@@ -56,9 +62,49 @@ export default {
     viewMode: String,
     apiAbsence: Object
   },
+  mounted() {
+    this.getDataFromApi().then(data => {
+      this.dataFilterAbsences = data.items;
+      this.totalRecords = data.totalRecords;
+    });
+  },
+  computed: {
+    hasShowMore() {
+      return !this.dataFilterAbsences
+        ? 0
+        : this.dataFilterAbsences.length < this.totalRecords;
+    }
+  },
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+    },
+    showMoreView() {
+      this.pageIndex++;
+      this.isShowMore = true;
+      this.getDataFromApi().then(data => {
+        this.dataFilterAbsences = this.dataFilterAbsences.concat(data.items);
+        this.totalRecords = data.totalRecords;
+      });
+    },
+    getDataFromApi() {
+      this.loading = true;
+      const filterRequest = {
+        pageSize: 9,
+        pageIndex: this.pageIndex
+      };
+      return new Promise(resolve => {
+        this.$http
+          .post(`${this.apiAbsence.filterAbsences}`, filterRequest)
+          .then(res => {
+            this.loading = false;
+            this.isShowMore = false;
+            resolve({
+              items: res.data.list,
+              totalRecords: res.data.totalRecords
+            });
+          });
+      });
     }
   },
   data() {
@@ -67,6 +113,10 @@ export default {
         isOpen: false,
         end: 3
       },
+      dataFilterAbsences: [],
+      pageIndex: 0,
+      loading: true,
+      isShowMore: false,
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
       itemList: [
@@ -74,7 +124,6 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      dataFilterAbsences,
       data1: [
         {
           avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
