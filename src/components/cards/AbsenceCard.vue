@@ -4,17 +4,24 @@
       <v-layout>
         <v-flex xs8 sm9>
           <v-layout>
-            <user-avatar :imageUrl="item.avatar.imageUrl" :name="item.name" width="unset"/>
+            <div class="v-image-user">
+              <user-avatar
+                :imageUrl="null"
+                :name="item.employeeName"
+                width="unset"
+                class="user-img"
+              />
+            </div>
             <v-layout class="column pl-1 justify-space-between">
-              <div class="subheading font-weight-bold">{{item.avatar.name}}</div>
-              <div class="grey--text">{{item.position}}</div>
+              <div class="subheading font-weight-bold v-number-of-line-name">{{item.employeeName}}</div>
+              <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
         </v-flex>
         <v-flex xs4 sm3>
           <v-layout class="grey--text justify-end v-date-time">
             <v-icon size="15">av_timer</v-icon>
-            <span>08 Aug 16</span>
+            <span>{{submittedDate(item.submittedDate)}}</span>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -42,14 +49,14 @@
           </v-flex>
         </v-layout>
       </div>
-      <div
-        class="user-description pl-3 pr-3 pt-2 pb-2"
-      >Lorem Ipsum placeholder text for use in your graphic, print and web layouts, and discover plugins for your favorite writing, design and blogging tools</div>
+      <v-flex class="v-number-of-line">
+        <div class="user-description pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
+      </v-flex>
       <v-layout class="pl-3 pr-3 pt-2 pb-2">
         <v-icon size="15">av_timer</v-icon>
         <span>
           Due date
-          <span class="red--text">{{formatDateTime(item.start)}}</span>
+          <span class="red--text">{{formatDateTime(item.dueAppliedDate)}}</span>
         </span>
       </v-layout>
     </div>
@@ -85,6 +92,9 @@ export default {
       const start = moment(startDate);
       const end = moment(endDate);
       return end.diff(start, "days");
+    },
+    submittedDate(date) {
+      return moment(date).format("MM-DD-YYYY");
     }
   }
 };
@@ -105,5 +115,32 @@ export default {
   width: 100px;
   position: absolute;
   right: 10px;
+}
+.user-img {
+  justify-content: center;
+}
+.v-image-user {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  background: grey;
+  justify-content: center;
+  align-items: center;
+}
+.v-number-of-line-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.v-number-of-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  height: 130px;
 }
 </style>

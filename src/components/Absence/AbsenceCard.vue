@@ -1,5 +1,6 @@
 <template>
   <div class="v-container">
+    <v-progress-linear v-if="loading" style="margin-left: 5px" :indeterminate="true"></v-progress-linear>
     <v-card-text class="card-user">
       <v-layout row wrap>
         <v-flex
@@ -13,7 +14,10 @@
           <AbsenceCard :item="item"/>
         </v-flex>
         <v-flex sm12 style="text-align:center">
-          <v-btn @click="showViewMore">View More</v-btn>
+          <v-btn @click="showMoreView" v-if="isShowMore">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          </v-btn>
+          <v-btn @click="showMoreView" v-else>View More</v-btn>
         </v-flex>
       </v-layout>
     </v-card-text>
@@ -25,12 +29,11 @@ export default {
   components: {
     AbsenceCard
   },
-  data() {
-    return {};
-  },
-  methods: {
-    showViewMore() {}
-  },
-  props: { dataFilterAbsences: Array }
+  props: {
+    dataFilterAbsences: Array,
+    showMoreView: Function,
+    loading: Boolean,
+    isShowMore: Boolean
+  }
 };
 </script>
