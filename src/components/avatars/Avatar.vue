@@ -1,5 +1,5 @@
 <template>
-  <v-list-tile-avatar :color="`${backgroundColor} img-avatar`" :style="{zIndex:index}">
+  <v-list-tile-avatar :color="`${backgroundColor} img-avatar`" :style="{zIndex:index, width}">
     <v-img
       v-if="!!imageUrl"
       :class="imgActive ? 'v-profile' : (typeId === 4 ? 'v-img' : 'elevation-6')"
@@ -12,6 +12,7 @@
 <script>
 export default {
   props: {
+    width:String,
     imageUrl: String,
     name: String,
     backgroundColor: String,
