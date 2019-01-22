@@ -77,6 +77,9 @@ export default {
       this.dataFilterAbsences = data.items;
       this.totalRecords = data.totalRecords;
     });
+    this.getDataAbsencingRequest().then(data => {
+      this.dataAbsencing = data;
+    });
   },
   computed: {
     hasShowMore() {
@@ -115,33 +118,7 @@ export default {
             });
           });
       });
-    }
-  },
-  data() {
-    return {
-      value: {
-        loadingViewFull: false,
-        loadingViewMore: false,
-        isOpen: false,
-        pageSize: 9,
-        pageIndex: 0
-      },
-      dataFilterAbsences: [],
-      pageIndex: 0,
-      loading: true,
-      isShowMore: false,
-      titleAbsence: "Who are Absencing ?",
-      titleUpcoming: "Upcoming Absence",
-      itemList: [
-        { text: "Peding Requests" },
-        { text: "Approved Request" },
-        { text: "Rejected Request" }
-      ],
-      dataAbsencing: {},
-      dataWhoAbsencing: {}
-    };
-  },
-  methods: {
+    },
     getDataAbsencingRequest() {
       return new Promise(resolve => {
         this.$http.post(`${this.apiAbsence.filterWhoAbsencing}`).then(res => {
@@ -188,10 +165,29 @@ export default {
       }
     }
   },
-  mounted() {
-    this.getDataAbsencingRequest().then(data => {
-      this.dataAbsencing = data;
-    });
+  data() {
+    return {
+      value: {
+        loadingViewFull: false,
+        loadingViewMore: false,
+        isOpen: false,
+        pageSize: 9,
+        pageIndex: 0
+      },
+      dataFilterAbsences: [],
+      pageIndex: 0,
+      loading: true,
+      isShowMore: false,
+      titleAbsence: "Who are Absencing ?",
+      titleUpcoming: "Upcoming Absence",
+      itemList: [
+        { text: "Peding Requests" },
+        { text: "Approved Request" },
+        { text: "Rejected Request" }
+      ],
+      dataAbsencing: {},
+      dataWhoAbsencing: {}
+    };
   }
 };
 </script>
