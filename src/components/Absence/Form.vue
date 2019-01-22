@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex md9 style="margin-top:20px">
       <v-flex xs12 right position absolute>
-        <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
+        <v-btn color="info" class="v-btn-add-filter" @click="popup.showCreate = true">Add New Absence</v-btn>
         <v-btn icon class="primary--text v-btn-add-filter">
           <v-icon>filter_list</v-icon>
         </v-btn>
@@ -33,16 +33,20 @@
         <v-divider/>
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming"/>
       </v-container>
+      <AbsenceCreate :popup ="popup"></AbsenceCreate>
     </v-flex>
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceDetailList from "./ListDetail";
+import AbsenceCreate from "./CreateAbsence";
+
 export default {
   components: {
     AbsenceList,
-    AbsenceDetailList
+    AbsenceDetailList,
+    AbsenceCreate
   },
   props: {
     viewMode: String
@@ -54,6 +58,9 @@ export default {
   },
   data() {
     return {
+      popup: {
+         showCreate: false,
+      },
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
       itemList: [
