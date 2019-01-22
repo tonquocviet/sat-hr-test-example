@@ -9,7 +9,7 @@
         <v-card-text class="card-user">
           <v-layout row wrap>
             <v-flex
-              v-for="(item, index) in data.slice(0, value.end)"
+              v-for="(item, index) in data.items"
               xs12
               sm6
               md4
@@ -19,7 +19,10 @@
               <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
-              <v-btn @click="viewMore">View More</v-btn>
+              <v-btn flat color="success" v-if="value.loadingViewMore">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              </v-btn>
+              <v-btn v-else @click="viewMore">View More</v-btn>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -33,18 +36,18 @@ import AbsenceCard from "../cards/AbsenceCard";
 
 export default {
   components: {
-    AbsenceCard,
+    AbsenceCard
   },
   props: {
     title: String,
-    data: Array,
-    value: Object
+    data: Object,
+    value: Object,
+    viewMoreWhoAbsencing: Function
   },
   methods: {
     viewMore() {
-      if (this.data.length > this.value.end) {
-        this.value.end += 3;
-      }
+      this.value.pageSize += 9;
+      this.viewMoreWhoAbsencing();
     }
   }
 };

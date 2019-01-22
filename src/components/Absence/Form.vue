@@ -29,19 +29,28 @@
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
-        <AbsenceDetailList :items="data1" :title="this.titleAbsence" :value="value"/>
+        <AbsenceDetailList
+          :items="dataAbsencing.items"
+          :title="this.titleAbsence"
+          :viewFull="viewFull"
+          :value="value"
+        />
         <v-divider/>
-        <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
+        <!-- <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/> -->
       </v-container>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="data" :value="value" />
+    <ModalListDetail
+      title="Who's on leave"
+      :viewMoreWhoAbsencing="viewMoreWhoAbsencing"
+      :data="dataWhoAbsencing"
+      :value="value"
+    />
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
-import { data } from "./data.js";
 
 export default {
   components: {
@@ -56,8 +65,11 @@ export default {
   data() {
     return {
       value: {
+        loadingViewFull: false,
+        loadingViewMore: false,
         isOpen: false,
-        end: 3
+        pageSize: 9,
+        pageIndex: 0
       },
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
@@ -66,31 +78,62 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      data,
-      data1: [
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          name: "Ông nội",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          name: "Cha",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          name: "Con",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        }
-      ]
+      dataAbsencing: {},
+      dataWhoAbsencing: {}
     };
+  },
+  methods: {
+    getDataAbsencingRequest() {
+      return new Promise(resolve => {
+        this.$http.post(`${this.apiAbsence.filterWhoAbsencing}`).then(res => {
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
+    },
+    getDataWhoAbsencingRequest() {
+      const { pageSize, pageIndex } = this.value;
+      const filterRequest = {
+        pageSize,
+        pageIndex
+      };
+      return new Promise(resolve => {
+        this.$http
+          .post(`${this.apiAbsence.filterWhoAbsencing}`, filterRequest)
+          .then(res => {
+            resolve({
+              items: res.data.list,
+              totalRecords: res.data.totalRecords
+            });
+          });
+      });
+    },
+    viewMoreWhoAbsencing() {
+      const { pageSize } = this.value;
+      this.value.loadingViewMore = true;
+      this.getDataWhoAbsencingRequest().then(data => {
+        this.dataWhoAbsencing = data;
+        this.value.loadingViewMore = false;
+      });
+    },
+    viewFull(name) {
+      if (name === "WhoAbsencing") {
+        this.value.loadingViewFull = true;
+        this.value.pageSize = 9;
+        this.getDataWhoAbsencingRequest().then(data => {
+          this.value.isOpen = true;
+          this.dataWhoAbsencing = data;
+          this.value.loadingViewFull = false;
+        });
+      }
+    }
+  },
+  mounted() {
+    this.getDataAbsencingRequest().then(data => {
+      this.dataAbsencing = data;
+    });
   }
 };
 </script>
