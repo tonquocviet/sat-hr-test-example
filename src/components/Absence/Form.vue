@@ -111,7 +111,6 @@ export default {
       });
     },
     viewMoreWhoAbsencing() {
-      const { pageSize } = this.value;
       this.value.loadingViewMore = true;
       this.getDataWhoAbsencingRequest().then(data => {
         this.dataWhoAbsencing = data;
