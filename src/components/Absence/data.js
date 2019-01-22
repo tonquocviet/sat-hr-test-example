@@ -1,4 +1,4 @@
-export const data = [
+export const dataFilterAbsences = [
   {
     id: 1,
     avatar: {

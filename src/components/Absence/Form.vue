@@ -22,7 +22,7 @@
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
           <AbsenceList v-if="viewMode === 'list'" :apiAbsence="apiAbsence"/>
-          <AbsenceCard :data="data" v-else/>
+          <AbsenceCard :dataFilterAbsences="dataFilterAbsences" v-else/>
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
@@ -43,7 +43,7 @@ import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
-import { data } from "./data.js";
+import { dataFilterAbsences } from "./data.js";
 
 export default {
   components: {
@@ -74,7 +74,7 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      data,
+      dataFilterAbsences,
       data1: [
         {
           avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",

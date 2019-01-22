@@ -3,7 +3,7 @@
     <v-card-text class="card-user">
       <v-layout row wrap>
         <v-flex
-          v-for="(item, index) in data.slice(0, showMore)"
+          v-for="(item, index) in dataFilterAbsences"
           xs12
           sm6
           md4
@@ -26,15 +26,11 @@ export default {
     AbsenceCard
   },
   data() {
-    return {
-      showMore: 3
-    };
+    return {};
   },
   methods: {
-    showViewMore() {
-      this.showMore += 3;
-    }
+    showViewMore() {}
   },
-  props: { data: Array }
+  props: { dataFilterAbsences: Array }
 };
 </script>
