@@ -66,6 +66,7 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
+
 export default {
   components: {
     UserAvatar
