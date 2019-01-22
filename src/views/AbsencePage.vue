@@ -14,7 +14,7 @@ export default {
       "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
     return {
       apiAbsence: {
-        getPostAbsenceData: `${baseUrl}/absence/filter`
+        filterAbsences: `${baseUrl}/absence/filter`
       }
     };
   }

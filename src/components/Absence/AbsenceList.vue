@@ -2,16 +2,16 @@
   <div class="v-container">
     <v-data-table
       :headers="headers"
-      :items="desserts.list"
+      :items="dataFilterAbsences.list"
       :search="search"
       :pagination.sync="pagination"
       class="elevation-1"
       light
     >
       <template slot="items" slot-scope="props">
-        <td class="text-xs-center">{{ startDate(props.item.startDate) }}</td>
-        <td class="text-xs-center">{{ endDate(props.item.endDate) }}</td>
-        <td class="text-xs-center">{{ props.item.employeeId }}</td>
+        <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
+        <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
+        <td class="text-xs-left">{{ props.item.employeeId }}</td>
         <td class="text-xs-left">{{ props.item.employeeName }}</td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">{{ props.item.leaveType.name }}</td>
@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     datatable() {
-      this.$http.post(`${this.apiAbsence.getPostAbsenceData}`).then(
+      this.$http.post(`${this.apiAbsence.filterAbsences}`).then(
         res => (
-          (this.desserts = res.data),
+          (this.dataFilterAbsences = res.data),
           (this.pagination = {
             descending: false,
             page: 5,
@@ -45,10 +45,10 @@ export default {
       );
     },
     startDate(date) {
-      return moment(date).format("DD-MM-YYYY");
+      return moment(date).format("MM/DD/YYYY");
     },
     endDate(date) {
-      return moment(date).format("DD-MM-YYYY");
+      return moment(date).format("MM/DD/YYYY");
     },
     onOffDays(start, end) {
       const startDate = moment(start);
@@ -62,21 +62,21 @@ export default {
   data() {
     return {
       search: "",
-      desserts: [],
+      dataFilterAbsences: [],
       pagination: {},
       selected: [],
       headers: [
         {
           text: "Start Dates",
-          align: "center",
+          align: "left",
           value: "startDate"
         },
-        { text: "End Dates", align: "center", value: "endDate" },
-        { text: "Emp ID", align: "center", value: "empId" },
-        { text: "Emp Name", align: "center", value: "empName" },
-        { text: "No Of Days", align: "center", value: "noOfdays" },
-        { text: "Leave Type", align: "center", value: "leaveType" },
-        { text: "Location", align: "center", value: "location" }
+        { text: "End Dates", align: "left", value: "endDate" },
+        { text: "Emp ID", align: "left", value: "empId" },
+        { text: "Emp Name", align: "left", value: "empName" },
+        { text: "No Of Days", align: "left", value: "noOfdays" },
+        { text: "Leave Type", align: "left", value: "leaveType" },
+        { text: "Location", align: "left", value: "location" }
       ]
     };
   },
