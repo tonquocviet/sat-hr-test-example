@@ -21,7 +21,7 @@
       <v-tabs color="transparent" dark slider-color="primary">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
-          <AbsenceList/>
+          <AbsenceList :apiAbsence="apiAbsence"/>
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
@@ -50,7 +50,8 @@ export default {
     ModalListDetail
   },
   props: {
-    viewMode: String
+    viewMode: String,
+    apiAbsence: Object
   },
   data() {
     return {
