@@ -1,4 +1,4 @@
-import Absence from "../components/AbsenceWrapper";
+import Absence from "../views/AbsencePage";
 import OrgChart from "../views/OrgChartPage";
 export default [
   {
