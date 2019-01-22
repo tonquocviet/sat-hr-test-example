@@ -16,7 +16,7 @@
               class="pl-2 pr-2 pt-2 pb-2"
               :key="index"
             >
-              <Card :item="item"/>
+              <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
               <v-btn @click="viewMore">View More</v-btn>
@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import Card from "../cards/Card";
+import AbsenceCard from "../cards/AbsenceCard";
 
 export default {
   components: {
-    Card
+    AbsenceCard,
   },
   props: {
     title: String,
