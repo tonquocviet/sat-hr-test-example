@@ -2,19 +2,18 @@
   <v-layout row>
     <v-flex md9 class="mt-2">
       <v-flex xs12 right class="right-button-container">
-        <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
-        <v-btn icon class="primary--text v-btn-add-filter">
+        <v-btn color="info">Add New Absence</v-btn>
+        <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
         <v-btn
           v-if="viewMode === 'card'"
           icon
-          class="v-btn-add-filter"
           @click="changeViewMode(true)"
         >
           <v-icon>list</v-icon>
         </v-btn>
-        <v-btn v-else icon class="v-btn-add-filter" @click="changeViewMode(false)">
+        <v-btn v-else icon @click="changeViewMode(false)">
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
@@ -105,6 +104,6 @@ export default {
 <style scoped>
 .right-button-container {
   position: relative;
-  z-index: 0;
+  z-index: 1;
 }
 </style>
