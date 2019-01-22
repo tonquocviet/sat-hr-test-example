@@ -18,15 +18,15 @@
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
-      <v-tabs color="transparent" dark slider-color="primary" v-if="viewMode === 'list'">
+      <v-tabs color="transparent" dark slider-color="primary">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
-          <AbsenceList :apiAbsence="apiAbsence"/>
+          <AbsenceList v-if="viewMode === 'list'" :apiAbsence="apiAbsence"/>
+          <AbsenceCard :data="data" v-else/>
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
         <v-tab-item>Rejected Request</v-tab-item>
       </v-tabs>
-      <AbsenceCard :data="data" v-if="viewMode === 'card'"/>
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
