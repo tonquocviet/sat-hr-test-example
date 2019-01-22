@@ -29,7 +29,7 @@
       </v-card>
       <v-card flat>
         <v-layout justify-end>
-          <v-btn flat color="success">View full</v-btn>
+          <v-btn @click="value.isOpen = true" flat color="success">View full</v-btn>
         </v-layout>
       </v-card>
       <!-- end who are absence -->
@@ -39,6 +39,7 @@
 <script>
 export default {
   props: {
+    value: Object,
     items: Array,
     title: String
   },

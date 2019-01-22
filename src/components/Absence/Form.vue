@@ -29,32 +29,36 @@
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
-        <AbsenceDetailList :items="data1" :title="this.titleAbsence"/>
+        <AbsenceDetailList :items="data1" :title="this.titleAbsence" :value="value"/>
         <v-divider/>
-        <AbsenceDetailList :items="data1" :title="this.titleUpcoming"/>
+        <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
     </v-flex>
+    <ModalListDetail title="Who's on leave" :data="data" :value="value" />
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceDetailList from "./ListDetail";
+import ModalListDetail from "./ModalListDetail";
+import { data } from "./data.js";
+
 export default {
   components: {
     AbsenceList,
-    AbsenceDetailList
+    AbsenceDetailList,
+    ModalListDetail
   },
   props: {
     viewMode: String,
     apiAbsence: Object
   },
-  methods: {
-    changeViewMode(isListView) {
-      this.$emit("changeViewMode", isListView ? "list" : "card");
-    }
-  },
   data() {
     return {
+      value: {
+        isOpen: false,
+        end: 3
+      },
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
       itemList: [
@@ -62,6 +66,7 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
+      data,
       data1: [
         {
           avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
