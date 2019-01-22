@@ -2,11 +2,11 @@
   <div class="v-container">
     <v-data-table
       :headers="headers"
-      :items="dataFilterAbsences.list"
-      :search="search"
+      :items="dataFilterAbsences"
       :pagination.sync="pagination"
+      :total-items="totalRecords"
+      :loading="loading"
       class="elevation-1"
-      light
     >
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
@@ -30,19 +30,28 @@ export default {
     apiAbsence: Object
   },
   methods: {
-    datatable() {
-      this.$http.post(`${this.apiAbsence.filterAbsences}`).then(
-        res => (
-          (this.dataFilterAbsences = res.data),
-          (this.pagination = {
-            descending: false,
-            page: 5,
-            rowsPerPage: 10,
-            sortBy: "startDate",
-            totalItems: res.data.totalRecords
-          })
-        )
-      );
+    getDataFromApi() {
+      this.loading = true;
+      const { sortBy, descending, page, rowsPerPage } = this.pagination;
+      const filterRequest = {
+        pageSize: rowsPerPage,
+        pageIndex: page,
+        sort: {
+          isAsc: !descending,
+          columnName: sortBy
+        }
+      };
+      return new Promise(resolve => {
+        this.$http
+          .post(`${this.apiAbsence.filterAbsences}`, filterRequest)
+          .then(res => {
+            this.loading = false;
+            resolve({
+              items: res.data.list,
+              totalRecords: res.data.totalRecords
+            });
+          });
+      });
     },
     startDate(date) {
       return moment(date).format("MM/DD/YYYY");
@@ -57,14 +66,19 @@ export default {
     }
   },
   mounted() {
-    this.datatable();
+    this.getDataFromApi().then(data => {
+      this.dataFilterAbsences = data.items;
+      this.totalRecords = data.totalRecords;
+    });
   },
   data() {
     return {
       search: "",
       dataFilterAbsences: [],
+      totalRecords: 0,
       pagination: {},
       selected: [],
+      loading: true,
       headers: [
         {
           text: "Start Dates",
@@ -72,8 +86,8 @@ export default {
           value: "startDate"
         },
         { text: "End Dates", align: "left", value: "endDate" },
-        { text: "Emp ID", align: "left", value: "empId" },
-        { text: "Emp Name", align: "left", value: "empName" },
+        { text: "Emp ID", align: "left", value: "employeeId" },
+        { text: "Emp Name", align: "left", value: "employeeName" },
         { text: "No Of Days", align: "left", value: "noOfdays" },
         { text: "Leave Type", align: "left", value: "leaveType" },
         { text: "Location", align: "left", value: "location" }
@@ -83,13 +97,23 @@ export default {
   computed: {
     pages() {
       if (
-        this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
+        !this.pagination ||
+        !this.pagination.rowsPerPage ||
+        !this.totalRecords
       )
         return 0;
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.totalRecords / this.pagination.rowsPerPage);
+    }
+  },
+  watch: {
+    pagination: {
+      handler() {
+        this.getDataFromApi().then(data => {
+          this.dataFilterAbsences = data.items;
+          this.totalRecords = data.totalRecords;
+        });
+      },
+      deep: true
     }
   }
 };
