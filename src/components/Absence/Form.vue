@@ -183,12 +183,14 @@ export default {
       this.ModalAbsenceList.pageIndex += 1;
       const { url } = this.ModalAbsenceList;
       this.getDataMoreAbsenceListRequest(url).then(data => {
-        const { items } = data;
+        const { items, totalRecords } = data;
         this.ModalAbsenceList.loadingViewMore = false;
         if ("WhoAbsencing" === name) {
           this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
+          this.totalRecordsWhoAbsencing = totalRecords;
         } else {
           this.dataUpcomingAbsence = this.dataUpcomingAbsence.concat(items);
+          this.totalRecordsUpcomming = totalRecords;
         }
       });
     },
@@ -206,12 +208,14 @@ export default {
       this.ModalAbsenceList.pageSize = 9;
       this.ModalAbsenceList.pageIndex = 0;
       this.getDataMoreAbsenceListRequest(url).then(data => {
-        const { items } = data;
+        const { items, totalRecords } = data;
         this.ModalAbsenceList.loadingViewFull = false;
         if ("WhoAbsencing" === name) {
           this.dataWhoAbsencing = items;
+          this.totalRecordsWhoAbsencing = totalRecords;
         } else {
           this.dataUpcomingAbsence = items;
+          this.totalRecordsUpcomming = totalRecords;
         }
       });
     }
