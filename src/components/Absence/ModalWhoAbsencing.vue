@@ -8,7 +8,7 @@
         </v-card-title>
         <v-card-text class="card-user">
           <div
-            v-if="ModalAbsenseList.loadingViewFull"
+            v-if="ModalAbsenceList.loadingViewFull"
             style="text-align:center;padding-bottom: 40px;"
           >
             <v-btn flat color="success">
@@ -27,7 +27,7 @@
               <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
-              <v-btn flat color="success" v-if="ModalAbsenseList.loadingViewMore">
+              <v-btn flat color="success" v-if="ModalAbsenceList.loadingViewMore">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
               </v-btn>
               <v-btn v-else @click="viewMore">View More</v-btn>
@@ -49,12 +49,12 @@ export default {
   props: {
     title: String,
     items: Array,
-    ModalAbsenseList: Object,
+    ModalAbsenceList: Object,
     popup: Object
   },
   methods: {
     viewMore() {
-      this.$emit("viewMoreAbsense", "WhoAbsensing");
+      this.$emit("viewMoreAbsence", "WhoAbsencing");
     }
   }
 };

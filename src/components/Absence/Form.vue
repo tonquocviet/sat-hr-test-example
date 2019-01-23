@@ -34,14 +34,14 @@
       <v-container fluid class="pa-0 elevation-2">
         <AbsenceDetailList
           name="WhoAbsencing"
-          :items="dataAbsenseList"
+          :items="dataAbsenceList"
           :title="titleAbsence"
           @viewFull="viewFull"
         />
         <v-divider/>
         <AbsenceDetailList
           name="UpcommingAbsence"
-          :items="dataAbsenseList2"
+          :items="dataAbsenceList2"
           :title="titleUpcoming"
           @viewFull="viewFull"
         />
@@ -50,16 +50,16 @@
     </v-flex>
     <ModalWhoAbsencing
       :title="titleAbsence"
-      @viewMoreAbsense="viewMoreAbsense"
+      @viewMoreAbsence="viewMoreAbsence"
       :items="dataWhoAbsencing"
-      :ModalAbsenseList="ModalAbsenseList"
+      :ModalAbsenceList="ModalAbsenceList"
       :popup="popup"
     />
     <ModelUpcomingAbsence
       :title="titleUpcoming"
-      @viewMoreAbsense="viewMoreAbsense"
+      @viewMoreAbsence="viewMoreAbsence"
       :items="dataUpcomingAbsence"
-      :ModalAbsenseList="ModalAbsenseList"
+      :ModalAbsenceList="ModalAbsenceList"
       :popup="popup"
     />
   </v-layout>
@@ -92,13 +92,13 @@ export default {
     });
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsencing = this.apiAbsence.filterUpcommingAbsence;
-    this.getdataAbsenseListRequest(urlWhoAbsencing).then(data => {
+    this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
       const { items } = data;
-      this.dataAbsenseList = items;
+      this.dataAbsenceList = items;
     });
-    this.getdataAbsenseListRequest(urlUpcommingAbsencing).then(data => {
+    this.getDataAbsenceListRequest(urlUpcommingAbsencing).then(data => {
       const { items } = data;
-      this.dataAbsenseList2 = items;
+      this.dataAbsenceList2 = items;
     });
   },
   computed: {
@@ -139,15 +139,15 @@ export default {
           });
       });
     },
-    getdataAbsenseListRequest(url) {
+    getDataAbsenceListRequest(url) {
       return new Promise(resolve => {
         this.$http.post(`${url}`).then(res => {
           resolve({ items: res.data.list });
         });
       });
     },
-    getDataMoreAbsencingRequest(url) {
-      const { pageSize, pageIndex } = this.ModalAbsenseList;
+    getDataMoreAbsenceListRequest(url) {
+      const { pageSize, pageIndex } = this.ModalAbsenceList;
       const filterRequest = {
         pageSize,
         pageIndex
@@ -158,14 +158,14 @@ export default {
         });
       });
     },
-    viewMoreAbsense(name) {
-      this.ModalAbsenseList.loadingViewMore = true;
-      this.ModalAbsenseList.pageIndex += 1;
-      const { url } = this.ModalAbsenseList;
-      this.getDataMoreAbsencingRequest(url).then(data => {
+    viewMoreAbsence(name) {
+      this.ModalAbsenceList.loadingViewMore = true;
+      this.ModalAbsenceList.pageIndex += 1;
+      const { url } = this.ModalAbsenceList;
+      this.getDataMoreAbsenceListRequest(url).then(data => {
         const { items } = data;
-        this.ModalAbsenseList.loadingViewMore = false;
-        if ("WhoAbsensing" === name) {
+        this.ModalAbsenceList.loadingViewMore = false;
+        if ("WhoAbsencing" === name) {
           this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
         } else {
           this.dataUpcomingAbsence = this.dataUpcomingAbsence.concat(items);
@@ -175,19 +175,19 @@ export default {
     viewFull(name) {
       if ("WhoAbsencing" === name) {
         this.popup.showWhoAbsencing = true;
-        this.ModalAbsenseList.url = this.apiAbsence.filterWhoAbsencing;
+        this.ModalAbsenceList.url = this.apiAbsence.filterWhoAbsencing;
       }
       if ("UpcommingAbsence" === name) {
         this.popup.showUpcomingAbsence = true;
-        this.ModalAbsenseList.url = this.apiAbsence.filterUpcommingAbsence;
+        this.ModalAbsenceList.url = this.apiAbsence.filterUpcommingAbsence;
       }
-      const { url } = this.ModalAbsenseList;
-      this.ModalAbsenseList.loadingViewFull = true;
-      this.ModalAbsenseList.pageSize = 9;
-      this.ModalAbsenseList.pageIndex = 0;
-      this.getDataMoreAbsencingRequest(url).then(data => {
+      const { url } = this.ModalAbsenceList;
+      this.ModalAbsenceList.loadingViewFull = true;
+      this.ModalAbsenceList.pageSize = 9;
+      this.ModalAbsenceList.pageIndex = 0;
+      this.getDataMoreAbsenceListRequest(url).then(data => {
         const { items } = data;
-        this.ModalAbsenseList.loadingViewFull = false;
+        this.ModalAbsenceList.loadingViewFull = false;
         if ("WhoAbsencing" === name) {
           this.dataWhoAbsencing = items;
         } else {
@@ -198,7 +198,7 @@ export default {
   },
   data() {
     return {
-      ModalAbsenseList: {
+      ModalAbsenceList: {
         name: "",
         loadingViewFull: false,
         loadingViewMore: false,
@@ -244,8 +244,8 @@ export default {
           description: "Style hơi chuối xí :D "
         }
       ],
-      dataAbsenseList: [],
-      dataAbsenseList2: [],
+      dataAbsenceList: [],
+      dataAbsenceList2: [],
       dataWhoAbsencing: [],
       dataUpcomingAbsence: []
     };
