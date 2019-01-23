@@ -5,45 +5,40 @@
         <v-container grid-list-md>
           <v-layout row wrap>
             <v-flex xs5>
-              <v-select
+              <v-autocomplete
                 v-model="name_employer"
-                :items="items"
                 item-text="name"
                 item-value="id"
+                :items="items"
                 label="Choose name employer"
-                persistent-hint
                 return-object
-                single-line
-              ></v-select>
+              ></v-autocomplete>
               <p class="font-weight-bold">Absence Type</p>
-              <v-select
+              <v-autocomplete
                 v-model="type_absence"
-                :items="items"
                 item-text="name"
                 item-value="id"
+                :items="items"
                 label="Choose type absence"
-                persistent-hint
                 return-object
-                single-line
-              ></v-select>
-
+              ></v-autocomplete>
               <v-text class="font-weight-bold">Absence Category : </v-text> Unpaind Leave
               <p class="font-weight-bold mt-4">Absence Reason</p>
-              <v-select
+              <v-autocomplete
                 v-model="reason_employer"
-                :items="items"
                 item-text="name"
                 item-value="id"
-                label="Choose reason absence"
-                persistent-hint
+                :items="items"
                 return-object
-                single-line
-              ></v-select>
-
-              <p class="font-weight-bold">Select days</p>
-              <vv-card>
-                <v-date-picker ref="picker" v-model="date" :picker-date.sync="pickerDate" full-width></v-date-picker>
-              </vv-card>
+              ></v-autocomplete>
+              <p class="font-weight-bold mt-4">Select days</p>
+                <v-card>
+                  <v-date-picker 
+                    v-model="dates"
+                    multiple
+                    width="100%"
+                  ></v-date-picker>
+                </v-card>
             </v-flex>
             <v-flex xs5 offset-xs1>
               <v-layout row wrap>
@@ -126,28 +121,16 @@
 export default {
   props: {
     popup: Object,
-    items: Object
+    items: Array
   },
   data() {
     return {
-      dialog: true,
-      date: new Date().toISOString().substr(0, 10),
-      pickerDate: null,
+      dates: [],
       name_employer: null,
       type_absence: null,
       reason_employer: null,
-
     };
   },
-  watch: {
-    pickerDate() {
-      this.notes = [
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)]
-      ].filter((value, index, self) => self.indexOf(value) === index);
-    }
-  }
 };
 </script>
 <style scoped>
