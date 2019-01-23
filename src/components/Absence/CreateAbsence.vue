@@ -107,7 +107,7 @@
         </v-container>
         <div class="ml-4">
           <span class="font-weight-bold text-uppercase">reason</span>
-          <v-textarea class="mr-3 mt-3" solo value="Optional" required></v-textarea>
+          <v-textarea class="mr-3 mt-3" solo placeholder="Optional" required></v-textarea>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
