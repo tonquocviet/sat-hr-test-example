@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="value.isOpen" width="1200">
+    <v-dialog v-model="whoIsAbsensingModel.isOpen" width="1200">
       <v-card>
         <v-card-title class="headline default lighten-2" style="padding: 16px 25px">
           <div style="width:30px;height:2px;margin-right:5px;background:orange"></div>
@@ -9,7 +9,7 @@
         <v-card-text class="card-user">
           <v-layout row wrap>
             <v-flex
-              v-for="(item, index) in data.items"
+              v-for="(item, index) in items"
               xs12
               sm6
               md4
@@ -19,7 +19,7 @@
               <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
-              <v-btn flat color="success" v-if="value.loadingViewMore">
+              <v-btn flat color="success" v-if="whoIsAbsensingModel.loadingViewMore">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
               </v-btn>
               <v-btn v-else @click="viewMore">View More</v-btn>
@@ -40,14 +40,14 @@ export default {
   },
   props: {
     title: String,
-    data: Object,
-    value: Object,
-    viewMoreWhoAbsencing: Function
+    items: Array,
+    whoIsAbsensingModel: Object,
+    viewMoreAbsencing: Function
   },
   methods: {
     viewMore() {
-      this.value.pageSize += 9;
-      this.viewMoreWhoAbsencing();
+      this.whoIsAbsensingModel.pageIndex += 1;
+      this.viewMoreAbsencing();
     }
   }
 };

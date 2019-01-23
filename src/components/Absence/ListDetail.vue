@@ -9,7 +9,7 @@
         <v-list two-line class="item-card-absence">
           <v-list-tile>
             <v-list-tile-avatar>
-              <img :src="item.avatar ">
+              <img :src="(item.avatar || {}).imageUrl ">
             </v-list-tile-avatar>
             <v-list-tile-sub-title>
               <span class="font-weight-bold">{{ item.employeeName }}</span>
@@ -29,10 +29,10 @@
       </v-card>
       <v-card flat>
         <v-layout justify-end>
-          <v-btn flat color="success" v-if="value.loadingViewFull">
+          <v-btn flat color="success" v-if="whoIsAbsensingModel.loadingViewFull">
             <v-progress-circular indeterminate color="green"></v-progress-circular>
           </v-btn>
-          <v-btn v-else @click="viewFull('WhoAbsencing')" flat color="success">View full</v-btn>
+          <v-btn v-else @click="viewFull(name)" flat color="success">View full</v-btn>
         </v-layout>
       </v-card>
       <!-- end who are absence -->
@@ -44,9 +44,10 @@ import moment from "moment";
 
 export default {
   props: {
-    value: Object,
+    whoIsAbsensingModel: Object,
     items: Array,
     title: String,
+    name: String,
     viewFull: Function
   },
   methods: {

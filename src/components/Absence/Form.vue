@@ -38,20 +38,27 @@
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
         <AbsenceDetailList
-          :items="dataAbsencing.items"
-          :title="this.titleAbsence"
+          name="WhoAbsencing"
+          :items="dataAbsencing"
+          :title="titleAbsence"
           :viewFull="viewFull"
-          :value="value"
+          :whoIsAbsensingModel="whoIsAbsensingModel"
         />
         <v-divider/>
-        <!-- <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/> -->
+        <AbsenceDetailList
+          name="UpcommingAbsencing"
+          :items="dataAbsencing2"
+          :title="titleUpcoming"
+          :viewFull="viewFull"
+          :whoIsAbsensingModel="whoIsAbsensingModel"
+        />
       </v-container>
     </v-flex>
     <ModalListDetail
-      title="Who's on leave"
-      :viewMoreWhoAbsencing="viewMoreWhoAbsencing"
-      :data="dataWhoAbsencing"
-      :value="value"
+      :title="whoIsAbsensingModel.titleModalListDetail"
+      :viewMoreAbsencing="viewMoreAbsencing"
+      :items="dataWhoAbsencing"
+      :whoIsAbsensingModel="whoIsAbsensingModel"
     />
   </v-layout>
 </template>
@@ -77,8 +84,15 @@ export default {
       this.dataFilterAbsences = data.items;
       this.totalRecords = data.totalRecords;
     });
-    this.getDataAbsencingRequest().then(data => {
-      this.dataAbsencing = data;
+    const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const urlUpcommingAbsencing = this.apiAbsence.filterUpcommingAbsence;
+    this.getDataAbsencingRequest(urlWhoAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsencing = items;
+    });
+    this.getDataAbsencingRequest(urlUpcommingAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsencing2 = items;
     });
   },
   computed: {
@@ -119,55 +133,60 @@ export default {
           });
       });
     },
-    getDataAbsencingRequest() {
+    getDataAbsencingRequest(url) {
       return new Promise(resolve => {
-        this.$http.post(`${this.apiAbsence.filterWhoAbsencing}`).then(res => {
-          resolve({
-            items: res.data.list,
-            totalRecords: res.data.totalRecords
-          });
+        this.$http.post(`${url}`).then(res => {
+          resolve({ items: res.data.list });
         });
       });
     },
-    getDataWhoAbsencingRequest() {
-      const { pageSize, pageIndex } = this.value;
+    getDataMoreAbsencingRequest(url) {
+      const { pageSize, pageIndex } = this.whoIsAbsensingModel;
       const filterRequest = {
         pageSize,
         pageIndex
       };
       return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiAbsence.filterWhoAbsencing}`, filterRequest)
-          .then(res => {
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
-          });
+        this.$http.post(`${url}`, filterRequest).then(res => {
+          resolve({ items: res.data.list });
+        });
       });
     },
-    viewMoreWhoAbsencing() {
-      this.value.loadingViewMore = true;
-      this.getDataWhoAbsencingRequest().then(data => {
-        this.dataWhoAbsencing = data;
-        this.value.loadingViewMore = false;
+    viewMoreAbsencing() {
+      this.whoIsAbsensingModel.loadingViewMore = true;
+      const { url } = this.whoIsAbsensingModel;
+      this.getDataMoreAbsencingRequest(url).then(data => {
+        const { items } = data;
+        this.whoIsAbsensingModel.loadingViewMore = false;
+        this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
       });
     },
     viewFull(name) {
-      if (name === "WhoAbsencing") {
-        this.value.loadingViewFull = true;
-        this.value.pageSize = 9;
-        this.getDataWhoAbsencingRequest().then(data => {
-          this.value.isOpen = true;
-          this.dataWhoAbsencing = data;
-          this.value.loadingViewFull = false;
-        });
+      if ("WhoAbsencing" === name) {
+        this.whoIsAbsensingModel.url = this.apiAbsence.filterWhoAbsencing;
+        this.whoIsAbsensingModel.titleModalListDetail = this.titleAbsence;
       }
+      if ("UpcommingAbsencing" === name) {
+        this.whoIsAbsensingModel.url = this.apiAbsence.filterUpcommingAbsence;
+        this.whoIsAbsensingModel.titleModalListDetail = this.titleUpcoming;
+      }
+      const { url } = this.whoIsAbsensingModel;
+      this.whoIsAbsensingModel.loadingViewFull = true;
+      this.whoIsAbsensingModel.pageSize = 9;
+      this.whoIsAbsensingModel.pageIndex = 0;
+      this.getDataMoreAbsencingRequest(url).then(data => {
+        const { items } = data;
+        this.whoIsAbsensingModel.isOpen = true;
+        this.whoIsAbsensingModel.loadingViewFull = false;
+        this.dataWhoAbsencing = items;
+      });
     }
   },
   data() {
     return {
-      value: {
+      whoIsAbsensingModel: {
+        titleModalListDetail: "",
+        name: "",
         loadingViewFull: false,
         loadingViewMore: false,
         isOpen: false,
@@ -185,8 +204,10 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      dataAbsencing: {},
-      dataWhoAbsencing: {}
+      dataAbsencing: [],
+      dataAbsencing2: [],
+      dataWhoAbsencing: [],
+      dataUpcommingAbsencing: []
     };
   }
 };

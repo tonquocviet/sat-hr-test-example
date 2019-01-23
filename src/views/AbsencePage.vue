@@ -15,7 +15,8 @@ export default {
     return {
       apiAbsence: {
         filterAbsences: `${baseUrl}/absence/filter`,
-        filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`
+        filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
+        filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`
       }
     };
   }
