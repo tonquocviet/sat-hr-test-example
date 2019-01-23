@@ -1,7 +1,14 @@
 <template>
  <v-container grid-list-md>
     <v-layout class="header">a</v-layout>
-    <v-layout class="main">a</v-layout>
+    <v-layout class="main">
+      <v-flex xs6>
+          1
+      </v-flex>
+      <v-flex xs6>
+          2
+      </v-flex>
+    </v-layout>
     <v-layout  column class="footer">
       <h3 class="mt-3"> Upcoming leaves </h3>
       <v-card v-for="item in items" :key="item.id" class="mt-3">
@@ -29,7 +36,7 @@
             <h3>{{ item.address }}</h3>
           </v-flex>
           <v-flex xs2 v-if="item.status == 'pending'">
-            <v-layout class="primary--text text-uppercase py-4">
+            <v-layout class="primary--text text-uppercase py-3">
               <h3 >view</h3>
               <v-icon>trending_flat</v-icon>
             </v-layout>
@@ -63,7 +70,7 @@
             <h3>{{ item.address }}</h3>
           </v-flex>
           <v-flex xs2 v-if="item.status == 'pending'">
-            <v-layout class="primary--text text-uppercase py-4">
+            <v-layout class="primary--text text-uppercase py-3">
               <h3 >view</h3>
               <v-icon>trending_flat</v-icon>
             </v-layout>
