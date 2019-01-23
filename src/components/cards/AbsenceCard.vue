@@ -1,5 +1,8 @@
 <template>
-  <v-card>
+  <v-card
+    :class="isAbsenceCard ? `v-pointer-card` : null"
+    @click="isAbsenceCard ? showModalDetail() : null"
+  >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout>
         <v-flex xs8 sm9>
@@ -73,7 +76,11 @@ export default {
     UserAvatar
   },
   props: {
-    item: Object
+    item: Object,
+    isAbsenceCard: Boolean
+  },
+  data() {
+    return {};
   },
   methods: {
     formatDate(date) {
@@ -95,12 +102,19 @@ export default {
     },
     submittedDate(date) {
       return moment(date).format("MM-DD-YYYY");
+    },
+    showModalDetail() {
+      this.itemDetail = this.item;
+      this.$emit("showDetailModal", this.itemDetail);
     }
   }
 };
 </script>
 
 <style scopes>
+.v-pointer-card {
+  cursor: pointer;
+}
 .user-infomation {
   border-left: 4px solid #ffd400;
   margin-left: -1px;

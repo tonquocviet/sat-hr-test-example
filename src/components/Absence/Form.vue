@@ -6,11 +6,7 @@
         <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
-        <v-btn
-          v-if="viewMode === 'card'"
-          icon
-          @click="changeViewMode(true)"
-        >
+        <v-btn v-if="viewMode === 'card'" icon @click="changeViewMode(true)">
           <v-icon>list</v-icon>
         </v-btn>
         <v-btn v-else icon @click="changeViewMode(false)">
@@ -28,6 +24,7 @@
             :isShowMore="isShowMore"
             :hasShowMore="hasShowMore"
             v-else
+            @showDetailModal="showDetailModal"
           />
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
@@ -42,6 +39,7 @@
       </v-container>
     </v-flex>
     <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
+    <ModalDetail :modal="modal" :itemDetail="itemDetail"/>
   </v-layout>
 </template>
 <script>
@@ -49,17 +47,20 @@ import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalListDetail from "./ModalListDetail";
+import ModalDetail from "./ModalDetail";
 
 export default {
   components: {
     AbsenceList,
     AbsenceCard,
     AbsenceDetailList,
-    ModalListDetail
+    ModalListDetail,
+    ModalDetail
   },
   props: {
     viewMode: String,
-    apiAbsence: Object
+    apiAbsence: Object,
+    itemDetail: Object
   },
   mounted() {
     this.getDataFromApi().then(data => {
@@ -75,6 +76,10 @@ export default {
     }
   },
   methods: {
+    showDetailModal(itemDetail) {
+      this.modal.isShowmodal = true;
+      this.$emit("showDetailModal", itemDetail);
+    },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
     },
@@ -111,6 +116,9 @@ export default {
       value: {
         isOpen: false,
         end: 3
+      },
+      modal: {
+        isShowmodal: false
       },
       dataFilterAbsences: [],
       pageIndex: 0,
