@@ -5,6 +5,7 @@
         <v-container grid-list-md>
           <v-layout row wrap>
             <v-flex xs5>
+              <p class="font-weight-bold">Employer name</p>
               <v-autocomplete
                 v-model="name_employer"
                 item-text="name"
@@ -22,12 +23,13 @@
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
-              <v-text class="font-weight-bold">Absence Category : </v-text> Unpaind Leave
+              <span class="font-weight-bold">Absence Category : </span> Unpaind Leave
               <p class="font-weight-bold mt-4">Absence Reason</p>
               <v-autocomplete
                 v-model="reason_employer"
                 item-text="name"
                 item-value="id"
+                label="Choose reason employer"
                 :items="items"
                 return-object
               ></v-autocomplete>
@@ -69,7 +71,7 @@
                 </v-flex>
                 <v-flex xs9>
                   <v-card class="blockquote">
-                    <v-text class="body-1">On May 28 there's a shortage of IOS developers </v-text>
+                    <span class="body-1">On May 28 there's a shortage of IOS developers </span>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -81,7 +83,7 @@
                 </v-flex>
                 <v-flex xs9>
                   <v-card class="blockquote">
-                    <v-text class="body-1">On May 28 there's a shortage of IOS developers</v-text>
+                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -93,7 +95,7 @@
                 </v-flex>
                 <v-flex xs9>
                   <v-card class="blockquote">
-                    <v-text class="body-1">On May 28 there's a shortage of IOS developers</v-text>
+                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -102,7 +104,7 @@
         </v-container>
         <div class="ml-4">
           <span class="font-weight-bold text-uppercase">reason</span>
-          <v-textarea class="mr-3 mt-3" solo value="Optional" required></v-textarea>
+          <textarea class="mr-3 mt-3" solo value="Optional" required></textarea>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
