@@ -1,7 +1,7 @@
 import Absence from "../views/AbsencePage";
+import Profile from "../views/ProfilePage";
 import OrgChart from "../views/OrgChartPage";
-export default [
-  {
+export default [{
     path: '/',
     name: 'Root',
     redirect: {
@@ -12,6 +12,11 @@ export default [
     path: '/absence',
     name: 'Absence',
     component: Absence
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   },
   {
     path: '/org-chart',
