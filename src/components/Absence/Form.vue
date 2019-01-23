@@ -59,8 +59,7 @@ export default {
   },
   props: {
     viewMode: String,
-    apiAbsence: Object,
-    itemDetail: Object
+    apiAbsence: Object
   },
   mounted() {
     this.getDataFromApi().then(data => {
@@ -78,6 +77,7 @@ export default {
   methods: {
     showDetailModal(itemDetail) {
       this.modal.isShowmodal = true;
+      this.itemDetail = itemDetail;
       this.$emit("showDetailModal", itemDetail);
     },
     changeViewMode(isListView) {
@@ -117,6 +117,7 @@ export default {
         isOpen: false,
         end: 3
       },
+      itemDetail: null,
       modal: {
         isShowmodal: false
       },

@@ -1,7 +1,7 @@
 <template>
   <div class="text-xs-center">
     <v-dialog v-model="modal.isShowmodal" width="1200">
-      <v-card>
+      <v-card v-if="itemDetail">
         <v-container grid-list-md text-xs-center>
           <v-layout row>
             <v-flex d-flex xs12 sm9>
@@ -26,22 +26,22 @@
                               <div style="height: 117px" class="text-xs-center pl-3 pr-3 pt-2 pb-2">
                                 <v-layout>
                                   <v-flex xs3>
-                                    <h3>{{formatMonth(new Date())}}</h3>
-                                    <h1>{{formatDate(new Date())}}</h1>
-                                    <h3 class="grey--text">{{formatDay(new Date())}}</h3>
+                                    <h3>{{formatMonth(itemDetail.startDate)}}</h3>
+                                    <h1>{{formatDate(itemDetail.startDate)}}</h1>
+                                    <h3 class="grey--text">{{formatDay(itemDetail.startDate)}}</h3>
                                   </v-flex>
                                   <v-flex xs6 class="user-date-arrow">
                                     <v-layout class="justify-center">
                                       <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
                                       <h4
                                         style="position: absolute;bottom: 0px;"
-                                      >{{countDay(new Date(), new Date())}} days anhual leave</h4>
+                                      >{{countDay(itemDetail.startDate, itemDetail.endDate)}} days anhual leave</h4>
                                     </v-layout>
                                   </v-flex>
                                   <v-flex xs3>
-                                    <h3>{{formatMonth(new Date())}}</h3>
-                                    <h1>{{formatDate(new Date())}}</h1>
-                                    <h3 class="grey--text">{{formatDay(new Date())}}</h3>
+                                    <h3>{{formatMonth(itemDetail.endDate)}}</h3>
+                                    <h1>{{formatDate(itemDetail.endDate)}}</h1>
+                                    <h3 class="grey--text">{{formatDay(itemDetail.endDate)}}</h3>
                                   </v-flex>
                                 </v-layout>
                               </div>
@@ -53,7 +53,7 @@
                               light
                               name="input-7-4"
                               label="Reason"
-                              v-model="textarea"
+                              v-model="description"
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
@@ -66,7 +66,7 @@
                                 <v-expansion-panel-content>
                                   <div slot="header">Absence Policy Group</div>
                                   <v-card>
-                                    <v-card-text>{{policyInfomation}}</v-card-text>
+                                    <v-card-text>{{itemDetail.leaveDescription}}</v-card-text>
                                   </v-card>
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -120,12 +120,18 @@
 
                       <v-flex xs12>
                         <v-layout row>
-                          <v-flex xs1>
+                          <v-flex xs0>
                             <v-list-tile-avatar style="margin-top: 10px;">
-                              <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                              <div class="v-image-user">
+                                <user-avatar
+                                  :imageUrl="(itemDetail.avatar||{}).imageUrl"
+                                  :name="itemDetail.employeeName"
+                                  width="unset"
+                                />
+                              </div>
                             </v-list-tile-avatar>
                           </v-flex>
-                          <v-flex xs11>
+                          <v-flex xs12>
                             <v-text-field
                               style="height: 50px"
                               v-model="comment"
@@ -160,16 +166,19 @@
                         <v-layout row style="height: 40px;">
                           <v-layout row>
                             <v-flex xs0>
-                              <v-list-tile-avatar style="justify-content: center;">
-                                <img
-                                  style="width: 30px; height: 30px;"
-                                  src="https://randomuser.me/api/portraits/men/85.jpg"
-                                >
+                              <v-list-tile-avatar>
+                                <div class="v-image-user">
+                                  <user-avatar
+                                    :imageUrl="(itemDetail.avatar||{}).imageUrl"
+                                    :name="itemDetail.employeeName"
+                                    width="unset"
+                                  />
+                                </div>
                               </v-list-tile-avatar>
                             </v-flex>
                             <v-flex xs12>
-                              <v-list-tile style="position: absolute; left: 30px">
-                                <span class="caption">
+                              <v-list-tile style="position: absolute; left: 35px">
+                                <span class="body-1">
                                   <a>
                                     <u>John Mayers</u>
                                   </a> replied on
@@ -188,8 +197,8 @@
 
                       <v-flex xs12>
                         <div class="v-comment">
-                          <div class="text-xs-left ml-2">
-                            <span class="caption">{{policyInfomation}}</span>
+                          <div class="text-xs-left ml-2 mt-2">
+                            <span class="caption">{{itemDetail.leaveDescription}}</span>
                           </div>
                         </div>
                       </v-flex>
@@ -207,11 +216,15 @@
                   </v-btn>
                 </v-flex>
                 <v-flex justify-center align-center d-flex style="flex-direction: column">
-                  <img
-                    style="width: 100px; height: 100px; border-radius: 50px; margin-top: 30px"
-                    src="https://randomuser.me/api/portraits/men/85.jpg"
-                  >
-                  <span class="headline font-weight-bold">John Mayers</span>
+                  <div class="v-image-user-2">
+                    <user-avatar
+                      :imageUrl="(itemDetail.avatar||{}).imageUrl"
+                      :name="itemDetail.employeeName"
+                      class="user-img"
+                      :imgActive="imgActive"
+                    />
+                  </div>
+                  <span class="headline font-weight-bold">{{itemDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
                   <v-chip class="headline" label>Absen Detail</v-chip>
@@ -226,14 +239,15 @@
                     <v-flex v-for="item in dataHRCard" :key="item.id">
                       <v-card width="120" height="110">
                         <v-list-tile-avatar class="v-card-image">
-                          <v-img
-                            :src="item.img"
-                            style="border-radius: 25px;"
-                            width="50"
-                            height="50"
-                          ></v-img>
+                          <div class="v-image-user">
+                            <user-avatar
+                              :imageUrl="(item.avatar||{}).imageUrl"
+                              :name="item.employeeName"
+                              width="unset"
+                            />
+                          </div>
                         </v-list-tile-avatar>
-                        <span class="body-2">John Mayers</span>
+                        <span class="body-2">{{item.employeeName}}</span>
                         <v-btn
                           class="mt-3"
                           position
@@ -262,55 +276,28 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
+import { dataHRCard } from "./fakeData";
 export default {
   components: {
     UserAvatar
   },
   props: {
     modal: Object,
-    itemDetail: Object
-  },
-  mounted() {
-    console.log('this.itemDetail', this.itemDetail)
+    itemDetail: Object,
+    dataHRCard: {
+      type: Array,
+      default: () => dataHRCard
+    }
   },
   data() {
     return {
-      textarea: "",
+      description: "",
       comment: "",
+      typeComment: 1,
+      typeId: 4,
+      imgActive: true,
       loading: false,
-      checkbox: true,
-      policyInfomation:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      dataHRCard: [
-        {
-          id: 1,
-          img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
-          icon: "warning",
-          name: "John Mayers",
-          color: "warning"
-        },
-        {
-          id: 2,
-          img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
-          icon: "",
-          name: "Phil colling",
-          color: null
-        },
-        {
-          id: 3,
-          img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
-          icon: "cancel",
-          name: "Carl Mayers",
-          color: "dark"
-        },
-        {
-          id: 4,
-          img: "https://cdn.vuetifyjs.com/images/cards/desert.jpg",
-          icon: "check_circle",
-          name: "Kim Mayers",
-          color: "success"
-        }
-      ]
+      checkbox: false
     };
   },
   methods: {
@@ -349,5 +336,26 @@ export default {
   justify-content: center;
   align-items: center;
   height: 60px;
+}
+.v-image-user {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  background: grey;
+  justify-content: center;
+  align-items: center;
+}
+.v-image-user-2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  display: flex;
+  background: steelblue;
+  justify-content: center;
+  align-items: center;
+}
+.user-img {
+  justify-content: center;
 }
 </style>
