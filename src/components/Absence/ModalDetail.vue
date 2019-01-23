@@ -188,9 +188,21 @@
                             </v-flex>
                           </v-layout>
                           <v-flex xs1>
-                            <v-btn flat icon>
-                              <v-icon size="20">settings</v-icon>
-                            </v-btn>
+                            <v-menu bottom right>
+                              <v-btn flat icon slot="activator">
+                                <v-icon size="20">settings</v-icon>
+                              </v-btn>
+                              <v-list>
+                                <v-list-tile
+                                  v-for="(item, i) in itemsComment"
+                                  :key="i"
+                                  style="cursor: pointer;"
+                                >
+                                  <v-icon size="20" color="dark">{{item.icon}}</v-icon>
+                                  <v-list-tile-title class="body-1 dark--text ml-2">{{ item.title }}</v-list-tile-title>
+                                </v-list-tile>
+                              </v-list>
+                            </v-menu>
                           </v-flex>
                         </v-layout>
                       </v-flex>
@@ -201,6 +213,18 @@
                             <span class="caption">{{itemDetail.leaveDescription}}</span>
                           </div>
                         </div>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-flex right xs4>
+                          <v-btn flat small color="primary">
+                            <v-icon>attach_file</v-icon>Bug Report.xml
+                          </v-btn>
+                        </v-flex>
+                        <v-flex right xs4>
+                          <v-btn flat small color="primary">
+                            <v-icon>image</v-icon>SytemInformation.txt
+                          </v-btn>
+                        </v-flex>
                       </v-flex>
                     </v-layout>
                   </v-card>
@@ -256,6 +280,7 @@
                           icon
                           :color="item.color"
                           style="margin-left: -15px"
+                          v-if="item.icon"
                         >
                           <v-icon>{{item.icon}}</v-icon>
                         </v-btn>
@@ -276,7 +301,7 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
-import { dataHRCard } from "./fakeData";
+import { dataHRCard, itemsComment } from "./fakeData";
 export default {
   components: {
     UserAvatar
@@ -287,6 +312,10 @@ export default {
     dataHRCard: {
       type: Array,
       default: () => dataHRCard
+    },
+    itemsComment: {
+      type: Array,
+      default: () => itemsComment
     }
   },
   data() {

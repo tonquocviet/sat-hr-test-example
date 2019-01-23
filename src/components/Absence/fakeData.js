@@ -44,3 +44,14 @@ export const dataHRCard = [
     color: "success"
   }
 ];
+
+export const itemsComment = [
+  {
+    title: "Private",
+    icon: "lock"
+  },
+  {
+    title: "Public",
+    icon: "public"
+  }
+];
