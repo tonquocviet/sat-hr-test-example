@@ -8,9 +8,14 @@
       <v-card flat v-for="item in items" :key="item.id" @click="showDetail(item)">
         <v-list two-line class="item-card-absence">
           <v-list-tile>
-            <v-list-tile-avatar>
-              <img :src="(item.avatar || {}).imageUrl ">
-            </v-list-tile-avatar>
+            <div class="v-image-user">
+              <UserAvatar
+                :imageUrl="(item.avatar||{}).imageUrl"
+                :name="item.employeeName"
+                width="unset"
+                class="user-img"
+              />
+            </div>
             <v-list-tile-sub-title>
               <span class="font-weight-bold">{{ item.employeeName }}</span>
               <v-layout>
@@ -29,10 +34,7 @@
       </v-card>
       <v-card flat>
         <v-layout justify-end>
-          <v-btn flat color="success" v-if="whoIsAbsensingModel.loadingViewFull">
-            <v-progress-circular indeterminate color="green"></v-progress-circular>
-          </v-btn>
-          <v-btn v-else @click="viewFull(name)" flat color="success">View full</v-btn>
+          <v-btn @click="viewFull" flat color="success">View full</v-btn>
         </v-layout>
       </v-card>
       <!-- end who are absence -->
@@ -41,14 +43,16 @@
 </template>
 <script>
 import moment from "moment";
+import UserAvatar from "../avatars/Avatar";
 
 export default {
+  components: {
+    UserAvatar
+  },
   props: {
-    whoIsAbsensingModel: Object,
     items: Array,
     title: String,
-    name: String,
-    viewFull: Function
+    name: String
   },
   methods: {
     showDetail(item) {
@@ -60,6 +64,9 @@ export default {
     },
     submittedDate(date) {
       return moment(date).format("MM-DD-YYYY");
+    },
+    viewFull() {
+      this.$emit("viewFull", this.name);
     }
   }
 };
@@ -70,5 +77,15 @@ export default {
 }
 .item-card-absence:hover {
   background-color: #eeeeee;
+}
+.v-image-user {
+  margin-right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  background: grey;
+  justify-content: center;
+  align-items: center;
 }
 </style>

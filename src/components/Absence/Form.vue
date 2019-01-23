@@ -41,23 +41,28 @@
           name="WhoAbsencing"
           :items="dataAbsencing"
           :title="titleAbsence"
-          :viewFull="viewFull"
-          :whoIsAbsensingModel="whoIsAbsensingModel"
+          @viewFull="viewFull"
         />
         <v-divider/>
         <AbsenceDetailList
-          name="UpcommingAbsencing"
+          name="UpcommingAbsence"
           :items="dataAbsencing2"
           :title="titleUpcoming"
-          :viewFull="viewFull"
-          :whoIsAbsensingModel="whoIsAbsensingModel"
+          @viewFull="viewFull"
         />
       </v-container>
     </v-flex>
-    <ModalListDetail
-      :viewMoreAbsencing="viewMoreAbsencing"
+    <ModalWhoAbsencing
+      :title="titleAbsence"
+      @viewMoreAbsense="viewMoreAbsense"
       :items="dataWhoAbsencing"
-      :whoIsAbsensingModel="whoIsAbsensingModel"
+      :AbsenceModal="AbsenceModal"
+    />
+    <ModelUpcomingAbsence
+      :title="titleUpcoming"
+      @viewMoreAbsense="viewMoreAbsense"
+      :items="dataUpcomingAbsence"
+      :AbsenceModal="AbsenceModal"
     />
   </v-layout>
 </template>
@@ -65,14 +70,16 @@
 import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
-import ModalListDetail from "./ModalListDetail";
+import ModalWhoAbsencing from "./ModalWhoAbsencing";
+import ModelUpcomingAbsence from "./ModelUpcomingAbsence";
 
 export default {
   components: {
     AbsenceList,
     AbsenceCard,
     AbsenceDetailList,
-    ModalListDetail
+    ModalWhoAbsencing,
+    ModelUpcomingAbsence
   },
   props: {
     viewMode: String,
@@ -140,7 +147,7 @@ export default {
       });
     },
     getDataMoreAbsencingRequest(url) {
-      const { pageSize, pageIndex } = this.whoIsAbsensingModel;
+      const { pageSize, pageIndex } = this.AbsenceModal;
       const filterRequest = {
         pageSize,
         pageIndex
@@ -151,44 +158,52 @@ export default {
         });
       });
     },
-    viewMoreAbsencing() {
-      this.whoIsAbsensingModel.loadingViewMore = true;
-      const { url } = this.whoIsAbsensingModel;
+    viewMoreAbsense(name) {
+      this.AbsenceModal.loadingViewMore = true;
+      this.AbsenceModal.pageIndex += 1;
+      const { url } = this.AbsenceModal;
       this.getDataMoreAbsencingRequest(url).then(data => {
         const { items } = data;
-        this.whoIsAbsensingModel.loadingViewMore = false;
-        this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
+        this.AbsenceModal.loadingViewMore = false;
+        if ("WhoAbsensing" === name) {
+          this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
+        } else {
+          this.dataUpcomingAbsence = this.dataUpcomingAbsence.concat(items);
+        }
       });
     },
     viewFull(name) {
       if ("WhoAbsencing" === name) {
-        this.whoIsAbsensingModel.url = this.apiAbsence.filterWhoAbsencing;
-        this.whoIsAbsensingModel.titleModalListDetail = this.titleAbsence;
+        this.AbsenceModal.isOpenWhoAbsencing = true;
+        this.AbsenceModal.url = this.apiAbsence.filterWhoAbsencing;
       }
-      if ("UpcommingAbsencing" === name) {
-        this.whoIsAbsensingModel.url = this.apiAbsence.filterUpcommingAbsence;
-        this.whoIsAbsensingModel.titleModalListDetail = this.titleUpcoming;
+      if ("UpcommingAbsence" === name) {
+        this.AbsenceModal.isOpenUpcomingAbsence = true;
+        this.AbsenceModal.url = this.apiAbsence.filterUpcommingAbsence;
       }
-      const { url } = this.whoIsAbsensingModel;
-      this.whoIsAbsensingModel.loadingViewFull = true;
-      this.whoIsAbsensingModel.pageSize = 9;
-      this.whoIsAbsensingModel.pageIndex = 0;
+      const { url } = this.AbsenceModal;
+      this.AbsenceModal.loadingViewFull = true;
+      this.AbsenceModal.pageSize = 9;
+      this.AbsenceModal.pageIndex = 0;
       this.getDataMoreAbsencingRequest(url).then(data => {
         const { items } = data;
-        this.whoIsAbsensingModel.isOpen = true;
-        this.whoIsAbsensingModel.loadingViewFull = false;
-        this.dataWhoAbsencing = items;
+        this.AbsenceModal.loadingViewFull = false;
+        if ("WhoAbsencing" === name) {
+          this.dataWhoAbsencing = items;
+        } else {
+          this.dataUpcomingAbsence = items;
+        }
       });
     }
   },
   data() {
     return {
-      whoIsAbsensingModel: {
-        titleModalListDetail: "",
+      AbsenceModal: {
         name: "",
         loadingViewFull: false,
         loadingViewMore: false,
-        isOpen: false,
+        isOpenWhoAbsencing: false,
+        isOpenUpcomingAbsence: false,
         pageSize: 9,
         pageIndex: 0
       },
@@ -206,7 +221,7 @@ export default {
       dataAbsencing: [],
       dataAbsencing2: [],
       dataWhoAbsencing: [],
-      dataUpcommingAbsencing: []
+      dataUpcomingAbsence: []
     };
   }
 };

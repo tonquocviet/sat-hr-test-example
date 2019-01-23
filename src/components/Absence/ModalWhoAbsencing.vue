@@ -1,13 +1,18 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="whoIsAbsensingModel.isOpen" width="1200">
+    <v-dialog v-model="AbsenceModal.isOpenWhoAbsencing" width="1200">
       <v-card>
         <v-card-title class="headline default lighten-2" style="padding: 16px 25px">
           <div style="width:30px;height:2px;margin-right:5px;background:orange"></div>
-          <span>{{whoIsAbsensingModel.titleModalListDetail}}</span>
+          <span>{{title}}</span>
         </v-card-title>
         <v-card-text class="card-user">
-          <v-layout row wrap>
+          <div v-if="AbsenceModal.loadingViewFull" style="text-align:center;padding-bottom: 40px;">
+            <v-btn flat color="success">
+              <v-progress-circular indeterminate color="green"></v-progress-circular>
+            </v-btn>
+          </div>
+          <v-layout v-else row wrap>
             <v-flex
               v-for="(item, index) in items"
               xs12
@@ -19,7 +24,7 @@
               <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
-              <v-btn flat color="success" v-if="whoIsAbsensingModel.loadingViewMore">
+              <v-btn flat color="success" v-if="AbsenceModal.loadingViewMore">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
               </v-btn>
               <v-btn v-else @click="viewMore">View More</v-btn>
@@ -39,14 +44,13 @@ export default {
     AbsenceCard
   },
   props: {
+    title: String,
     items: Array,
-    whoIsAbsensingModel: Object,
-    viewMoreAbsencing: Function
+    AbsenceModal: Object
   },
   methods: {
     viewMore() {
-      this.whoIsAbsensingModel.pageIndex += 1;
-      this.viewMoreAbsencing();
+      this.$emit("viewMoreAbsense", "WhoAbsensing");
     }
   }
 };

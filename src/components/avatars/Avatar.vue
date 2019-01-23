@@ -12,7 +12,8 @@
 <script>
 export default {
   props: {
-    width:String,
+    minWidth: String,
+    width: String,
     imageUrl: String,
     name: String,
     backgroundColor: String,
