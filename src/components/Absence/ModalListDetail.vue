@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline default lighten-2" style="padding: 16px 25px">
           <div style="width:30px;height:2px;margin-right:5px;background:orange"></div>
-          <span>{{title}}</span>
+          <span>{{whoIsAbsensingModel.titleModalListDetail}}</span>
         </v-card-title>
         <v-card-text class="card-user">
           <v-layout row wrap>
@@ -39,7 +39,6 @@ export default {
     AbsenceCard
   },
   props: {
-    title: String,
     items: Array,
     whoIsAbsensingModel: Object,
     viewMoreAbsencing: Function

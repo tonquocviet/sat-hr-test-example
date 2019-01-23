@@ -55,7 +55,6 @@
       </v-container>
     </v-flex>
     <ModalListDetail
-      :title="whoIsAbsensingModel.titleModalListDetail"
       :viewMoreAbsencing="viewMoreAbsencing"
       :items="dataWhoAbsencing"
       :whoIsAbsensingModel="whoIsAbsensingModel"
