@@ -37,7 +37,7 @@
         <v-divider/>
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
-      <AbsenceCreate :items="data1" :popup ="popup"></AbsenceCreate>
+      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
     <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
     <ModalDetail :modal="modal" :itemDetail="itemDetail"/>
@@ -55,7 +55,7 @@ export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
-    ModalDetail
+    ModalDetail,
     AbsenceCreate,
     AbsenceCard,
     ModalListDetail
@@ -117,7 +117,7 @@ export default {
   data() {
     return {
       popup: {
-         showCreate: false,
+        showCreate: false
       },
       value: {
         isOpen: false,
