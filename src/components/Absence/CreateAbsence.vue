@@ -5,7 +5,6 @@
         <v-container grid-list-md>
           <v-layout row wrap>
             <v-flex xs5>
-              <p class="font-weight-bold">Employer name</p>
               <v-autocomplete
                 v-model="name_employer"
                 item-text="name"
@@ -14,7 +13,6 @@
                 label="Choose name employer"
                 return-object
               ></v-autocomplete>
-              <p class="font-weight-bold">Absence Type</p>
               <v-autocomplete
                 v-model="type_absence"
                 item-text="name"
@@ -23,8 +21,13 @@
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
-              <span class="font-weight-bold">Absence Category : </span> Unpaind Leave
-              <p class="font-weight-bold mt-4">Absence Reason</p>
+              <v-flex>
+                <v-text-field
+                  value="Unpaind Leave"
+                  label="Absence Category"
+                  readonly
+                ></v-text-field>
+              </v-flex>
               <v-autocomplete
                 v-model="reason_employer"
                 item-text="name"
@@ -65,8 +68,8 @@
               </div>
               <v-layout row wrap class="mt-5">
                 <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="error" fab>
-                    <v-icon>clear</v-icon>
+                  <v-btn color="error" class="ic-status" fab>
+                    <v-icon >clear</v-icon>
                   </v-btn>
                 </v-flex>
                 <v-flex xs9>
@@ -77,7 +80,7 @@
               </v-layout>
               <v-layout row wrap class="mt-5">
                 <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="grey" fab dark>
+                  <v-btn color="grey" class="ic-status" fab dark>
                     <v-icon>priority_high</v-icon>
                   </v-btn>
                 </v-flex>
@@ -89,7 +92,7 @@
               </v-layout>
               <v-layout row wrap class="mt-5">
                 <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="success" fab>
+                  <v-btn color="success" class="ic-status" fab>
                     <v-icon>done</v-icon>
                   </v-btn>
                 </v-flex>
@@ -136,12 +139,12 @@ export default {
 };
 </script>
 <style scoped>
-.text-day-out {
-  margin-top: 108px !important;
-}
 .show-note {
   height: 50px;
   background-color: grey;
   line-height: 50px;
+}
+.ic-status{
+  z-index: 1;
 }
 </style>
