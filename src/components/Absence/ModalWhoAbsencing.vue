@@ -26,7 +26,7 @@
             >
               <AbsenceCard :item="item"/>
             </v-flex>
-            <v-flex sm12 style="text-align:center">
+            <v-flex sm12 style="text-align:center" v-if="hasShowMoreWhoAbsencing">
               <v-btn flat color="success" v-if="ModalAbsenceList.loadingViewMore">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
               </v-btn>
@@ -50,6 +50,7 @@ export default {
     title: String,
     items: Array,
     ModalAbsenceList: Object,
+    hasShowMoreWhoAbsencing: Boolean,
     popup: Object
   },
   methods: {

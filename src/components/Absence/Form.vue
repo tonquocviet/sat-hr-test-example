@@ -50,17 +50,19 @@
     </v-flex>
     <ModalWhoAbsencing
       :title="titleAbsence"
-      @viewMoreAbsence="viewMoreAbsence"
       :items="dataWhoAbsencing"
       :ModalAbsenceList="ModalAbsenceList"
       :popup="popup"
+      :hasShowMoreWhoAbsencing="hasShowMoreWhoAbsencing"
+      @viewMoreAbsence="viewMoreAbsence"
     />
     <ModelUpcomingAbsence
       :title="titleUpcoming"
-      @viewMoreAbsence="viewMoreAbsence"
       :items="dataUpcomingAbsence"
       :ModalAbsenceList="ModalAbsenceList"
       :popup="popup"
+      :hasShowMoreUpcoming="hasShowMoreUpcoming"
+      @viewMoreAbsence="viewMoreAbsence"
     />
   </v-layout>
 </template>
@@ -93,12 +95,14 @@ export default {
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsencing = this.apiAbsence.filterUpcommingAbsence;
     this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
-      const { items } = data;
+      const { items, totalRecords } = data;
       this.dataAbsenceList = items;
+      this.totalRecordsWhoAbsencing = totalRecords;
     });
     this.getDataAbsenceListRequest(urlUpcommingAbsencing).then(data => {
-      const { items } = data;
+      const { items, totalRecords } = data;
       this.dataAbsenceList2 = items;
+      this.totalRecordsUpcomming = totalRecords;
     });
   },
   computed: {
@@ -106,6 +110,16 @@ export default {
       return !this.dataFilterAbsences
         ? 0
         : this.dataFilterAbsences.length < this.totalRecords;
+    },
+    hasShowMoreWhoAbsencing() {
+      return !this.dataWhoAbsencing
+        ? 0
+        : this.dataWhoAbsencing.length < this.totalRecordsWhoAbsencing;
+    },
+    hasShowMoreUpcoming() {
+      return !this.dataUpcomingAbsence
+        ? 0
+        : this.dataUpcomingAbsence.length < this.totalRecordsUpcomming;
     }
   },
   methods: {
@@ -142,7 +156,10 @@ export default {
     getDataAbsenceListRequest(url) {
       return new Promise(resolve => {
         this.$http.post(`${url}`).then(res => {
-          resolve({ items: res.data.list });
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
         });
       });
     },
@@ -154,7 +171,10 @@ export default {
       };
       return new Promise(resolve => {
         this.$http.post(`${url}`, filterRequest).then(res => {
-          resolve({ items: res.data.list });
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
         });
       });
     },
@@ -244,6 +264,8 @@ export default {
           description: "Style hơi chuối xí :D "
         }
       ],
+      totalRecordsWhoAbsencing: 0,
+      totalRecordsUpcomming: 0,
       dataAbsenceList: [],
       dataAbsenceList2: [],
       dataWhoAbsencing: [],
