@@ -1,20 +1,15 @@
 <template>
   <v-layout row>
-    <v-flex md9 style="margin-top:20px">
-      <v-flex xs12 right position absolute>
-        <v-btn color="info" class="v-btn-add-filter">Add New Absence</v-btn>
-        <v-btn icon class="primary--text v-btn-add-filter">
+    <v-flex md9 class="mt-2">
+      <v-flex xs12 right class="right-button-container">
+        <v-btn color="info" @click="popup.showCreate = true">Add New Absence</v-btn>
+        <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
-        <v-btn
-          v-if="viewMode === 'card'"
-          icon
-          class="v-btn-add-filter"
-          @click="changeViewMode(true)"
-        >
+        <v-btn v-if="viewMode === 'card'" icon @click="changeViewMode(true)">
           <v-icon>list</v-icon>
         </v-btn>
-        <v-btn v-else icon class="v-btn-add-filter" @click="changeViewMode(false)">
+        <v-btn v-else icon @click="changeViewMode(false)">
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
@@ -39,30 +34,33 @@
       <v-container fluid class="pa-0 elevation-2">
         <AbsenceDetailList
           name="WhoAbsencing"
-          :items="dataAbsencing"
+          :items="dataAbsenseList"
           :title="titleAbsence"
           @viewFull="viewFull"
         />
         <v-divider/>
         <AbsenceDetailList
           name="UpcommingAbsence"
-          :items="dataAbsencing2"
+          :items="dataAbsenseList2"
           :title="titleUpcoming"
           @viewFull="viewFull"
         />
       </v-container>
+      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
     <ModalWhoAbsencing
       :title="titleAbsence"
       @viewMoreAbsense="viewMoreAbsense"
       :items="dataWhoAbsencing"
-      :AbsenceModal="AbsenceModal"
+      :ModalAbsenseList="ModalAbsenseList"
+      :popup="popup"
     />
     <ModelUpcomingAbsence
       :title="titleUpcoming"
       @viewMoreAbsense="viewMoreAbsense"
       :items="dataUpcomingAbsence"
-      :AbsenceModal="AbsenceModal"
+      :ModalAbsenseList="ModalAbsenseList"
+      :popup="popup"
     />
   </v-layout>
 </template>
@@ -72,14 +70,16 @@ import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalWhoAbsencing from "./ModalWhoAbsencing";
 import ModelUpcomingAbsence from "./ModelUpcomingAbsence";
+import AbsenceCreate from "./CreateAbsence";
 
 export default {
   components: {
     AbsenceList,
-    AbsenceCard,
     AbsenceDetailList,
     ModalWhoAbsencing,
-    ModelUpcomingAbsence
+    ModelUpcomingAbsence,
+    AbsenceCreate,
+    AbsenceCard
   },
   props: {
     viewMode: String,
@@ -92,13 +92,13 @@ export default {
     });
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsencing = this.apiAbsence.filterUpcommingAbsence;
-    this.getDataAbsencingRequest(urlWhoAbsencing).then(data => {
+    this.getdataAbsenseListRequest(urlWhoAbsencing).then(data => {
       const { items } = data;
-      this.dataAbsencing = items;
+      this.dataAbsenseList = items;
     });
-    this.getDataAbsencingRequest(urlUpcommingAbsencing).then(data => {
+    this.getdataAbsenseListRequest(urlUpcommingAbsencing).then(data => {
       const { items } = data;
-      this.dataAbsencing2 = items;
+      this.dataAbsenseList2 = items;
     });
   },
   computed: {
@@ -139,7 +139,7 @@ export default {
           });
       });
     },
-    getDataAbsencingRequest(url) {
+    getdataAbsenseListRequest(url) {
       return new Promise(resolve => {
         this.$http.post(`${url}`).then(res => {
           resolve({ items: res.data.list });
@@ -147,7 +147,7 @@ export default {
       });
     },
     getDataMoreAbsencingRequest(url) {
-      const { pageSize, pageIndex } = this.AbsenceModal;
+      const { pageSize, pageIndex } = this.ModalAbsenseList;
       const filterRequest = {
         pageSize,
         pageIndex
@@ -159,12 +159,12 @@ export default {
       });
     },
     viewMoreAbsense(name) {
-      this.AbsenceModal.loadingViewMore = true;
-      this.AbsenceModal.pageIndex += 1;
-      const { url } = this.AbsenceModal;
+      this.ModalAbsenseList.loadingViewMore = true;
+      this.ModalAbsenseList.pageIndex += 1;
+      const { url } = this.ModalAbsenseList;
       this.getDataMoreAbsencingRequest(url).then(data => {
         const { items } = data;
-        this.AbsenceModal.loadingViewMore = false;
+        this.ModalAbsenseList.loadingViewMore = false;
         if ("WhoAbsensing" === name) {
           this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
         } else {
@@ -174,20 +174,20 @@ export default {
     },
     viewFull(name) {
       if ("WhoAbsencing" === name) {
-        this.AbsenceModal.isOpenWhoAbsencing = true;
-        this.AbsenceModal.url = this.apiAbsence.filterWhoAbsencing;
+        this.popup.showWhoAbsencing = true;
+        this.ModalAbsenseList.url = this.apiAbsence.filterWhoAbsencing;
       }
       if ("UpcommingAbsence" === name) {
-        this.AbsenceModal.isOpenUpcomingAbsence = true;
-        this.AbsenceModal.url = this.apiAbsence.filterUpcommingAbsence;
+        this.popup.showUpcomingAbsence = true;
+        this.ModalAbsenseList.url = this.apiAbsence.filterUpcommingAbsence;
       }
-      const { url } = this.AbsenceModal;
-      this.AbsenceModal.loadingViewFull = true;
-      this.AbsenceModal.pageSize = 9;
-      this.AbsenceModal.pageIndex = 0;
+      const { url } = this.ModalAbsenseList;
+      this.ModalAbsenseList.loadingViewFull = true;
+      this.ModalAbsenseList.pageSize = 9;
+      this.ModalAbsenseList.pageIndex = 0;
       this.getDataMoreAbsencingRequest(url).then(data => {
         const { items } = data;
-        this.AbsenceModal.loadingViewFull = false;
+        this.ModalAbsenseList.loadingViewFull = false;
         if ("WhoAbsencing" === name) {
           this.dataWhoAbsencing = items;
         } else {
@@ -198,14 +198,17 @@ export default {
   },
   data() {
     return {
-      AbsenceModal: {
+      ModalAbsenseList: {
         name: "",
         loadingViewFull: false,
         loadingViewMore: false,
-        isOpenWhoAbsencing: false,
-        isOpenUpcomingAbsence: false,
         pageSize: 9,
         pageIndex: 0
+      },
+      popup: {
+        showCreate: false,
+        showWhoAbsencing: false,
+        showUpcomingAbsence: false
       },
       dataFilterAbsences: [],
       pageIndex: 0,
@@ -218,19 +221,40 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      dataAbsencing: [],
-      dataAbsencing2: [],
+      data1: [
+        {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+          name: "Ông nội",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
+        },
+        {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+          name: "Cha",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
+        },
+        {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+          name: "Con",
+          date_start: "25 Agust 1995",
+          date_end: "25 May 1995",
+          description: "Style hơi chuối xí :D "
+        }
+      ],
+      dataAbsenseList: [],
+      dataAbsenseList2: [],
       dataWhoAbsencing: [],
       dataUpcomingAbsence: []
     };
   }
 };
 </script>
-<style>
-.v-btn-card {
-  margin-right: 90px;
-}
-.v-btn-add-filter {
-  z-index: 10;
+<style scoped>
+.right-button-container {
+  position: relative;
+  z-index: 1;
 }
 </style>

@@ -14,7 +14,13 @@
         <td class="text-xs-left">{{ props.item.employeeId }}</td>
         <td class="text-xs-left">{{ props.item.employeeName }}</td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
-        <td class="text-xs-left">{{ props.item.leaveType.name }}</td>
+        <td class="text-xs-left">
+          <v-chip
+            small
+            :color="getColorFromLeaveName(props.item.leaveType.name)"
+            text-color="white"
+          >{{ props.item.leaveType.name }}</v-chip>
+        </td>
         <td class="text-xs-left">{{ props.item.location }}</td>
       </template>
     </v-data-table>
@@ -25,6 +31,7 @@
 </template>
 <script>
 import moment from "moment";
+import { leaveTypes } from "../../config";
 export default {
   props: {
     apiAbsence: Object
@@ -52,6 +59,11 @@ export default {
             });
           });
       });
+    },
+    getColorFromLeaveName(leaveName) {
+      return (
+        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
+      ).color;
     },
     startDate(date) {
       return moment(date).format("MM/DD/YYYY");

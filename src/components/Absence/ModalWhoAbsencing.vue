@@ -1,13 +1,16 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="AbsenceModal.isOpenWhoAbsencing" width="1200">
+    <v-dialog v-model="popup.showWhoAbsencing" width="1200">
       <v-card>
         <v-card-title class="headline default lighten-2" style="padding: 16px 25px">
           <div style="width:30px;height:2px;margin-right:5px;background:orange"></div>
           <span>{{title}}</span>
         </v-card-title>
         <v-card-text class="card-user">
-          <div v-if="AbsenceModal.loadingViewFull" style="text-align:center;padding-bottom: 40px;">
+          <div
+            v-if="ModalAbsenseList.loadingViewFull"
+            style="text-align:center;padding-bottom: 40px;"
+          >
             <v-btn flat color="success">
               <v-progress-circular indeterminate color="green"></v-progress-circular>
             </v-btn>
@@ -24,7 +27,7 @@
               <AbsenceCard :item="item"/>
             </v-flex>
             <v-flex sm12 style="text-align:center">
-              <v-btn flat color="success" v-if="AbsenceModal.loadingViewMore">
+              <v-btn flat color="success" v-if="ModalAbsenseList.loadingViewMore">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
               </v-btn>
               <v-btn v-else @click="viewMore">View More</v-btn>
@@ -46,7 +49,8 @@ export default {
   props: {
     title: String,
     items: Array,
-    AbsenceModal: Object
+    ModalAbsenseList: Object,
+    popup: Object
   },
   methods: {
     viewMore() {
