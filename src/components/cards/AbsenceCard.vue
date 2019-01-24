@@ -1,8 +1,8 @@
 <template>
   <v-card>
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
-      <v-layout>
-        <v-flex xs8 sm9>
+      <v-layout row wrap>
+        <v-flex md12 lg6>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -18,10 +18,16 @@
             </v-layout>
           </v-layout>
         </v-flex>
-        <v-flex xs4 sm3>
-          <v-layout class="grey--text justify-end v-date-time">
-            <v-icon size="15">av_timer</v-icon>
-            <span>{{submittedDate(item.submittedDate)}}</span>
+        <v-flex md12 lg6>
+          <v-layout class="grey--text">
+            <v-spacer class="hidden-md-and-down"/>
+            <span>
+              <v-chip
+                small
+                :color="getColorFromLeaveName(item.leaveType.name)"
+                text-color="white"
+              >{{ item.leaveType.name }}</v-chip>
+            </span>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -39,7 +45,7 @@
               <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
               <h4
                 style="position: absolute;bottom: 0px;"
-              >{{countDay(item.startDate, item.endDate)}} days anhual leave</h4>
+              >{{countDay(item.startDate, item.endDate)}} days Annual leave</h4>
             </v-layout>
           </v-flex>
           <v-flex xs3>
@@ -65,7 +71,7 @@
 
 <script>
 import moment from "moment";
-
+import { leaveTypes } from "../../config";
 import UserAvatar from "../avatars/Avatar";
 
 export default {
@@ -95,6 +101,11 @@ export default {
     },
     submittedDate(date) {
       return moment(date).format("MM-DD-YYYY");
+    },
+    getColorFromLeaveName(leaveName) {
+      return (
+        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
+      ).color;
     }
   }
 };
@@ -110,11 +121,6 @@ export default {
 }
 .user-description {
   background: #ececec59;
-}
-.v-date-time {
-  width: 100px;
-  position: absolute;
-  right: 10px;
 }
 .user-img {
   justify-content: center;
