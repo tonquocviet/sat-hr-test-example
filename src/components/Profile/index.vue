@@ -289,8 +289,6 @@ export default {
 
 <style scopes>
 .scroll-year-absence {
- background: #ececec59;
- height: 145px;
  overflow: auto;
 }
 .scroll-year-absence::-webkit-scrollbar-track {
