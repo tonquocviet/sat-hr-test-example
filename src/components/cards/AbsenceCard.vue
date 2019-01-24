@@ -1,8 +1,8 @@
 <template>
   <v-card>
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
-      <v-layout>
-        <v-flex xs8 sm9>
+      <v-layout row wrap>
+        <v-flex md12 lg6>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -18,8 +18,9 @@
             </v-layout>
           </v-layout>
         </v-flex>
-        <v-flex xs4 sm3>
-          <v-layout class="grey--text justify-end v-date-time">
+        <v-flex md12 lg6>
+          <v-layout class="grey--text">
+            <v-spacer class="hidden-md-and-down"/>
             <span>
               <v-chip
                 small
@@ -120,11 +121,6 @@ export default {
 }
 .user-description {
   background: #ececec59;
-}
-.v-date-time {
-  width: 100px;
-  position: absolute;
-  right: 10px;
 }
 .user-img {
   justify-content: center;
