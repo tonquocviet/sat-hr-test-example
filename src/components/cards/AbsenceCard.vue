@@ -1,8 +1,8 @@
 <template>
   <v-card>
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
-      <v-layout row wrap>
-        <v-flex md12 lg6>
+      <v-layout row wrap justify-space-between>
+        <div>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -17,10 +17,9 @@
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
-        </v-flex>
-        <v-flex md12 lg6>
+        </div>
+        <div>
           <v-layout class="grey--text">
-            <v-spacer class="hidden-md-and-down"/>
             <span>
               <v-chip
                 small
@@ -29,7 +28,7 @@
               >{{ item.leaveType.name }}</v-chip>
             </span>
           </v-layout>
-        </v-flex>
+        </div>
       </v-layout>
     </div>
     <div class="elevation-3">
