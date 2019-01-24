@@ -5,7 +5,7 @@
       <v-card flat>
         <h3 class="ml-2 pt-2">{{ title }}</h3>
       </v-card>
-      <v-card flat v-for="item in items" :key="item.id" @click="showDetail(item)">
+      <v-card flat v-for="item in items" :key="item.id" @click="showDetail(item)" class="py-1">
         <v-list two-line class="item-card-absence">
           <v-list-tile>
             <div class="v-image-user">
@@ -24,9 +24,16 @@
                 <v-icon class="caption ml-4">date_range</v-icon>
                 <span class="caption ml-1">{{ submittedDate(item.endDate) }}</span>
               </v-layout>
-              <v-layout>
-                <span class="date-off error--text mr-3">{{countDay(item.startDate)}}</span> |
-                <span class="ml-3">{{item.employeeRole.name}}</span>
+              <v-layout column>
+                <span class="date-off error--text mr-3">{{countDay(item.startDate)}}</span>
+                <div>
+                  <v-chip
+                    class="mx-0 my-0"
+                    small
+                    :color="getColorFromLeaveName(item.leaveType.name)"
+                    text-color="white"
+                  >{{ item.leaveType.name }}</v-chip>
+                </div>
               </v-layout>
             </v-list-tile-sub-title>
           </v-list-tile>
@@ -44,6 +51,7 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
+import { leaveTypes } from "../../config";
 
 export default {
   components: {
@@ -67,6 +75,11 @@ export default {
     },
     viewFull() {
       this.$emit("viewFull", this.name);
+    },
+    getColorFromLeaveName(leaveName) {
+      return (
+        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
+      ).color;
     }
   }
 };
