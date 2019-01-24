@@ -39,7 +39,7 @@
               <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
               <h4
                 style="position: absolute;bottom: 0px;"
-              >{{countDay(item.startDate, item.endDate)}} days anhual leave</h4>
+              >{{countDay(item.startDate, item.endDate)}} days Annual leave</h4>
             </v-layout>
           </v-flex>
           <v-flex xs3>
