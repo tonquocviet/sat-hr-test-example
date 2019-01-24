@@ -49,7 +49,7 @@ import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import AbsenceCreate from "./CreateAbsence";
 import ModalListDetail from "./ModalListDetail";
-import ModalDetail from "./ModalDetail";
+import ModalDetail from "./ModalDetail/Form";
 
 export default {
   components: {
