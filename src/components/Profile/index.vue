@@ -288,6 +288,24 @@ export default {
 </script>
 
 <style scopes>
+.scroll-year-absence {
+ background: #ececec59;
+ height: 145px;
+ overflow: auto;
+}
+.scroll-year-absence::-webkit-scrollbar-track {
+ background-color: #ececec59;
+}
+
+.scroll-year-absence::-webkit-scrollbar {
+ width: 3px;
+ background-color: #ececec59;
+}
+
+.scroll-year-absence::-webkit-scrollbar-thumb {
+ background-color: #000000;
+ border: 1px solid #ececec59;
+}
 .month-absence{
   cursor: pointer;
 }
