@@ -20,8 +20,13 @@
         </v-flex>
         <v-flex xs4 sm3>
           <v-layout class="grey--text justify-end v-date-time">
-            <v-icon size="15">av_timer</v-icon>
-            <span>{{submittedDate(item.submittedDate)}}</span>
+            <span>
+              <v-chip
+                small
+                :color="getColorFromLeaveName(item.leaveType.name)"
+                text-color="white"
+              >{{ item.leaveType.name }}</v-chip>
+            </span>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -65,7 +70,7 @@
 
 <script>
 import moment from "moment";
-
+import { leaveTypes } from "../../config";
 import UserAvatar from "../avatars/Avatar";
 
 export default {
@@ -95,6 +100,11 @@ export default {
     },
     submittedDate(date) {
       return moment(date).format("MM-DD-YYYY");
+    },
+    getColorFromLeaveName(leaveName) {
+      return (
+        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
+      ).color;
     }
   }
 };
