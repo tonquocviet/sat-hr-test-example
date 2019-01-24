@@ -54,8 +54,8 @@
           </v-flex>
         </v-layout>
       </div>
-      <v-flex class="v-number-of-line">
-        <div class="user-description pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
+      <v-flex class="user-description">
+        <div class="pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
       </v-flex>
       <v-layout class="pl-3 pr-3 pt-2 pb-2">
         <v-icon size="15">av_timer</v-icon>
@@ -118,8 +118,24 @@ export default {
 .user-date-arrow {
   position: relative;
 }
+
 .user-description {
   background: #ececec59;
+  height: 145px;
+  overflow: auto;
+}
+.user-description::-webkit-scrollbar-track {
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar {
+  width: 3px;
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border: 1px solid #ececec59;
 }
 .user-img {
   justify-content: center;
