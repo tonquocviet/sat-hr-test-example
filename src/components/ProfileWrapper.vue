@@ -6,10 +6,10 @@
   </v-content>
 </template>
 <script>
-import Profile from "./Profile";
-export default {
-  components: {
-    Profile
-  }
-};
+  import Profile from "./Profile/Profile";
+  export default {
+    components: {
+      Profile
+    }
+  };
 </script>
