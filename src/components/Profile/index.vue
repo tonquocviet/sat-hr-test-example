@@ -109,7 +109,7 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap class="mt-5">
-      <v-flex xs5>
+      <v-flex sm5 xs12>
         <v-card>
           <v-date-picker 
             v-model="dates"
@@ -118,10 +118,10 @@
           ></v-date-picker>
         </v-card>
       </v-flex>
-      <v-flex xs7>
+      <v-flex xs12 sm7 >
         <v-layout row wrap class="scroll-year-absence px-3 mt-3">
-          <v-flex xs4 v-for=" item in years" :key="item.id" class="month-absence mt-4 h-100" @click="changeMonth(item)">
-            <v-card  class="mt-3 ml-5">
+          <v-flex  v-for=" item in years" :key="item.id" class="xs12 sm6 md4 month-absence  mt-4 h-100" @click="changeMonth(item)">
+            <v-card  class="mt-3 ml-3 card-date-of-month">
               <v-date-picker 
                 v-model="item.dates"
                 multiple
@@ -288,10 +288,6 @@ export default {
 </script>
 
 <style scopes>
-.scroll-year-absence::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
 .month-absence{
   cursor: pointer;
 }
@@ -303,6 +299,11 @@ export default {
   .user-img {
     justify-content: center !important;
   }
-}
+} 
+@media only screen and (max-width: 868px) {
+  .card-date-of-month {
+    margin-left: 5px !important;
+  }
+}     
 </style>
 
