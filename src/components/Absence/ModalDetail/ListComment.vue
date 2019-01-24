@@ -4,7 +4,7 @@
       <v-layout row style="height: 40px;">
         <v-layout row>
           <v-flex xs0>
-            <div class="v-image-user">
+            <div>
               <user-avatar
                 :imageUrl="(itemDetail.avatar||{}).imageUrl"
                 :name="itemDetail.employeeName"

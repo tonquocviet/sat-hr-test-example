@@ -11,7 +11,7 @@
             />
           </div>
         </v-flex>
-        <v-flex xs12>
+        <v-flex xs12 style="z-index: 1;">
           <v-textarea
             type="text"
             solo

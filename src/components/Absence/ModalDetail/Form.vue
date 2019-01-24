@@ -157,12 +157,6 @@ export default {
 };
 </script>
 <style>
-.v-button-close-modal {
-  height: 20px;
-  position: absolute;
-  right: 0px;
-  display: flex;
-}
 
 .v-image-user-2 {
   width: 100px;
