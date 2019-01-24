@@ -1,7 +1,10 @@
 import Absence from "../views/AbsencePage";
 import Profile from "../views/ProfilePage";
 import OrgChart from "../views/OrgChartPage";
-export default [{
+import SettingPage from "../views/SettingPage";
+
+export default [
+  {
     path: '/',
     name: 'Root',
     redirect: {
@@ -22,5 +25,10 @@ export default [{
     path: '/org-chart',
     name: 'OrgChart',
     component: OrgChart
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: SettingPage
   }
 ];

@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex md9 class="mt-2">
       <v-flex xs12 right class="right-button-container">
-        <v-btn color="info">Add New Absence</v-btn>
+        <v-btn color="info" @click="popup.showCreate = true">Add New Absence</v-btn>
         <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
@@ -40,6 +40,7 @@
         <v-divider/>
         <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
       </v-container>
+      <AbsenceCreate :items="data1" :popup ="popup"></AbsenceCreate>
     </v-flex>
     <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
   </v-layout>
@@ -48,13 +49,15 @@
 import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
+import AbsenceCreate from "./CreateAbsence";
 import ModalListDetail from "./ModalListDetail";
 
 export default {
   components: {
     AbsenceList,
-    AbsenceCard,
     AbsenceDetailList,
+    AbsenceCreate,
+    AbsenceCard,
     ModalListDetail
   },
   props: {
@@ -108,6 +111,9 @@ export default {
   },
   data() {
     return {
+      popup: {
+         showCreate: false,
+      },
       value: {
         isOpen: false,
         end: 3
@@ -119,7 +125,7 @@ export default {
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
       itemList: [
-        { text: "Peding Requests" },
+        { text: "Pending Requests" },
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
