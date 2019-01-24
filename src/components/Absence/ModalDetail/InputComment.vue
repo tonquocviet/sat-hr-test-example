@@ -28,6 +28,11 @@
       <v-flex xs3 right style="height: 20px" class="mt-5">
         <v-checkbox color="primary" label="Mark Public" v-model="checkbox"></v-checkbox>
       </v-flex>
+      <v-flex xs3 right style="height: 20px" class="mt-5">
+        <v-btn flat icon class="mt-3">
+          <v-icon>attach_file</v-icon>
+        </v-btn>
+      </v-flex>
     </v-flex>
   </v-flex>
 </template>
