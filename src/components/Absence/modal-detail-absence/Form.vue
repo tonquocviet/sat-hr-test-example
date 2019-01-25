@@ -118,7 +118,7 @@ import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApproved from "./CardHRApproved";
-import { dataHRCard, itemsComment, dataApproved } from "../fakeData";
+import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
   components: {
     UserAvatar,
