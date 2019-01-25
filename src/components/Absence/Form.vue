@@ -35,51 +35,54 @@
         <AbsenceDetailList
           name="WhoAbsencing"
           :items="dataAbsenceList"
-          :title="titleAbsence"
-          @viewFull="viewFull"
+          :title="`Who are absencing ?`"
+          @viewFull="isShowAbsencingModal=true"
         />
         <v-divider/>
         <AbsenceDetailList
           name="UpcommingAbsence"
           :items="dataAbsenceList2"
-          :title="titleUpcoming"
-          @viewFull="viewFull"
+          :title="`Upcomming absences`"
+          @viewFull="isShowUpcommingAbsenceModal = true"
         />
       </v-container>
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
-    <ModalWhoAbsencing
-      :title="titleAbsence"
-      :items="dataWhoAbsencing"
-      :ModalAbsenceList="ModalAbsenceList"
-      :popup="popup"
-      :hasShowMoreWhoAbsencing="hasShowMoreWhoAbsencing"
-      @viewMoreAbsence="viewMoreAbsence"
+    <ModalForSubFilter
+      :isShow="isShowAbsencingModal"
+      :apiUrl="apiAbsence.filterWhoAbsencing"
+      :title="`Who is abcensing`"
+      @closeDialog="isShowAbsencingModal = false"
     />
-    <ModelUpcomingAbsence
+    <ModalForSubFilter
+      :isShow="isShowUpcommingAbsenceModal"
+      :apiUrl="apiAbsence.filterUpcommingAbsence"
+      :title="`Upcommming absences`"
+      @closeDialog="isShowUpcommingAbsenceModal = false"
+    />
+    <!-- <ModalForSubFilter
       :title="titleUpcoming"
       :items="dataUpcomingAbsence"
-      :ModalAbsenceList="ModalAbsenceList"
+      :isLoadingViewMore="false"
+      :isLoadingViewFull="false"
       :popup="popup"
       :hasShowMoreUpcoming="hasShowMoreUpcoming"
       @viewMoreAbsence="viewMoreAbsence"
-    />
+    />-->
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
-import ModalWhoAbsencing from "./ModalWhoAbsencing";
-import ModelUpcomingAbsence from "./ModelUpcomingAbsence";
+import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
-    ModalWhoAbsencing,
-    ModelUpcomingAbsence,
+    ModalForSubFilter,
     AbsenceCreate,
     AbsenceCard
   },
@@ -163,10 +166,9 @@ export default {
         });
       });
     },
-    getDataMoreAbsenceListRequest(url) {
-      const { pageSize, pageIndex } = this.ModalAbsenceList;
+    getDataMoreAbsenceListRequest(url, pageIndex) {
       const filterRequest = {
-        pageSize,
+        pageSize: 9,
         pageIndex
       };
       return new Promise(resolve => {
@@ -176,6 +178,28 @@ export default {
             totalRecords: res.data.totalRecords
           });
         });
+      });
+    },
+    viewMoreUpcomming() {
+      this.upcommingAbsenceModalModel.pageIndex++;
+      this.upcommingAbsenceModalModel.isLoadingViewMore = true;
+      if (this.upcommingAbsenceModalModel.pageIndex === 0) {
+        this.upcommingAbsenceModalModel.isLoadingViewFull = true;
+      }
+      console.log(this.upcommingAbsenceModalModel);
+      const url = this.apiAbsence.filterUpcommingAbsence;
+      this.getDataMoreAbsenceListRequest(
+        url,
+        this.upcommingAbsenceModalModel.pageIndex
+      ).then(data => {
+        const { items, totalRecords } = data;
+        this.upcommingAbsenceModalModel.isLoadingViewMore = false;
+        this.upcommingAbsenceModalModel.isLoadingViewFull = false;
+        this.upcommingAbsenceModalModel.items = this.upcommingAbsenceModalModel.items.concat(
+          items
+        );
+        this.upcommingAbsenceModalModel.hasShowMore =
+          totalRecords > this.upcommingAbsenceModalModel.items.length;
       });
     },
     viewMoreAbsence(name) {
@@ -196,39 +220,23 @@ export default {
     },
     viewFull(name) {
       if ("WhoAbsencing" === name) {
-        this.popup.showWhoAbsencing = true;
-        this.ModalAbsenceList.url = this.apiAbsence.filterWhoAbsencing;
+        this.whoAbsencingModalModel.isShow = true;
+        this.whoAbsencingModalModel.pageIndex = -1;
+        this.whoAbsencingModalModel.items = [];
+        this.viewMoreUpcomming();
       }
       if ("UpcommingAbsence" === name) {
-        this.popup.showUpcomingAbsence = true;
-        this.ModalAbsenceList.url = this.apiAbsence.filterUpcommingAbsence;
+        this.upcommingAbsenceModalModel.isShow = true;
+        this.upcommingAbsenceModalModel.pageIndex = -1;
+        this.upcommingAbsenceModalModel.items = [];
+        this.viewMoreUpcomming();
       }
-      const { url } = this.ModalAbsenceList;
-      this.ModalAbsenceList.loadingViewFull = true;
-      this.ModalAbsenceList.pageSize = 9;
-      this.ModalAbsenceList.pageIndex = 0;
-      this.getDataMoreAbsenceListRequest(url).then(data => {
-        const { items, totalRecords } = data;
-        this.ModalAbsenceList.loadingViewFull = false;
-        if ("WhoAbsencing" === name) {
-          this.dataWhoAbsencing = items;
-          this.totalRecordsWhoAbsencing = totalRecords;
-        } else {
-          this.dataUpcomingAbsence = items;
-          this.totalRecordsUpcomming = totalRecords;
-        }
-      });
     }
   },
   data() {
     return {
-      ModalAbsenceList: {
-        name: "",
-        loadingViewFull: false,
-        loadingViewMore: false,
-        pageSize: 9,
-        pageIndex: 0
-      },
+      isShowUpcommingAbsenceModal: false,
+      isShowAbsencingModal: false,
       popup: {
         showCreate: false,
         showWhoAbsencing: false,
@@ -238,10 +246,8 @@ export default {
       pageIndex: 0,
       loading: true,
       isShowMore: false,
-      titleAbsence: "Who are Absencing ?",
-      titleUpcoming: "Upcoming Absence",
       itemList: [
-        { text: "Peding Requests" },
+        { text: "Pending Requests" },
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
