@@ -37,7 +37,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .v-image-user {
   margin: auto;
   width: 40px;
