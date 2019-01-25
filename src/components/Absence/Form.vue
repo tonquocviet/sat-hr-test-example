@@ -36,7 +36,7 @@
           name="WhoAbsencing"
           :items="dataAbsenceList"
           :title="`Who are absencing ?`"
-          @viewFull="isShowAbsencingModal=true"
+          @viewFull="isShowAbsencingModal = true"
         />
         <v-divider/>
         <AbsenceDetailList
@@ -60,15 +60,6 @@
       :title="`Upcommming absences`"
       @closeDialog="isShowUpcommingAbsenceModal = false"
     />
-    <!-- <ModalForSubFilter
-      :title="titleUpcoming"
-      :items="dataUpcomingAbsence"
-      :isLoadingViewMore="false"
-      :isLoadingViewFull="false"
-      :popup="popup"
-      :hasShowMoreUpcoming="hasShowMoreUpcoming"
-      @viewMoreAbsence="viewMoreAbsence"
-    />-->
   </v-layout>
 </template>
 <script>
@@ -96,16 +87,14 @@ export default {
       this.totalRecords = data.totalRecords;
     });
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
-    const urlUpcommingAbsencing = this.apiAbsence.filterUpcommingAbsence;
+    const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
     this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
-      const { items, totalRecords } = data;
+      const { items } = data;
       this.dataAbsenceList = items;
-      this.totalRecordsWhoAbsencing = totalRecords;
     });
-    this.getDataAbsenceListRequest(urlUpcommingAbsencing).then(data => {
-      const { items, totalRecords } = data;
+    this.getDataAbsenceListRequest(urlUpcommingAbsence).then(data => {
+      const { items } = data;
       this.dataAbsenceList2 = items;
-      this.totalRecordsUpcomming = totalRecords;
     });
   },
   computed: {
@@ -113,16 +102,6 @@ export default {
       return !this.dataFilterAbsences
         ? 0
         : this.dataFilterAbsences.length < this.totalRecords;
-    },
-    hasShowMoreWhoAbsencing() {
-      return !this.dataWhoAbsencing
-        ? 0
-        : this.dataWhoAbsencing.length < this.totalRecordsWhoAbsencing;
-    },
-    hasShowMoreUpcoming() {
-      return !this.dataUpcomingAbsence
-        ? 0
-        : this.dataUpcomingAbsence.length < this.totalRecordsUpcomming;
     }
   },
   methods: {
@@ -165,72 +144,6 @@ export default {
           });
         });
       });
-    },
-    getDataMoreAbsenceListRequest(url, pageIndex) {
-      const filterRequest = {
-        pageSize: 9,
-        pageIndex
-      };
-      return new Promise(resolve => {
-        this.$http.post(`${url}`, filterRequest).then(res => {
-          resolve({
-            items: res.data.list,
-            totalRecords: res.data.totalRecords
-          });
-        });
-      });
-    },
-    viewMoreUpcomming() {
-      this.upcommingAbsenceModalModel.pageIndex++;
-      this.upcommingAbsenceModalModel.isLoadingViewMore = true;
-      if (this.upcommingAbsenceModalModel.pageIndex === 0) {
-        this.upcommingAbsenceModalModel.isLoadingViewFull = true;
-      }
-      console.log(this.upcommingAbsenceModalModel);
-      const url = this.apiAbsence.filterUpcommingAbsence;
-      this.getDataMoreAbsenceListRequest(
-        url,
-        this.upcommingAbsenceModalModel.pageIndex
-      ).then(data => {
-        const { items, totalRecords } = data;
-        this.upcommingAbsenceModalModel.isLoadingViewMore = false;
-        this.upcommingAbsenceModalModel.isLoadingViewFull = false;
-        this.upcommingAbsenceModalModel.items = this.upcommingAbsenceModalModel.items.concat(
-          items
-        );
-        this.upcommingAbsenceModalModel.hasShowMore =
-          totalRecords > this.upcommingAbsenceModalModel.items.length;
-      });
-    },
-    viewMoreAbsence(name) {
-      this.ModalAbsenceList.loadingViewMore = true;
-      this.ModalAbsenceList.pageIndex += 1;
-      const { url } = this.ModalAbsenceList;
-      this.getDataMoreAbsenceListRequest(url).then(data => {
-        const { items, totalRecords } = data;
-        this.ModalAbsenceList.loadingViewMore = false;
-        if ("WhoAbsencing" === name) {
-          this.dataWhoAbsencing = this.dataWhoAbsencing.concat(items);
-          this.totalRecordsWhoAbsencing = totalRecords;
-        } else {
-          this.dataUpcomingAbsence = this.dataUpcomingAbsence.concat(items);
-          this.totalRecordsUpcomming = totalRecords;
-        }
-      });
-    },
-    viewFull(name) {
-      if ("WhoAbsencing" === name) {
-        this.whoAbsencingModalModel.isShow = true;
-        this.whoAbsencingModalModel.pageIndex = -1;
-        this.whoAbsencingModalModel.items = [];
-        this.viewMoreUpcomming();
-      }
-      if ("UpcommingAbsence" === name) {
-        this.upcommingAbsenceModalModel.isShow = true;
-        this.upcommingAbsenceModalModel.pageIndex = -1;
-        this.upcommingAbsenceModalModel.items = [];
-        this.viewMoreUpcomming();
-      }
     }
   },
   data() {
@@ -238,9 +151,7 @@ export default {
       isShowUpcommingAbsenceModal: false,
       isShowAbsencingModal: false,
       popup: {
-        showCreate: false,
-        showWhoAbsencing: false,
-        showUpcomingAbsence: false
+        showCreate: false
       },
       dataFilterAbsences: [],
       pageIndex: 0,
@@ -274,12 +185,8 @@ export default {
           description: "Style hơi chuối xí :D "
         }
       ],
-      totalRecordsWhoAbsencing: 0,
-      totalRecordsUpcomming: 0,
       dataAbsenceList: [],
-      dataAbsenceList2: [],
-      dataWhoAbsencing: [],
-      dataUpcomingAbsence: []
+      dataAbsenceList2: []
     };
   }
 };

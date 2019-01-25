@@ -1,6 +1,10 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog :value="isShow" @input="v => v ? openDialog() : $emit('closeDialog')" width="1200">
+    <v-dialog
+      :value="isShow"
+      @input="v => {hasShowMore = false;v ? openDialog() : $emit('closeDialog')}"
+      width="1200"
+    >
       <v-card>
         <v-card-title class="headline default lighten-2" style="padding: 16px 25px">
           <div style="width:30px;height:2px;margin-right:5px;background:orange"></div>
@@ -61,17 +65,17 @@ export default {
     },
     viewMore() {
       this.pageIndex++;
-      this.isLoadingViewMore = true;
       if (this.pageIndex === 0) {
         this.isLoadingViewFull = true;
+      } else {
+        this.isLoadingViewMore = true;
       }
       this.getDataMoreAbsenceListRequest().then(data => {
         const { items, totalRecords } = data;
         this.isLoadingViewMore = false;
         this.isLoadingViewFull = false;
         this.items = this.items.concat(items);
-        this.hasShowMore =
-          totalRecords > this.items.length;
+        this.hasShowMore = totalRecords > this.items.length;
       });
       this.$emit("viewMoreAbsence");
     }
