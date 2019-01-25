@@ -2,7 +2,7 @@
   <div class="px-3 py-3">
     <ProfileHeader></ProfileHeader>
     <ProfileListDate :years="years"></ProfileListDate>
-    <v-layout column class="date-absence-footer">
+    <v-layout column>
       <ProfileUpcoming :items="items"></ProfileUpcoming>
       <ProfilePast :items="items"></ProfilePast>
     </v-layout>

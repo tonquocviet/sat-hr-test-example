@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap class="date-absence-header">
+  <v-layout row wrap>
     <v-flex sm12 md3>
       <UserAvatar
         imageUrl="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png"
@@ -109,7 +109,7 @@
   </v-layout>
 </template>
 <script>
-import UserAvatar from "../avatars/Avatar";
+import UserAvatar from "../../avatars/Avatar";
   export default {
     components: {
       UserAvatar

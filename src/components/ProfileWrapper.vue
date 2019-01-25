@@ -6,7 +6,7 @@
   </v-content>
 </template>
 <script>
-  import Profile from "./Profile/Profile";
+  import Profile from "./Absence/Profile/Profile";
   export default {
     components: {
       Profile
