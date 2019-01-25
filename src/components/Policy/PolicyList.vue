@@ -26,7 +26,6 @@
 </template>
 <script>
   import moment from "moment";
-  import { leaveTypes } from "../../config";
   export default {
     props: {
       apiPolicy: Object
