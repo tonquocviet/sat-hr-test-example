@@ -24,6 +24,7 @@
             :isShowMore="isShowMore"
             :hasShowMore="hasShowMore"
             v-else
+            @showDetailModal="showDetailModal"
           />
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
@@ -48,6 +49,11 @@
       </v-container>
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
+    <ModalDetailAbsence
+      :isShow="isShowAbsenceDetailsModal"
+      :absenceDetail="absenceDetail"
+      @closeDialog="isShowAbsenceDetailsModal = false"
+    />
     <ModalForSubFilter
       :isShow="isShowAbsencingModal"
       :apiUrl="apiAbsence.filterWhoAbsencing"
@@ -68,11 +74,13 @@ import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
+import ModalDetailAbsence from "./modal-detail-absence/Form";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
+    ModalDetailAbsence,
     ModalForSubFilter,
     AbsenceCreate,
     AbsenceCard
@@ -105,6 +113,10 @@ export default {
     }
   },
   methods: {
+    showDetailModal(item) {
+      this.isShowAbsenceDetailsModal = true;
+      this.absenceDetail = item;
+    },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
     },
@@ -153,6 +165,8 @@ export default {
       popup: {
         showCreate: false
       },
+      absenceDetail: null,
+      isShowAbsenceDetailsModal: false,
       dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,
