@@ -42,11 +42,11 @@
         />
         <v-divider/>
         <AbsenceDetailList
-          name="UpcommingAbsence"
+          name="UpcomingAbsence"
           @showDetailModal="showDetailModal"
           :items="dataAbsenceList2"
-          :title="`Upcomming absences`"
-          @viewFull="isShowUpcommingAbsenceModal = true"
+          :title="`Upcoming absences`"
+          @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
@@ -63,10 +63,10 @@
       @closeDialog="isShowAbsencingModal = false"
     />
     <ModalForSubFilter
-      :isShow="isShowUpcommingAbsenceModal"
+      :isShow="isShowUpcomingAbsenceModal"
       :apiUrl="apiAbsence.filterUpcommingAbsence"
-      :title="`Upcommming absences`"
-      @closeDialog="isShowUpcommingAbsenceModal = false"
+      :title="`Upcoming absences`"
+      @closeDialog="isShowUpcomingAbsenceModal = false"
     />
   </v-layout>
 </template>
@@ -162,7 +162,7 @@ export default {
   },
   data() {
     return {
-      isShowUpcommingAbsenceModal: false,
+      isShowUpcomingAbsenceModal: false,
       isShowAbsencingModal: false,
       popup: {
         showCreate: false
