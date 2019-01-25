@@ -13,12 +13,7 @@
         <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
         <td class="text-xs-left">{{ props.item.employeeId }}</td>
         <td class="text-xs-left">
-          <a
-            class="black--text"
-            target="_blank"
-            :href="detailLink + '/' + props.item.id"
-            style="text-decoration: none;"
-          >{{ props.item.employeeName }}</a>
+          <router-link :to="detailLink + '/' + props.item.id">{{ props.item.employeeName }}</router-link>
         </td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">
@@ -31,10 +26,10 @@
         <td class="text-xs-left">{{ props.item.location }}</td>
         <td class="text-xs-left">
           <v-layout row>
-            <v-btn flat icon @click="showDetailModal(props.item)">
+            <v-btn flat icon @click="absenceClick(props.item)">
               <v-icon>remove_red_eye</v-icon>
             </v-btn>
-            <v-btn flat icon @click="approvedRequest(props.item)">
+            <v-btn flat icon @click="openModalConfirm(props.item)">
               <v-icon>check_circle_outline</v-icon>
             </v-btn>
           </v-layout>
@@ -44,6 +39,16 @@
     <div class="text-xs-right pt-2">
       <v-pagination light v-model="pagination.page" :total-visible="7" :length="pages"></v-pagination>
     </div>
+    <v-dialog v-model="confirmRequest" max-width="290">
+      <v-card>
+        <v-card-text>Please confirm that you want to approve for this request?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" darken-1" flat="flat" @click="confirmRequest = false">No</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="approvedRequest">Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -55,11 +60,16 @@ export default {
     detailLink: String
   },
   methods: {
-    showDetailModal(absenceDetail) {
+    absenceClick(absenceDetail) {
       this.$emit("showDetailModal", absenceDetail);
     },
+    openModalConfirm(itemAbsence) {
+      this.confirmRequest = true;
+      this.itemAbsence = itemAbsence;
+    },
     approvedRequest() {
-      // Xử lý request từ peding sang approved request.... (Api ?)
+      this.confirmRequest = false;
+      return this.itemAbsence;
     },
     getDataFromApi() {
       this.loading = true;
@@ -115,6 +125,7 @@ export default {
       pagination: {},
       selected: [],
       loading: true,
+      confirmRequest: false,
       headers: [
         {
           text: "Start Dates",

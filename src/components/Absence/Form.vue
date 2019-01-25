@@ -20,7 +20,7 @@
             v-if="viewMode === 'list'"
             @showDetailModal="showDetailModal"
             :apiAbsence="apiAbsence"
-            :detailLink="detailLinks.forProfile"
+            :detailLink="detailLinks.forAbsenceProfile"
           />
           <AbsenceCard
             @showMoreView="showMoreView"

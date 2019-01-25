@@ -19,7 +19,7 @@ export default {
         filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`
       },
       detailLinks: {
-        forProfile: "/profile"
+        forAbsenceProfile: "/absence-profile"
       }
     };
   }
