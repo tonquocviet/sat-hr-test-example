@@ -12,10 +12,10 @@
                       <v-flex xs12>
                         <v-card color="primary">
                           <v-flex right>
-                            <v-btn color="primary">Approve</v-btn>
-                            <v-btn color="primary">Reject</v-btn>
+                            <v-btn color="success">Approve</v-btn>
+                            <v-btn color="error">Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
-                            <v-btn color="primary">Request Information</v-btn>
+                            <v-btn>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
@@ -54,7 +54,7 @@
                           </v-flex>
                           <v-flex xs6>
                             <v-layout column style="height: 200px">
-                              <CardApproved :dataApproved="dataApproved"/>
+                              <PolicyAlert :dataApproved="dataApproved"/>
                             </v-layout>
                           </v-flex>
                         </v-layout>
@@ -73,7 +73,6 @@
               </v-layout>
             </v-flex>
             <v-flex xs12 sm3>
-              <!-- <v-card> -->
               <v-layout column>
                 <v-flex justify-center align-center d-flex style="flex-direction: column">
                   <div class="v-image-user-2">
@@ -97,12 +96,11 @@
 
                   <v-layout row wrap class="ml-2">
                     <v-flex v-for="item in dataHRCard" :key="item.id">
-                      <CardHRApproved :item="item"/>
+                      <CardHRApprover :item="item"/>
                     </v-flex>
                   </v-layout>
                 </v-flex>
               </v-layout>
-              <!-- </v-card> -->
             </v-flex>
           </v-layout>
         </v-container>
@@ -113,20 +111,20 @@
 
 <script>
 import CardCountAbsence from "../../cards/CardCountAbsence";
-import CardApproved from "./CardApproved";
+import PolicyAlert from "../../alert/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
-import CardHRApproved from "./CardHRApproved";
+import CardHRApprover from "./CardHRApprover";
 import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
   components: {
     UserAvatar,
     CardCountAbsence,
-    CardApproved,
+    PolicyAlert,
     InputComment,
     ListComment,
-    CardHRApproved
+    CardHRApprover
   },
   props: {
     isShow: Boolean,
@@ -159,7 +157,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .v-image-user-2 {
   width: 100px;
   height: 100px;

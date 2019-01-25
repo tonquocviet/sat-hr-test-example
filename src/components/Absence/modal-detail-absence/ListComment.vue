@@ -70,7 +70,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .v-image-user {
   width: 40px;
   height: 40px;
