@@ -6,11 +6,7 @@
         <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
-        <v-btn
-          v-if="viewMode === 'card'"
-          icon
-          @click="changeViewMode(true)"
-        >
+        <v-btn v-if="viewMode === 'card'" icon @click="changeViewMode(true)">
           <v-icon>list</v-icon>
         </v-btn>
         <v-btn v-else icon @click="changeViewMode(false)">
@@ -28,6 +24,7 @@
             :isShowMore="isShowMore"
             :hasShowMore="hasShowMore"
             v-else
+            @showDetailModal="showDetailModal"
           />
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
@@ -36,29 +33,57 @@
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
-        <AbsenceDetailList :items="data1" :title="this.titleAbsence" :value="value"/>
+        <AbsenceDetailList
+          name="WhoAbsencing"
+          :items="dataAbsenceList"
+          :title="`Who are absencing ?`"
+          @viewFull="isShowAbsencingModal = true"
+        />
         <v-divider/>
-        <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
+        <AbsenceDetailList
+          name="UpcomingAbsence"
+          :items="dataAbsenceList2"
+          :title="`Upcoming absences`"
+          @viewFull="isShowUpcomingAbsenceModal = true"
+        />
       </v-container>
-      <AbsenceCreate :items="data1" :popup ="popup"></AbsenceCreate>
+      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
+    <ModalDetailAbsence
+      :isShow="isShowAbsenceDetailsModal"
+      :absenceDetail="absenceDetail"
+      @closeDialog="isShowAbsenceDetailsModal = false"
+    />
+    <ModalForSubFilter
+      :isShow="isShowAbsencingModal"
+      :apiUrl="apiAbsence.filterWhoAbsencing"
+      :title="`Who is abcensing`"
+      @closeDialog="isShowAbsencingModal = false"
+    />
+    <ModalForSubFilter
+      :isShow="isShowUpcomingAbsenceModal"
+      :apiUrl="apiAbsence.filterUpcommingAbsence"
+      :title="`Upcoming absences`"
+      @closeDialog="isShowUpcomingAbsenceModal = false"
+    />
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
+import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
-import ModalListDetail from "./ModalListDetail";
+import ModalDetailAbsence from "./modal-detail-absence/Form";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
+    ModalDetailAbsence,
+    ModalForSubFilter,
     AbsenceCreate,
-    AbsenceCard,
-    ModalListDetail
+    AbsenceCard
   },
   props: {
     viewMode: String,
@@ -69,6 +94,16 @@ export default {
       this.dataFilterAbsences = data.items;
       this.totalRecords = data.totalRecords;
     });
+    const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsenceList = items;
+    });
+    this.getDataAbsenceListRequest(urlUpcommingAbsence).then(data => {
+      const { items } = data;
+      this.dataAbsenceList2 = items;
+    });
   },
   computed: {
     hasShowMore() {
@@ -78,6 +113,10 @@ export default {
     }
   },
   methods: {
+    showDetailModal(item) {
+      this.isShowAbsenceDetailsModal = true;
+      this.absenceDetail = item;
+    },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
     },
@@ -107,23 +146,31 @@ export default {
             });
           });
       });
+    },
+    getDataAbsenceListRequest(url) {
+      return new Promise(resolve => {
+        this.$http.post(`${url}`).then(res => {
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
     }
   },
   data() {
     return {
+      isShowUpcomingAbsenceModal: false,
+      isShowAbsencingModal: false,
       popup: {
-         showCreate: false,
+        showCreate: false
       },
-      value: {
-        isOpen: false,
-        end: 3
-      },
+      absenceDetail: null,
+      isShowAbsenceDetailsModal: false,
       dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,
       isShowMore: false,
-      titleAbsence: "Who are Absencing ?",
-      titleUpcoming: "Upcoming Absence",
       itemList: [
         { text: "Pending Requests" },
         { text: "Approved Request" },
@@ -151,7 +198,9 @@ export default {
           date_end: "25 May 1995",
           description: "Style hơi chuối xí :D "
         }
-      ]
+      ],
+      dataAbsenceList: [],
+      dataAbsenceList2: []
     };
   }
 };
