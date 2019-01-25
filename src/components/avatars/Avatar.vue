@@ -18,6 +18,7 @@ export default {
     avatarSize: String,
     width: String,
     justifyContent: String,
+    width: String,
     imageUrl: String,
     name: String,
     backgroundColor: String,

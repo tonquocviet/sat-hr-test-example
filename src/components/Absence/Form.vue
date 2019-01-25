@@ -6,11 +6,7 @@
         <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
-        <v-btn
-          v-if="viewMode === 'card'"
-          icon
-          @click="changeViewMode(true)"
-        >
+        <v-btn v-if="viewMode === 'card'" icon @click="changeViewMode(true)">
           <v-icon>list</v-icon>
         </v-btn>
         <v-btn v-else icon @click="changeViewMode(false)">
@@ -36,29 +32,50 @@
     </v-flex>
     <v-flex md3 class="ml-3">
       <v-container fluid class="pa-0 elevation-2">
-        <AbsenceDetailList :items="data1" :title="this.titleAbsence" :value="value"/>
+        <AbsenceDetailList
+          name="WhoAbsencing"
+          :items="dataAbsenceList"
+          :title="`Who are absencing ?`"
+          @viewFull="isShowAbsencingModal = true"
+        />
         <v-divider/>
-        <AbsenceDetailList :items="data1" :title="this.titleUpcoming" :value="value"/>
+        <AbsenceDetailList
+          name="UpcommingAbsence"
+          :items="dataAbsenceList2"
+          :title="`Upcomming absences`"
+          @viewFull="isShowUpcommingAbsenceModal = true"
+        />
       </v-container>
-      <AbsenceCreate :items="data1" :popup ="popup"></AbsenceCreate>
+      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
-    <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
+    <ModalForSubFilter
+      :isShow="isShowAbsencingModal"
+      :apiUrl="apiAbsence.filterWhoAbsencing"
+      :title="`Who is abcensing`"
+      @closeDialog="isShowAbsencingModal = false"
+    />
+    <ModalForSubFilter
+      :isShow="isShowUpcommingAbsenceModal"
+      :apiUrl="apiAbsence.filterUpcommingAbsence"
+      :title="`Upcommming absences`"
+      @closeDialog="isShowUpcommingAbsenceModal = false"
+    />
   </v-layout>
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
 import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
+import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
-import ModalListDetail from "./ModalListDetail";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
+    ModalForSubFilter,
     AbsenceCreate,
-    AbsenceCard,
-    ModalListDetail
+    AbsenceCard
   },
   props: {
     viewMode: String,
@@ -68,6 +85,16 @@ export default {
     this.getDataFromApi().then(data => {
       this.dataFilterAbsences = data.items;
       this.totalRecords = data.totalRecords;
+    });
+    const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsenceList = items;
+    });
+    this.getDataAbsenceListRequest(urlUpcommingAbsence).then(data => {
+      const { items } = data;
+      this.dataAbsenceList2 = items;
     });
   },
   computed: {
@@ -107,23 +134,29 @@ export default {
             });
           });
       });
+    },
+    getDataAbsenceListRequest(url) {
+      return new Promise(resolve => {
+        this.$http.post(`${url}`).then(res => {
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
     }
   },
   data() {
     return {
+      isShowUpcommingAbsenceModal: false,
+      isShowAbsencingModal: false,
       popup: {
-         showCreate: false,
-      },
-      value: {
-        isOpen: false,
-        end: 3
+        showCreate: false
       },
       dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,
       isShowMore: false,
-      titleAbsence: "Who are Absencing ?",
-      titleUpcoming: "Upcoming Absence",
       itemList: [
         { text: "Pending Requests" },
         { text: "Approved Request" },
@@ -151,7 +184,9 @@ export default {
           date_end: "25 May 1995",
           description: "Style hơi chuối xí :D "
         }
-      ]
+      ],
+      dataAbsenceList: [],
+      dataAbsenceList2: []
     };
   }
 };
