@@ -1,6 +1,7 @@
 import Absence from "../views/AbsencePage";
 import OrgChart from "../views/OrgChartPage";
 import SettingPage from "../views/SettingPage";
+import ReportPage from "../views/ReportPage";
 
 export default [
   {
@@ -24,5 +25,10 @@ export default [
     path: '/settings',
     name: 'Settings',
     component: SettingPage
+  },
+  {
+    path: '/report',
+    name: 'Report',
+    component: ReportPage
   }
 ];
