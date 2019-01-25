@@ -15,7 +15,7 @@
         <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
         <td class="text-xs-left">{{ props.item.numberOfEmployees }}</td>
         <td class="text-xs-left">
-          <span class="tag-policy py-2 px-3 white--text mx-1" v-for="item in props.item.tags" :key="item.id">{{ item }}</span>
+          <v-chip class="tag-policy px-1 mx-1" v-for="item in props.item.tags" :key="item.id">{{ item }}</v-chip>
         </td>
       </template>
     </v-data-table>
@@ -108,9 +108,4 @@
     }
   };
 </script>
-<style>
-  .tag-policy{
-    background-color: grey;
-    border-radius: 10px;
-  }
-</style>
+

@@ -1,7 +1,7 @@
 import Absence from "../views/AbsencePage";
 import OrgChart from "../views/OrgChartPage";
 import SettingPage from "../views/SettingPage";
-import PolicyPage from "../views/PolicyPage";
+import PolicyAbsencePage from "../views/PolicyAbsencePage";
 
 export default [
   {
@@ -17,9 +17,9 @@ export default [
     component: Absence
   },
   {
-    path: '/policies',
-    name: 'Policy',
-    component: PolicyPage
+    path: '/absence-policy',
+    name: 'AbsencePolicy',
+    component: PolicyAbsencePage
   },
   {
     path: '/org-chart',

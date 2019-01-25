@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PolicyWrapper from "../components/PolicyWrapper";
+import PolicyWrapper from "../components/PolicyAbsenceWrapper";
 
 export default {
   components: {

@@ -6,7 +6,7 @@
   </v-content>
 </template>
 <script>
-import Policy from "./Policy/Form";
+import Policy from "./Absence/Policy/Form";
 export default {
   props: {
     apiPolicy: Object

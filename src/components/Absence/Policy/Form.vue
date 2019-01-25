@@ -18,7 +18,6 @@
         </v-btn>
       </v-flex>
       <v-tabs color="transparent" dark slider-color="primary">
-        <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
           <PolicyList v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
         </v-tab-item>
@@ -48,11 +47,6 @@ export default {
     return {
       pageIndex: 0,
       loading: true,
-      itemList: [
-        { text: "Pending Requests" },
-        { text: "Approved Request" },
-        { text: "Rejected Request" }
-      ],
     };
   }
 };
