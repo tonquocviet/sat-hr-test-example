@@ -134,7 +134,7 @@ export default {
       titleAbsence: "Who are Absencing ?",
       titleUpcoming: "Upcoming Absence",
       itemList: [
-        { text: "Peding Requests" },
+        { text: "Pending Requests" },
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
