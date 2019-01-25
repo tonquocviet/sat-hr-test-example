@@ -58,7 +58,7 @@ export default {
     showDetailModal(absenceDetail) {
       this.$emit("showDetailModal", absenceDetail);
     },
-    approvedRequest(dataAbsenceReuqest) {
+    approvedRequest() {
       // Xử lý request từ peding sang approved request.... (Api ?)
     },
     getDataFromApi() {
