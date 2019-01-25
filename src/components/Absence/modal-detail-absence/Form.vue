@@ -1,7 +1,7 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="modal.isShowmodal" width="1200">
-      <v-card v-if="itemDetail">
+    <v-dialog :value="isShow" @input="$emit('closeDialog')" width="1200">
+      <v-card v-if="absenceDetail">
         <v-container grid-list-md text-xs-center>
           <v-layout row>
             <v-flex d-flex xs12 sm9>
@@ -22,7 +22,10 @@
                       <v-flex xs12>
                         <v-layout row style="height: 130px;">
                           <v-flex xs6>
-                            <card-count-absence :itemDetail="itemDetail"/>
+                            <CardCountAbsence
+                              :startDate="absenceDetail.startDate"
+                              :endDate="absenceDetail.endDate"
+                            />
                           </v-flex>
                           <v-flex xs6>
                             <v-textarea
@@ -43,7 +46,7 @@
                                 <v-expansion-panel-content>
                                   <div slot="header">Absence Policy Group</div>
                                   <v-card>
-                                    <v-card-text>{{itemDetail.leaveDescription}}</v-card-text>
+                                    <v-card-text>{{absenceDetail.leaveDescription}}</v-card-text>
                                   </v-card>
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -51,18 +54,18 @@
                           </v-flex>
                           <v-flex xs6>
                             <v-layout column style="height: 200px">
-                              <card-approved :dataApproved="dataApproved"/>
+                              <CardApproved :dataApproved="dataApproved"/>
                             </v-layout>
                           </v-flex>
                         </v-layout>
                       </v-flex>
 
                       <v-layout column>
-                        <input-comment @onComment="onComment" :avatar="itemDetail"/>
+                        <InputComment @onComment="onComment" :avatar="absenceDetail"/>
                       </v-layout>
 
                       <v-layout>
-                        <list-comment :itemsComment="itemsComment" :itemDetail="itemDetail"/>
+                        <ListComment :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -74,14 +77,14 @@
               <v-layout column>
                 <v-flex justify-center align-center d-flex style="flex-direction: column">
                   <div class="v-image-user-2">
-                    <user-avatar
-                      :imageUrl="(itemDetail.avatar||{}).imageUrl"
-                      :name="itemDetail.employeeName"
+                    <UserAvatar
+                      :imageUrl="(absenceDetail.avatar||{}).imageUrl"
+                      :name="absenceDetail.employeeName"
                       class="user-img"
                       :imgActive="imgActive"
                     />
                   </div>
-                  <span class="headline font-weight-bold">{{itemDetail.employeeName}}</span>
+                  <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
                   <v-chip class="headline" label>Absen Detail</v-chip>
@@ -94,7 +97,7 @@
 
                   <v-layout row wrap class="ml-2">
                     <v-flex v-for="item in dataHRCard" :key="item.id">
-                      <card-h-r-approved :item="item"/>
+                      <CardHRApproved :item="item"/>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -126,8 +129,8 @@ export default {
     CardHRApproved
   },
   props: {
-    modal: Object,
-    itemDetail: Object,
+    isShow: Boolean,
+    absenceDetail: Object,
     dataHRCard: {
       type: Array,
       default: () => dataHRCard
@@ -157,7 +160,6 @@ export default {
 };
 </script>
 <style>
-
 .v-image-user-2 {
   width: 100px;
   height: 100px;

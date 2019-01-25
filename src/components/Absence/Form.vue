@@ -40,7 +40,11 @@
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
     <ModalListDetail title="Who's on leave" :data="dataFilterAbsences" :value="value"/>
-    <ModalDetail :modal="modal" :itemDetail="itemDetail"/>
+    <ModalDetailAbsence
+      :isShow="isShowAbsenceDetailsModal"
+      :absenceDetail="absenceDetail"
+      @closeDialog="isShowAbsenceDetailsModal = false"
+    />
   </v-layout>
 </template>
 <script>
@@ -49,13 +53,13 @@ import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import AbsenceCreate from "./CreateAbsence";
 import ModalListDetail from "./ModalListDetail";
-import ModalDetail from "./ModalDetail/Form";
+import ModalDetailAbsence from "./modal-detail-absence/Form";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
-    ModalDetail,
+    ModalDetailAbsence,
     AbsenceCreate,
     AbsenceCard,
     ModalListDetail
@@ -78,10 +82,9 @@ export default {
     }
   },
   methods: {
-    showDetailModal(itemDetail) {
-      this.modal.isShowmodal = true;
-      this.itemDetail = itemDetail;
-      this.$emit("showDetailModal", itemDetail);
+    showDetailModal(item) {
+      this.isShowAbsenceDetailsModal = true;
+      this.absenceDetail = item;
     },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
@@ -123,10 +126,8 @@ export default {
         isOpen: false,
         end: 3
       },
-      itemDetail: null,
-      modal: {
-        isShowmodal: false
-      },
+      absenceDetail: null,
+      isShowAbsenceDetailsModal: false,
       dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,

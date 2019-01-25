@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :class="isAbsenceCard ? `v-pointer-card` : null"
-    @click="isAbsenceCard ? showModalDetail() : null"
+    :class="isClickable ? `v-pointer-card` : null"
+    @click="isClickable ? showModalDetail() : null"
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout>
@@ -77,10 +77,7 @@ export default {
   },
   props: {
     item: Object,
-    isAbsenceCard: Boolean
-  },
-  data() {
-    return {};
+    isClickable: Boolean
   },
   methods: {
     formatDate(date) {
@@ -104,8 +101,7 @@ export default {
       return moment(date).format("MM-DD-YYYY");
     },
     showModalDetail() {
-      this.itemDetail = this.item;
-      this.$emit("showDetailModal", this.itemDetail);
+      this.$emit("showDetailModal", this.item);
     }
   }
 };

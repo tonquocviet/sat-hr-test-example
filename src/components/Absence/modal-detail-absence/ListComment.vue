@@ -4,10 +4,10 @@
       <v-layout row style="height: 40px;">
         <v-layout row>
           <v-flex xs0>
-            <div>
+            <div class="v-image-user">
               <user-avatar
-                :imageUrl="(itemDetail.avatar||{}).imageUrl"
-                :name="itemDetail.employeeName"
+                :imageUrl="(absenceDetail.avatar||{}).imageUrl"
+                :name="absenceDetail.employeeName"
                 width="unset"
               />
             </div>
@@ -41,7 +41,7 @@
 
     <v-flex xs12>
       <div class="text-xs-left ml-2 mt-2">
-        <span class="caption">{{itemDetail.leaveDescription}}</span>
+        <span class="caption">{{absenceDetail.leaveDescription}}</span>
       </div>
     </v-flex>
     <v-flex xs12>
@@ -66,7 +66,18 @@ export default {
   },
   props: {
     itemsComment: Array,
-    itemDetail: Object
+    absenceDetail: Object
   }
 };
 </script>
+<style>
+.v-image-user {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  background: grey;
+  justify-content: center;
+  align-items: center;
+}
+</style>

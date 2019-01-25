@@ -11,11 +11,7 @@
           class="pl-2 pr-2 pt-2 pb-2"
           :key="index"
         >
-          <AbsenceCard
-            @showDetailModal="showDetailModal"
-            :isAbsenceCard="isAbsenceCard"
-            :item="item"
-          />
+          <AbsenceCard @showDetailModal="showDetailModal" :isClickable="true" :item="item"/>
         </v-flex>
         <v-flex sm12 style="text-align:center" v-if="hasShowMore">
           <v-btn v-if="isShowMore">
@@ -33,14 +29,9 @@ export default {
   components: {
     AbsenceCard
   },
-  data() {
-    return {
-      isAbsenceCard: true
-    };
-  },
   methods: {
-    showDetailModal(itemDetail) {
-      this.$emit("showDetailModal", itemDetail);
+    showDetailModal(absenceDetail) {
+      this.$emit("showDetailModal", absenceDetail);
     }
   },
   props: {

@@ -2,7 +2,7 @@
   <v-card width="120" height="110">
     <v-flex justify-center align-center style="height: 60px; display: flex;" class="v-card-image">
       <div class="v-image-user">
-        <user-avatar
+        <UserAvatar
           :imageUrl="(item.avatar||{}).imageUrl"
           :name="item.employeeName"
           width="unset"
