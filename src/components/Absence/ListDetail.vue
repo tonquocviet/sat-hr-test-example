@@ -5,7 +5,7 @@
       <v-card flat>
         <h3 class="ml-2 pt-2">{{ title }}</h3>
       </v-card>
-      <v-card flat v-for="item in items" :key="item.id" @click="showDetail(item)" class="py-1">
+      <v-card flat v-for="item in items" :key="item.id" @click="showDetailModal(item)" class="py-1">
         <v-list two-line class="item-card-absence">
           <v-list-tile>
             <div class="v-image-user">
@@ -63,8 +63,8 @@ export default {
     name: String
   },
   methods: {
-    showDetail(item) {
-      return item;
+    showDetailModal(absenceDetail) {
+      this.$emit("showDetailModal", absenceDetail);
     },
     countDay(startDate) {
       const start = moment(startDate);

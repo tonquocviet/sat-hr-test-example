@@ -35,6 +35,7 @@
       <v-container fluid class="pa-0 elevation-2">
         <AbsenceDetailList
           name="WhoAbsencing"
+          @showDetailModal="showDetailModal"
           :items="dataAbsenceList"
           :title="`Who are absencing ?`"
           @viewFull="isShowAbsencingModal = true"
@@ -42,6 +43,7 @@
         <v-divider/>
         <AbsenceDetailList
           name="UpcommingAbsence"
+          @showDetailModal="showDetailModal"
           :items="dataAbsenceList2"
           :title="`Upcomming absences`"
           @viewFull="isShowUpcommingAbsenceModal = true"
