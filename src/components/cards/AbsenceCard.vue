@@ -1,5 +1,8 @@
 <template>
-  <v-card>
+  <v-card
+    :class="isClickable ? `v-pointer-card` : null"
+    @click="isClickable ? showModalDetail() : null"
+  >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout row wrap>
         <v-flex md12 lg6>
@@ -79,7 +82,8 @@ export default {
     UserAvatar
   },
   props: {
-    item: Object
+    item: Object,
+    isClickable: Boolean
   },
   methods: {
     formatDate(date) {
@@ -102,6 +106,9 @@ export default {
     submittedDate(date) {
       return moment(date).format("MM-DD-YYYY");
     },
+    showModalDetail() {
+      this.$emit("showDetailModal", this.item);
+    },
     getColorFromLeaveName(leaveName) {
       return (
         leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
@@ -112,6 +119,9 @@ export default {
 </script>
 
 <style scopes>
+.v-pointer-card {
+  cursor: pointer;
+}
 .user-infomation {
   border-left: 4px solid #ffd400;
   margin-left: -1px;
