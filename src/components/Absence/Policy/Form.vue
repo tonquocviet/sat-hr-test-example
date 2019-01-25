@@ -17,13 +17,7 @@
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
-      <v-tabs color="transparent" dark slider-color="primary">
-        <v-tab-item>
-          <PolicyList v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
-        </v-tab-item>
-        <v-tab-item>Approved Request</v-tab-item>
-        <v-tab-item>Rejected Request</v-tab-item>
-      </v-tabs>
+      <PolicyList v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
     </v-flex>
   </v-layout>
 </template>

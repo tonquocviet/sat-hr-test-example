@@ -15,7 +15,7 @@
         <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
         <td class="text-xs-left">{{ props.item.numberOfEmployees }}</td>
         <td class="text-xs-left">
-          <v-chip class="tag-policy px-1 mx-1" v-for="item in props.item.tags" :key="item.id">{{ item }}</v-chip>
+          <v-chip small v-for="item in props.item.tags" :key="item.id">{{ item }}</v-chip>
         </td>
       </template>
     </v-data-table>
