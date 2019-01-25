@@ -27,7 +27,8 @@ import moment from "moment";
 
 export default {
   props: {
-    startDate: String
+    startDate: String,
+    endDate: String
   },
   computed: {
     nameMonthStartDate() {
