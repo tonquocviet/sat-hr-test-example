@@ -1,5 +1,5 @@
 <template>
-  <AbsenceWrapper :apiAbsence="apiAbsence"/>
+  <AbsenceWrapper :apiAbsence="apiAbsence" :detailLinks="detailLinks"/>
 </template>
 
 <script>
@@ -17,6 +17,9 @@ export default {
         filterAbsences: `${baseUrl}/absence/filter`,
         filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
         filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`
+      },
+      detailLinks: {
+        forProfile: "/profile"
       }
     };
   }
