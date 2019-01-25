@@ -111,7 +111,7 @@
 
 <script>
 import CardCountAbsence from "../../cards/CardCountAbsence";
-import PolicyAlert from "../../alert/PolicyAlert";
+import PolicyAlert from "../../alerts/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
