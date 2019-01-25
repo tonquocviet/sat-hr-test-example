@@ -48,10 +48,12 @@
         />
       </v-container>
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
+    </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
       :absenceDetail="absenceDetail"
       @closeDialog="isShowAbsenceDetailsModal = false"
+    />
     <ModalForSubFilter
       :isShow="isShowAbsencingModal"
       :apiUrl="apiAbsence.filterWhoAbsencing"
