@@ -71,7 +71,7 @@ export default {
     mini: true,
     itemTabs: [
       { text: "ABSENCE", link: "/absence" },
-      { text: "POLICIES", link: "/policies" },
+      { text: "POLICIES", link: "/absence-policy" },
       { text: "REPORT", link: "/report" },
       { text: "SETTINGS", link: "/settings" }
     ],
