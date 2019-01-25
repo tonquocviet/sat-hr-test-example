@@ -1,7 +1,6 @@
 <template>
   <v-layout>
     <v-flex xs12>
-      <!-- start who are absence -->
       <v-card flat>
         <h3 class="ml-2 pt-2">{{ title }}</h3>
       </v-card>
@@ -44,7 +43,6 @@
           <v-btn @click="viewFull" flat color="success">View full</v-btn>
         </v-layout>
       </v-card>
-      <!-- end who are absence -->
     </v-flex>
   </v-layout>
 </template>
