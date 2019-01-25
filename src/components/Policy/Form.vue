@@ -39,46 +39,13 @@ export default {
     viewMode: String,
     apiPolicy: Object
   },
-  mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterAbsences = data.items;
-      this.totalRecords = data.totalRecords;
-    });
-  },
-  computed: {
-    hasShowMore() {
-      return !this.dataFilterAbsences
-        ? 0
-        : this.dataFilterAbsences.length < this.totalRecords;
-    }
-  },
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
-    },
-    getDataFromApi() {
-      this.loading = true;
-      const filterRequest = {
-        pageSize: 9,
-        pageIndex: this.pageIndex
-      };
-      return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiPolicy.filterAbsences}`, filterRequest)
-          .then(res => {
-            this.loading = false;
-            this.isShowMore = false;
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
-          });
-      });
     }
   },
   data() {
     return {
-      dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,
       itemList: [
