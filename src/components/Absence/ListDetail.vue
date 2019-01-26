@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     absenceClick(absenceDetail) {
-      this.$emit("showDetailModal", absenceDetail);
+      this.$emit("absenceClick", absenceDetail);
     },
     countDay(startDate) {
       const start = moment(startDate);
