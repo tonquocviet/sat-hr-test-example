@@ -13,7 +13,7 @@
     </v-card>
   </v-dialog>
 </template>
-<<script>
+<script>
   export default {
     props: {
       isShow: Boolean
