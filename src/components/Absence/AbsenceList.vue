@@ -68,8 +68,24 @@ export default {
       this.itemAbsence = itemAbsence;
     },
     approvedRequest() {
-      this.confirmRequest = false;
-      return this.itemAbsence;
+      this.$http
+        .post(`${this.apiAbsence.approveRequest}`, {
+          data: {
+            id: this.itemAbsence.id
+          }
+        })
+        .then(res => {
+          this.confirmRequest = false;
+          if (res.data === false) {
+            this.message = "Approve Request Error !";
+          } else {
+            this.message = "Approve Request Success !";
+          }
+        })
+        .catch(e => {
+          this.message = "Internal server error";
+          this.confirmRequest = false;
+        });
     },
     getDataFromApi() {
       this.loading = true;

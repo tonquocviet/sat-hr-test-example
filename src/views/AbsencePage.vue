@@ -16,7 +16,8 @@ export default {
       apiAbsence: {
         filterAbsences: `${baseUrl}/absence/filter`,
         filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
-        filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`
+        filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
+        approveRequest: `${baseUrl}/absence/approve-request`
       },
       detailLinks: {
         forAbsenceProfile: "/absence-profile"
