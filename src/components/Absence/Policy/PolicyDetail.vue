@@ -24,15 +24,8 @@ export default {
     viewMode: String,
     apiPolicy: Object
   },
-  methods: {
-    changeViewMode(isListView) {
-      this.$emit("changeViewMode", isListView ? "list" : "card");
-    }
-  },
   data() {
     return {
-      pageIndex: 0,
-      loading: true,
       itemList: [
         { id: 1, text: "Overview" },
         { id: 2, text: "Employee List" },
@@ -43,9 +36,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.right-button-container {
-  position: relative;
-  z-index: 1;
-}
-</style>
+
