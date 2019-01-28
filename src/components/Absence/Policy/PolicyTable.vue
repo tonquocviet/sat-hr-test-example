@@ -10,13 +10,12 @@
     >
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.name }}</td>
-        <td class="text-xs-left">{{ props.item.id }}</td>
-        <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
-        <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
-        <td class="text-xs-left">{{ props.item.numberOfEmployees }}</td>
+        <td class="text-xs-left">{{ props.item.createdBy.firstName }} {{ props.item.createdBy.lastName }}</td>
         <td class="text-xs-left">
-          <v-chip small v-for="item in props.item.tags" :key="item.id">{{ item }}</v-chip>
+          <v-chip v-if="props.item.status = 'active'" small color="success" text-color="white">{{ props.item.status }}</v-chip>
+          <v-chip v-else small color="error" text-color="white">{{ props.item.status }}</v-chip>
         </td>
+        <td class="text-xs-left">{{ props.item.endDate != null ?endDate(props.item.endDate) : 'N/A' }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
@@ -54,9 +53,6 @@
             });
         });
       },
-      startDate(date) {
-        return moment(date).format("MM/DD/YYYY");
-      },
       endDate(date) {
         return moment(date).format("MM/DD/YYYY");
       }
@@ -76,11 +72,9 @@
         loading: true,
         headers: [
           { text: "Policy Name", align: "left", value: "namePolicy" },
-          { text: "Policy ID", align: "left", value: "idPolicy" },
-          { text: "Start Date", align: "left", value: "startDate" },
-          { text: "End Date", align: "left", value: "endDate" },
-          { text: "Number Policy", align: "left", value: "numberPolicy" },
-          { text: "Tag", align: "left", value: "Tag" }
+          { text: "Created by", align: "left", value: "createdBy" },
+          { text: "Status", align: "left", value: "status" },
+          { text: "Expiration", align: "left", value: "expiration" },
         ]
       };
     },
@@ -101,6 +95,7 @@
           this.getDataFromApi().then(data => {
             this.dataFilterPolicy = data.items;
             this.totalRecords = data.totalRecords;
+            this.$emit("lengthPolicy", data.items.length);
           });
         },
         deep: true
