@@ -83,8 +83,10 @@ export default {
           }
         })
         .catch(e => {
-          this.message = "Internal server error";
-          this.confirmRequest = false;
+          if (e.response.status == "502") {
+            this.message = "Internal server error";
+            this.confirmRequest = false;
+          }
         });
     },
     getDataFromApi() {
