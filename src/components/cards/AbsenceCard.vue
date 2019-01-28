@@ -5,7 +5,7 @@
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout row wrap>
-        <v-flex md12 lg6>
+        <v-flex md6 lg6>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -16,20 +16,23 @@
               />
             </div>
             <v-layout class="column pl-1 justify-space-between">
-              <div class="subheading font-weight-bold v-number-of-line-name">{{item.employeeName}}</div>
+              <div class="subheading font-weight-bold v-number-of-line-name">
+                {{item.employeeName}}
+              </div>
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
         </v-flex>
-        <v-flex md12 lg6>
-          <v-layout class="grey--text">
-            <v-spacer class="hidden-md-and-down"/>
+        <v-flex md6 lg6 align-self-center>
+          <v-layout justify-end class="grey--text">
             <span>
               <v-chip
                 small
                 :color="getColorFromLeaveName(item.leaveType.name)"
                 text-color="white"
-              >{{ item.leaveType.name }}</v-chip>
+              >
+                {{smallScreen ? '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' : item.leaveType.name}}
+              </v-chip>
             </span>
           </v-layout>
         </v-flex>
@@ -81,9 +84,21 @@ export default {
   components: {
     UserAvatar
   },
+  data: () => ({
+    smallScreen: false
+  }),
   props: {
     item: Object,
     isClickable: Boolean
+  },
+  beforeDestroy() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.onResize, { passive: true })
+    }
+  },
+  mounted() {
+    this.onResize(),
+    window.addEventListener('resize', this.onResize, { passive: true })
   },
   methods: {
     formatDate(date) {
@@ -113,6 +128,9 @@ export default {
       return (
         leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
       ).color;
+    },
+    onResize() {
+      this.smallScreen = window.innerWidth < 1264
     }
   }
 };
