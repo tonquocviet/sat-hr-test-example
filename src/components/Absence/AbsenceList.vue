@@ -24,12 +24,12 @@
           >{{ props.item.leaveType.name }}</v-chip>
         </td>
         <td class="text-xs-left">{{ props.item.location }}</td>
-        <td class="text-xs-left">
+        <td class="text-xs-center">
           <v-layout row>
-            <v-btn flat icon @click="absenceClick(props.item)">
+            <v-btn flat icon @click="absenceClick(props.item)" class="ma-0" color="grey">
               <v-icon>remove_red_eye</v-icon>
             </v-btn>
-            <v-btn flat icon @click="openModalConfirm(props.item)">
+            <v-btn flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
               <v-icon>check_circle_outline</v-icon>
             </v-btn>
           </v-layout>
@@ -49,6 +49,10 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="infoSnackbar" :bottom="true" :left="true" :timeout="6000">
+      {{ savedMessage }}
+      <v-btn color="primary" flat @click="infoSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -70,23 +74,16 @@ export default {
     approvedRequest() {
       this.$http
         .post(`${this.apiAbsence.approveRequest}`, {
-          data: {
-            id: this.itemAbsence.id
-          }
+          id: this.itemAbsence.id
         })
-        .then(res => {
+        .then(() => {
           this.confirmRequest = false;
-          if (res.data === false) {
-            this.message = "Approve Request Error !";
-          } else {
-            this.message = "Approve Request Success !";
-          }
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve success !!";
         })
-        .catch(e => {
-          if (e.response.status == "502") {
-            this.message = "Internal server error";
-            this.confirmRequest = false;
-          }
+        .catch(() => {
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve failed !!";
         });
     },
     getDataFromApi() {
@@ -144,6 +141,8 @@ export default {
       selected: [],
       loading: true,
       confirmRequest: false,
+      infoSnackbar: false,
+      savedMessage: "",
       headers: [
         {
           text: "Start Dates",
@@ -156,7 +155,7 @@ export default {
         { text: "No Of Days", align: "left", value: "noOfdays" },
         { text: "Leave Type", align: "left", value: "leaveType" },
         { text: "Location", align: "left", value: "location" },
-        { text: "Actions", align: "left", value: "location" }
+        { text: "Actions", align: "center", value: "location", sortable: false }
       ]
     };
   },
