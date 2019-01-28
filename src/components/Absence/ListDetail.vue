@@ -23,15 +23,23 @@
                 <v-icon class="caption ml-4">date_range</v-icon>
                 <span class="caption ml-1">{{ submittedDate(item.endDate) }}</span>
               </v-layout>
-              <v-layout column>
+              <v-layout align-center justify-space-between>
                 <span class="date-off error--text mr-3">{{countDay(item.startDate)}}</span>
-                <div>
+                <div class="hidden-md-and-down">
                   <v-chip
                     class="mx-0 my-0"
                     small
                     :color="getColorFromLeaveName(item.leaveType.name)"
                     text-color="white"
                   >{{ item.leaveType.name }}</v-chip>
+                </div>
+                <div class="hidden-lg-and-up">
+                  <v-chip
+                    class="mx-0 my-0"
+                    small
+                    :color="getColorFromLeaveName(item.leaveType.name)"
+                    text-color="white"
+                  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-chip>
                 </div>
               </v-layout>
             </v-list-tile-sub-title>
