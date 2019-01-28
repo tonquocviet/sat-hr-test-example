@@ -5,7 +5,7 @@
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout row wrap justify-space-between>
-        <div>
+        <v-flex md6 lg6>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -16,22 +16,31 @@
               />
             </div>
             <v-layout class="column pl-1 justify-space-between">
-              <div class="subheading font-weight-bold v-number-of-line-name">{{item.employeeName}}</div>
+              <div class="subheading font-weight-bold v-number-of-line-name">
+                {{item.employeeName}}
+              </div>
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
-        </div>
-        <div>
-          <v-layout class="grey--text">
-            <span>
+        </v-flex>
+        <v-flex md6 lg6 align-self-center>
+          <v-layout justify-end class="grey--text">
+            <span class="hidden-md-and-down">
               <v-chip
                 small
                 :color="getColorFromLeaveName(item.leaveType.name)"
                 text-color="white"
-              >{{ item.leaveType.name }}</v-chip>
+              >{{item.leaveType.name}}</v-chip>
+            </span>
+            <span class="hidden-lg-and-up">
+              <v-chip
+                small
+                :color="getColorFromLeaveName(item.leaveType.name)"
+                text-color="white"
+              >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-chip>
             </span>
           </v-layout>
-        </div>
+        </v-flex>
       </v-layout>
     </div>
     <div class="elevation-3">
