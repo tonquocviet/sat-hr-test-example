@@ -12,7 +12,9 @@
         <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
         <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
         <td class="text-xs-left">{{ props.item.employeeId }}</td>
-        <td class="text-xs-left">{{ props.item.employeeName }}</td>
+        <td class="text-xs-left">
+          <router-link :to="detailLink + '/' + props.item.id">{{ props.item.employeeName }}</router-link>
+        </td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">
           <v-chip
@@ -22,11 +24,35 @@
           >{{ props.item.leaveType.name }}</v-chip>
         </td>
         <td class="text-xs-left">{{ props.item.location }}</td>
+        <td class="text-xs-center">
+          <v-layout row>
+            <v-btn flat icon @click="absenceClick(props.item)" class="ma-0" color="grey">
+              <v-icon>remove_red_eye</v-icon>
+            </v-btn>
+            <v-btn flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
+              <v-icon>check_circle_outline</v-icon>
+            </v-btn>
+          </v-layout>
+        </td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
-      <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination light v-model="pagination.page" :total-visible="7" :length="pages"></v-pagination>
     </div>
+    <v-dialog v-model="confirmRequest" max-width="290">
+      <v-card>
+        <v-card-text>Please confirm that you want to approve for this request?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color=" darken-1" flat="flat" @click="confirmRequest = false">No</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="approvedRequest">Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-snackbar v-model="infoSnackbar" :bottom="true" :left="true" :timeout="6000">
+      {{ savedMessage }}
+      <v-btn color="primary" flat @click="infoSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -34,9 +60,32 @@ import moment from "moment";
 import { leaveTypes } from "../../config";
 export default {
   props: {
-    apiAbsence: Object
+    apiAbsence: Object,
+    detailLink: String
   },
   methods: {
+    absenceClick(absenceDetail) {
+      this.$emit("showDetailModal", absenceDetail);
+    },
+    openModalConfirm(itemAbsence) {
+      this.confirmRequest = true;
+      this.itemAbsence = itemAbsence;
+    },
+    approvedRequest() {
+      this.$http
+        .post(`${this.apiAbsence.approveRequest}`, {
+          id: this.itemAbsence.id
+        })
+        .then(() => {
+          this.confirmRequest = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve success !!";
+        })
+        .catch(() => {
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve failed !!";
+        });
+    },
     getDataFromApi() {
       this.loading = true;
       const { sortBy, descending, page, rowsPerPage } = this.pagination;
@@ -91,6 +140,9 @@ export default {
       pagination: {},
       selected: [],
       loading: true,
+      confirmRequest: false,
+      infoSnackbar: false,
+      savedMessage: "",
       headers: [
         {
           text: "Start Dates",
@@ -102,7 +154,8 @@ export default {
         { text: "Emp Name", align: "left", value: "employeeName" },
         { text: "No Of Days", align: "left", value: "noOfdays" },
         { text: "Leave Type", align: "left", value: "leaveType" },
-        { text: "Location", align: "left", value: "location" }
+        { text: "Location", align: "left", value: "location" },
+        { text: "Actions", align: "center", value: "location", sortable: false }
       ]
     };
   },
