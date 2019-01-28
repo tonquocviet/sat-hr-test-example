@@ -2,6 +2,7 @@ import Absence from "../views/AbsencePage";
 import Profile from "../views/ProfilePage";
 import OrgChart from "../views/OrgChartPage";
 import SettingPage from "../views/SettingPage";
+import PolicyAbsencePage from "../views/PolicyAbsencePage";
 
 export default [
   {
@@ -20,6 +21,9 @@ export default [
     path: '/profile',
     name: 'Profile',
     component: Profile
+    path: '/absence-policy',
+    name: 'AbsencePolicy',
+    component: PolicyAbsencePage
   },
   {
     path: '/org-chart',

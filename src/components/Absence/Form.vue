@@ -24,6 +24,7 @@
             :isShowMore="isShowMore"
             :hasShowMore="hasShowMore"
             v-else
+            @showDetailModal="showDetailModal"
           />
         </v-tab-item>
         <v-tab-item>Approved Request</v-tab-item>
@@ -34,20 +35,27 @@
       <v-container fluid class="pa-0 elevation-2">
         <AbsenceDetailList
           name="WhoAbsencing"
+          @absenceClick="showDetailModal"
           :items="dataAbsenceList"
           :title="`Who are absencing ?`"
           @viewFull="isShowAbsencingModal = true"
         />
         <v-divider/>
         <AbsenceDetailList
-          name="UpcommingAbsence"
+          name="UpcomingAbsence"
+          @absenceClick="showDetailModal"
           :items="dataAbsenceList2"
-          :title="`Upcomming absences`"
-          @viewFull="isShowUpcommingAbsenceModal = true"
+          :title="`Upcoming absences`"
+          @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
       <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
     </v-flex>
+    <ModalDetailAbsence
+      :isShow="isShowAbsenceDetailsModal"
+      :absenceDetail="absenceDetail"
+      @closeDialog="isShowAbsenceDetailsModal = false"
+    />
     <ModalForSubFilter
       :isShow="isShowAbsencingModal"
       :apiUrl="apiAbsence.filterWhoAbsencing"
@@ -55,10 +63,10 @@
       @closeDialog="isShowAbsencingModal = false"
     />
     <ModalForSubFilter
-      :isShow="isShowUpcommingAbsenceModal"
+      :isShow="isShowUpcomingAbsenceModal"
       :apiUrl="apiAbsence.filterUpcommingAbsence"
-      :title="`Upcommming absences`"
-      @closeDialog="isShowUpcommingAbsenceModal = false"
+      :title="`Upcoming absences`"
+      @closeDialog="isShowUpcomingAbsenceModal = false"
     />
   </v-layout>
 </template>
@@ -68,11 +76,13 @@ import AbsenceCard from "./AbsenceCard";
 import AbsenceDetailList from "./ListDetail";
 import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
+import ModalDetailAbsence from "./modal-detail-absence/Form";
 
 export default {
   components: {
     AbsenceList,
     AbsenceDetailList,
+    ModalDetailAbsence,
     ModalForSubFilter,
     AbsenceCreate,
     AbsenceCard
@@ -105,6 +115,10 @@ export default {
     }
   },
   methods: {
+    showDetailModal(item) {
+      this.isShowAbsenceDetailsModal = true;
+      this.absenceDetail = item;
+    },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
     },
@@ -148,11 +162,13 @@ export default {
   },
   data() {
     return {
-      isShowUpcommingAbsenceModal: false,
+      isShowUpcomingAbsenceModal: false,
       isShowAbsencingModal: false,
       popup: {
         showCreate: false
       },
+      absenceDetail: null,
+      isShowAbsenceDetailsModal: false,
       dataFilterAbsences: [],
       pageIndex: 0,
       loading: true,

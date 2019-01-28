@@ -1,11 +1,10 @@
 <template>
   <v-layout>
     <v-flex xs12>
-      <!-- start who are absence -->
       <v-card flat>
         <h3 class="ml-2 pt-2">{{ title }}</h3>
       </v-card>
-      <v-card flat v-for="item in items" :key="item.id" @click="showDetail(item)" class="py-1">
+      <v-card flat v-for="item in items" :key="item.id" @click="absenceClick(item)" class="py-1">
         <v-list two-line class="item-card-absence">
           <v-list-tile>
             <div class="v-image-user">
@@ -44,7 +43,6 @@
           <v-btn @click="viewFull" flat color="success">View full</v-btn>
         </v-layout>
       </v-card>
-      <!-- end who are absence -->
     </v-flex>
   </v-layout>
 </template>
@@ -63,8 +61,8 @@ export default {
     name: String
   },
   methods: {
-    showDetail(item) {
-      return item;
+    absenceClick(absenceDetail) {
+      this.$emit("absenceClick", absenceDetail);
     },
     countDay(startDate) {
       const start = moment(startDate);
