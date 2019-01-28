@@ -98,10 +98,6 @@ export default {
     detailLinks: Object
   },
   mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterAbsences = data.items;
-      this.totalRecords = data.totalRecords;
-    });
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
     this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
@@ -127,6 +123,12 @@ export default {
     },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+      if (!isListView) {
+        this.getDataFromApi().then(data => {
+          this.dataFilterAbsences = data.items;
+          this.totalRecords = data.totalRecords;
+        });
+      }
     },
     showMoreView() {
       this.pageIndex++;
