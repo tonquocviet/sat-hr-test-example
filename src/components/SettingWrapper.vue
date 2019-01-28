@@ -15,7 +15,7 @@
           :key="item"
         >
           <Baselines v-if="item === 'Baselines'" :data="settings[item]"/>
-          <Holiday v-if="item === 'Holiday'" :data="settings[item]" :add="addHoliday"/>
+          <Holiday v-if="item === 'Holiday'" :data="settings[item]" v-on:addHoliday="addHoliday"/>
         </v-tab-item>
       </v-tabs>
     </v-container>

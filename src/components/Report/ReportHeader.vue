@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs2>
+    <v-flex xs4 md2>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -29,14 +29,13 @@
     </v-flex>
     <v-spacer></v-spacer>
     <template v-for="item in Object.keys(colors)">
-        <v-flex style="margin-left: 2vw;" :key="item" xs1>
-          <v-card
-            class="mx-auto"
+        <v-flex :key="item" md1 xs3>
+          <v-chip
+            label
+            disabled
             :color="colors[item].background"
-            dark
-          >
-            <v-card-text :style="{ color: colors[item].color || 'white'} " class="text-xs-center">{{ colors[item].name }}</v-card-text>
-          </v-card>
+            :text-color="colors[item].color || 'white'"
+          >{{ colors[item].name }}</v-chip>
         </v-flex>
     </template>
   </v-layout>
@@ -47,7 +46,6 @@
     props: {
       date: String,
       colors: Object,
-      changeDate: Function
     },
     data() {
       return {
@@ -58,7 +56,7 @@
     },
     watch: {
       picker: function (val) {
-        this.changeDate(val);
+        this.$emit('changeDate', val);
       }
     }
   }

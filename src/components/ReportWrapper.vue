@@ -5,7 +5,7 @@
         <v-tab class="primary--text" ripple>Employee List</v-tab>
         <v-tab class="primary--text" ripple>Summary</v-tab>
         <v-tab-item>
-          <ReportHeader :date="date" :changeDate="changeDate" :colors="colorsReport" />
+          <ReportHeader :date="date" v-on:changeDate="changeDate" :colors="colorsReport" />
           <ReportTable :data="employees" :date="getMonth" :holidays="holidays"/>
         </v-tab-item>
         <v-tab-item>Summary</v-tab-item>
@@ -31,159 +31,108 @@ export default {
       holidays: [
         {
           name: 'Holiday 1',
-          date: '11/25'
+          from: '11/24/2016',
+          to: '11/25/2016'
         }
       ],
       employees: [
         {
           id: 1,
           name: 'Employee 1',
-          daysOff: {
-            vacation: [],
-            sick: [
-              {
-                from: '11/15/2016',
-                to: '11/15/2016'
-              }
-            ],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/15/2016',
+              to: '11/15/2016',
+              type: 'sick'
+            }
+          ]
         },
         {
           id: 2,
           name: 'Employee 2',
-          daysOff: {
-            vacation: [
-              {
-                from: '11/05/2016',
-                to: '11/19/2016'
-              }
-            ],
-            sick: [],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/05/2016',
+              to: '11/19/2016',
+              type: 'vacation'
+            }
+          ],
         },
         {
           id: 3,
           name: 'Employee 3',
-          daysOff: {
-            vacation: [],
-            sick: [],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: []
         },
         {
           id: 4,
           name: 'Employee 4',
-          daysOff: {
-            vacation: [],
-            sick: [],
-            unpaid: [],
-            halfday: [],
-            other: [
-              {
-                from: '11/07/2016',
-                to: '11/10/2016'
-              }
-            ]
-          }
+          daysOff: [
+            {
+              from: '11/07/2016',
+              to: '11/10/2016',
+              type: 'other'
+            }
+          ]
         },
         {
           id: 5,
           name: 'Employee 5',
-          daysOff: {
-            vacation: [],
-            sick: [
-              {
-                from: '11/22/2016',
-                to: '11/22/2016'
-              }
-            ],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/22/2016',
+              to: '11/22/2016',
+              type: 'sick'
+            }
+          ]
         },
         {
           id: 6,
           name: 'Employee 6',
-          daysOff: {
-            vacation: [
-              {
-                from: '11/15/2016',
-                to: '11/29/2016'
-              }
-            ],
-            sick: [],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/15/2016',
+              to: '11/29/2016',
+              type: 'vacation'
+            }
+          ]
         },
         {
           id: 7,
           name: 'Employee 7',
-          daysOff: {
-            vacation: [],
-            sick: [],
-            unpaid: [
-              {
-                from: '11/10/2016',
-                to: '11/11/2016'
-              }
-            ],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/10/2016',
+              to: '11/11/2016',
+              type: 'unpaid'
+            }
+          ]
         },
         {
           id: 8,
           name: 'Employee 8',
-          daysOff: {
-            vacation: [],
-            sick: [],
-            unpaid: [],
-            halfday: [
-              {
-                from: '11/10/2016',
-                to: '11/10/2016'
-              }
-            ],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/10/2016',
+              to: '11/10/2016',
+              type: 'halfday'
+            }
+          ]
         },
         {
           id: 9,
           name: 'Employee 9',
-          daysOff: {
-            vacation: [],
-            sick: [],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: []
         },
         {
           id: 10,
           name: 'Employee 10',
-          daysOff: {
-            vacation: [],
-            sick: [
-              {
-                from: '11/24/2016',
-                to: '11/29/2016'
-              }
-            ],
-            unpaid: [],
-            halfday: [],
-            other: []
-          }
+          daysOff: [
+            {
+              from: '11/24/2016',
+              to: '11/29/2016',
+              type: 'sick'
+            }
+          ]
         },
       ]
     }

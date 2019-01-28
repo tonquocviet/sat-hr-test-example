@@ -118,7 +118,7 @@ export default {
 };
 </script>
 
-<style scopes>
+<style scoped>
 .v-pointer-card {
   cursor: pointer;
 }

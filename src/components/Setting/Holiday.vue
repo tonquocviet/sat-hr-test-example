@@ -79,8 +79,7 @@
 <script>
 export default {
   props: {
-    data: Array,
-    add: Function
+    data: Array
   },
   data() {
     return {
@@ -108,7 +107,7 @@ export default {
     },
     save() {
       if (this.$refs.form.validate()) {
-        this.add(this.newItem.name, this.computedDate);
+        this.$emit('addHoliday', this.newItem.name, this.computedDate);
         this.dialog = false;
         setTimeout(() => {
           this.newItem = {

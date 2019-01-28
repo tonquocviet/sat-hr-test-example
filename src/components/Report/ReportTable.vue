@@ -4,11 +4,11 @@
       <v-data-table
         :items="getItems()"
         :headers="getHeaders()"
-        class="elevation-1"
+        class="elevation-1 fixed-table"
         hide-actions
       >
         <template slot="items" slot-scope="props">
-          <td>{{ props.item.name }}</td>
+          <td class="text-xs-center">{{ props.item.name }}</td>
           <td v-for="item in props.item.styles" :key="item.id" :style="{ backgroundColor: item.color, borderLeft: '1px solid grey' }">{{ item.text }}</td>
         </template>
       </v-data-table>
@@ -48,21 +48,22 @@ export default {
     getItems() {
       const { year, month } = this.date;
       return this.data.map(e => {
-        const { name, daysOff: { vacation = [], sick = [], unpaid = [], halfday = [], other = [] } } = e;
+        const { name, daysOff = [] } = e;
 
-        const mVacation = vacation.map(dateToMoment);
-        const mSick = sick.map(dateToMoment);
-        const mUnpaid = unpaid.map(dateToMoment);
-        const mHaflday = halfday.map(dateToMoment);
-        const mOther = other.map(dateToMoment);
+        const mVacation = daysOff.filter(d => d.type === 'vacation').map(dateToMoment);
+        const mSick = daysOff.filter(d => d.type === 'sick').map(dateToMoment);
+        const mUnpaid = daysOff.filter(d => d.type === 'unpaid').map(dateToMoment);
+        const mHaflday = daysOff.filter(d => d.type === 'halfday').map(dateToMoment);
+        const mOther = daysOff.filter(d => d.type === 'other').map(dateToMoment);
 
         const styles = range(1, this.daysInMonth + 1, 1).map(d => {
-          const isVacation = mVacation.filter(v => year === v.from.year() && month === v.from.month() + 1 && d >= v.from.date() && d <= v.to.date()).length > 0;
-          const isSick = mSick.filter(v => year === v.from.year() && month === v.from.month() + 1 && d >= v.from.date() && d <= v.to.date()).length > 0;
-          const isUnpaid = mUnpaid.filter(v => year === v.from.year() && month === v.from.month() + 1 && d >= v.from.date() && d <= v.to.date()).length > 0;
-          const isHalfday = mHaflday.filter(v => year === v.from.year() && month === v.from.month() + 1 && d >= v.from.date() && d <= v.to.date()).length > 0;
-          const isOther = mOther.filter(v => year === v.from.year() && month === v.from.month() + 1 && d >= v.from.date() && d <= v.to.date()).length > 0;
-          const isHoliday = this.holidaysInYear.filter(h => h.month() + 1 === month && h.date() === d).length > 0;
+          const mDay = moment(`${month}/${d}/${year}`, 'MM/DD/YYYY');
+          const isVacation = mVacation.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
+          const isSick = mSick.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
+          const isUnpaid = mUnpaid.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
+          const isHalfday = mHaflday.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
+          const isOther = mOther.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
+          const isHoliday = this.holidaysInYear.some(v => mDay.isBetween(v.from, v.to, null, '[]'));
           const isWeekend = getDateInWeek(this.dateInWeek + d - 1) === 'Sun';
 
           return {
@@ -94,9 +95,14 @@ export default {
       return new Date(this.date.year, this.date.month, 0).getDate();
     },
     holidaysInYear() {
-      return this.holidays.map(h => moment(h.date, 'MM/DD').year(this.date.year));
+      return this.holidays.map(dateToMoment);
     }
   }
 }
 </script>
-
+<style>
+.fixed-table table th {
+  padding: 0 !important;
+  text-align: center !important;
+}
+</style>
