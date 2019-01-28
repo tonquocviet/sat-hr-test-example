@@ -19,7 +19,7 @@
           <h4 class="primary--text">Approved By</h4>
           <h3>{{ item.approvedBy }}</h3>
         </v-flex>
-        <v-flex xs2 column text-md-left class="pl-3">
+        <v-flex xs2 column text-md-left class=" pl-3">
           <h4 class="primary--text">Status</h4>
           <h3 v-if="item.status == 'approved'" class="success--text">{{ item.status }}</h3>
           <h3 v-if="item.status == 'pending'" class="error--text">{{ item.status }}</h3>
