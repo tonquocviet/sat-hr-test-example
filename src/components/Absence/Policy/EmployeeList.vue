@@ -23,7 +23,7 @@
       <v-layout>
         <v-flex xs12 sm12 >
           <v-card flat>
-            <h3 class="ml-2 pt-2">Tiêu đề</h3>
+            <h3 class="ml-2 pt-2">Removed Employee</h3>
           </v-card>
           <v-card
             flat
@@ -39,7 +39,7 @@
                     >
                   </v-avatar>
                 </div>
-                <v-list-tile-sub-title>
+                <v-list-tile-sub-title class="ml-3">
                   <span class="font-weight-bold">name</span>
                   <v-layout>
                     <v-icon class="caption">date_range</v-icon>
