@@ -1,20 +1,28 @@
 <template>
-  <v-layout row wrap class="mt-5">
-    <v-flex sm4 xs12>
+  <v-layout wrap>
+    <v-flex xs12 sm12 md4 lg3 class="pt-2">
       <v-card>
-        <v-date-picker v-model="dates" multiple width="100%"></v-date-picker>
+        <v-date-picker
+          :value="dates"
+          multiple
+          width="100%"
+          @input="changeDates"
+          :pickerDate="pickerDate"
+          @update:pickerDate="changePickerDate"
+          :titleDateFormat="titleDateFormat"
+        ></v-date-picker>
       </v-card>
     </v-flex>
-    <v-flex xs12 sm8>
-      <v-layout row wrap class="scroll-year-absence px-3 mt-3">
+    <v-flex xs12 sm12 md8 lg9>
+      <v-layout row wrap>
         <v-flex
-          v-for=" item in years"
-          :key="item.id"
-          class="xs12 sm6 md3 month-absence mt-4 h-100"
-          @click="changeMonth(item)"
+          v-for="(month,index) in to12Months"
+          :key="index"
+          class="xs12 sm4 lg3 xl2 month-absence h-100 pa-2"
+          @click="selectedIndex = index"
         >
-          <v-card class="mt-3 ml-3 card-date-of-month">
-            <v-date-picker v-model="item.dates" multiple no-title disabled width="100%"></v-date-picker>
+          <v-card :class="`card-date-of-month ${index===selectedIndex ? 'elevation-10':''}`">
+            <v-date-picker :value="month" multiple no-title disabled width="100%"></v-date-picker>
           </v-card>
         </v-flex>
       </v-layout>
@@ -24,16 +32,49 @@
 <script>
 export default {
   props: {
-    years: Array
+    dates: Array
   },
   data() {
     return {
-      dates: []
+      selectedIndex: 0
     };
   },
   methods: {
-    changeMonth(item) {
-      this.dates = item.dates;
+    changeDates(selectedDates) {
+      this.$emit("update:dates", selectedDates);
+    },
+    changePickerDate(pickerDate) {
+      const [, month] = pickerDate.split("-").map(Number);
+      this.selectedIndex = month - 1;
+    },
+    titleDateFormat(dates) {
+      const count = dates.filter(x => {
+        const [, month] = x.split("-").map(Number);
+        return month === this.selectedIndex + 1;
+      }).length;
+      return `${count} day(s)`;
+    }
+  },
+  computed: {
+    to12Months() {
+      let months = [];
+      const defaultYear =
+        new Date(this.dates[0] || new Date()).getFullYear() + "";
+      for (var i = 0; i < 12; i++) {
+        const datesInMonth = this.dates.filter(
+          x => new Date(x).getMonth() === i
+        );
+        if (!datesInMonth.length) {
+          datesInMonth.push(`${defaultYear}-${i + 1}`);
+        }
+        months.push(datesInMonth);
+      }
+      return months;
+    },
+    pickerDate() {
+      const defaultYear =
+        new Date(this.dates[0] || new Date()).getFullYear() + "";
+      return `${defaultYear}-${this.selectedIndex + 1}`;
     }
   }
 };
@@ -41,11 +82,6 @@ export default {
 <style scopes>
 .month-absence {
   cursor: pointer;
-}
-.scroll-year-absence {
-  height: 360px;
-  overflow-x: auto;
-  overflow: auto;
 }
 @media only screen and (max-width: 868px) {
   .card-date-of-month {
