@@ -4,8 +4,8 @@
     @click="isClickable ? showModalDetail() : null"
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
-      <v-layout row wrap>
-        <v-flex md12 lg6>
+      <v-layout row wrap justify-space-between>
+        <div>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -20,10 +20,9 @@
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
-        </v-flex>
-        <v-flex md12 lg6>
+        </div>
+        <div>
           <v-layout class="grey--text">
-            <v-spacer class="hidden-md-and-down"/>
             <span>
               <v-chip
                 small
@@ -32,7 +31,7 @@
               >{{ item.leaveType.name }}</v-chip>
             </span>
           </v-layout>
-        </v-flex>
+        </div>
       </v-layout>
     </div>
     <div class="elevation-3">
@@ -58,8 +57,8 @@
           </v-flex>
         </v-layout>
       </div>
-      <v-flex class="v-number-of-line">
-        <div class="user-description pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
+      <v-flex class="user-description">
+        <div class="pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
       </v-flex>
       <v-layout class="pl-3 pr-3 pt-2 pb-2">
         <v-icon size="15">av_timer</v-icon>
@@ -129,8 +128,24 @@ export default {
 .user-date-arrow {
   position: relative;
 }
+
 .user-description {
   background: #ececec59;
+  height: 145px;
+  overflow: auto;
+}
+.user-description::-webkit-scrollbar-track {
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar {
+  width: 3px;
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border: 1px solid #ececec59;
 }
 .user-img {
   justify-content: center;
