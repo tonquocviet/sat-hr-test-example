@@ -3,15 +3,14 @@
     <ProfileHeader></ProfileHeader>
     <ProfileListDate :dates.sync="daysOff"></ProfileListDate>
     <v-layout column>
-      <LeavePast :items="items"></LeavePast>
-      <LeavePast :items="items"></LeavePast>
+      <ProfileFooter :items="items"></ProfileFooter>
     </v-layout>
   </div>
 </template>
 <script>
   import ProfileHeader from "./ProfileHeader"
   import ProfileListDate from "./ProfileListDate"
-  import LeavePast from "./LeavePast"
+  import ProfileFooter from "./ProfileFooter"
 
   export default {
     data () {
@@ -62,7 +61,7 @@
     components: {
       ProfileHeader,
       ProfileListDate,
-      LeavePast
+      ProfileFooter
     }
   }
 </script>

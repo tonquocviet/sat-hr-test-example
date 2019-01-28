@@ -1,57 +1,51 @@
 <template>
-  <div>
-    <h3 class="mt-3">Upcoming leaves</h3>
-    <v-card v-for="item in items" :key="item.id" class="mt-3">
-      <v-layout class="py-4">
-        <v-flex xs2 column text-md-left class="pl-3">
-          <h4 class="primary--text">Start Date</h4>
-          <h3>{{ item.startDate }}</h3>
-        </v-flex>
-        <v-flex xs2 column text-md-left class="pl-3">
-          <h4 class="primary--text">End Date</h4>
-          <h3>{{ item.endDate }}</h3>
-        </v-flex>
-        <v-flex xs2 column text-md-left class="pl-3">
-          <h4 class="primary--text">Leave Type</h4>
-          <h3>{{ item.leaveType }}</h3>
-        </v-flex>
-        <v-flex xs2 column text-md-left class="pl-3">
-          <h4 class="primary--text">Approved By</h4>
-          <h3>{{ item.approvedBy }}</h3>
-        </v-flex>
-        <v-flex xs2 column text-md-left class=" pl-3">
-          <h4 class="primary--text">Status</h4>
-          <h3 v-if="item.status == 'approved'" class="success--text">{{ item.status }}</h3>
-          <h3 v-if="item.status == 'pending'" class="error--text">{{ item.status }}</h3>
-          <h3 v-if="item.status == 'canceled'" class="grey--text">{{ item.status }}</h3>
-        </v-flex>
-        <v-flex xs2 column text-md-left class="pl-3">
-          <h4 class="primary--text">Address</h4>
-          <h3>{{ item.address }}</h3>
-        </v-flex>
-        <v-flex xs2>
-          <v-layout class="primary--text text-uppercase py-3">
-            <!-- <h3>view</h3>
-            <v-icon>trending_flat</v-icon> -->
-            <v-btn flat color="success" v-if="item.status == 'canceled'">
-              <span>reopen</span>
-              <v-icon size="15">arrow_forward</v-icon>
-            </v-btn>
-            <v-btn flat color="error" v-else>
-              <span>cancel</span>
-              <v-icon size="15">arrow_forward</v-icon>
-            </v-btn>
-          </v-layout>
-        </v-flex>
+  <v-layout class="py-4">
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">Start Date</h4>
+      <h3>{{ item.startDate }}</h3>
+    </v-flex>
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">End Date</h4>
+      <h3>{{ item.endDate }}</h3>
+    </v-flex>
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">Leave Type</h4>
+      <h3>{{ item.leaveType }}</h3>
+    </v-flex>
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">Approved By</h4>
+      <h3>{{ item.approvedBy }}</h3>
+    </v-flex>
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">Status</h4>
+      <h3 v-if="item.status == 'approved'" class="success--text">{{ item.status }}</h3>
+      <h3 v-if="item.status == 'pending'" class="error--text">{{ item.status }}</h3>
+      <h3 v-if="item.status == 'canceled'" class="grey--text">{{ item.status }}</h3>
+    </v-flex>
+    <v-flex xs2 column text-md-left class="pl-3">
+      <h4 class="primary--text">Address</h4>
+      <h3>{{ item.address }}</h3>
+    </v-flex>
+    <v-flex xs2>
+      <v-layout class="primary--text text-uppercase py-3">
+        <!-- <h3>view</h3>
+        <v-icon>trending_flat</v-icon>-->
+        <v-btn flat color="success" v-if="item.status == 'canceled'">
+          <span>reopen</span>
+          <v-icon size="15">arrow_forward</v-icon>
+        </v-btn>
+        <v-btn flat color="error" v-else>
+          <span>cancel</span>
+          <v-icon size="15">arrow_forward</v-icon>
+        </v-btn>
       </v-layout>
-    </v-card>
-  </div>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
-export default {
+  export default {
   props: {
-    items: Array,
+    item: Object,
   }
 };
 </script>
-
