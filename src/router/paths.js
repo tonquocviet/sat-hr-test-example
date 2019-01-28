@@ -21,6 +21,8 @@ export default [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
     path: '/absence-policy',
     name: 'AbsencePolicy',
     component: PolicyAbsencePage
