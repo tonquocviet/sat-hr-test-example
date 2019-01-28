@@ -126,12 +126,6 @@ export default {
       return endDate.diff(startDate, "days") + 1;
     }
   },
-  mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterAbsences = data.items;
-      this.totalRecords = data.totalRecords;
-    });
-  },
   data() {
     return {
       search: "",
