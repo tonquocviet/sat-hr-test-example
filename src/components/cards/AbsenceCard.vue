@@ -16,29 +16,14 @@
               />
             </div>
             <v-layout class="column pl-1 justify-space-between">
-              <div class="subheading font-weight-bold v-number-of-line-name">
-                {{item.employeeName}}
-              </div>
+              <div class="subheading font-weight-bold v-number-of-line-name">{{item.employeeName}}</div>
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
         </v-flex>
         <v-flex md6 lg6 align-self-center>
           <v-layout justify-end class="grey--text">
-            <span class="hidden-md-and-down">
-              <v-chip
-                small
-                :color="getColorFromLeaveName(item.leaveType.name)"
-                text-color="white"
-              >{{item.leaveType.name}}</v-chip>
-            </span>
-            <span class="hidden-lg-and-up">
-              <v-chip
-                small
-                :color="getColorFromLeaveName(item.leaveType.name)"
-                text-color="white"
-              >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-chip>
-            </span>
+            <LeaveTypeChip :leaveType="item.leaveType.name" :isResponsive="true"/>
           </v-layout>
         </v-flex>
       </v-layout>
@@ -82,12 +67,13 @@
 
 <script>
 import moment from "moment";
-import { leaveTypes } from "../../config";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 import UserAvatar from "../avatars/Avatar";
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    LeaveTypeChip
   },
   props: {
     item: Object,
@@ -116,11 +102,6 @@ export default {
     },
     showModalDetail() {
       this.$emit("showDetailModal", this.item);
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     }
   }
 };
