@@ -36,7 +36,7 @@
     </v-flex>
     <CreatePolicy :isShow="isShowCreate" @closeDialog="isShowCreate = false"></CreatePolicy>
     <v-layout>
-      <v-btn @click="isShowCreate = true" color="success" class="create-policy mr-5 mb-5" fab dark>
+      <v-btn @click="isShowCreate = true" color="success" class="create-policy mr-5 mb-5 " fab dark position absolute>
         <v-icon>create</v-icon>
       </v-btn>
     </v-layout>
@@ -84,8 +84,6 @@ export default {
   z-index: 1;
 }
 .create-policy{
-  position: fixed;
-  z-index: 1000;
   bottom: 0;
   right: 0;
 }
