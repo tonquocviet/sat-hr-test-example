@@ -172,3 +172,60 @@ export const dataApproved = [
     text: "You're within your Casual Leave qoute, which will reduce to 10 days"
   }
 ];
+
+export const dataLeaveCard = [
+  {
+    id: 1,
+    type: 1,
+    name: "A Leave Of Absence",
+    number: 1,
+    numberAbsence: "7/7"
+  },
+  {
+    id: 2,
+    type: 2,
+    name: "A Leave Of Absence",
+    number: 2,
+    numberAbsence: "16/16"
+  },
+  {
+    id: 3,
+    type: 3,
+    name: "A Leave Of Absence",
+    number: 3,
+    numberAbsence: "7/7"
+  },
+  {
+    id: 4,
+    type: 4,
+    name: "A Leave Of Absence",
+    numberAbsence: "7/7"
+  }
+];
+
+export const itemsLeave = [
+  {
+    startDate: "25 Aug, Sun",
+    endDate: "25 Aug, Sun",
+    leaveType: "Nguyễn",
+    approvedBy: "Văn",
+    type: 1,
+    address: "Duy Sơn"
+  },
+  {
+    startDate: "25 Aug, Sun",
+    endDate: "25 Aug, Sun",
+    leaveType: "Nguyễn",
+    approvedBy: "Văn",
+    type: 2,
+    address: "Duy Sơn"
+  },
+  {
+    startDate: "25 Aug, Sun",
+    endDate: "25 Aug, Sun",
+    leaveType: "Nguyễn",
+    approvedBy: "Văn",
+    type: 3,
+    address: "Duy Sơn"
+  }
+];
