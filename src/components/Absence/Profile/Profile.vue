@@ -3,16 +3,15 @@
     <ProfileHeader></ProfileHeader>
     <ProfileListDate :years="years"></ProfileListDate>
     <v-layout column>
-      <ProfileUpcoming :items="items"></ProfileUpcoming>
-      <ProfilePast :items="items"></ProfilePast>
+      <LeavePast :items="items"></LeavePast>
+      <LeavePast :items="items"></LeavePast>
     </v-layout>
   </div>
 </template>
 <script>
   import ProfileHeader from "./ProfileHeader"
   import ProfileListDate from "./ProfileListDate"
-  import ProfileUpcoming from "./ProfileUpcoming"
-  import ProfilePast from "./ProfilePast"
+  import LeavePast from "./LeavePast"
 
   export default {
     data () {
@@ -57,24 +56,27 @@
         ],
         items: [
           {
-            last_name: "Phong JR",
-            day: "25 Aug, Sun",
-            first_name: "Nguyễn",
-            status: "success",
+            startDate: "25 Aug, Sun",
+            endDate: "25 Aug, Sun",
+            leaveType: "Nguyễn",
+            approvedBy: "Văn",
+            status: "approved",
             address: "Duy Sơn"
           },
           {
-            last_name: "Phong JR",
-            day: "25 Aug, Sun",
-            first_name: "Nguyễn",
+            startDate: "25 Aug, Sun",
+            endDate: "25 Aug, Sun",
+            leaveType: "Nguyễn",
+            approvedBy: "Văn",
             status: "pending",
             address: "Duy Sơn"
           },
           {
-            last_name: "Phong JR",
-            day: "25 Aug, Sun",
-            first_name: "Nguyễn",
-            status: "error",
+            startDate: "25 Aug, Sun",
+            endDate: "25 Aug, Sun",
+            leaveType: "Nguyễn",
+            approvedBy: "Văn",
+            status: "canceled",
             address: "Duy Sơn"
           }
         ]
@@ -83,8 +85,7 @@
     components: {
       ProfileHeader,
       ProfileListDate,
-      ProfilePast,
-      ProfileUpcoming
+      LeavePast
     }
   }
 </script>
