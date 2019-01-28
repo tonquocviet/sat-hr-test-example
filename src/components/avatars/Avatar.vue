@@ -1,5 +1,9 @@
 <template>
-  <v-list-tile-avatar :color="`${backgroundColor} img-avatar`" :style="{zIndex:index, width}">
+  <v-list-tile-avatar
+    :size="avatarSize"
+    :color="`${backgroundColor} img-avatar`"
+    :style="{zIndex:index, width, justifyContent}"
+  >
     <v-img
       v-if="!!imageUrl"
       :class="imgActive ? 'v-profile' : (typeId === 4 ? 'v-img' : 'elevation-6')"
@@ -8,11 +12,12 @@
     <span v-if="!imageUrl" class="white--text headline">{{nameSymbol}}</span>
   </v-list-tile-avatar>
 </template>
-
 <script>
 export default {
   props: {
+    avatarSize: String,
     width: String,
+    justifyContent: String,
     imageUrl: String,
     name: String,
     backgroundColor: String,
@@ -33,7 +38,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .img-avatar {
   min-width: 40px;
