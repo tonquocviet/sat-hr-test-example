@@ -23,7 +23,7 @@
         </v-flex>
         <v-flex md6 lg6 align-self-center>
           <v-layout justify-end class="grey--text">
-            <LeaveTypeChip :leaveType="item.leaveType.name" :isResponsive="true"/>
+            <LeaveTypeChip :leaveType="item.leaveType.name" is-responsive/>
           </v-layout>
         </v-flex>
       </v-layout>
