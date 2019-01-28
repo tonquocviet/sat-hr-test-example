@@ -11,7 +11,7 @@
       </v-flex>
       <v-flex xs12>
         <div>Step 1: Setup
-          <v-icon style="cursor: pointer;" @click="isShowModalStep = true" size="17">edit</v-icon>
+          <v-icon style="cursor: pointer;" @click="isShowModalStep1 = true" size="17">edit</v-icon>
           <div class="detail-step1">
             <table class="table-step1">
               <tr>
@@ -55,9 +55,9 @@
         </div>
       </v-flex>
       <ModalFormStep1
-        :isShow="isShowModalStep"
+        :isShow="isShowModalStep1"
         :apiUrl="apiPolicy.getCountries"
-        @closeDialog="isShowModalStep = false"
+        @closeDialog="isShowModalStep1 = false"
       />
     </v-layout>
   </div>
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       description: "",
-      isShowModalStep: false
+      isShowModalStep1: false
     };
   }
 };
