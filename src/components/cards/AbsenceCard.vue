@@ -4,7 +4,7 @@
     @click="isClickable ? showModalDetail() : null"
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
-      <v-layout row wrap>
+      <v-layout row wrap justify-space-between>
         <v-flex md6 lg6>
           <v-layout>
             <div class="v-image-user">
@@ -25,14 +25,19 @@
         </v-flex>
         <v-flex md6 lg6 align-self-center>
           <v-layout justify-end class="grey--text">
-            <span>
+            <span class="hidden-md-and-down">
               <v-chip
                 small
                 :color="getColorFromLeaveName(item.leaveType.name)"
                 text-color="white"
-              >
-                {{smallScreen ? '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' : item.leaveType.name}}
-              </v-chip>
+              >{{item.leaveType.name}}</v-chip>
+            </span>
+            <span class="hidden-lg-and-up">
+              <v-chip
+                small
+                :color="getColorFromLeaveName(item.leaveType.name)"
+                text-color="white"
+              >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-chip>
             </span>
           </v-layout>
         </v-flex>
@@ -61,8 +66,8 @@
           </v-flex>
         </v-layout>
       </div>
-      <v-flex class="v-number-of-line">
-        <div class="user-description pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
+      <v-flex class="user-description">
+        <div class="pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
       </v-flex>
       <v-layout class="pl-3 pr-3 pt-2 pb-2">
         <v-icon size="15">av_timer</v-icon>
@@ -84,21 +89,9 @@ export default {
   components: {
     UserAvatar
   },
-  data: () => ({
-    smallScreen: false
-  }),
   props: {
     item: Object,
     isClickable: Boolean
-  },
-  beforeDestroy() {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('resize', this.onResize, { passive: true })
-    }
-  },
-  mounted() {
-    this.onResize(),
-    window.addEventListener('resize', this.onResize, { passive: true })
   },
   methods: {
     formatDate(date) {
@@ -128,9 +121,6 @@ export default {
       return (
         leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
       ).color;
-    },
-    onResize() {
-      this.smallScreen = window.innerWidth < 1264
     }
   }
 };
@@ -147,8 +137,24 @@ export default {
 .user-date-arrow {
   position: relative;
 }
+
 .user-description {
   background: #ececec59;
+  height: 145px;
+  overflow: auto;
+}
+.user-description::-webkit-scrollbar-track {
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar {
+  width: 3px;
+  background-color: #ececec59;
+}
+
+.user-description::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border: 1px solid #ececec59;
 }
 .user-img {
   justify-content: center;

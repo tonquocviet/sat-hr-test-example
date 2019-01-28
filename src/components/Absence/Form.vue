@@ -16,7 +16,12 @@
       <v-tabs color="transparent" dark slider-color="primary">
         <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
         <v-tab-item>
-          <AbsenceList v-if="viewMode === 'list'" :apiAbsence="apiAbsence"/>
+          <AbsenceList
+            v-if="viewMode === 'list'"
+            @showDetailModal="showDetailModal"
+            :apiAbsence="apiAbsence"
+            :detailLink="detailLinks.forAbsenceProfile"
+          />
           <AbsenceCard
             @showMoreView="showMoreView"
             :dataFilterAbsences="dataFilterAbsences"
@@ -89,7 +94,8 @@ export default {
   },
   props: {
     viewMode: String,
-    apiAbsence: Object
+    apiAbsence: Object,
+    detailLinks: Object
   },
   mounted() {
     this.getDataFromApi().then(data => {
