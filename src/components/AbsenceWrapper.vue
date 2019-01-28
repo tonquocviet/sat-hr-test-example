@@ -1,7 +1,12 @@
 <template>
   <v-content>
     <v-container fluid class="pa-0">
-      <Absence :viewMode="viewMode" @changeViewMode="onViewModeChange" :apiAbsence="apiAbsence"/>
+      <Absence
+        :viewMode="viewMode"
+        @changeViewMode="onViewModeChange"
+        :apiAbsence="apiAbsence"
+        :detailLinks="detailLinks"
+      />
     </v-container>
   </v-content>
 </template>
@@ -9,7 +14,8 @@
 import Absence from "./Absence/Form";
 export default {
   props: {
-    apiAbsence: Object
+    apiAbsence: Object,
+    detailLinks: Object
   },
   components: {
     Absence
