@@ -2,7 +2,6 @@
   <v-layout row>
     <v-flex md9 class="mt-2">
       <v-flex xs12 right class="right-button-container">
-        <v-btn color="info">Add New Policy</v-btn>
         <v-btn icon class="primary--text">
           <v-icon>filter_list</v-icon>
         </v-btn>
@@ -17,7 +16,16 @@
           <v-icon>apps</v-icon>
         </v-btn>
       </v-flex>
-      <PolicyList v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
+      <v-flex xs12>
+        <v-tabs color="transparent" dark slider-color="primary">
+          <v-tab v-for="item in itemList" :key="item.id" ripple class="primary--text">{{ item.text }}</v-tab>
+          <v-tab-item>
+            <PolicyList v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
+          </v-tab-item>
+          <v-tab-item>Approved Request</v-tab-item>
+          <v-tab-item>Rejected Request</v-tab-item>
+        </v-tabs>
+      </v-flex>
     </v-flex>
   </v-layout>
 </template>
@@ -41,6 +49,11 @@ export default {
     return {
       pageIndex: 0,
       loading: true,
+      itemList: [
+        { text: "All" },
+        { text: "Active" },
+        { text: "Inactive" }
+      ],
     };
   }
 };
