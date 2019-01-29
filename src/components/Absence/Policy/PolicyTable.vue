@@ -10,7 +10,7 @@
     >
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">
-          <router-link :to=" 'absence-policy' + '/' + props.item.id">{{ props.item.name }}</router-link>
+          <router-link :to="`/absence-policy/${ props.item.id}`">{{ props.item.name }}</router-link>
         </td>
         <td
           class="text-xs-left"
