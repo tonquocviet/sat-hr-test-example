@@ -54,7 +54,11 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
+      <AbsenceCreate 
+        :items="data1"
+        :leaveTypes="leaveTypes"
+        :popup="popup" 
+      />
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
@@ -82,6 +86,7 @@ import AbsenceDetailList from "./ListDetail";
 import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
 import ModalDetailAbsence from "./modal-detail-absence/Form";
+import { leaveTypes } from "../../config.js";
 
 export default {
   components: {
@@ -98,10 +103,6 @@ export default {
     detailLinks: Object
   },
   mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterAbsences = data.items;
-      this.totalRecords = data.totalRecords;
-    });
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
     this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
@@ -127,6 +128,12 @@ export default {
     },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+      if (!isListView) {
+        this.getDataFromApi().then(data => {
+          this.dataFilterAbsences = data.items;
+          this.totalRecords = data.totalRecords;
+        });
+      }
     },
     showMoreView() {
       this.pageIndex++;
@@ -184,6 +191,7 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
+      leaveTypes,
       data1: [
         {
           avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",

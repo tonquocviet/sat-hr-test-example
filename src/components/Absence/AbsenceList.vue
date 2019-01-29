@@ -17,11 +17,7 @@
         </td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">
-          <v-chip
-            small
-            :color="getColorFromLeaveName(props.item.leaveType.name)"
-            text-color="white"
-          >{{ props.item.leaveType.name }}</v-chip>
+          <LeaveTypeChip :leaveType="props.item.leaveType.name"/>
         </td>
         <td class="text-xs-left">{{ props.item.location }}</td>
         <td class="text-xs-center">
@@ -57,11 +53,14 @@
 </template>
 <script>
 import moment from "moment";
-import { leaveTypes } from "../../config";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
     apiAbsence: Object,
     detailLink: String
+  },
+  components: {
+    LeaveTypeChip
   },
   methods: {
     absenceClick(absenceDetail) {
@@ -109,11 +108,6 @@ export default {
           });
       });
     },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
-    },
     startDate(date) {
       return moment(date).format("MM/DD/YYYY");
     },
@@ -125,12 +119,6 @@ export default {
       const endDate = moment(end);
       return endDate.diff(startDate, "days") + 1;
     }
-  },
-  mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterAbsences = data.items;
-      this.totalRecords = data.totalRecords;
-    });
   },
   data() {
     return {

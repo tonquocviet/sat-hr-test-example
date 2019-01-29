@@ -5,7 +5,7 @@
   >
     <div class="user-infomation pl-3 pr-3 pt-3 pb-3">
       <v-layout row wrap justify-space-between>
-        <div>
+        <v-flex md6 lg6>
           <v-layout>
             <div class="v-image-user">
               <user-avatar
@@ -20,18 +20,12 @@
               <div class="grey--text">{{item.employeeRole.name}}</div>
             </v-layout>
           </v-layout>
-        </div>
-        <div>
-          <v-layout class="grey--text">
-            <span>
-              <v-chip
-                small
-                :color="getColorFromLeaveName(item.leaveType.name)"
-                text-color="white"
-              >{{ item.leaveType.name }}</v-chip>
-            </span>
+        </v-flex>
+        <v-flex md6 lg6 align-self-center>
+          <v-layout justify-end class="grey--text">
+            <LeaveTypeChip :leaveType="item.leaveType.name" is-responsive/>
           </v-layout>
-        </div>
+        </v-flex>
       </v-layout>
     </div>
     <div class="elevation-3">
@@ -73,12 +67,13 @@
 
 <script>
 import moment from "moment";
-import { leaveTypes } from "../../config";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 import UserAvatar from "../avatars/Avatar";
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    LeaveTypeChip
   },
   props: {
     item: Object,
@@ -107,11 +102,6 @@ export default {
     },
     showModalDetail() {
       this.$emit("showDetailModal", this.item);
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     }
   }
 };

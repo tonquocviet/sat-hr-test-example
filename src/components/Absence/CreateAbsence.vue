@@ -17,17 +17,10 @@
                 v-model="type_absence"
                 item-text="name"
                 item-value="id"
-                :items="items"
+                :items="leaveTypes"
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
-              <v-flex>
-                <v-text-field
-                  value="Unpaind Leave"
-                  label="Absence Category"
-                  readonly
-                ></v-text-field>
-              </v-flex>
               <v-autocomplete
                 v-model="reason_employer"
                 item-text="name"
@@ -126,6 +119,7 @@
 export default {
   props: {
     popup: Object,
+    leaveTypes: Array,
     items: Array
   },
   data() {
