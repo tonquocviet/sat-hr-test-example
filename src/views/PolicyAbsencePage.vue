@@ -14,8 +14,9 @@ export default {
       "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
     return {
       apiPolicy: {
-        filterPolicy: `${baseUrl}/absence-policy/filter`
-      }
+        filterPolicy: `${baseUrl}/absence-policy/filter`,
+        filterCountPolicy: `${baseUrl}/absence-policy/count`
+      },
     };
   }
 };
