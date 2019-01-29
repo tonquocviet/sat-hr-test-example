@@ -43,7 +43,6 @@
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
 import LeaveTypeChip from "../chips/LeaveTypeChip";
-import { leaveTypes } from "../../config";
 
 export default {
   components: {
@@ -68,11 +67,6 @@ export default {
     },
     viewFull() {
       this.$emit("viewFull", this.name);
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     }
   }
 };
