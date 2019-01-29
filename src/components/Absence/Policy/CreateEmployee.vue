@@ -33,8 +33,5 @@ export default {
     isShowCreate: Boolean,
     employees: Array
   },
-  created(){
-    console.log(this.employees);
-  }
 }
 </script>

@@ -86,7 +86,6 @@ export default {
           name: "Frozen Yogurt",
           startDate: "25-08-1995",
           endDate: "25-08-1995",
-          startDate: "25-08-1995",
           tags: [
             "tag1", "tag2", "tag3"
           ]
@@ -95,7 +94,6 @@ export default {
           name: "Frozen Yogurt",
           startDate: "25-08-1995",
           endDate: "25-08-1995",
-          startDate: "25-08-1995",
           tags: [
             "tag1", "tag2", "tag3"
           ]
@@ -104,7 +102,6 @@ export default {
           name: "Frozen Yogurt",
           startDate: "25-08-1995",
           endDate: "25-08-1995",
-          startDate: "25-08-1995",
           tags: [
             "tag1", "tag2", "tag3"
           ]
