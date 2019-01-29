@@ -6,7 +6,9 @@
         <v-tab-item>
           <Overview :apiPolicy="apiPolicy"/>
         </v-tab-item>
-        <v-tab-item>Employee List</v-tab-item>
+        <v-tab-item>
+          <EmployeeList></EmployeeList>
+        </v-tab-item>
         <v-tab-item>Performance</v-tab-item>
         <v-tab-item>Settings</v-tab-item>
       </v-tabs>
@@ -15,10 +17,12 @@
 </template>
 <script>
 import Overview from "./Overview";
+import EmployeeList from "./EmployeeList";
 
 export default {
   components: {
-    Overview
+    Overview,
+    EmployeeList
   },
   props: {
     viewMode: String,
