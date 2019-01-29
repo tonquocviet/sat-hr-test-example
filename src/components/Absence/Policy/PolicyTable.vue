@@ -9,7 +9,9 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.name }}</td>
+        <td class="text-xs-left">
+          <router-link :to="detailLink + '/' + props.item.id">{{ props.item.name }}</router-link>
+        </td>
         <td
           class="text-xs-left"
         >{{ props.item.createdBy.firstName }} {{ props.item.createdBy.lastName }}</td>
@@ -74,6 +76,7 @@ export default {
   },
   data() {
     return {
+      detailLink: "absence-policy",
       dataFilterPolicy: [],
       totalRecords: 0,
       pagination: {},
