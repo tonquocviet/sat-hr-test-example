@@ -22,18 +22,37 @@
             :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
           />
-          <AbsenceCard
-            @showMoreView="showMoreView"
-            :dataFilterAbsences="dataFilterAbsences"
-            :loading="loading"
-            :isShowMore="isShowMore"
-            :hasShowMore="hasShowMore"
+          <AbsenceCardContainer v-else @showDetailModal="showDetailModal" :apiAbsence="apiAbsence"/>
+        </v-tab-item>
+        <v-tab-item>
+          <AbsenceList
+            v-if="viewMode === 'list'"
+            @showDetailModal="showDetailModal"
+            :apiAbsence="apiAbsence"
+            :detailLink="detailLinks.forAbsenceProfile"
+          />
+          <AbsenceCardContainer
             v-else
             @showDetailModal="showDetailModal"
+            :apiAbsence="apiAbsence"
+            absence-status="approved"
           />
         </v-tab-item>
-        <v-tab-item>Approved Request</v-tab-item>
-        <v-tab-item>Rejected Request</v-tab-item>
+        <v-tab-item>
+          <AbsenceList
+            v-if="viewMode === 'list'"
+            @showDetailModal="showDetailModal"
+            :apiAbsence="apiAbsence"
+            :detailLink="detailLinks.forAbsenceProfile"
+            absence-status="rejected"
+          />
+          <AbsenceCardContainer
+            v-else
+            @showDetailModal="showDetailModal"
+            :apiAbsence="apiAbsence"
+            absence-status="rejected"
+          />
+        </v-tab-item>
       </v-tabs>
     </v-flex>
     <v-flex md3 class="ml-3">
@@ -54,11 +73,7 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate 
-        :items="data1"
-        :leaveTypes="leaveTypes"
-        :popup="popup" 
-      />
+      <AbsenceCreate :items="data1" :leaveTypes="leaveTypes" :popup="popup"/>
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
@@ -81,7 +96,7 @@
 </template>
 <script>
 import AbsenceList from "./AbsenceList";
-import AbsenceCard from "./AbsenceCard";
+import AbsenceCardContainer from "./AbsenceCardContainer";
 import AbsenceDetailList from "./ListDetail";
 import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
@@ -95,7 +110,7 @@ export default {
     ModalDetailAbsence,
     ModalForSubFilter,
     AbsenceCreate,
-    AbsenceCard
+    AbsenceCardContainer
   },
   props: {
     viewMode: String,
@@ -114,13 +129,6 @@ export default {
       this.dataAbsenceList2 = items;
     });
   },
-  computed: {
-    hasShowMore() {
-      return !this.dataFilterAbsences
-        ? 0
-        : this.dataFilterAbsences.length < this.totalRecords;
-    }
-  },
   methods: {
     showDetailModal(item) {
       this.isShowAbsenceDetailsModal = true;
@@ -128,39 +136,6 @@ export default {
     },
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
-      if (!isListView) {
-        this.getDataFromApi().then(data => {
-          this.dataFilterAbsences = data.items;
-          this.totalRecords = data.totalRecords;
-        });
-      }
-    },
-    showMoreView() {
-      this.pageIndex++;
-      this.isShowMore = true;
-      this.getDataFromApi().then(data => {
-        this.dataFilterAbsences = this.dataFilterAbsences.concat(data.items);
-        this.totalRecords = data.totalRecords;
-      });
-    },
-    getDataFromApi() {
-      this.loading = true;
-      const filterRequest = {
-        pageSize: 9,
-        pageIndex: this.pageIndex
-      };
-      return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiAbsence.filterAbsences}`, filterRequest)
-          .then(res => {
-            this.loading = false;
-            this.isShowMore = false;
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
-          });
-      });
     },
     getDataAbsenceListRequest(url) {
       return new Promise(resolve => {
