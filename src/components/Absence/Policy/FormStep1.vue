@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-layout row wrap>
+    <v-layout class="px-3 py-2" row wrap>
       <v-flex xs12 sm6 px-2 py-2>
         <v-text-field
           :readonly="readonly"
@@ -96,21 +96,11 @@
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <div>Absence Type Code</div>
-        <v-textarea 
-          :readonly="readonly" 
-          solo 
-          v-model="absenceTypeCode" 
-          name="input-7-4"
-        ></v-textarea>
+        <v-textarea :readonly="readonly" solo v-model="absenceTypeCode" name="input-7-4"></v-textarea>
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <div>Short Description</div>
-        <v-textarea 
-          :readonly="readonly" 
-          solo 
-          v-model="shortDescription" 
-          name="input-7-4"
-        ></v-textarea>
+        <v-textarea :readonly="readonly" solo v-model="shortDescription" name="input-7-4"></v-textarea>
       </v-flex>
       <v-flex xs12 px-2>
         <v-checkbox
@@ -128,13 +118,8 @@
           v-model="automatically"
         ></v-checkbox>
       </v-flex>
+      <v-btn v-if="!readonly" :disabled="!valid" color="success" @click="submit">Save</v-btn>
     </v-layout>
-    <v-btn 
-    v-if="!readonly" 
-    :disabled="!valid" 
-    color="success"
-    @click="submit"
-    >Save</v-btn>
   </v-form>
 </template>
 
@@ -153,7 +138,7 @@ const countryRules = [v => !!v || "Country is required"];
 export default {
   props: {
     itemsCountry: Array,
-    readonly: Boolean,
+    readonly: Boolean
   },
   data: () => ({
     valid: true,

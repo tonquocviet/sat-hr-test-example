@@ -1,9 +1,9 @@
 <template>
-  <v-card>
-    <v-layout class="pa-2 mt-3">
-      <v-card style="width:100%; margin-top: -20px" color="teal">
+  <v-card >
+    <v-layout class="px-4 mt-3">
+      <v-card class="elevation-4 card-title-policy" color="success">
         <v-layout class="pa-3">
-          <v-toolbar-title class="pr-1 white--text font-weight-light">Desciption</v-toolbar-title>
+          <h2 class="pr-1 white--text font-weight-light">Description</h2>
         <v-icon
           style="cursor: pointer; color: rgba(255, 255, 255, 0.79)"
           v-if="readonly"
@@ -12,7 +12,7 @@
         </v-layout>
       </v-card>
     </v-layout>
-    <v-layout row wrap class="pa-2">
+    <v-layout row wrap class="px-4 py-3">
       <v-flex xs12 sm6 class="pr-2">
         <v-textarea :readonly="readonly" solo v-model="description" name="input-7-4"></v-textarea>
       </v-flex>
@@ -66,4 +66,13 @@ export default {
   }
 };
 </script>
+
+<style>
+.card-title-policy {
+  width:100%; 
+  margin-top: -20px; 
+  border-radius: 6px;
+}
+</style>
+
 

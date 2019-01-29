@@ -1,9 +1,9 @@
 <template>
   <v-card>
-    <v-layout class="pa-2 mt-3">
-      <v-card style="width:100%; margin-top: -20px" color="teal">
+    <v-layout class="px-4 mt-3">
+      <v-card class="elevation-4 card-title-policy" color="success">
         <v-layout class="pa-3">
-          <v-toolbar-title class="pr-1 white--text font-weight-light">Step 1: Setup</v-toolbar-title>
+          <h2 class="pr-1 white--text font-weight-light">Step 1: Setup</h2>
         <v-icon
           style="cursor: pointer; color: rgba(255, 255, 255, 0.79)"
           v-if="readonly"
