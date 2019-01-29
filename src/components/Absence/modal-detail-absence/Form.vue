@@ -90,10 +90,10 @@
                   <span class="body-1">Created</span>
                   <span>Jan 24th, 8:15am</span>
                   <span class="my-2">Category</span>
-                  <v-chip
+                  <LeaveTypeChip
                     text-color="white"
                     :color="getColorFromLeaveName(absenceDetail.leaveType.name)"
-                  >{{absenceDetail.leaveType.name}}</v-chip>
+                    :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
                   <v-chip class="my-1 headline" label>HR Approvers</v-chip>
 
@@ -120,6 +120,7 @@ import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
 import { leaveTypes } from "../../../config";
+import LeaveTypeChip from "../../chips/LeaveTypeChip"
 import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
   components: {
@@ -128,7 +129,8 @@ export default {
     PolicyAlert,
     InputComment,
     ListComment,
-    CardHRApprover
+    CardHRApprover,
+    LeaveTypeChip
   },
   props: {
     isShow: Boolean,
