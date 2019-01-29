@@ -14,11 +14,11 @@
       </v-flex>
       <v-flex xs12>
         <v-tabs color="transparent" dark slider-color="primary">
-          <v-tab v-for="item in Object.keys(person)" :key="item" ripple class="primary--text">
+          <v-tab v-for="item in tabs" :key="item" ripple class="primary--text">
             {{ item }}
-            <v-chip v-if="item == 'all'" color="primary" text-color="white" small>{{ person.all }}</v-chip>
-            <v-chip v-if="item == 'active'" color="primary" text-color="white" small>{{ person.active }}</v-chip>
-            <v-chip v-if="item == 'inactive'" color="primary" text-color="white" small>{{ person.inactive }}</v-chip>
+            <v-chip v-if="item == 'all'" color="primary" text-color="white" small>{{ active + inactive }}</v-chip>
+            <v-chip v-if="item == 'active'" color="primary" text-color="white" small>{{ active }}</v-chip>
+            <v-chip v-if="item == 'inactive'" color="primary" text-color="white" small>{{ inactive }}</v-chip>
           </v-tab>
           <v-tab-item>
             <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
@@ -45,8 +45,10 @@ export default {
   },
   props: {
     viewMode: String,
-    apiPolicy: Object,
-    apiCountPolicy: Object
+    apiPolicy: Object
+  },
+  mounted() {
+    this.getCountPolicy();
   },
   methods: {
     changeViewMode(isListView) {
@@ -54,29 +56,23 @@ export default {
     },
     getCountPolicy() {
       this.$http
-        .get(`${this.apiCountPolicy.filterCountPolicy}`)
-        .then(({ data }) => {
-          this.person = {
-            all: data.active + data.inactive,
-            active: data.active,
-            inactive: data.inactive
-          };
+        .get(`${this.apiPolicy.filterCountPolicy}`)
+        .then(data => {
+          this.active = data.data.active
+          this.inactive = data.data.inactive
         });
     }
   },
   data() {
     return {
       isShowCreate: false,
-      person: {
-        all: 0,
-        inactive: 0,
-        active: 0,
-      },
+      inactive: 0,
+      active: 0,
+      tabs: [
+        "all", "active", "inactive"
+      ]
     };
   },
-  created(){
-    this.getCountPolicy();
-  }
 };
 </script>
 <style scoped>
