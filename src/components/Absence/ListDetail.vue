@@ -25,22 +25,7 @@
               </v-layout>
               <v-layout align-center justify-space-between>
                 <span class="date-off error--text">{{countDay(item.startDate)}}</span>
-                <div class="hidden-md-and-down">
-                  <v-chip
-                    class="mx-0 my-0"
-                    small
-                    :color="getColorFromLeaveName(item.leaveType.name)"
-                    text-color="white"
-                  >{{ item.leaveType.name }}</v-chip>
-                </div>
-                <div class="hidden-lg-and-up">
-                  <v-chip
-                    class="mx-0 my-0"
-                    small
-                    :color="getColorFromLeaveName(item.leaveType.name)"
-                    text-color="white"
-                  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</v-chip>
-                </div>
+                <LeaveTypeChip :leaveType="item.leaveType.name" is-responsive />
               </v-layout>
             </v-list-tile-sub-title>
           </v-list-tile>
@@ -57,11 +42,13 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 import { leaveTypes } from "../../config";
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    LeaveTypeChip
   },
   props: {
     items: Array,
