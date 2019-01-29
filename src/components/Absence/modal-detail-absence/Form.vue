@@ -90,7 +90,10 @@
                   <span class="body-1">Created</span>
                   <span>Jan 24th, 8:15am</span>
                   <span class="my-2">Category</span>
-                  <v-chip color="primary" text-color="white">Photobok</v-chip>
+                  <v-chip
+                    text-color="white"
+                    :color="getColorFromLeaveName(absenceDetail.leaveType.name)"
+                  >{{absenceDetail.leaveType.name}}</v-chip>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
                   <v-chip class="my-1 headline" label>HR Approvers</v-chip>
 
@@ -116,6 +119,7 @@ import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
+import { leaveTypes } from "../../../config";
 import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
   components: {
@@ -145,6 +149,11 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    getColorFromLeaveName(leaveName) {
+      return (
+        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
+      ).color;
     }
   },
   data() {

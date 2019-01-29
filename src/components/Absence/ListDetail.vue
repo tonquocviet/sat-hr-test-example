@@ -1,4 +1,4 @@
-<template>
+  <template>
   <v-layout>
     <v-flex xs12>
       <v-card flat>
