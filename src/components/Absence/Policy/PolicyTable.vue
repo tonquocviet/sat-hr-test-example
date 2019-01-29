@@ -24,7 +24,7 @@
         </td>
         <td
           class="text-xs-left"
-        >{{ props.item.endDate != null ?endDate(props.item.endDate) : 'N/A' }}</td>
+        >{{ props.item.endDate != null ?endDate(props.item.expiredDate) : 'N/A' }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
