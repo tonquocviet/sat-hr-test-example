@@ -1,5 +1,5 @@
 <template>
-  <PolicyWrapper :apiPolicy="apiPolicy"/>
+  <PolicyWrapper :apiPolicy="apiPolicy" :apiCountPolicy="apiCountPolicy"/>
 </template>
 
 <script>
@@ -15,7 +15,10 @@ export default {
     return {
       apiPolicy: {
         filterPolicy: `${baseUrl}/absence-policy/filter`
-      }
+      },
+      apiCountPolicy: {
+        filterCountPolicy: `${baseUrl}/absence-policy/count`
+      },
     };
   }
 };

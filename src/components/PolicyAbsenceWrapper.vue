@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container fluid class="pa-0">
-      <Policy :viewMode="viewMode" @changeViewMode="onViewModeChange" :apiPolicy="apiPolicy"/>
+      <Policy :viewMode="viewMode" @changeViewMode="onViewModeChange" :apiCountPolicy="apiCountPolicy" :apiPolicy="apiPolicy"/>
     </v-container>
   </v-content>
 </template>
@@ -9,7 +9,8 @@
 import Policy from "./Absence/Policy/Form";
 export default {
   props: {
-    apiPolicy: Object
+    apiPolicy: Object,
+    apiCountPolicy: Object
   },
   components: {
     Policy

@@ -14,15 +14,14 @@
       </v-flex>
       <v-flex xs12>
         <v-tabs color="transparent" dark slider-color="primary">
-          <v-tab v-for="(text,index) in tabs" :key="index" ripple class="primary--text">
-            {{ text }}
-            <v-chip color="primary" text-color="white" small>{{ countPolicy }}</v-chip>
+          <v-tab v-for="item in Object.keys(person)" :key="item" ripple class="primary--text">
+            {{ item }}
+            <v-chip v-if="item == 'all'" color="primary" text-color="white" small>{{ person.all }}</v-chip>
+            <v-chip v-if="item == 'active'" color="primary" text-color="white" small>{{ person.active }}</v-chip>
+            <v-chip v-if="item == 'inactive'" color="primary" text-color="white" small>{{ person.inactive }}</v-chip>
           </v-tab>
           <v-tab-item>
-            <PolicyTable
-              v-if="viewMode === 'list'"
-              :apiPolicy="apiPolicy"
-            />
+            <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
           </v-tab-item>
           <v-tab-item>Page active</v-tab-item>
           <v-tab-item>Page In active</v-tab-item>
@@ -46,19 +45,37 @@ export default {
   },
   props: {
     viewMode: String,
-    apiPolicy: Object
+    apiPolicy: Object,
+    apiCountPolicy: Object
   },
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+    },
+    getCountPolicy() {
+      this.$http
+        .get(`${this.apiCountPolicy.filterCountPolicy}`)
+        .then(({ data }) => {
+          this.person = {
+            all: data.active + data.inactive,
+            active: data.active,
+            inactive: data.inactive
+          };
+        });
     }
   },
   data() {
     return {
-      countPolicy: 5,
       isShowCreate: false,
-      tabs: ["All", "Active", "Inactive"]
+      person: {
+        all: 0,
+        inactive: 0,
+        active: 0,
+      },
     };
+  },
+  created(){
+    this.getCountPolicy();
   }
 };
 </script>
