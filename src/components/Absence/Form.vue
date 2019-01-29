@@ -54,7 +54,7 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate :items="data1" :popup="popup"></AbsenceCreate>
+      <AbsenceCreate :items="leaveTypes" :popup="popup"></AbsenceCreate>
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
@@ -82,6 +82,7 @@ import AbsenceDetailList from "./ListDetail";
 import ModalForSubFilter from "./ModalForSubFilter";
 import AbsenceCreate from "./CreateAbsence";
 import ModalDetailAbsence from "./modal-detail-absence/Form";
+import { leaveTypes } from "../../config.js";
 
 export default {
   components: {
@@ -186,29 +187,7 @@ export default {
         { text: "Approved Request" },
         { text: "Rejected Request" }
       ],
-      data1: [
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          name: "Ông nội",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          name: "Cha",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          name: "Con",
-          date_start: "25 Agust 1995",
-          date_end: "25 May 1995",
-          description: "Style hơi chuối xí :D "
-        }
-      ],
+      leaveTypes,
       dataAbsenceList: [],
       dataAbsenceList2: []
     };
