@@ -7,8 +7,8 @@
       </div>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="default darken-1" flat="flat" @click="$emit('closeDialog')">Cancel</v-btn>
-        <v-btn color="green darken-1" flat="flat" @click="$emit('closeDialog')">Create</v-btn>
+        <v-btn color="default" flat="flat" @click="$emit('closeDialog')">Cancel</v-btn>
+        <v-btn color="green" flat="flat" @click="$emit('closeDialog')">Create</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
