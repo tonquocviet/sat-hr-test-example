@@ -30,36 +30,3 @@ export const leaveTypes = [{ name: "Family and Medical Leave", color: "primary" 
 { name: "Adverse Weather", color: "pink" },
 { name: "Work from Home", color: "purple" }
 ];
-
-export const colorsReport = {
-  vacation: {
-    name: 'Vacation',
-    background: 'black'
-  },
-  sick: {
-    name: 'Sick',
-    background: 'red'
-  },
-  unpaid: {
-    name: 'Unpaid',
-    background: 'yellow',
-    color: 'black'
-  },
-  halfday: {
-    name: 'Half day',
-    background: 'blue'
-  },
-  other: {
-    name: 'Other',
-    background: 'cyan',
-    color: 'black'
-  },
-  holiday: {
-    name: 'Holiday',
-    background: 'purple'
-  },
-  weekend: {
-    name: 'Weekend',
-    background: 'grey'
-  }
-}

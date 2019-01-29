@@ -1,14 +1,6 @@
 <template>
   <div class="v-container">
-    <v-btn
-      color="red"
-      dark
-      fab
-      fixed
-      bottom
-      right
-      @click="dialog = true"
-    >
+    <v-btn color="red" dark fab fixed bottom right @click="dialog = true">
       <v-icon>add</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" max-width="500px">
@@ -60,12 +52,7 @@
     </v-dialog>
     <v-layout row>
       <v-flex xs6>
-        <v-data-table
-          :items="data"
-          :headers="headers"
-          class="elevation-1"
-          hide-actions
-        >
+        <v-data-table :items="data" :headers="headers" class="elevation-1" hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.name }}</td>
             <td>{{ props.item.date }}</td>
@@ -85,21 +72,21 @@ export default {
     return {
       headers: [
         {
-          text: 'Holiday Name',
+          text: "Holiday Name",
           sortable: false
         },
         {
-          text: 'Date',
+          text: "Date",
           sortable: false
         }
       ],
       newItem: {
-        name: '',
-        date: ''
+        name: "",
+        date: ""
       },
       dialog: false,
       menu: false
-    }
+    };
   },
   methods: {
     close() {
@@ -107,26 +94,29 @@ export default {
     },
     save() {
       if (this.$refs.form.validate()) {
-        this.$emit('addHoliday', this.newItem.name, this.computedDate);
+        this.$emit("addHoliday", {
+          name: this.newItem.name,
+          date: this.computedDate
+        });
         this.dialog = false;
         setTimeout(() => {
           this.newItem = {
-            name: '',
-            date: ''
+            name: "",
+            date: ""
           };
           this.$refs.form.resetValidation();
-        }, 300)
+        }, 300);
       }
     }
   },
   computed: {
     computedDate() {
       const { date } = this.newItem;
-      if (!date) return null
+      if (!date) return null;
 
-      const [, month, day] = date.split('-')
-      return `${month}/${day}`
+      const [, month, day] = date.split("-");
+      return `${month}/${day}`;
     }
   }
-}
+};
 </script>
