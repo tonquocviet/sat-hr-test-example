@@ -17,7 +17,7 @@
                 v-model="type_absence"
                 item-text="name"
                 item-value="id"
-                :items="items"
+                :items="leaveTypes"
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
@@ -126,6 +126,7 @@
 export default {
   props: {
     popup: Object,
+    leaveTypes: Array,
     items: Array
   },
   data() {
