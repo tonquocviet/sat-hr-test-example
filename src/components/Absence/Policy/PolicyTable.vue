@@ -10,7 +10,7 @@
     >
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">
-          <router-link :to="detailLink + '/' + props.item.id">{{ props.item.name }}</router-link>
+          <router-link :to=" 'absence-policy' + '/' + props.item.id">{{ props.item.name }}</router-link>
         </td>
         <td
           class="text-xs-left"
@@ -76,7 +76,6 @@ export default {
   },
   data() {
     return {
-      detailLink: "absence-policy",
       dataFilterPolicy: [],
       totalRecords: 0,
       pagination: {},
