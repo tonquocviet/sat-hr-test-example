@@ -1,42 +1,36 @@
 <template>
-  <div>
-    <v-layout>
-      <h2>Step 1: Setup</h2>
-      <v-icon style="cursor: pointer;" @click="$emit('openDialog')" size="20">edit</v-icon>
+  <v-card>
+    <v-layout class="pa-2">
+      <v-toolbar-title class="pr-1">Step 1: Setup</v-toolbar-title>
+      <v-icon
+        style="cursor: pointer;"
+        v-if="readonly"
+        @click="readonly = false"
+        size="20"
+      >border_color</v-icon>
     </v-layout>
-    <v-card>
-      <v-layout row wrap class="pt-3">
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="John Doe" label="Policy Name" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="Usa" label="Country" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="true" label="Status" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="Absence Type Code" label="Absence Type Code" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="20/10/2018" label="Effective Start Date" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-text-field value="20/12/2018" label="Effective End Date" readonly></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm6 class="px-2">
-          <v-checkbox readonly label="Allow Request in ESSD" class="pa-0 ma-0" v-model="checkbox"></v-checkbox>
-          <v-checkbox readonly label="Allow Request in ESSD" class="pa-0 ma-0" v-model="checkbox"></v-checkbox>
-        </v-flex>
-      </v-layout>
-    </v-card>
-  </div>
+    <FormStep1 
+    :itemsCountry="step1.itemsCountry" 
+    :readonly="readonly" 
+    @onReadonly="readonly = true"
+    />
+  </v-card>
 </template>
 
 <script>
+import FormStep1 from "./FormStep1";
+
 export default {
+  components: {
+    FormStep1
+  },
+  props: {
+    step1: Object
+  },
   data() {
-    return { checkbox: true };
+    return {
+      readonly: true
+    };
   }
 };
 </script>

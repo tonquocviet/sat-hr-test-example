@@ -2,10 +2,18 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-layout row wrap>
       <v-flex xs12 sm6 px-2 py-2>
-        <v-text-field v-model="name" :counter="1024" :rules="nameRules" label="Name" required></v-text-field>
+        <v-text-field
+          :readonly="readonly"
+          v-model="name"
+          :counter="1024"
+          :rules="nameRules"
+          label="Name"
+          required
+        ></v-text-field>
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <v-autocomplete
+          :readonly="readonly"
           :rules="countryRules"
           v-model="country"
           item-text="name"
@@ -17,6 +25,7 @@
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <v-select
+          :readonly="readonly"
           v-model="status"
           :items="statusItems"
           :rules="[v => !!v || 'status is required']"
@@ -38,6 +47,7 @@
               full-width
             >
               <v-text-field
+                :readonly="readonly"
                 slot="activator"
                 v-model="startDateFormatted"
                 label="Start Date"
@@ -46,6 +56,7 @@
                 @blur="startDate = parseDate(startDateFormatted)"
               ></v-text-field>
               <v-date-picker
+                :readonly="readonly"
                 :min="parseDate(dateCurrent)"
                 v-model="startDate"
                 no-title
@@ -64,6 +75,7 @@
               full-width
             >
               <v-text-field
+                :readonly="readonly"
                 slot="activator"
                 v-model="endDateFormatted"
                 label="End Date"
@@ -72,6 +84,7 @@
                 @blur="endDate = parseDate(endDateFormatted)"
               ></v-text-field>
               <v-date-picker
+                :readonly="readonly"
                 :min="startDate"
                 v-model="endDate"
                 no-title
@@ -83,21 +96,45 @@
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <div>Absence Type Code</div>
-        <v-textarea solo v-model="absenceTypeCode" name="input-7-4"></v-textarea>
+        <v-textarea 
+          :readonly="readonly" 
+          solo 
+          v-model="absenceTypeCode" 
+          name="input-7-4"
+        ></v-textarea>
       </v-flex>
       <v-flex xs12 sm6 px-2 py-2>
         <div>Short Description</div>
-        <v-textarea solo v-model="shortDescription" name="input-7-4"></v-textarea>
+        <v-textarea 
+          :readonly="readonly" 
+          solo 
+          v-model="shortDescription" 
+          name="input-7-4"
+        ></v-textarea>
       </v-flex>
       <v-flex xs12 px-2>
-        <v-checkbox class="pa-0 ma-0" :label="`Allow Request in ESSD`" v-model="allowRequest"></v-checkbox>
+        <v-checkbox
+          :readonly="readonly"
+          class="pa-0 ma-0"
+          :label="`Allow Request in ESSD`"
+          v-model="allowRequest"
+        ></v-checkbox>
       </v-flex>
       <v-flex xs12 px-2>
-        <v-checkbox class="pa-0 ma-0" :label="`Automatically Approve`" v-model="automatically"></v-checkbox>
+        <v-checkbox
+          :readonly="readonly"
+          class="pa-0 ma-0"
+          :label="`Automatically Approve`"
+          v-model="automatically"
+        ></v-checkbox>
       </v-flex>
     </v-layout>
-    <v-btn :disabled="!valid" color="success" @click="submit">Save</v-btn>
-    <v-btn color="error" @click="reset">Reset Form</v-btn>
+    <v-btn 
+    v-if="!readonly" 
+    :disabled="!valid" 
+    color="success"
+    @click="submit"
+    >Save</v-btn>
   </v-form>
 </template>
 
@@ -115,14 +152,14 @@ const nameRules = [
 const countryRules = [v => !!v || "Country is required"];
 export default {
   props: {
-    isShow: Boolean,
-    itemsCountry: Array
+    itemsCountry: Array,
+    readonly: Boolean,
   },
   data: () => ({
     valid: true,
     name: "",
     nameRules,
-    country: {},
+    country: "",
     countryRules,
     status: null,
     statusItems: ["Active", "Inactive", "Testing"],
@@ -139,42 +176,11 @@ export default {
     automatically: false
   }),
   methods: {
-    getCountries() {
-      return new Promise(resolve => {
-        this.$http
-          .get(`${this.apiUrl}`)
-          .then(res => resolve({ items: res.data }));
-      });
-    },
     submit() {
       if (this.$refs.form.validate()) {
-        // console.log({
-        //   name: this.name,
-        //   country: this.country.name,
-        //   status: this.status,
-        //   startDate: this.startDate,
-        //   endDate: this.endDate,
-        //   absenceTypeCode: this.absenceTypeCode,
-        //   shortDescription: this.shortDescription,
-        //   allowRequest: this.allowRequest,
-        //   autocomplete: this.automatically
-        // });
-        this.$emit("closeDialog");
+        this.$emit("onReadonly");
       }
     },
-    reset() {
-      this.name = "";
-      this.country = "";
-      this.status = null;
-      this.startDate = newDate;
-      this.endDate = newDate;
-      this.absenceTypeCode = "";
-      this.shortDescription = "";
-      this.allowRequest = false;
-      this.automatically = false;
-      this.$refs.form.resetValidation();
-    },
-
     parseDate(date) {
       if (!date) return null;
       const [month, day, year] = date.split("/");
@@ -193,13 +199,6 @@ export default {
     },
     endDate() {
       this.endDateFormatted = formatDate(this.endDate);
-    },
-    isShow: {
-      handler(isOpen) {
-        if (!isOpen) {
-          this.reset();
-        }
-      }
     }
   }
 };

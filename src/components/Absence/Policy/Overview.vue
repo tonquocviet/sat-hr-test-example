@@ -1,44 +1,46 @@
 <template>
-  <div class="px-4 py-4">
+  <div class="pa-3">
     <v-layout row wrap>
-      <v-flex xs12>
-        <v-layout column wrap>
-          <v-layout>
-            <h2>Desciption</h2>
-            <v-icon style="cursor: pointer;" size="20">edit</v-icon>
-          </v-layout>
-          <v-textarea solo v-model="description" name="input-7-4"></v-textarea>
-        </v-layout>
+      <v-flex xs12 class="mb-3">
+        <Description/>
       </v-flex>
-      <v-flex xs12>
-        <Step1 @openDialog="isShowModalStep1 = true"/>
+      <v-flex xs12 class="mb-3">
+        <Step1 :step1="step1"/>
       </v-flex>
-      <ModalFormStep1
-        :isShow="isShowModalStep1"
-        :apiUrl="apiPolicy.getCountries"
-        @closeDialog="isShowModalStep1 = false"
-      />
     </v-layout>
   </div>
 </template>
 
 <script>
+import Description from "./Description";
 import Step1 from "./Step1";
-import ModalFormStep1 from "./ModalFormStep1";
 
 export default {
   components: {
-    Step1,
-    ModalFormStep1
+    Description,
+    Step1
+  },
+  data() {
+    return {
+      step1: {
+        itemsCountry: []
+      }
+    }
   },
   props: {
     apiPolicy: Object
   },
-  data() {
-    return {
-      description: "",
-      isShowModalStep1: false
-    };
+  methods: {
+    getCountries() {
+      return new Promise(resolve => {
+        this.$http
+          .get(`${this.apiPolicy.getCountries}`)
+          .then(res => resolve({ items: res.data }));
+      });
+    }
+  },
+  mounted() {
+    this.getCountries().then(data => (this.step1.itemsCountry = data.items));
   }
 };
 </script>
