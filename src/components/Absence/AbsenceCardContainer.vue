@@ -16,7 +16,7 @@ export default {
     AbsenceCard
   },
   props: {
-    apiAbsence: Object,
+    filterApiUrl: String,
     absenceStatus: {
       type: String,
       default: "pending"
@@ -30,9 +30,10 @@ export default {
   },
   computed: {
     hasShowMore() {
-      return !this.dataFilterAbsences
-        ? 0
-        : this.dataFilterAbsences.length < this.totalRecords;
+      return (
+        !!this.dataFilterAbsences &&
+        this.dataFilterAbsences.length < this.totalRecords
+      );
     }
   },
   methods: {
@@ -52,16 +53,14 @@ export default {
         status: this.absenceStatus
       };
       return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiAbsence.filterAbsences}`, filterRequest)
-          .then(res => {
-            this.loading = false;
-            this.isShowMore = false;
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
+        this.$http.post(`${this.filterApiUrl}`, filterRequest).then(res => {
+          this.loading = false;
+          this.isShowMore = false;
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
           });
+        });
       });
     }
   },

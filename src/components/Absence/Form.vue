@@ -22,7 +22,11 @@
             :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
           />
-          <AbsenceCardContainer v-else @showDetailModal="showDetailModal" :apiAbsence="apiAbsence"/>
+          <AbsenceCardContainer
+            v-else
+            @showDetailModal="showDetailModal"
+            :filterApiUrl="apiAbsence.filterAbsences"
+          />
         </v-tab-item>
         <v-tab-item>
           <AbsenceList
@@ -34,7 +38,7 @@
           <AbsenceCardContainer
             v-else
             @showDetailModal="showDetailModal"
-            :apiAbsence="apiAbsence"
+            :filterApiUrl="apiAbsence.filterAbsences"
             absence-status="approved"
           />
         </v-tab-item>
@@ -49,7 +53,7 @@
           <AbsenceCardContainer
             v-else
             @showDetailModal="showDetailModal"
-            :apiAbsence="apiAbsence"
+            :filterApiUrl="apiAbsence.filterAbsences"
             absence-status="rejected"
           />
         </v-tab-item>
