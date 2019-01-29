@@ -9,7 +9,9 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.name }}</td>
+        <td class="text-xs-left">
+          <router-link :to="`/absence-policy/${ props.item.id}`">{{ props.item.name }}</router-link>
+        </td>
         <td
           class="text-xs-left"
         >{{ props.item.createdBy.firstName }} {{ props.item.createdBy.lastName }}</td>
@@ -24,7 +26,7 @@
         </td>
         <td
           class="text-xs-left"
-        >{{ props.item.endDate != null ?endDate(props.item.endDate) : 'N/A' }}</td>
+        >{{ props.item.expiredDate != null ? expiredDate(props.item.expiredDate) : 'N/A' }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
@@ -62,7 +64,7 @@ export default {
           });
       });
     },
-    endDate(date) {
+    expiredDate(date) {
       return moment(date).format("MM/DD/YYYY");
     }
   },
