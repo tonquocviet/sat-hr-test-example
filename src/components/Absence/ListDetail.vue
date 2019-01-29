@@ -24,7 +24,7 @@
                 <span class="caption ml-1">{{ submittedDate(item.endDate) }}</span>
               </v-layout>
               <v-layout align-center justify-space-between>
-                <span class="date-off error--text mr-3">{{countDay(item.startDate)}}</span>
+                <span class="date-off error--text">{{countDay(item.startDate)}}</span>
                 <div class="hidden-md-and-down">
                   <v-chip
                     class="mx-0 my-0"
