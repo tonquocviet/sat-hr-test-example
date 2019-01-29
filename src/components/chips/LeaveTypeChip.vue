@@ -1,6 +1,6 @@
 <template>
   <v-chip small :color="leaveTypeColor" text-color="white">
-    <span :class="`${isResponsive ? 'hidden-md-and-down':''}`">{{ leaveType }}</span>
+    <span :class="`${isResponsive ? 'hidden-md-and-down' : ''}`">{{ leaveType }}</span>
     <span v-if="isResponsive" class="hidden-lg-and-up">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   </v-chip>
 </template>
