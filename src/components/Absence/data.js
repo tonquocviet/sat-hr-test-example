@@ -173,37 +173,37 @@ export const dataApproved = [
   }
 ];
 
-export const dataLeaveCard = [
+export const dataEmployCard = [
   {
     id: 1,
     type: 1,
-    name: "A Leave Of Absence",
+    name: "Absence",
     number: 1,
     numberAbsence: "7/7"
   },
   {
     id: 2,
     type: 2,
-    name: "A Leave Of Absence",
+    name: "Absence",
     number: 2,
     numberAbsence: "16/16"
   },
   {
     id: 3,
     type: 3,
-    name: "A Leave Of Absence",
+    name: "Absence",
     number: 3,
     numberAbsence: "7/7"
   },
   {
     id: 4,
     type: 4,
-    name: "A Leave Of Absence",
+    name: "Absence",
     numberAbsence: "7/7"
   }
 ];
 
-export const itemsLeave = [
+export const iistItemsAbsence = [
   {
     startDate: "25 Aug, Sun",
     endDate: "25 Aug, Sun",
@@ -227,5 +227,68 @@ export const itemsLeave = [
     approvedBy: "Văn",
     type: 3,
     address: "Duy Sơn"
+  }
+];
+
+export const dataAbsenceList = [
+  {
+    id: 18725,
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    employeeId: 19896,
+    employeeName: "Eugene Lynch",
+    employeeRole: {
+      id: 1,
+      name: "Family and Medical Leave"
+    },
+    endDate: "2019-01-31T00:00:00.000Z",
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    location: "Outlook",
+    startDate: "2019-01-28T00:00:00.000Z",
+    submittedDate: "2019-02-18T17:00:00.000Z",
+    leaveType: {
+      id: 1,
+      name: "Family and Medical Absence"
+    }
+  },
+  {
+    id: 54321,
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    employeeId: 12121,
+    employeeName: "Eugene Lynch",
+    employeeRole: {
+      id: 3,
+      name: "Developer"
+    },
+    endDate: "2019-01-31T00:00:00.000Z",
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    location: "Outlook",
+    startDate: "2019-01-28T00:00:00.000Z",
+    submittedDate: "2019-02-18T17:00:00.000Z",
+    leaveType: {
+      id: 9,
+      name: "Sick Absence"
+    }
+  },
+  {
+    id: 12345,
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    employeeId: 21312,
+    employeeName: "Eugene Lynch",
+    employeeRole: {
+      id: 2,
+      name: "Developer"
+    },
+    endDate: "2019-01-31T00:00:00.000Z",
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    location: "Outlook",
+    startDate: "2019-01-28T00:00:00.000Z",
+    submittedDate: "2019-02-18T17:00:00.000Z",
+    leaveType: {
+      id: 13,
+      name: "Childbirth"
+    }
   }
 ];

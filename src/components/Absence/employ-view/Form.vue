@@ -5,76 +5,52 @@
         <v-flex xs10>
           <h3 class="headline font-weight-bold">Absence</h3>
         </v-flex>
-        <v-flex xs10>
-          <h3 class="caption">Home > absence</h3>
-        </v-flex>
+        <v-flex xs10></v-flex>
       </v-layout>
       <v-flex xs2 row>
         <v-btn color="primary">
-          <v-icon>add_circle</v-icon>Add New Leave
+          <v-icon>add_circle</v-icon>Add New Absence
         </v-btn>
       </v-flex>
     </v-layout>
     <hr>
     <v-layout>
       <v-flex xs9>
-        <LeaveCard :dataLeaveCard="dataLeaveCard"/>
+        <AbsenceEmployCard :dataEmployCard="dataEmployCard"/>
         <v-flex sm12 md12>
-          <EmployViewContent :items="itemsLeave"/>
+          <EmployViewContent :items="iistItemsAbsence"/>
         </v-flex>
       </v-flex>
       <v-flex xs3>
-        <EmployViewListRight :dataAbsenceList="dataAbsenceList"/>
+        <ListOnTheRight :dataAbsenceList="dataAbsenceList"/>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-import LeaveCard from "../../cards/LeaveCard";
-import EmployViewListRight from "./EmployViewListRight";
+import AbsenceEmployCard from "../../cards/AbsenceEmployCard";
+import ListOnTheRight from "./ListOnTheRight";
 import EmployViewContent from "./EmployViewContent";
-import { dataLeaveCard, itemsLeave } from "../data";
+import { dataEmployCard, iistItemsAbsence, dataAbsenceList } from "../data";
 export default {
   components: {
-    LeaveCard,
+    AbsenceEmployCard,
     EmployViewContent,
-    EmployViewListRight
+    ListOnTheRight
   },
   props: {
-    dataLeaveCard: {
+    dataEmployCard: {
       type: Array,
-      default: () => dataLeaveCard
+      default: () => dataEmployCard
     },
-    itemsLeave: {
+    iistItemsAbsence: {
       type: Array,
-      default: () => itemsLeave
+      default: () => iistItemsAbsence
     },
-    apiListEmployView: Object
-  },
-  data() {
-    return {
-      dataAbsenceList: []
-    };
-  },
-  methods: {
-    getDataList() {
-      return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiListEmployView.filterWhoAbsencing}`)
-          .then(res => {
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
-          });
-      });
+    dataAbsenceList: {
+      type: Array,
+      default: () => dataAbsenceList
     }
-  },
-  mounted() {
-    this.getDataList().then(data => {
-      this.dataAbsenceList = data.items;
-      this.totalRecords = data.totalRecords;
-    });
   }
 };
 </script>

@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h3 class="mt-3">Upcoming leaves</h3>
+    <h3 class="mt-3">Upcoming Absence</h3>
     <v-card v-for="item in items" :key="item.id" class="mt-3">
-      <CardLeavePast :item="item"/>
+      <LeaveRowItem :item="item"/>
     </v-card>
-    <h3 class="mt-3">Past leaves</h3>
+    <h3 class="mt-3">Past Absence</h3>
     <v-card v-for="item in items" :key="item.id" class="mt-3">
-      <CardLeavePast :item="item"/>
+      <LeaveRowItem :item="item"/>
     </v-card>
   </div>
 </template>
 <script>
-import CardLeavePast from "../../cards/CardLeavePast";
+import LeaveRowItem from "../Profile/LeaveRowItem";
 export default {
   props: {
     items: Array
   },
   components: {
-    CardLeavePast
+    LeaveRowItem
   }
 };
 </script>

@@ -5,7 +5,7 @@
         <v-flex
           md3
           class="px-1 py-1"
-          v-for="itemLeaveCard in dataLeaveCard"
+          v-for="itemLeaveCard in dataEmployCard"
           :key="itemLeaveCard.id"
         >
           <v-card
@@ -56,7 +56,7 @@
 <script>
 export default {
   props: {
-    dataLeaveCard: Array
+    dataEmployCard: Array
   }
 };
 </script>

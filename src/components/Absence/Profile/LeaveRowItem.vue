@@ -10,7 +10,7 @@
         <h3>{{ item.endDate }}</h3>
       </v-flex>
       <v-flex xs2 column text-md-left class="pl-3">
-        <h4 class="primary--text">Leave Type</h4>
+        <h4 class="primary--text">Absence Type</h4>
         <v-chip small>{{ item.leaveType }}</v-chip>
       </v-flex>
       <v-flex xs2 column text-md-left class="pl-3">

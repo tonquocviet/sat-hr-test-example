@@ -9,21 +9,21 @@
       </v-flex>
     </v-layout>
     <v-flex xs12 sm6 class="ml-2">
-      <v-date-picker v-model="dateTimeColor" event-color="date" :events="functionEvents"></v-date-picker>
+      <v-date-picker v-model="dateTimeColor" event-color="date" :events="functionEvents" readonly></v-date-picker>
     </v-flex>
     <v-layout row class="mt-1">
       <v-flex pa-1 align-center d-flex>
         <v-icon color="blue" size="15">fiber_manual_record</v-icon>Holiday
       </v-flex>
       <v-flex pa-1 align-center d-flex>
-        <v-icon color="green" size="15">fiber_manual_record</v-icon>Casual leave
+        <v-icon color="green" size="15">fiber_manual_record</v-icon>Casual Absence
       </v-flex>
       <v-flex pa-1 align-center d-flex>
-        <v-icon color="red" size="15">fiber_manual_record</v-icon>Sick leave
+        <v-icon color="red" size="15">fiber_manual_record</v-icon>Sick Absence
       </v-flex>
     </v-layout>
     <v-flex xs12 class="mt-2 ml-2">
-      <AbsenceDetailList :items="dataAbsenceList" :title="`Team's Planned Leave`"/>
+      <AbsenceDetailList :items="dataAbsenceList" :title="`Team's Planned Absence`"/>
     </v-flex>
   </v-flex>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container fluid class="pa-0">
-      <EmployView :apiListEmployView="apiListEmployView"/>
+      <EmployView/>
     </v-container>
   </v-content>
 </template>
@@ -10,9 +10,6 @@ import EmployView from "./Absence/employ-view/Form";
 export default {
   components: {
     EmployView
-  },
-  props: {
-    apiListEmployView: Object
   }
 };
 </script>
