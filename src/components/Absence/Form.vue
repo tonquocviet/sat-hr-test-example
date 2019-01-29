@@ -57,6 +57,7 @@
       <AbsenceCreate 
         :items="data1"
         :leaveTypes="leaveTypes"
+        :dataReasonEmployer="dataReasonEmployer"
         :popup="popup" 
       />
     </v-flex>
@@ -105,6 +106,11 @@ export default {
   mounted() {
     const urlWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const urlUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    const urlGetReason = this.apiAbsence.getReason;
+    this.getReasonRequest(urlGetReason).then(data => {
+      const { items } = data;
+      this.dataReasonEmployer = items;
+    });
     this.getDataAbsenceListRequest(urlWhoAbsencing).then(data => {
       const { items } = data;
       this.dataAbsenceList = items;
@@ -171,6 +177,15 @@ export default {
           });
         });
       });
+    },
+    getReasonRequest(url) {
+      return new Promise(resolve => {
+        this.$http.get(`${url}`).then(res => {
+          resolve({
+            items: res.data,
+          });
+        });
+      });
     }
   },
   data() {
@@ -215,6 +230,7 @@ export default {
           description: "Style hơi chuối xí :D "
         }
       ],
+      dataReasonEmployer: [],
       dataAbsenceList: [],
       dataAbsenceList2: []
     };

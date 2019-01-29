@@ -26,7 +26,7 @@
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
-                :items="items"
+                :items="dataReasonEmployer"
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
@@ -120,6 +120,7 @@ export default {
   props: {
     popup: Object,
     leaveTypes: Array,
+    dataReasonEmployer: Array,
     items: Array
   },
   data() {
