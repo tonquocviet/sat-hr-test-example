@@ -1,15 +1,18 @@
 <template>
-  <v-card class="pa-2 pb-3">
-    <v-layout class="mb-3">
-      <v-toolbar-title class="pr-1">Desciption</v-toolbar-title>
-      <v-icon
-        style="cursor: pointer;"
-        v-if="readonly"
-        size="20"
-        @click="readonly = false"
-      >border_color</v-icon>
+  <v-card>
+    <v-layout class="pa-2 mt-3">
+      <v-card style="width:100%; margin-top: -20px" color="teal">
+        <v-layout class="pa-3">
+          <v-toolbar-title class="pr-1 white--text font-weight-light">Desciption</v-toolbar-title>
+        <v-icon
+          style="cursor: pointer; color: rgba(255, 255, 255, 0.79)"
+          v-if="readonly"
+          @click="readonly = false"
+        >border_color</v-icon>
+        </v-layout>
+      </v-card>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout row wrap class="pa-2">
       <v-flex xs12 sm6 class="pr-2">
         <v-textarea :readonly="readonly" solo v-model="description" name="input-7-4"></v-textarea>
       </v-flex>
@@ -30,7 +33,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <div v-if="!readonly" style="text-align: right" class="pt-3">
+    <div v-if="!readonly" style="text-align: right" class="pb-2">
       <v-btn @click="readonly = true" color="info ">Save</v-btn>
     </div>
   </v-card>
