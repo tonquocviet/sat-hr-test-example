@@ -24,7 +24,7 @@
         </td>
         <td
           class="text-xs-left"
-        >{{ props.item.endDate != null ?endDate(props.item.expiredDate) : 'N/A' }}</td>
+        >{{ props.item.expiredDate != null ? expiredDate(props.item.expiredDate) : 'N/A' }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
@@ -62,7 +62,7 @@ export default {
           });
       });
     },
-    endDate(date) {
+    expiredDate(date) {
       return moment(date).format("MM/DD/YYYY");
     }
   },
