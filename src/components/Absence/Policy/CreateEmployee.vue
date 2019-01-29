@@ -14,6 +14,7 @@
                 :items="employees"
                 label="Choose name employer"
                 return-object
+                multiple
               ></v-autocomplete>
             </v-flex>
           </v-container>

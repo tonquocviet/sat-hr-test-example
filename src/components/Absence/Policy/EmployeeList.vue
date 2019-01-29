@@ -8,7 +8,7 @@
         <template slot="items" slot-scope="props">
           <td>
             <v-btn flat icon class="ma-0" color="black">
-              <v-icon>remove_circle</v-icon>
+              <v-icon color="error">remove_circle</v-icon>
             </v-btn>
           </td>
           <td>{{ props.item.name }}</td>
@@ -21,9 +21,9 @@
     </v-flex>
     <v-flex md3 sx12 class="pl-3">
       <v-layout wrap>
-        <ItemEmployeeRight :title="title.removed" :items="items"></ItemEmployeeRight>
+        <ItemEmployeeRight :title="title.removed" :items="items" :status="removed"></ItemEmployeeRight>
         <v-divider></v-divider>
-        <ItemEmployeeRight :title="title.created" :items="items"></ItemEmployeeRight>
+        <ItemEmployeeRight :title="title.created" :items="items" :status="added"></ItemEmployeeRight>
       </v-layout>
     </v-flex>
     <CreateEmployee :employees="desserts" @closeDialog="isShowCreate= false" :isShowCreate="isShowCreate"></CreateEmployee>
@@ -41,6 +41,8 @@ export default {
   data() {
     return {
       isShowCreate: false,
+      removed: "removed",
+      added: "added",
       headers: [
         {
           text: "",
@@ -83,28 +85,19 @@ export default {
       },
       items: [
         {
-          name: "Frozen Yogurt",
-          startDate: "25-08-1995",
-          endDate: "25-08-1995",
-          tags: [
-            "tag1", "tag2", "tag3"
-          ]
+          eraser: "Frozen Yogurt",
+          employee: "John",
+          date: "25 Aug 2019",
         },
         {
-          name: "Frozen Yogurt",
-          startDate: "25-08-1995",
-          endDate: "25-08-1995",
-          tags: [
-            "tag1", "tag2", "tag3"
-          ]
+          eraser: "Frozen Yogurt",
+          employee: "John",
+          date: "25 Aug 2019",
         },
         {
-          name: "Frozen Yogurt",
-          startDate: "25-08-1995",
-          endDate: "25-08-1995",
-          tags: [
-            "tag1", "tag2", "tag3"
-          ]
+          eraser: "Frozen Yogurt",
+          employee: "John",
+          date: "25 Aug 2019",
         }
       ],
     };
