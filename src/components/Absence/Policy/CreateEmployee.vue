@@ -20,8 +20,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="$emit('closeDialog')">Cancel</v-btn>
-          <v-btn color="blue darken-1"  flat @click="$emit('closeDialog')">Create</v-btn>
+          <v-btn color="default" flat @click="$emit('closeDialog')">Cancel</v-btn>
+          <v-btn color="success"  flat @click="$emit('closeDialog')">Create</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
