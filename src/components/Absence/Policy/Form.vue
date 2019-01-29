@@ -23,6 +23,14 @@
               v-if="viewMode === 'list'"
               :apiPolicy="apiPolicy"
             />
+            <PolicyCard
+              @showMoreView="showMoreView"
+              :dataFilterPolicy="dataFilterPolicy"
+              :loading="loading"
+              :isShowMore="isShowMore"
+              :hasShowMore="hasShowMore"
+              v-else
+            />
           </v-tab-item>
           <v-tab-item>Page active</v-tab-item>
           <v-tab-item>Page In active</v-tab-item>
@@ -37,24 +45,70 @@
 </template>
 <script>
 import PolicyTable from "./PolicyTable";
+import PolicyCard from "./PolicyCard";
 import CreatePolicy from "./CreatePolicy";
 
 export default {
   components: {
     PolicyTable,
+    PolicyCard,
     CreatePolicy
   },
   props: {
     viewMode: String,
     apiPolicy: Object
   },
+  computed: {
+    hasShowMore() {
+      return !this.dataFilterPolicy
+        ? 0
+        : this.dataFilterPolicy.length < this.totalRecords;
+    }
+  },
   methods: {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
+      if (!isListView) {
+        this.getDataFromApi().then(data => {
+          this.dataFilterPolicy = data.items;
+          this.totalRecords = data.totalRecords;
+        });
+      }
+    },
+    getDataFromApi() {
+      this.loading = true;
+      const filterRequest = {
+        pageSize: 12,
+        pageIndex: this.pageIndex
+      };
+      return new Promise(resolve => {
+        this.$http
+          .post(`${this.apiPolicy.filterPolicy}`, filterRequest)
+          .then(res => {
+            this.loading = false;
+            this.isShowMore = false;
+            resolve({
+              items: res.data.list,
+              totalRecords: res.data.totalRecords
+            });
+          });
+      });
+    },
+    showMoreView() {
+      this.pageIndex++;
+      this.isShowMore = true;
+      this.getDataFromApi().then(data => {
+        this.dataFilterPolicy = this.dataFilterPolicy.concat(data.items);
+        this.totalRecords = data.totalRecords;
+      });
     }
   },
   data() {
     return {
+      dataFilterPolicy: [],
+      pageIndex: 0,
+      loading: true,
+      isShowMore: false,
       countPolicy: 5,
       isShowCreate: false,
       tabs: ["All", "Active", "Inactive"]
