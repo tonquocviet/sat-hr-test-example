@@ -168,7 +168,7 @@ export default {
       });
     },
     approved() {
-      this.postRequest(this.apiAbsence.approveRequest).then(data => {
+      this.postRequest(this.apiAbsence.approveRequest).then(() => {
         this.$emit("editAbsenceDetail", { status: "approved" });
         this.infoSnackbar = true;
         this.savedMessage = "Approve success !!";
