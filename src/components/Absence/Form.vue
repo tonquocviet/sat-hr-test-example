@@ -56,6 +56,7 @@
       </v-container>
       <AbsenceCreate 
         :items="data1"
+        :getAbsenceReasonsApiUrl="apiAbsence.getReason"
         :leaveTypes="leaveTypes"
         :popup="popup" 
       />
