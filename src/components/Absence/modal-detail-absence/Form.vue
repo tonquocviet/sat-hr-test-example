@@ -31,8 +31,9 @@
                             <v-textarea
                               solo
                               light
+                              disabled
                               name="input-7-4"
-                              label="Reason"
+                              label="The description of the absence detail card"
                               v-model="description"
                             ></v-textarea>
                           </v-flex>
