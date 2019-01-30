@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :class="isClickable ? `v-pointer-card` : null"
+    :class="isClickable ? 'v-pointer-card' : null"
     @click="isClickable ? showModalDetail() : null"
   >
     <div :class="'pl-3 pr-3 pt-3 pb-3 user-infomation-' + item.status">

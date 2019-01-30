@@ -4,12 +4,12 @@
     <v-card-text class="card-user">
       <v-layout row wrap>
         <v-flex
-          v-for="(item, index) in dataFilterPolicy"
+          v-for="item in dataFilterPolicy"
           xs12
           sm6
           md4
           class="pl-2 pr-2 pt-2 pb-2"
-          :key="index"
+          :key="item.id"
         >
           <PolicyCard 
             @showDetailModal="showDetailModal" 
@@ -17,7 +17,7 @@
             :item="item"
           />
         </v-flex>
-        <v-flex sm12 style="text-align:center" v-if="hasShowMore">
+        <v-flex sm12 text-xs-center v-if="hasShowMore">
           <v-btn v-if="isShowMore">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
           </v-btn>
