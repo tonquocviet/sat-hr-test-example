@@ -34,7 +34,7 @@
                               disabled
                               name="input-7-4"
                               label="Reason for absence"
-                              v-model="leaveReason"
+                              v-model="absenceDetail.leaveReason"
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
