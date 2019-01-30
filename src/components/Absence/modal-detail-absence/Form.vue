@@ -12,7 +12,11 @@
                       <v-flex xs12>
                         <v-card color="primary">
                           <v-flex right>
-                            <v-btn color="success">Approve</v-btn>
+                            <v-btn
+                              @click="approved"
+                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              color="success"
+                            >Approve</v-btn>
                             <v-btn color="error">Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
@@ -106,6 +110,10 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="infoSnackbar" :bottom="true" :left="true" :timeout="6000">
+      {{ savedMessage }}
+      <v-btn color="primary" flat @click="infoSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -130,6 +138,7 @@ export default {
   },
   props: {
     isShow: Boolean,
+    apiAbsence: Object,
     absenceDetail: Object,
     dataHRCard: {
       type: Array,
@@ -147,6 +156,23 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    postRequest(url) {
+      const data = {
+        id: this.absenceDetail.id
+      };
+      return new Promise(resolve => {
+        this.$http.post(`${url}`, data).then(res => {
+          resolve(res.data);
+        });
+      });
+    },
+    approved() {
+      this.postRequest(this.apiAbsence.approveRequest).then(data => {
+        this.$emit("editAbsenceDetail", { status: "approved" });
+        this.infoSnackbar = true;
+        this.savedMessage = "Approve success !!";
+      });
     }
   },
   data() {
@@ -154,7 +180,9 @@ export default {
       description: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true
+      imgActive: true,
+      infoSnackbar: false,
+      savedMessage: ""
     };
   }
 };
