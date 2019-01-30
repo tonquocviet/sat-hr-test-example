@@ -93,9 +93,7 @@ export default {
               const dataset = data.datasets[tooltipItem.datasetIndex];
               const total = dataset.data.reduce(function(
                 previousValue,
-                currentValue,
-                currentIndex,
-                array
+                currentValue
               ) {
                 return previousValue + currentValue;
               });
