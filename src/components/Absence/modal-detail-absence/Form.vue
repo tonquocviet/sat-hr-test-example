@@ -18,11 +18,7 @@
                               color="success"
                             >
                               <span>Approve</span>
-                              <v-progress-circular
-                                v-if="isLoading"
-                                class="ml-2"
-                                indeterminate
-                              ></v-progress-circular>
+                              <v-progress-circular v-if="isLoading" class="ml-2" indeterminate></v-progress-circular>
                             </v-btn>
                             <v-btn color="error">Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
@@ -166,22 +162,27 @@ export default {
     },
     postRequest(url) {
       this.isLoading = true;
-      const data = {
-        id: this.absenceDetail.id
-      };
-      return new Promise(resolve => {
-        this.$http.post(`${url}`, data).then(res => {
+      return new Promise((resolve, reject) => {
+        this.$http.post(`${url}`, { id: this.absenceDetail.id })
+        .then(res => {
           resolve(res.data);
-        });
+        })
+        .catch((error) => reject(error));
       });
     },
     approved() {
-      this.postRequest(this.apiAbsence.approveRequest).then(() => {
-        this.isLoading = false;
-        this.$emit("editAbsenceDetail", { status: "approved" });
-        this.infoSnackbar = true;
-        this.savedMessage = "Approve success !!";
-      });
+      this.postRequest(this.apiAbsence.approveRequest)
+        .then(() => {
+          this.isLoading = false;
+          this.$emit("editAbsenceDetail", { status: "approved" });
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve success !!";
+        })
+        .catch(() => {
+          this.isLoading = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve failed !!";
+        });
     }
   },
   data() {
