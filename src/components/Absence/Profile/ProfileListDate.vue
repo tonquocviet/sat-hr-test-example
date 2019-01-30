@@ -15,7 +15,7 @@
       </v-card>
       <v-card class="mt-3">
         <v-layout row wrap> 
-          <v-flex v-for="item in tags" :key="item.name"xs6 class="pa-1">
+          <v-flex v-for="item in tags" :key="item.name" lg6 sm4 xs6 class="pa-1">
             <LeaveTypeChip :leaveType="item.name"/>
           </v-flex>
         </v-layout>
