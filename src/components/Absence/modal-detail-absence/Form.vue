@@ -31,9 +31,10 @@
                             <v-textarea
                               solo
                               light
+                              disabled
                               name="input-7-4"
-                              label="Reason"
-                              v-model="description"
+                              label="Reason for absence"
+                              v-model="absenceDetail.leaveReason"
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
@@ -151,7 +152,7 @@ export default {
   },
   data() {
     return {
-      description: "",
+      leaveReason: "",
       typeComment: 1,
       typeId: 4,
       imgActive: true
