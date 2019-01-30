@@ -23,16 +23,9 @@
                 <v-icon class="caption ml-4">date_range</v-icon>
                 <span class="caption ml-1">{{ submittedDate(item.endDate) }}</span>
               </v-layout>
-              <v-layout column>
-                <span class="date-off error--text mr-3">{{countDay(item.startDate)}}</span>
-                <div>
-                  <v-chip
-                    class="mx-0 my-0"
-                    small
-                    :color="getColorFromLeaveName(item.leaveType.name)"
-                    text-color="white"
-                  >{{ item.leaveType.name }}</v-chip>
-                </div>
+              <v-layout align-center justify-space-between>
+                <span class="date-off error--text">{{countDay(item.startDate)}}</span>
+                <LeaveTypeChip :leaveType="item.leaveType.name" is-responsive />
               </v-layout>
             </v-list-tile-sub-title>
           </v-list-tile>
@@ -49,11 +42,12 @@
 <script>
 import moment from "moment";
 import UserAvatar from "../avatars/Avatar";
-import { leaveTypes } from "../../config";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    LeaveTypeChip
   },
   props: {
     items: Array,
@@ -73,11 +67,6 @@ export default {
     },
     viewFull() {
       this.$emit("viewFull", this.name);
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     }
   }
 };
