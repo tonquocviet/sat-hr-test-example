@@ -124,13 +124,13 @@ export default {
     items: Array
   },
   mounted() {
-    this.getReasonRequest(this.apiUrl).then(data => {
+    this.getAbsenceReasonsRequest(this.apiUrl).then(data => {
       const { items } = data;
       this.dataAbsenceReasons = items;
     });
   },
   methods: {
-    getReasonRequest(url) {
+    getAbsenceReasonsRequest(url) {
       return new Promise(resolve => {
         this.$http.get(`${url}`).then(res => {
           resolve({
