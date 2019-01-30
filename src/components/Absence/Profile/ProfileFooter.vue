@@ -1,16 +1,33 @@
 <template>
   <div>
-    <h3 class="mt-3">Upcoming leaves</h3>
-    <LeaveRowItem v-for="item in items" :key="item.id" :item="item"></LeaveRowItem>
-    <h3 class="mt-3">Past leaves</h3>
-    <LeaveRowItem v-for="item in items" :key="item.id" :item="item" :passLeave="true"></LeaveRowItem>
+    <LeaveRowItem
+      @emitPopupAbsenceApproved="emitPopupAbsenceApproved"
+      @emitPopupAbsenceRequest="emitPopupAbsenceRequest"
+      :title="`Upcoming leaves`"
+      :items="dataAbsenceList"
+    />
+    <LeaveRowItem
+      @emitPopupAbsenceApproved="emitPopupAbsenceApproved"
+      @emitPopupAbsenceRequest="emitPopupAbsenceRequest"
+      :title="`Past leaves`"
+      :items="dataUpcommingAbsence"
+    />
   </div>
 </template>
 <script>
-import LeaveRowItem from './LeaveRowItem'
+import LeaveRowItem from "./LeaveRowItem";
 export default {
   props: {
-    items: Array,
+    dataAbsenceList: Array,
+    dataUpcommingAbsence: Array
+  },
+  methods: {
+    emitPopupAbsenceApproved() {
+      this.$emit("receivePopupAbsenceApproved");
+    },
+    emitPopupAbsenceRequest(absenceDetail) {
+       this.$emit("receivePopupAbsenceRequest", absenceDetail);
+    }
   },
   components: {
     LeaveRowItem

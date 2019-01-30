@@ -172,3 +172,27 @@ export const dataApproved = [
     text: "You're within your Casual Leave qoute, which will reduce to 10 days"
   }
 ];
+
+export const dataCardCreate = [
+  {
+    avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+    name: "Ông nội",
+    date_start: "25 Agust 1995",
+    date_end: "25 May 1995",
+    description: "Style hơi chuối xí :D "
+  },
+  {
+    avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+    name: "Cha",
+    date_start: "25 Agust 1995",
+    date_end: "25 May 1995",
+    description: "Style hơi chuối xí :D "
+  },
+  {
+    avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+    name: "Con",
+    date_start: "25 Agust 1995",
+    date_end: "25 May 1995",
+    description: "Style hơi chuối xí :D "
+  }
+]
