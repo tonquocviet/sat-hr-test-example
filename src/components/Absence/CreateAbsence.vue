@@ -125,8 +125,7 @@ export default {
   },
   mounted() {
     this.getAbsenceReasonsRequest().then(data => {
-      const { items } = data;
-      this.dataAbsenceReasons = items;
+      this.dataAbsenceReasons = data.items;
     });
   },
   methods: {
