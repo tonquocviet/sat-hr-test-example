@@ -26,7 +26,7 @@
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
-                :items="dataReasonEmployer"
+                :items="dataAbsenceReasons"
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
@@ -119,12 +119,30 @@
 export default {
   props: {
     popup: Object,
+    apiUrl: String,
     leaveTypes: Array,
-    dataReasonEmployer: Array,
     items: Array
+  },
+  mounted() {
+    this.getReasonRequest(this.apiUrl).then(data => {
+      const { items } = data;
+      this.dataAbsenceReasons = items;
+    });
+  },
+  methods: {
+    getReasonRequest(url) {
+      return new Promise(resolve => {
+        this.$http.get(`${url}`).then(res => {
+          resolve({
+            items: res.data,
+          });
+        });
+      });
+    }
   },
   data() {
     return {
+      dataAbsenceReasons: [],
       dates: [],
       name_employer: null,
       type_absence: null,
@@ -133,6 +151,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .show-note {
   height: 50px;
