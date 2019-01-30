@@ -18,7 +18,11 @@
                               color="success"
                             >
                               <span>Approve</span>
-                              <v-progress-circular v-if="isLoading" class="ml-2" indeterminate></v-progress-circular>
+                              <v-progress-circular
+                                v-if="isLoadingApproved"
+                                class="ml-2"
+                                indeterminate
+                              ></v-progress-circular>
                             </v-btn>
                             <v-btn color="error">Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
@@ -161,19 +165,19 @@ export default {
       this.$emit("onComment", comment);
     },
     approvedRequest() {
-      this.isLoading = true;
+      this.isLoadingApproved = true;
       this.$http
         .post(`${this.apiAbsence.approveRequest}`, {
           id: this.absenceDetail.id
         })
         .then(() => {
-          this.isLoading = false;
+          this.isLoadingApproved = false;
           this.$emit("editAbsenceDetail", { status: "approved" });
           this.infoSnackbar = true;
           this.savedMessage = "Approve success !!";
         })
         .catch(() => {
-          this.isLoading = false;
+          this.isLoadingApproved = false;
           this.infoSnackbar = true;
           this.savedMessage = "Approve failed !!";
         });
@@ -187,7 +191,7 @@ export default {
       imgActive: true,
       infoSnackbar: false,
       savedMessage: "",
-      isLoading: false
+      isLoadingApproved: false
     };
   }
 };
