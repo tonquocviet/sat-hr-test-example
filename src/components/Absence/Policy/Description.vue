@@ -34,7 +34,7 @@
       </v-flex>
     </v-layout>
     <div v-if="!readonly" style="text-align: right" class="pb-2">
-      <v-btn @click="readonly = true" color="info ">Save</v-btn>
+      <v-btn @click="readonly = true" color="success">Save</v-btn>
     </div>
   </v-card>
 </template>

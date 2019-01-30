@@ -118,7 +118,7 @@
           v-model="automatically"
         ></v-checkbox>
       </v-flex>
-      <v-btn v-if="!readonly" :disabled="!valid" color="primary" @click="submit">Save</v-btn>
+      <v-btn v-if="!readonly" :disabled="!valid" color="success" @click="submit">Save</v-btn>
     </v-layout>
   </v-form>
 </template>
