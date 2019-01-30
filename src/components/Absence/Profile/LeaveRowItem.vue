@@ -72,10 +72,10 @@ export default {
     }
   },
   computed: {
-    startDate(date) {
+    startDate() {
       return date => moment(date).format("MM-DD-YYYY");
     },
-    endDate(date) {
+    endDate() {
       return date => moment(date).format("MM-DD-YYYY");
     }
   }
