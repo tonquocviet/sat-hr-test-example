@@ -4,36 +4,24 @@
     panel-sub-title="Setup policy's description"
     :readonly="readonly"
     @save="save"
-    @cancel="readonly=true"
+    @cancel="cancel"
     @edit="edit"
   >
     <template>
       <v-layout row class="px-4 py-3">
         <v-flex xs12 sm6 class="pr-2">
           <span v-if="readonly">{{object.description}}</span>
-          <v-textarea v-else solo v-model="editingObject.description" hide-details no-resize></v-textarea>
+          <v-textarea v-else solo v-model="object.description" hide-details no-resize></v-textarea>
         </v-flex>
         <v-flex xs12 sm6>
-          <v-card v-if="readonly">
+          <v-card >
             <v-card-text class="py-0" v-for="item in object.settings" :key="item.id">
               <v-layout row>
                 <v-flex xs11>
                   <v-subheader class="pl-0" style="height:100%">{{ item.question }}</v-subheader>
                 </v-flex>
                 <v-flex xs1>
-                  <v-text-field readonly label="day" :value="item.answer"></v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-card-text>
-          </v-card>
-          <v-card v-else>
-            <v-card-text class="py-0" v-for="item in editingObject.settings" :key="item.id">
-              <v-layout row>
-                <v-flex xs11>
-                  <v-subheader class="pl-0" style="height:100%">{{ item.question }}</v-subheader>
-                </v-flex>
-                <v-flex xs1>
-                  <v-text-field label="day(s)" v-model="item.answer"></v-text-field>
+                  <v-text-field :readonly="readonly"  label="day(s)" v-model="item.answer"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-card-text>
@@ -88,8 +76,11 @@ export default {
       this.editingObject = JSON.parse(JSON.stringify(this.object));
       this.readonly = false;
     },
-    save() {
+    cancel() {
       this.object = JSON.parse(JSON.stringify(this.editingObject));
+      this.readonly = true;
+    },
+    save() {
       this.readonly = true;
     }
   }
