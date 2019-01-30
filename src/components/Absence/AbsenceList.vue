@@ -57,7 +57,11 @@ import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
     apiAbsence: Object,
-    detailLink: String
+    detailLink: String,
+    absenceStatus: {
+      type: String,
+      default: "pending"
+    }
   },
   components: {
     LeaveTypeChip
@@ -91,6 +95,7 @@ export default {
       const filterRequest = {
         pageSize: rowsPerPage,
         pageIndex: page,
+        status: this.absenceStatus,
         sort: {
           isAsc: !descending,
           columnName: sortBy
