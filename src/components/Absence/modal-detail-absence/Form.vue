@@ -88,8 +88,8 @@
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
                   <v-chip class="headline white black--text" disabled label>Absen Detail</v-chip>
-                  <span class="body-1">Created</span>
-                  <span>Jan 24th, 8:15am</span>
+                  <span class="body-1">Submitted</span>
+                  <span>{{ changeDateSubmitted(absenceDetail.submittedDate) }}</span>
                   <span class="my-2">Category</span>
                   <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
@@ -119,6 +119,7 @@ import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { dataHRCard, itemsComment, dataApproved } from "../data";
+import moment from "moment";
 export default {
   components: {
     UserAvatar,
@@ -148,6 +149,9 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    changeDateSubmitted(date){
+      return moment(date).format("MMM D, YYYY ") + "at" + moment(date).format(" hh:mm:ss A");
     }
   },
   data() {
