@@ -86,13 +86,13 @@
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
-                  <v-chip class="headline" label>Absen Detail</v-chip>
+                  <v-chip class="headline white black--text" disabled label>Absen Detail</v-chip>
                   <span class="body-1">Created</span>
                   <span>Jan 24th, 8:15am</span>
                   <span class="my-2">Category</span>
                   <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
-                  <v-chip class="my-1 headline" label>HR Approvers</v-chip>
+                  <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
                     <v-flex v-for="item in dataHRCard" :key="item.id">
