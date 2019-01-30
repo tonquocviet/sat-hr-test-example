@@ -21,8 +21,9 @@
         </v-flex>
         <v-flex xs2 column text-md-left class="pl-3">
           <h4 class="primary--text">Status</h4>
-          <h3 v-if="item.status === true" class="default--text">Approved</h3>
-          <h3 v-if="item.status === false" class="error--text">Cancel</h3>
+          <h3 v-if="item.status == 'approved'" class="success--text">{{ item.status }}</h3>
+          <h3 v-if="item.status == 'pending'" class="error--text">{{ item.status }}</h3>
+          <h3 v-if="item.status == 'rejected'" class="grey--text">{{ item.status }}</h3>
         </v-flex>
         <v-flex xs2 column text-md-left class="pl-3">
           <h4 class="primary--text">Address</h4>
@@ -33,15 +34,15 @@
             <template>
               <v-btn
                 flat
-                color="default"
-                v-if="item.status === true"
+                color="error"
+                v-if="item.status == 'pending'"
                 @click="openPopupAbsenceApproved"
               >
-                <span>view</span>
+                <span>cancel</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
-              <v-btn flat color="error" v-else @click="openPopupAbsenceRequest(item)">
-                <span>cancel</span>
+              <v-btn flat v-else color="default" @click="openPopupAbsenceRequest(item)">
+                <span>view</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
             </template>
