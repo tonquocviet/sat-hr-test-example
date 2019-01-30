@@ -160,19 +160,12 @@ export default {
     onComment(comment) {
       this.$emit("onComment", comment);
     },
-    postRequest(url) {
-      this.isLoading = true;
-      return new Promise((resolve, reject) => {
-        this.$http
-          .post(`${url}`, { id: this.absenceDetail.id })
-          .then(res => {
-            resolve(res.data);
-          })
-          .catch(error => reject(error));
-      });
-    },
     approved() {
-      this.postRequest(this.apiAbsence.approveRequest)
+      this.isLoading = true;
+      this.$http
+        .post(`${this.apiAbsence.approveRequest}`, {
+          id: this.absenceDetail.id
+        })
         .then(() => {
           this.isLoading = false;
           this.$emit("editAbsenceDetail", { status: "approved" });
