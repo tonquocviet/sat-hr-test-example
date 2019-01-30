@@ -17,7 +17,7 @@
         <v-textarea :readonly="readonly" solo v-model="description" name="input-7-4"></v-textarea>
       </v-flex>
       <v-flex xs12 sm6>
-        <div v-for="item in Settings" :key="item.id">
+        <div v-for="item in settings" :key="item.id">
           <v-card>
             <v-card-text class="py-0">
               <v-layout row wrap>
@@ -45,7 +45,7 @@ export default {
     return {
       readonly: true,
       description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-      Settings: [
+      settings: [
         {
           id: 1,
           question: "How many absence days can one full-time employee have under this policy?",
@@ -74,5 +74,3 @@ export default {
   border-radius: 6px;
 }
 </style>
-
-

@@ -5,7 +5,6 @@ import SettingPage from "../views/SettingPage";
 import PolicyAbsencePage from "../views/PolicyAbsencePage";
 import PolicyDetailPage from "../views/PolicyDetailPage";
 
-
 export default [
   {
     path: '/',

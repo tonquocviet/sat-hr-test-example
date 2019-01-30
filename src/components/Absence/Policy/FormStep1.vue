@@ -28,7 +28,7 @@
           :readonly="readonly"
           v-model="status"
           :items="statusItems"
-          :rules="[v => !!v || 'status is required']"
+          :rules="[v => !!v || 'Status is required']"
           label="Status"
           required
         ></v-select>
@@ -106,7 +106,7 @@
         <v-checkbox
           :readonly="readonly"
           class="pa-0 ma-0"
-          :label="`Allow Request in ESSD`"
+          label="Allow Request in ESSD"
           v-model="allowRequest"
         ></v-checkbox>
       </v-flex>
@@ -114,11 +114,11 @@
         <v-checkbox
           :readonly="readonly"
           class="pa-0 ma-0"
-          :label="`Automatically Approve`"
+          label="Automatically Approve"
           v-model="automatically"
         ></v-checkbox>
       </v-flex>
-      <v-btn v-if="!readonly" :disabled="!valid" color="success" @click="submit">Save</v-btn>
+      <v-btn v-if="!readonly" :disabled="!valid" color="primary" @click="submit">Save</v-btn>
     </v-layout>
   </v-form>
 </template>
