@@ -3,9 +3,6 @@
     <v-flex md9 class="mt-2">
       <v-flex xs12 right class="right-button-container">
         <v-btn color="info" @click="popup.showCreate = true">Add New Absence</v-btn>
-        <v-btn icon class="primary--text">
-          <v-icon>filter_list</v-icon>
-        </v-btn>
         <v-btn v-if="viewMode === 'card'" icon @click="changeViewMode(true)">
           <v-icon>list</v-icon>
         </v-btn>
