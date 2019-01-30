@@ -185,7 +185,7 @@ export default {
       allowRequest: false,
       automatically: false
     },
-    editingObject: {}
+    prevObject: {}
   }),
   mounted() {
     this.getCountries().then(({ items }) => {
@@ -223,11 +223,11 @@ export default {
       }, 0);
     },
     edit() {
-      this.editingObject = JSON.parse(JSON.stringify(this.object)) ;
+      this.prevObject = JSON.parse(JSON.stringify(this.object)) ;
       this.readonly = false;
     },
     cancel() {
-      this.object = JSON.parse(JSON.stringify(this.editingObject));
+      this.object = JSON.parse(JSON.stringify(this.prevObject));
       this.readonly = true;
     },
     save() {
