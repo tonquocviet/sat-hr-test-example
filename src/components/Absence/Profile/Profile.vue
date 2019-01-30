@@ -3,14 +3,34 @@
     <ProfileHeader></ProfileHeader>
     <ProfileListDate :dates.sync="daysOff" :tags="tags"></ProfileListDate>
     <v-layout column>
-      <ProfileFooter :items="items"></ProfileFooter>
+      <ProfileFooter
+        :dataUpcommingAbsence="dataUpcommingAbsence"
+        :dataAbsenceList="dataAbsenceList"
+        @receivePopupAbsenceApproved="receivePopupAbsenceApproved"
+        @receivePopupAbsenceRequest="receivePopupAbsenceRequest"
+      />
     </v-layout>
+    <ModalDetailAbsence
+      @closeDialog="isShowAbsenceDetailsModal = false"
+      :absenceDetail="absenceDetail"
+      :isShow="isShowAbsenceDetailsModal"
+    />
+    <AbsenceCreate
+      :getAbsenceReasonsApiUrl="apiAbsence.getReason"
+      :items="dataCardCreate"
+      :leaveTypes="leaveTypes"
+      :popup="popup"
+    />
   </div>
 </template>
 <script>
 import ProfileHeader from "./ProfileHeader"
 import ProfileListDate from "./ProfileListDate"
 import ProfileFooter from "./ProfileFooter"
+import ModalDetailAbsence from "../modal-detail-absence/Form";
+import AbsenceCreate from "../CreateAbsence";
+import { leaveTypes } from "../../../config.js";
+import { dataCardCreate } from "../data";
 
 export default {
   data () {
@@ -70,13 +90,65 @@ export default {
         { name: "Temporary Disability "},
         { name: "Childbirth"},
         { name: "Administrative Leave"},
-      ]
+      ],
+      dataAbsenceList: [],
+      dataUpcommingAbsence: [],
+      isShowAbsenceDetailsModal: false,
+      absenceDetail: null,
+      popup: {
+        showCreate: false
+      },
     }
   },
   components: {
     ProfileHeader,
     ProfileListDate,
-    ProfileFooter
+    ProfileFooter,
+    ModalDetailAbsence,
+    AbsenceCreate
+    
+  },
+  props: {
+    apiAbsence: Object,
+    leaveTypes: {
+      type: Array,
+      default: () => leaveTypes
+    },
+    dataCardCreate: {
+      type: Array,
+      default: () => dataCardCreate
+    }
+  },
+  mounted() {
+    const apiFilterWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const apiFilterUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    this.getDataAbsenceFromApi(apiFilterWhoAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsenceList = items;
+    });
+    this.getDataAbsenceFromApi(apiFilterUpcommingAbsence).then(data => {
+      const { items } = data;
+      this.dataUpcommingAbsence = items;
+    });
+  },
+  methods: {
+    getDataAbsenceFromApi(apiUrl) {
+      return new Promise(resolve => {
+        this.$http.post(`${apiUrl}`).then(res => {
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
+    },
+    receivePopupAbsenceApproved() {
+      this.popup.showCreate = true;
+    },
+    receivePopupAbsenceRequest(absenceDetail) {
+      this.absenceDetail = absenceDetail;
+      this.isShowAbsenceDetailsModal = true;
+    }
   }
-}
+};
 </script>
