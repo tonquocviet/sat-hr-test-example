@@ -18,7 +18,7 @@
             @showDetailModal="showDetailModal"
             :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
-            :type="true"
+            :needRenderApproveAction="true"
           />
           <AbsenceCardContainer
             v-else
