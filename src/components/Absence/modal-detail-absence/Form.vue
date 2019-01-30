@@ -25,6 +25,17 @@
                             <CardCountAbsence
                               :startDate="absenceDetail.startDate"
                               :endDate="absenceDetail.endDate"
+                              v-if="absenceDetail.type === 1"
+                            />
+                            <CardCountTimeAbsence
+                              :startDate="absenceDetail.startDate"
+                              :endDate="absenceDetail.endDate"
+                              v-if="absenceDetail.type === 2"
+                            />
+                            <CardAbsenceForManyDays
+                              :startDate="absenceDetail.startDate"
+                              :endDate="absenceDetail.endDate"
+                              v-if="absenceDetail.type === 3"
                             />
                           </v-flex>
                           <v-flex xs6>
@@ -111,6 +122,8 @@
 
 <script>
 import CardCountAbsence from "../../cards/CardCountAbsence";
+import CardCountTimeAbsence from "../../cards/CardCountTimeAbsence";
+import CardAbsenceForManyDays from "../../cards/CardAbsenceForManyDays";
 import PolicyAlert from "../../alerts/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
@@ -121,6 +134,8 @@ export default {
   components: {
     UserAvatar,
     CardCountAbsence,
+    CardCountTimeAbsence,
+    CardAbsenceForManyDays,
     PolicyAlert,
     InputComment,
     ListComment,
