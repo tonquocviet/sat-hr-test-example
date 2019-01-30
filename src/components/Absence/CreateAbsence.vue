@@ -119,20 +119,20 @@
 export default {
   props: {
     popup: Object,
-    apiUrl: String,
+    getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
     items: Array
   },
   mounted() {
-    this.getAbsenceReasonsRequest(this.apiUrl).then(data => {
+    this.getAbsenceReasonsRequest().then(data => {
       const { items } = data;
       this.dataAbsenceReasons = items;
     });
   },
   methods: {
-    getAbsenceReasonsRequest(url) {
+    getAbsenceReasonsRequest() {
       return new Promise(resolve => {
-        this.$http.get(`${url}`).then(res => {
+        this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
           resolve({
             items: res.data,
           });
