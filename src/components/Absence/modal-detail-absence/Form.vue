@@ -116,7 +116,6 @@ import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
-import { leaveTypes } from "../../../config";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
