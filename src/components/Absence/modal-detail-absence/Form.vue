@@ -33,8 +33,8 @@
                               light
                               disabled
                               name="input-7-4"
-                              label="The description of the absence detail card"
-                              v-model="description"
+                              label="Reason for absence"
+                              v-model="leaveReason "
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
