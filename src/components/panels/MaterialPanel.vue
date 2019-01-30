@@ -1,9 +1,12 @@
 <template>
   <v-card>
     <v-layout class="px-4 mt-3">
-      <v-card class="elevation-4 card-title-policy" color="primary">
+      <v-card class="elevation-4 card-title-policy" dark color="primary">
         <v-layout class="pa-3">
-          <h4 class="title pr-1 white--text font-weight-light">{{panelTitle}}</h4>
+          <div>
+            <h4 class="title pr-1 font-weight-light">{{panelTitle}}</h4>
+            <p v-if="!!panelSubTitle" class="category font-weight-thin mb-0 mt-1">{{panelSubTitle}}</p>
+          </div>
           <v-btn
             flat
             icon
@@ -12,7 +15,7 @@
             absolute
             right
             v-if="readonly"
-            @click="readonly = false"
+            @click="edit"
           >
             <v-icon>edit</v-icon>
           </v-btn>
@@ -23,28 +26,36 @@
     <div v-if="!readonly" style="text-align: right" class="pb-2">
       <v-divider/>
       <v-btn @click="cancelClick" color="default ">Cancel</v-btn>
-      <v-btn @click="saveClick" color="info ">Save</v-btn>
+      <v-btn @click="saveClick" color="primary">Save</v-btn>
     </div>
   </v-card>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      readonly: true
-    };
-  },
   props: {
-    panelTitle: String
+    panelTitle: String,
+    panelSubTitle: String,
+    readonly: Boolean
   },
   methods: {
     cancelClick() {
-      this.readonly = true;
       this.$emit("cancel");
     },
     saveClick() {
       this.$emit("save");
+    },
+    edit() {
+      this.$emit("edit");
+    }
+  },
+  watch: {
+    isReadonly: {
+      handler(v) {
+        if (!v === undefined) {
+          this.readonly = v;
+        }
+      }
     }
   }
 };
@@ -57,7 +68,7 @@ export default {
   border-radius: 6px;
 }
 .btn-edit {
-  top: 8px;
+  top: calc(50% - 18px);
 }
 </style>
 

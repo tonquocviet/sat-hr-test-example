@@ -5,7 +5,7 @@
         <Description/>
       </v-flex>
       <v-flex xs12 class="mb-3">
-        <Step1 :step1="step1"/>
+        <FormStep1 :getCountriesApiUrl="apiPolicy.getCountries"/>
       </v-flex>
     </v-layout>
   </div>
@@ -13,34 +13,15 @@
 
 <script>
 import Description from "./Description";
-import Step1 from "./Step1";
+import FormStep1 from "./FormStep1";
 
 export default {
   components: {
     Description,
-    Step1
-  },
-  data() {
-    return {
-      step1: {
-        itemsCountry: []
-      }
-    }
+    FormStep1
   },
   props: {
     apiPolicy: Object
-  },
-  methods: {
-    getCountries() {
-      return new Promise(resolve => {
-        this.$http
-          .get(`${this.apiPolicy.getCountries}`)
-          .then(res => resolve({ items: res.data }));
-      });
-    }
-  },
-  mounted() {
-    this.getCountries().then(data => (this.step1.itemsCountry = data.items));
   }
 };
 </script>
