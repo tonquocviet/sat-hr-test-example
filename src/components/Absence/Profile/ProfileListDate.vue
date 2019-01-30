@@ -14,10 +14,10 @@
         ></v-date-picker>
       </v-card>
       <v-card class="mt-3">
-        <v-layout row wrap justify-center align-center> 
-          <div v-for="item in tags" :key="item.name" class="pa-1">
+        <v-layout row wrap> 
+          <v-flex v-for="item in tags" :key="item.name"xs6 class="pa-1">
             <LeaveTypeChip :leaveType="item.name"/>
-          </div>
+          </v-flex>
         </v-layout>
       </v-card>
     </v-flex>
