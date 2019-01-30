@@ -148,11 +148,6 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     }
   },
   data() {
