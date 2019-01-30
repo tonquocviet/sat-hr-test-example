@@ -129,6 +129,7 @@ export default {
     changeViewMode(isListView) {
       this.$emit("changeViewMode", isListView ? "list" : "card");
       if (!isListView) {
+        this.pageIndex = 0;
         this.getDataFromApi().then(data => {
           this.dataFilterAbsences = data.items;
           this.totalRecords = data.totalRecords;
