@@ -2,7 +2,7 @@
   <MaterialPanel
     panel-title="Step 1"
     panel-sub-title="General settings"
-    @save="submit"
+    @save="save"
     @cancel="cancel"
     @edit="edit"
     :readonly="readonly"
@@ -15,7 +15,7 @@
             :readonly="readonly"
             v-model="object.name"
             :counter="1024"
-            :rules="object.nameRules"
+            :rules="[v => !!v || 'Name is required',v => (v && v.length < 1024) || 'Name must be less than 30 characters']"
             label="Name"
             required
           ></v-text-field>
@@ -24,7 +24,7 @@
           <v-autocomplete
             :append-icon="readonly ? '' : $vuetify.icons.dropdown"
             :readonly="readonly"
-            :rules="object.countryRules"
+            :rules="[v => !!v || 'Country is required']"
             v-model="object.country"
             item-text="name"
             item-value="name"
@@ -131,7 +131,7 @@
           <v-checkbox
             :readonly="readonly"
             class="pa-0 ma-0"
-            :label="`Allow Request in ESSD`"
+            label="Allow Request in ESSD"
             v-model="object.allowRequest"
           ></v-checkbox>
         </v-flex>
@@ -139,7 +139,7 @@
           <v-checkbox
             :readonly="readonly"
             class="pa-0 ma-0"
-            :label="`Automatically Approve`"
+            label="Automatically Approve"
             v-model="object.automatically"
           ></v-checkbox>
         </v-flex>
@@ -156,11 +156,6 @@ const formatDate = date => {
   const [year, month, day] = date.split("-");
   return `${month}/${day}/${year}`;
 };
-const nameRules = [
-  v => !!v || "Name is required",
-  v => (v && v.length < 1024) || "Name must be less than 30 characters"
-];
-const countryRules = [v => !!v || "Country is required"];
 export default {
   components: {
     MaterialPanel
@@ -174,10 +169,8 @@ export default {
     object: {
       valid: true,
       name: "",
-      nameRules,
       country: "",
       itemsCountry: [],
-      countryRules,
       status: null,
       statusItems: ["Active", "Inactive", "Testing"],
       menuStartDate: false,
@@ -230,14 +223,14 @@ export default {
       }, 0);
     },
     edit() {
-      this.editingObject = JSON.parse(JSON.stringify(this.object));
+      this.editingObject = JSON.parse(JSON.stringify(this.object)) ;
       this.readonly = false;
     },
     cancel() {
       this.object = JSON.parse(JSON.stringify(this.editingObject));
       this.readonly = true;
     },
-    submit() {
+    save() {
       if (this.$refs.form.validate()) {
         this.readonly = true;
       }

@@ -65,7 +65,7 @@ export default {
           }
         ]
       },
-      editingObject: {
+      prevObject: {
         description: "",
         settings: []
       }
@@ -73,11 +73,11 @@ export default {
   },
   methods: {
     edit() {
-      this.editingObject = JSON.parse(JSON.stringify(this.object));
+      this.prevObject = JSON.parse(JSON.stringify(this.object));
       this.readonly = false;
     },
     cancel() {
-      this.object = JSON.parse(JSON.stringify(this.editingObject));
+      this.object = JSON.parse(JSON.stringify(this.prevObject));
       this.readonly = true;
     },
     save() {
