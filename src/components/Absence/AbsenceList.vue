@@ -25,7 +25,7 @@
             <v-btn flat icon @click="absenceClick(props.item)" class="ma-0" color="grey">
               <v-icon>remove_red_eye</v-icon>
             </v-btn>
-            <v-btn flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
+            <v-btn v-if="type" flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
               <v-icon>check_circle_outline</v-icon>
             </v-btn>
           </v-layout>
@@ -56,6 +56,7 @@ import moment from "moment";
 import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
+    type: Boolean,
     apiAbsence: Object,
     detailLink: String,
     absenceStatus: {
@@ -111,6 +112,7 @@ export default {
               totalRecords: res.data.totalRecords
             });
           });
+          
       });
     },
     startDate(date) {
