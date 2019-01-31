@@ -11,7 +11,7 @@
                     <v-layout row wrap>
                       <v-flex xs12>
                         <v-card color="primary">
-                          <v-flex right>
+                          <v-flex right v-if="checkDueDate">
                             <v-btn
                               @click="approveRequest"
                               :disabled="absenceDetail.status === 'approved' ? true : false "
@@ -24,7 +24,9 @@
                                 indeterminate
                               ></v-progress-circular>
                             </v-btn>
-                            <v-btn color="error">Reject</v-btn>
+                            <v-btn color="error"
+                            :disabled="absenceDetail.status === 'rejected' ? true : false "
+                            >Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
                           </v-flex>
@@ -200,6 +202,9 @@ export default {
         "at " +
         moment(this.absenceDetail.submittedDate).format("hh:mm:ss A")
       );
+    },
+    checkDueDate() {
+      return (moment(this.absenceDetail.dueDate) >= moment());
     }
   },
   data() {
