@@ -88,7 +88,7 @@
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
                   <span class="body-1">Submitted</span>
-                  <span>{{ changeDateSubmitted(absenceDetail.submittedDate) }}</span>
+                  <span>{{formatedDate}}</span>
                   <span class="my-2">Category</span>
                   <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
@@ -151,8 +151,12 @@ export default {
     }
   },
   computed: {
-    changeDateSubmitted(){
-      return date => moment(date).format("MMM D, YYYY ") + "at" + moment(date).format(" hh:mm:ss A");
+    formatedDate() {
+      return (
+        moment(this.absenceDetail.submittedDate).format("MMM D, YYYY ") +
+        "at " +
+        moment(this.absenceDetail.submittedDate).format("hh:mm:ss A")
+      );
     }
   },
   data() {
