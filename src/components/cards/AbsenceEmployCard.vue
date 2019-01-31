@@ -9,10 +9,10 @@
           :key="itemLeaveCard.id"
         >
           <v-card
-            :style="`border-top:7px solid ${itemLeaveCard.type === 1 ? `blue` : null ||
-              itemLeaveCard.type === 2 ? `green` : null ||
-              itemLeaveCard.type === 3 ? `red` : null ||
-              itemLeaveCard.type === 4 ? `purple` : null
+            :style="`border-top:7px solid ${itemLeaveCard.type === 1 ? 'blue' :
+              itemLeaveCard.type === 2 ? 'green' :
+              itemLeaveCard.type === 3 ? 'red' :
+              itemLeaveCard.type === 4 ? 'purple' : null
             };border-radius:6px`"
           >
             <v-card-title>
@@ -20,10 +20,10 @@
                 <h3>{{itemLeaveCard.name}}</h3>
                 <span
                   :class="`font-weight-bold display-1
-                  ${itemLeaveCard.type === 1 ? `blue--text` : null ||
-                    itemLeaveCard.type === 2 ? `green--text` : null ||
-                    itemLeaveCard.type === 3 ? `red--text` : null ||
-                    itemLeaveCard.type === 4 ? `purple--text` : null}`"
+                  ${itemLeaveCard.type === 1 ? 'blue--text' :
+                    itemLeaveCard.type === 2 ? 'green--text' :
+                    itemLeaveCard.type === 3 ? 'red--text' :
+                    itemLeaveCard.type === 4 ? 'purple--text' : null}`"
                 >{{itemLeaveCard.numberAbsence}}</span>
                 <br>
                 <b>Absence</b>
@@ -38,10 +38,10 @@
               <v-btn
                 flat
                 :color="`${
-                  itemLeaveCard.type === 1 ? `blue` : null ||
-                  itemLeaveCard.type === 2 ? `green` : null ||
-                  itemLeaveCard.type === 3 ? `red` : null ||
-                  itemLeaveCard.type === 4 ? `purple` : null}`"
+                  itemLeaveCard.type === 1 ? 'blue' :
+                  itemLeaveCard.type === 2 ? 'green' :
+                  itemLeaveCard.type === 3 ? 'red' :
+                  itemLeaveCard.type === 4 ? 'purple' : null}`"
               >
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
