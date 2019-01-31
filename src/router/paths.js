@@ -4,6 +4,7 @@ import OrgChart from "../views/OrgChartPage";
 import SettingPage from "../views/SettingPage";
 import PolicyAbsencePage from "../views/PolicyAbsencePage";
 import EmployListView from "../views/EmployListView";
+import PolicyDetailPage from "../views/PolicyDetailPage";
 
 export default [
   {
@@ -36,8 +37,10 @@ export default [
   {
     path: "/org-chart",
     name: "OrgChart",
-    component: OrgChart
-  },
+    path: '/absence-policy/:id',
+    name: 'AbsenceDetail',
+    component: PolicyDetailPage
+  }
   {
     path: "/settings",
     name: "Settings",

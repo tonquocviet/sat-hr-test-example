@@ -17,11 +17,7 @@
         </td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">
-          <v-chip
-            small
-            :color="getColorFromLeaveName(props.item.leaveType.name)"
-            text-color="white"
-          >{{ props.item.leaveType.name }}</v-chip>
+          <LeaveTypeChip :leaveType="props.item.leaveType.name"/>
         </td>
         <td class="text-xs-left">{{ props.item.location }}</td>
         <td class="text-xs-center">
@@ -29,7 +25,7 @@
             <v-btn flat icon @click="absenceClick(props.item)" class="ma-0" color="grey">
               <v-icon>remove_red_eye</v-icon>
             </v-btn>
-            <v-btn flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
+            <v-btn v-if="needRenderApproveAction" flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
               <v-icon>check_circle_outline</v-icon>
             </v-btn>
           </v-layout>
@@ -57,11 +53,19 @@
 </template>
 <script>
 import moment from "moment";
-import { leaveTypes } from "../../config";
+import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
+    needRenderApproveAction: Boolean,
     apiAbsence: Object,
-    detailLink: String
+    detailLink: String,
+    absenceStatus: {
+      type: String,
+      default: "pending"
+    }
+  },
+  components: {
+    LeaveTypeChip
   },
   methods: {
     absenceClick(absenceDetail) {
@@ -92,6 +96,7 @@ export default {
       const filterRequest = {
         pageSize: rowsPerPage,
         pageIndex: page,
+        status: this.absenceStatus,
         sort: {
           isAsc: !descending,
           columnName: sortBy
@@ -107,12 +112,8 @@ export default {
               totalRecords: res.data.totalRecords
             });
           });
+          
       });
-    },
-    getColorFromLeaveName(leaveName) {
-      return (
-        leaveTypes.filter(x => x.name === leaveName)[0] || { color: "primary" }
-      ).color;
     },
     startDate(date) {
       return moment(date).format("MM/DD/YYYY");
