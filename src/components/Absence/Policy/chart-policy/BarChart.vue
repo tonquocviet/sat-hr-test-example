@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12>
+  <v-layout xs12>
     <v-flex xs12>
       <v-layout row>
         <v-flex xs6>
@@ -40,15 +40,20 @@
           </v-layout>
         </v-flex>
       </v-layout>
+      <v-flex xs12>
+        <BarChart :chart-data="datacollection" :options="options"/>
+      </v-flex>
     </v-flex>
-    <v-flex class="mt-4" xs12>
-      <canvas ref="barchart"/>
-    </v-flex>
-  </v-flex>
+  </v-layout>
 </template>
+
 <script>
-import Chart from "chart.js";
+import BarChart from "./BarChart.js";
+
 export default {
+  components: {
+    BarChart
+  },
   props: {
     dataChartBar: Array,
     totalPending: Number,
@@ -56,22 +61,28 @@ export default {
     thisMonthTotal: Number,
     totalReject: Number
   },
+  data() {
+    return {
+      datacollection: null,
+      options: null
+    };
+  },
   mounted() {
-    const dataBarChart = this.dataChartBar.reduce(
-      (prev, curr) => {
-        prev.day.push(curr.day);
-        prev.approved.push(curr.approved);
-        prev.reject.push(curr.reject);
-        prev.pending.push(curr.pending);
-        return prev;
-      },
-      { day: [], approved: [], reject: [], pending: [] }
-    );
-    const barchart = this.$refs.barchart;
-    const ctx = barchart.getContext("2d");
-    new Chart(ctx, {
-      type: "bar",
-      data: {
+    this.getDataChartBar();
+  },
+  methods: {
+    getDataChartBar() {
+      const dataBarChart = this.dataChartBar.reduce(
+        (prev, curr) => {
+          prev.day.push(curr.day);
+          prev.approved.push(curr.approved);
+          prev.reject.push(curr.reject);
+          prev.pending.push(curr.pending);
+          return prev;
+        },
+        { day: [], approved: [], reject: [], pending: [] }
+      );
+      this.datacollection = {
         labels: dataBarChart.day,
         datasets: [
           {
@@ -96,23 +107,21 @@ export default {
             borderWidth: 1
           }
         ]
-      },
-      options: {
+      };
+      this.options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          yAxes: [
-            {
-              stacked: true,
-              ticks: {
-                beginAtZero: true
-              }
-            }
-          ],
           xAxes: [
             {
               stacked: true,
-              ticks: {
-                beginAtZero: true
-              }
+              categoryPercentage: 0.5,
+              barPercentage: 1
+            }
+          ],
+          yAxes: [
+            {
+              stacked: true
             }
           ]
         },
@@ -122,8 +131,8 @@ export default {
           position: "bottom"
         },
         legend: false //hide label chart
-      }
-    });
+      };
+    }
   }
 };
 </script>

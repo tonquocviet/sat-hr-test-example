@@ -45,14 +45,18 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex xs6>
-      <canvas ref="piechart"></canvas>
-    </v-flex>
+    <v-layout justify-center align-center>
+      <v-flex xs6>
+        <PieChart :chart-data="datacollection" :options="options"/>
+      </v-flex>
+    </v-layout>
   </v-layout>
 </template>
 <script>
 import Chart from "chart.js";
+import PieChart from "./PieChart.js";
 import UserAvatar from "../../../avatars/Avatar";
+
 export default {
   props: {
     dataPolicySloved: Array,
@@ -61,23 +65,30 @@ export default {
     totalReject: Number
   },
   components: {
-    UserAvatar
+    UserAvatar,
+    PieChart
+  },
+  data() {
+    return {
+      datacollection: null,
+      options: null
+    };
   },
   mounted() {
-    const piechart = this.$refs.piechart;
-    const ctx = piechart.getContext("2d");
-    new Chart(ctx, {
-      type: "pie",
-      data: {
+    this.getDataChartPie();
+  },
+  methods: {
+    getDataChartPie() {
+      this.datacollection = {
+        labels: ["Approved", "Pending", "Reject"],
         datasets: [
           {
             data: [this.totalApproved, this.totalPending, this.totalReject],
             backgroundColor: ["#53C5AC", "#EFCC64", "#8C9098"]
           }
-        ],
-        labels: ["Approved", "Pending", "Reject"]
-      },
-      options: {
+        ]
+      };
+      this.options = {
         responsive: true,
         legend: {
           position: "top"
@@ -103,8 +114,8 @@ export default {
             }
           }
         }
-      }
-    });
+      };
+    }
   }
 };
 </script>
