@@ -229,7 +229,7 @@ export const ListItemsAbsence = [
     leaveType: { id: 9, name: "Sick Leave" },
     employeeName: "Eugene Lynch",
     endDate: "2019-02-02T00:00:00.000Z",
-    id: 18725,
+    id: 18715,
     leaveDescription:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
     leaveReason: "This is my leave reason 18725",
@@ -246,7 +246,7 @@ export const ListItemsAbsence = [
     leaveType: { id: 9, name: "Sick Leave" },
     employeeName: "Eugene Lynch",
     endDate: "2019-02-02T00:00:00.000Z",
-    id: 18725,
+    id: 18724,
     leaveDescription:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
     leaveReason: "This is my leave reason 18725",
