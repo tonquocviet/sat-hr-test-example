@@ -152,7 +152,7 @@ export default {
     getHRCardRequest() {
       this.isHRCard = true;
       const { id } = this.absenceDetail;
-      const url = `${this.apiAbsence.absences}/${id}/approvers`;
+      const url = this.apiAbsence.getAbsenceHRApprovers(id);
       this.$http.get(url).then(res => {
         this.isHRCard = false;
         this.dataHRCard = res.data;
