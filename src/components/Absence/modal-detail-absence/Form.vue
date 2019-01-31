@@ -42,9 +42,10 @@
                             <v-textarea
                               solo
                               light
+                              disabled
                               name="input-7-4"
-                              label="Reason"
-                              v-model="description"
+                              label="Reason for absence"
+                              v-model="absenceDetail.leaveReason"
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
@@ -97,16 +98,19 @@
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
-                  <v-chip class="headline white black--text" disabled label>Absen Detail</v-chip>
-                  <span class="body-1">Created</span>
-                  <span>Jan 24th, 8:15am</span>
+                  <v-chip class="headline white black--text" disabled label>Absence Detail</v-chip>
+                  <span class="body-1">Submitted</span>
+                  <span>{{changeDateSubmitted}}</span>
                   <span class="my-2">Category</span>
                   <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
                   <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
-                    <v-flex v-for="item in dataHRCard" :key="item.id">
+                    <div class="text-xs-center" v-if="isHRCard">
+                      <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                    </div>
+                    <v-flex v-else v-for="(item,index) in dataHRCard" :key="index">
                       <CardHRApprover :item="item"/>
                     </v-flex>
                   </v-layout>
@@ -132,7 +136,8 @@ import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
-import { dataHRCard, itemsComment, dataApproved } from "../data";
+import { itemsComment, dataApproved } from "../data";
+import moment from "moment";
 export default {
   components: {
     UserAvatar,
@@ -147,10 +152,6 @@ export default {
     isShow: Boolean,
     apiAbsence: Object,
     absenceDetail: Object,
-    dataHRCard: {
-      type: Array,
-      default: () => dataHRCard
-    },
     dataApproved: {
       type: Array,
       default: () => dataApproved
@@ -163,6 +164,15 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    getHRCardRequest() {
+      this.isHRCard = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsenceHRApprovers(id);
+      this.$http.get(url).then(res => {
+        this.isHRCard = false;
+        this.dataHRCard = res.data;
+      });
     },
     approveRequest() {
       this.isApproving = true;
@@ -183,16 +193,34 @@ export default {
         });
     }
   },
+  computed: {
+    changeDateSubmitted() {
+      return (
+        moment(this.absenceDetail.submittedDate).format("MMM D, YYYY ") +
+        "at " +
+        moment(this.absenceDetail.submittedDate).format("hh:mm:ss A")
+      );
+    }
+  },
   data() {
     return {
-      description: "",
+      leaveReason: "",
       typeComment: 1,
       typeId: 4,
       imgActive: true,
+      dataHRCard: [],
+      isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
       isApproving: false
     };
+  },
+  watch: {
+    isShow(val) {
+      if (val) {
+        this.getHRCardRequest();
+      }
+    }
   }
 };
 </script>

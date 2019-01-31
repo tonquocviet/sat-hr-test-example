@@ -1,18 +1,18 @@
 <template>
   <v-content>
     <v-container fluid class="pa-0">
-      <Profile :apiAbsence="apiAbsence"/>
+      <PolicyDetail :apiPolicy="apiPolicy"/>
     </v-container>
   </v-content>
 </template>
 <script>
-import Profile from "./Absence/Profile/Profile";
+import PolicyDetail from "./Absence/Policy/PolicyDetail";
 export default {
   props: {
-    apiAbsence: Object
+    apiPolicy: Object
   },
   components: {
-    Profile
+    PolicyDetail
   }
 };
 </script>
