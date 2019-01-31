@@ -38,7 +38,8 @@
               <td class="justify-center layout px-0">
                 <v-icon v-if="editId === props.item.id" size="20" class="mr-2" @click="save">save</v-icon>
                 <v-icon v-else size="20" class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                <v-icon size="20" @click="deleteItem(props.item)">delete</v-icon>
+                <v-icon v-if="editId === props.item.id" size="20" class="mr-2" @click="close">cancel</v-icon>
+                <v-icon v-else size="20" @click="deleteItem(props.item)">delete</v-icon>
               </td>
             </template>
             <template slot="no-data">
@@ -100,11 +101,9 @@ export default {
       val || this.close();
     }
   },
-
   created() {
     this.initialize();
   },
-
   methods: {
     initialize() {
       this.desserts = [
@@ -146,27 +145,21 @@ export default {
         }
       ];
     },
-
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.editId = item.id;
     },
-
     deleteItem(item) {
       const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.desserts.splice(index, 1);
     },
-
     close() {
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-        this.editId = "";
-      }, 300);
+      this.editedItem = Object.assign({}, this.defaultItem);
+      this.editedIndex = -1;
+      this.editId = "";
     },
-
     save() {
       Object.assign(this.desserts[this.editedIndex], this.editedItem);
       this.close();
