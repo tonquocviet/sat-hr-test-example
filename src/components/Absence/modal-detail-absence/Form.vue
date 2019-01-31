@@ -121,7 +121,7 @@ import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
-import { dataHRCard, itemsComment, dataApproved } from "../data";
+import { itemsComment, dataApproved } from "../data";
 export default {
   components: {
     UserAvatar,
