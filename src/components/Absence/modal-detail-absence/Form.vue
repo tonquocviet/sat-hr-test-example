@@ -14,7 +14,7 @@
                           <v-flex right>
                             <v-btn
                               @click="approveRequest"
-                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              :disabled="absenceDetail.status === 'approved'"
                               color="success"
                             >
                               <span>Approve</span>
@@ -26,7 +26,7 @@
                             </v-btn>
                             <v-btn
                               @click="rejectRequest"
-                              :disabled="absenceDetail.status === 'rejected' ? true : false "
+                              :disabled="absenceDetail.status === 'rejected'"
                               color="error"
                             >
                               <span>Reject</span>
