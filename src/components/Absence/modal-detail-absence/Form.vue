@@ -19,7 +19,7 @@
                             >
                               <span>Approve</span>
                               <v-progress-circular
-                                v-if="isLoadingApproved"
+                                v-if="isApproving"
                                 class="ml-2"
                                 indeterminate
                               ></v-progress-circular>
@@ -165,19 +165,19 @@ export default {
       this.$emit("onComment", comment);
     },
     approveRequest() {
-      this.isLoadingApproved = true;
+      this.isApproving = true;
       this.$http
         .post(`${this.apiAbsence.approveRequest}`, {
           id: this.absenceDetail.id
         })
         .then(() => {
-          this.isLoadingApproved = false;
+          this.isApproving = false;
           this.$emit("updatedAbsenceDetail ");
           this.infoSnackbar = true;
           this.savedMessage = "Approve success !!";
         })
         .catch(() => {
-          this.isLoadingApproved = false;
+          this.isApproving = false;
           this.infoSnackbar = true;
           this.savedMessage = "Approve failed !!";
         });
@@ -191,7 +191,7 @@ export default {
       imgActive: true,
       infoSnackbar: false,
       savedMessage: "",
-      isLoadingApproved: false
+      isApproving: false
     };
   }
 };
