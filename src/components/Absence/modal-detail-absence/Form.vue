@@ -149,9 +149,11 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
-    },
-    changeDateSubmitted(date){
-      return moment(date).format("MMM D, YYYY ") + "at" + moment(date).format(" hh:mm:ss A");
+    }
+  },
+  computed: {
+    changeDateSubmitted(){
+      return date => moment(date).format("MMM D, YYYY ") + "at" + moment(date).format(" hh:mm:ss A");
     }
   },
   data() {
