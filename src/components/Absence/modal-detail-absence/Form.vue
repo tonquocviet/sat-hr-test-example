@@ -96,7 +96,10 @@
                   <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
-                    <v-flex v-for="item in dataHRCard" :key="item.id">
+                    <div class="text-xs-center" v-if="isHRCard">
+                      <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                    </div>
+                    <v-flex v-else v-for="(item,index) in dataHRCard" :key="index">
                       <CardHRApprover :item="item"/>
                     </v-flex>
                   </v-layout>
@@ -118,7 +121,7 @@ import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
-import { dataHRCard, itemsComment, dataApproved } from "../data";
+import { itemsComment, dataApproved } from "../data";
 import moment from "moment";
 export default {
   components: {
@@ -132,11 +135,8 @@ export default {
   },
   props: {
     isShow: Boolean,
+    apiAbsence: Object,
     absenceDetail: Object,
-    dataHRCard: {
-      type: Array,
-      default: () => dataHRCard
-    },
     dataApproved: {
       type: Array,
       default: () => dataApproved
@@ -149,6 +149,15 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    getHRCardRequest() {
+      this.isHRCard = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsenceHRApprovers(id);
+      this.$http.get(url).then(res => {
+        this.isHRCard = false;
+        this.dataHRCard = res.data;
+      });
     }
   },
   computed: {
@@ -165,8 +174,17 @@ export default {
       leaveReason: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true
+      imgActive: true,
+      dataHRCard: [],
+      isHRCard: false
     };
+  },
+  watch: {
+    isShow(val) {
+      if (val) {
+        this.getHRCardRequest();
+      }
+    }
   }
 };
 </script>

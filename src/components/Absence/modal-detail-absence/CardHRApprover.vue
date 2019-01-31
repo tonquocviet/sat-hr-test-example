@@ -3,26 +3,26 @@
     <v-flex justify-center align-center style="height: 60px; display: flex;" class="v-card-image">
       <div class="v-image-user">
         <UserAvatar
-          :imageUrl="(item.avatar||{}).imageUrl"
-          :name="item.employeeName"
+          :imageUrl="(item.user.avatar||{}).imageUrl"
+          :name="item.user.firstName + ' ' + item.user.lastName"
           width="unset"
         />
       </div>
     </v-flex>
-    <span class="body-2">{{item.employeeName}}</span>
+    <span class="body-2">{{item.user.firstName + " " + item.user.lastName}}</span>
     <v-btn
       class="mt-3"
       position
       absolute
       flat
       icon
-      :color="item.type ? (item.type === 1 ? `warning` : null ) || (item.type === 2 ? `dark` : null ) || (item.type === 3 ? `success` : null ) : null"
+      :color="item.status ? (item.status === 'request-info' ? 'warning' : null ) || (item.status === 'rejected' ? 'dark' : null ) || (item.status === 'approved' ? 'success' : null ) : null"
       style="margin-left: -15px"
-      v-if="item.type"
+      v-if="item.status"
     >
-      <v-icon v-if="item.type === 1">warning</v-icon>
-      <v-icon v-if="item.type === 2">cancel</v-icon>
-      <v-icon v-if="item.type === 3">check_circle</v-icon>
+      <v-icon v-if="item.status === 'request-info'">warning</v-icon>
+      <v-icon v-if="item.status === 'rejected'">cancel</v-icon>
+      <v-icon v-if="item.status === 'approved'">check_circle</v-icon>
     </v-btn>
   </v-card>
 </template>
