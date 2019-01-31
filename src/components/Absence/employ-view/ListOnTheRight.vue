@@ -1,15 +1,21 @@
 <template>
   <v-flex>
     <v-layout row>
-      <v-flex xs6 align-center d-flex>
+      <v-flex xs6 align-center d-flex class="text-xs-left">
         <h3 class="headling ml-2">Calendar</h3>
       </v-flex>
-      <v-flex xs6>
-        <v-btn left small flat color="success">View full</v-btn>
+      <v-flex xs6 class="text-xs-right">
+        <v-btn small flat color="success">View full</v-btn>
       </v-flex>
     </v-layout>
-    <v-flex xs12 sm6 class="ml-2">
-      <v-date-picker v-model="dateTimeColor" event-color="date" :events="functionEvents" readonly></v-date-picker>
+    <v-flex xs12 class="ml-2">
+      <v-date-picker
+        width="100%"
+        v-model="dateTimeColor"
+        event-color="date"
+        :events="functionEvents"
+        readonly
+      ></v-date-picker>
     </v-flex>
     <v-layout row class="mt-1">
       <v-flex pa-1 align-center d-flex>
