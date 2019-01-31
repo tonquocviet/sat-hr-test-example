@@ -3,6 +3,7 @@
     panel-title="Description"
     panel-sub-title="Setup policy's description"
     :readonly="readonly"
+    :isShowEdit="true"
     @save="save"
     @cancel="cancel"
     @edit="edit"

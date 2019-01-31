@@ -75,15 +75,16 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate 
+      <AbsenceCreate
         :items="data1"
         :getAbsenceReasonsApiUrl="apiAbsence.getReason"
         :leaveTypes="leaveTypes"
-        :popup="popup" 
+        :popup="popup"
       />
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
+      :apiAbsence="apiAbsence"
       :absenceDetail="absenceDetail"
       @closeDialog="isShowAbsenceDetailsModal = false"
     />
