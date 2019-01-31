@@ -84,9 +84,11 @@
                       <v-flex xs12>
                         <InputComment @onComment="onComment" :avatar="absenceDetail"/>
                       </v-flex>
-
-                      <v-layout xs12 wrap column v-for="a in dataCommentAbsence" :key="a.id" class="showComment">
-                        <ListComment :comment="a" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      <v-flex v-if="isFetchingComments" xs12 class="text-xs-center">
+                        <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                      </v-flex>
+                      <v-layout v-else xs12 wrap column v-for="item in dataCommentAbsence" :key="item.id" class="showComment">
+                        <ListComment :comment="item" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -193,9 +195,11 @@ export default {
       });
     },
     getCommentAbsence(){
+      this.isFetchingComments = true
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getCommentAbsence(id);
       this.$http.get(url).then(res => {
+        this.isFetchingComments = false
         this.dataCommentAbsence = res.data
       });
     },
@@ -262,7 +266,8 @@ export default {
       isApproving: false,
       dataPolicies: {},
       isFetchingPolicies: false,
-      isRejecting: false
+      isRejecting: false,
+      isisFetchingComments: false, 
     };
   },
   watch: {

@@ -43,25 +43,18 @@
       </v-flex>
     </v-layout>
     <v-flex xs12>
-      <v-flex right xs4>
-        <v-btn flat small color="primary">
-          <v-icon>attach_file</v-icon>Bug Report.xml
-        </v-btn>
-      </v-flex>
-      <v-flex right xs4>
-        <v-btn flat small color="primary">
-          <v-icon>image</v-icon>SytemInformation.txt
-        </v-btn>
-      </v-flex>
+      <AttachmentComment :items="comment.attachments"></AttachmentComment>
     </v-flex>
   </v-flex>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";
+import AttachmentComment from "./AttachmentComment"
 import moment from "moment";
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    AttachmentComment
   },
   props: {
     itemsComment: Array,
