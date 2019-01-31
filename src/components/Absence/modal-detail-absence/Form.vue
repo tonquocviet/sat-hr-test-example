@@ -14,7 +14,7 @@
                           <v-flex right v-if="checkDueDate">
                             <v-btn
                               @click="approveRequest"
-                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              :disabled="absenceDetail.status === 'approved'"
                               color="success"
                             >
                               <span>Approve</span>
@@ -25,7 +25,7 @@
                               ></v-progress-circular>
                             </v-btn>
                             <v-btn color="error"
-                            :disabled="absenceDetail.status === 'rejected' ? true : false "
+                            :disabled="absenceDetail.status === 'rejected'"
                             >Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
