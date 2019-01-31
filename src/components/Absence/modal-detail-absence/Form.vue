@@ -12,7 +12,18 @@
                       <v-flex xs12>
                         <v-card color="primary">
                           <v-flex right>
-                            <v-btn color="success">Approve</v-btn>
+                            <v-btn
+                              @click="approveRequest"
+                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              color="success"
+                            >
+                              <span>Approve</span>
+                              <v-progress-circular
+                                v-if="isApproving"
+                                class="ml-2"
+                                indeterminate
+                              ></v-progress-circular>
+                            </v-btn>
                             <v-btn color="error">Reject</v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
@@ -110,6 +121,10 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="infoSnackbar" :bottom="true" :left="true" :timeout="6000">
+      {{ savedMessage }}
+      <v-btn color="primary" flat @click="infoSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -158,6 +173,24 @@ export default {
         this.isHRCard = false;
         this.dataHRCard = res.data;
       });
+    },
+    approveRequest() {
+      this.isApproving = true;
+      this.$http
+        .post(`${this.apiAbsence.approveRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isApproving = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve success !!";
+        })
+        .catch(() => {
+          this.isApproving = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve failed !!";
+        });
     }
   },
   computed: {
@@ -176,7 +209,10 @@ export default {
       typeId: 4,
       imgActive: true,
       dataHRCard: [],
-      isHRCard: false
+      isHRCard: false,
+      infoSnackbar: false,
+      savedMessage: "",
+      isApproving: false
     };
   },
   watch: {
