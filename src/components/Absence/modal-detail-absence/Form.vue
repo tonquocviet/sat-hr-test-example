@@ -172,7 +172,7 @@ export default {
         })
         .then(() => {
           this.isApproving = false;
-          this.$emit("updatedAbsenceDetail ");
+          this.$emit("updatedAbsenceDetail");
           this.infoSnackbar = true;
           this.savedMessage = "Approve success !!";
         })
