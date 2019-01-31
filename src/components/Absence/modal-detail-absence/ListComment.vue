@@ -39,7 +39,7 @@
 
     <v-layout xs12>
       <v-flex class="text-xs-left ml-2 mt-2">
-        <span class="caption">{{comment.comment}}</span>
+        <pre>{{comment.comment}}</pre>
       </v-flex>
     </v-layout>
     <v-flex xs12>
