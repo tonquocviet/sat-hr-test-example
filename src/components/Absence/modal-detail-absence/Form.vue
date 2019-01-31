@@ -14,19 +14,22 @@
                           <v-flex right>
                             <v-btn
                               @click="approveRequest"
-                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              :disabled="!checkDueDate || absenceDetail.status === 'approved'"
                               color="success"
                             >
                               <span>Approve</span>
-                              <v-progress-circular
-                                v-if="isApproving"
-                                class="ml-2"
-                                indeterminate
-                              ></v-progress-circular>
+                              <v-progress-circular v-if="isApproving" class="ml-2" indeterminate></v-progress-circular>
                             </v-btn>
-                            <v-btn color="error">Reject</v-btn>
-                            <v-btn color="primary">Reassign</v-btn>
-                            <v-btn>Request Information</v-btn>
+                            <v-btn
+                              @click="rejectRequest"
+                              :disabled="!checkDueDate || absenceDetail.status === 'rejected'"
+                              color="error"
+                            >
+                              <span>Reject</span>
+                              <v-progress-circular v-if="isRejecting" class="ml-2" indeterminate></v-progress-circular>
+                            </v-btn>
+                            <v-btn :disabled="!checkDueDate" color="primary">Reassign</v-btn>
+                            <v-btn :disabled="!checkDueDate">Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
@@ -51,14 +54,20 @@
                         </v-layout>
                       </v-flex>
                       <v-flex xs12>
-                        <v-layout row>
+                        <div v-if="isFetchingPolicies" class="text-xs-center">
+                          <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                        </div>
+                        <v-layout v-else row>
                           <v-flex xs6>
                             <v-card dark color="secondary">
                               <v-expansion-panel light>
-                                <v-expansion-panel-content>
-                                  <div slot="header">Absence Policy Group</div>
+                                <v-expansion-panel-content
+                                  v-for="item in dataPolicies.policies"
+                                  :key="item.id"
+                                >
+                                  <div slot="header">{{ item.name }}</div>
                                   <v-card>
-                                    <v-card-text>{{absenceDetail.leaveDescription}}</v-card-text>
+                                    <v-card-text>{{item.description}}</v-card-text>
                                   </v-card>
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -66,7 +75,7 @@
                           </v-flex>
                           <v-flex xs6>
                             <v-layout column style="height: 200px">
-                              <PolicyAlert :dataApproved="dataApproved"/>
+                              <PolicyAlert :dataAlerts="dataPolicies.alerts"/>
                             </v-layout>
                           </v-flex>
                         </v-layout>
@@ -165,6 +174,15 @@ export default {
     onComment(comment) {
       this.$emit("onComment", comment);
     },
+    getPoliciesRequest() {
+      this.isFetchingPolicies = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsencePolicies(id);
+      this.$http.get(url).then(res => {
+        this.isFetchingPolicies = false;
+        this.dataPolicies = res.data;
+      });
+    },
     getHRCardRequest() {
       this.isHRCard = true;
       const { id } = this.absenceDetail;
@@ -198,6 +216,24 @@ export default {
           this.infoSnackbar = true;
           this.savedMessage = "Approve failed !!";
         });
+    },
+    rejectRequest() {
+      this.isRejecting = true;
+      this.$http
+        .post(`${this.apiAbsence.rejectRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isRejecting = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject success !!";
+        })
+        .catch(() => {
+          this.isRejecting = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject failed !!";
+        });
     }
   },
   computed: {
@@ -207,6 +243,9 @@ export default {
         "at " +
         moment(this.absenceDetail.submittedDate).format("hh:mm:ss A")
       );
+    },
+    checkDueDate() {
+      return moment(this.absenceDetail.dueDate) >= moment();
     }
   },
   data() {
@@ -220,12 +259,16 @@ export default {
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
-      isApproving: false
+      isApproving: false,
+      dataPolicies: {},
+      isFetchingPolicies: false,
+      isRejecting: false
     };
   },
   watch: {
     isShow(val) {
       if (val) {
+        this.getPoliciesRequest();
         this.getHRCardRequest();
         this.getCommentAbsence();
       }
