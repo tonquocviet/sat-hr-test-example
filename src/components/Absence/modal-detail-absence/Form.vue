@@ -178,7 +178,6 @@ export default {
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getCommentAbsence(id);
       this.$http.get(url).then(res => {
-        console.log(res.data)
         this.dataCommentAbsence = res.data
       });
     },
