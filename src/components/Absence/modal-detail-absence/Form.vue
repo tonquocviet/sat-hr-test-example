@@ -96,7 +96,10 @@
                   <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
-                    <v-flex v-for="item in dataHRCard" :key="item.id">
+                    <div class="text-xs-center" v-if="isLoadingHRCard">
+                      <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                    </div>
+                    <v-flex v-else v-for="(item,index) in dataHRCard" :key="index">
                       <CardHRApprover :item="item"/>
                     </v-flex>
                   </v-layout>
@@ -131,11 +134,8 @@ export default {
   },
   props: {
     isShow: Boolean,
+    apiAbsence: Object,
     absenceDetail: Object,
-    dataHRCard: {
-      type: Array,
-      default: () => dataHRCard
-    },
     dataApproved: {
       type: Array,
       default: () => dataApproved
@@ -148,6 +148,15 @@ export default {
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    getHRCardRequest() {
+      this.isLoadingHRCard = true;
+      const { id } = this.absenceDetail;
+      const url = `${this.apiAbsence.absences}/${id}/approvers`;
+      this.$http.get(url).then(res => {
+        this.isLoadingHRCard = false;
+        this.dataHRCard = res.data;
+      });
     }
   },
   data() {
@@ -155,8 +164,17 @@ export default {
       leaveReason: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true
+      imgActive: true,
+      dataHRCard: [],
+      isLoadingHRCard: false
     };
+  },
+  watch: {
+    isShow(val) {
+      if (val) {
+        this.getHRCardRequest();
+      }
+    }
   }
 };
 </script>

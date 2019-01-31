@@ -84,6 +84,7 @@
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
+      :apiAbsence="apiAbsence"
       :absenceDetail="absenceDetail"
       @closeDialog="isShowAbsenceDetailsModal = false"
     />
