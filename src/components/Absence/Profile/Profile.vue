@@ -33,6 +33,17 @@ import { leaveTypes } from "../../../config.js";
 import { dataCardCreate } from "../data";
 
 export default {
+  props: {
+    apiAbsence: Object,
+    leaveTypes: {
+      type: Array,
+      default: () => leaveTypes
+    },
+    dataCardCreate: {
+      type: Array,
+      default: () => dataCardCreate
+    }
+  },
   data () {
     return {
       daysOff: [
@@ -107,17 +118,6 @@ export default {
     ModalDetailAbsence,
     AbsenceCreate
     
-  },
-  props: {
-    apiAbsence: Object,
-    leaveTypes: {
-      type: Array,
-      default: () => leaveTypes
-    },
-    dataCardCreate: {
-      type: Array,
-      default: () => dataCardCreate
-    }
   },
   mounted() {
     const apiFilterWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
