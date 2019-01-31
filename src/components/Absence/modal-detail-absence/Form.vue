@@ -72,12 +72,12 @@
                         </v-layout>
                       </v-flex>
 
-                      <v-layout column>
+                      <v-flex xs12>
                         <InputComment @onComment="onComment" :avatar="absenceDetail"/>
-                      </v-layout>
+                      </v-flex>
 
-                      <v-layout>
-                        <ListComment :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      <v-layout column>
+                        <ListComment :comments="dataCommentAbsence" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -174,6 +174,14 @@ export default {
         this.dataHRCard = res.data;
       });
     },
+    getCommentAbsence(){
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getCommentAbsence(id);
+      this.$http.get(url).then(res => {
+        console.log(res.data)
+        this.dataCommentAbsence = res.data
+      });
+    },
     approveRequest() {
       this.isApproving = true;
       this.$http
@@ -209,6 +217,7 @@ export default {
       typeId: 4,
       imgActive: true,
       dataHRCard: [],
+      dataCommentAbsence: [],
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
@@ -219,6 +228,7 @@ export default {
     isShow(val) {
       if (val) {
         this.getHRCardRequest();
+        this.getCommentAbsence();
       }
     }
   }
