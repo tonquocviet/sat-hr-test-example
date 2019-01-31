@@ -13,7 +13,7 @@
                         <v-card color="primary">
                           <v-flex right>
                             <v-btn
-                              @click="approvedRequest"
+                              @click="approveRequest"
                               :disabled="absenceDetail.status === 'approved' ? true : false "
                               color="success"
                             >
@@ -164,7 +164,7 @@ export default {
     onComment(comment) {
       this.$emit("onComment", comment);
     },
-    approvedRequest() {
+    approveRequest() {
       this.isLoadingApproved = true;
       this.$http
         .post(`${this.apiAbsence.approveRequest}`, {
@@ -172,7 +172,7 @@ export default {
         })
         .then(() => {
           this.isLoadingApproved = false;
-          this.$emit("editAbsenceDetail", { status: "approved" });
+          this.$emit("updatedAbsenceDetail ");
           this.infoSnackbar = true;
           this.savedMessage = "Approve success !!";
         })

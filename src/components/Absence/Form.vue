@@ -85,7 +85,6 @@
       :isShow="isShowAbsenceDetailsModal"
       :apiAbsence="apiAbsence"
       :absenceDetail="absenceDetail"
-      @editAbsenceDetail="editAbsenceDetail"
       @closeDialog="isShowAbsenceDetailsModal = false"
     />
     <ModalForSubFilter
@@ -154,9 +153,6 @@ export default {
           });
         });
       });
-    },
-    editAbsenceDetail(items) {
-      this.absenceDetail = { ...this.absenceDetail, ...items };
     }
   },
   data() {
