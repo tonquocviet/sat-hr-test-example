@@ -20,7 +20,8 @@ export default {
         getReason: `${baseUrl}/absence/get-reasons`,
         approveRequest: `${baseUrl}/absence/approve-request`,
         getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers`,
-        getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies` 
+        getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
+        rejectRequest: `${baseUrl}/absence/reject-request`
       },
       detailLinks: {
         forAbsenceProfile: "/absence-profile"
