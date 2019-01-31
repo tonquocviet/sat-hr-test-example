@@ -47,14 +47,13 @@
     </v-flex>
     <v-layout justify-center align-center>
       <v-flex xs6>
-        <PieChart :chart-data="datacollection" :options="options"/>
+        <ReceiveDataPieChart :chart-data="datacollection" :options="options"/>
       </v-flex>
     </v-layout>
   </v-layout>
 </template>
 <script>
-import Chart from "chart.js";
-import PieChart from "./PieChart.js";
+import ReceiveDataPieChart from "./ReceiveDataPieChart";
 import UserAvatar from "../../../avatars/Avatar";
 
 export default {
@@ -66,7 +65,7 @@ export default {
   },
   components: {
     UserAvatar,
-    PieChart
+    ReceiveDataPieChart
   },
   data() {
     return {

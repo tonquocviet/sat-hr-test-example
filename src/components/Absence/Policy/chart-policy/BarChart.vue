@@ -41,18 +41,18 @@
         </v-flex>
       </v-layout>
       <v-flex xs12>
-        <BarChart :chart-data="datacollection" :options="options"/>
+        <ReceiveDataBarChart style="height: 500px" :chart-data="datacollection" :options="options"/>
       </v-flex>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import BarChart from "./BarChart.js";
+import ReceiveDataBarChart from "./ReceiveDataBarChart";
 
 export default {
   components: {
-    BarChart
+    ReceiveDataBarChart
   },
   props: {
     dataChartBar: Array,
