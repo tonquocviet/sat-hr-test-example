@@ -149,6 +149,7 @@ import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { itemsComment, dataApproved } from "../data";
 import moment from "moment";
+
 export default {
   components: {
     UserAvatar,
@@ -199,8 +200,8 @@ export default {
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getCommentAbsence(id);
       this.$http.get(url).then(res => {
-        this.isFetchingComments = false
-        this.dataCommentAbsence = res.data
+        this.isFetchingComments = false;
+        this.dataCommentAbsence = res.data;
       });
     },
     approveRequest() {
