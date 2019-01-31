@@ -14,7 +14,35 @@
                           <v-flex right v-if="checkDueDate">
                             <v-btn
                               @click="approveRequest"
-                              :disabled="absenceDetail.status === 'approved' ? true : false "
+                              :disabled="absenceDetail.status === 'approved'"
+                              color="success"
+                            >
+                              <span>Approve</span>
+                              <v-progress-circular
+                                v-if="isApproving"
+                                class="ml-2"
+                                indeterminate
+                              ></v-progress-circular>
+                            </v-btn>
+                            <v-btn
+                              @click="rejectRequest"
+                              :disabled="absenceDetail.status === 'rejected'"
+                              color="error"
+                            >
+                              <span>Reject</span>
+                              <v-progress-circular
+                                v-if="isRejecting"
+                                class="ml-2"
+                                indeterminate
+                              ></v-progress-circular>
+                            </v-btn>
+                            <v-btn color="primary">Reassign</v-btn>
+                            <v-btn>Request Information</v-btn>
+                          </v-flex>
+                          <v-flex right v-else>
+                            <v-btn
+                              @click="approveRequest"
+                                disabled
                               color="success"
                             >
                               <span>Approve</span>
@@ -25,10 +53,10 @@
                               ></v-progress-circular>
                             </v-btn>
                             <v-btn color="error"
-                            :disabled="absenceDetail.status === 'rejected' ? true : false "
+                            disabled
                             >Reject</v-btn>
-                            <v-btn color="primary">Reassign</v-btn>
-                            <v-btn>Request Information</v-btn>
+                            <v-btn disabled color="primary">Reassign</v-btn>
+                            <v-btn disabled>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
