@@ -37,10 +37,13 @@ export default [
   {
     path: "/org-chart",
     name: "OrgChart",
-    path: '/absence-policy/:id',
-    name: 'AbsenceDetail',
+    component: OrgChart
+  },
+  {
+    path: "/absence-policy/:id",
+    name: "AbsenceDetail",
     component: PolicyDetailPage
-  }
+  },
   {
     path: "/settings",
     name: "Settings",

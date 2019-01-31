@@ -18,7 +18,7 @@
       <v-flex xs9>
         <AbsenceEmployCard :dataEmployCard="dataEmployCard"/>
         <v-flex sm12 md12>
-          <EmployViewContent :items="iistItemsAbsence"/>
+          <EmployViewContent :ListItemsAbsence="ListItemsAbsence"/>
         </v-flex>
       </v-flex>
       <v-flex xs3>
@@ -31,7 +31,7 @@
 import AbsenceEmployCard from "../../cards/AbsenceEmployCard";
 import ListOnTheRight from "./ListOnTheRight";
 import EmployViewContent from "./EmployViewContent";
-import { dataEmployCard, iistItemsAbsence, dataAbsenceList } from "../data";
+import { dataEmployCard, ListItemsAbsence, dataAbsenceList } from "../data";
 export default {
   components: {
     AbsenceEmployCard,
@@ -43,9 +43,9 @@ export default {
       type: Array,
       default: () => dataEmployCard
     },
-    iistItemsAbsence: {
+    ListItemsAbsence: {
       type: Array,
-      default: () => iistItemsAbsence
+      default: () => ListItemsAbsence
     },
     dataAbsenceList: {
       type: Array,

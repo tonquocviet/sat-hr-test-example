@@ -203,30 +203,57 @@ export const dataEmployCard = [
   }
 ];
 
-export const iistItemsAbsence = [
+export const ListItemsAbsence = [
   {
-    startDate: "25 Aug, Sun",
-    endDate: "25 Aug, Sun",
-    leaveType: "Nguyễn",
-    approvedBy: "Văn",
-    type: 1,
-    address: "Duy Sơn"
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    dueDate: "2018-09-08T00:00:00.000Z",
+    employeeId: 19896,
+    employeeRole: { id: 2, name: "Developer" },
+    leaveType: { id: 9, name: "Sick Leave" },
+    employeeName: "Eugene Lynch",
+    endDate: "2019-02-02T00:00:00.000Z",
+    id: 18725,
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    leaveReason: "This is my leave reason 18725",
+    location: "Outlook",
+    startDate: "2019-01-30T00:00:00.000Z",
+    status: "approved",
+    submittedDate: "2019-02-18T17:00:00.000Z"
   },
   {
-    startDate: "25 Aug, Sun",
-    endDate: "25 Aug, Sun",
-    leaveType: "Nguyễn",
-    approvedBy: "Văn",
-    type: 2,
-    address: "Duy Sơn"
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    dueDate: "2018-09-08T00:00:00.000Z",
+    employeeId: 19896,
+    employeeRole: { id: 2, name: "Developer" },
+    leaveType: { id: 9, name: "Sick Leave" },
+    employeeName: "Eugene Lynch",
+    endDate: "2019-02-02T00:00:00.000Z",
+    id: 18725,
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    leaveReason: "This is my leave reason 18725",
+    location: "Outlook",
+    startDate: "2019-01-30T00:00:00.000Z",
+    status: "approved",
+    submittedDate: "2019-02-18T17:00:00.000Z"
   },
   {
-    startDate: "25 Aug, Sun",
-    endDate: "25 Aug, Sun",
-    leaveType: "Nguyễn",
-    approvedBy: "Văn",
-    type: 3,
-    address: "Duy Sơn"
+    dueAppliedDate: "2019-02-20T17:00:00.000Z",
+    dueDate: "2018-09-08T00:00:00.000Z",
+    employeeId: 19896,
+    employeeRole: { id: 2, name: "Developer" },
+    leaveType: { id: 9, name: "Sick Leave" },
+    employeeName: "Eugene Lynch",
+    endDate: "2019-02-02T00:00:00.000Z",
+    id: 18725,
+    leaveDescription:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    leaveReason: "This is my leave reason 18725",
+    location: "Outlook",
+    startDate: "2019-01-30T00:00:00.000Z",
+    status: "approved",
+    submittedDate: "2019-02-18T17:00:00.000Z"
   }
 ];
 
@@ -314,4 +341,4 @@ export const dataCardCreate = [
     date_end: "25 May 1995",
     description: "Style hơi chuối xí :D "
   }
-]
+];
