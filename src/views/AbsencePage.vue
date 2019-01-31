@@ -19,7 +19,8 @@ export default {
         filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
         getReason: `${baseUrl}/absence/get-reasons`,
         approveRequest: `${baseUrl}/absence/approve-request`,
-        getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers` 
+        getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers`,
+        getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies` 
       },
       detailLinks: {
         forAbsenceProfile: "/absence-profile"

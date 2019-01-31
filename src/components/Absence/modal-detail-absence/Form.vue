@@ -51,14 +51,20 @@
                         </v-layout>
                       </v-flex>
                       <v-flex xs12>
-                        <v-layout row>
+                        <div v-if="isPoliciesing" class="text-xs-center">
+                          <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                        </div>
+                        <v-layout v-else row>
                           <v-flex xs6>
                             <v-card dark color="secondary">
                               <v-expansion-panel light>
-                                <v-expansion-panel-content>
-                                  <div slot="header">Absence Policy Group</div>
+                                <v-expansion-panel-content
+                                  v-for="item in dataPolicies.policies"
+                                  :key="item.id"
+                                >
+                                  <div slot="header">{{ item.name }}</div>
                                   <v-card>
-                                    <v-card-text>{{absenceDetail.leaveDescription}}</v-card-text>
+                                    <v-card-text>{{item.description}}</v-card-text>
                                   </v-card>
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -66,7 +72,7 @@
                           </v-flex>
                           <v-flex xs6>
                             <v-layout column style="height: 200px">
-                              <PolicyAlert :dataApproved="dataApproved"/>
+                              <PolicyAlert :dataAlerts="dataPolicies.alerts"/>
                             </v-layout>
                           </v-flex>
                         </v-layout>
@@ -165,6 +171,15 @@ export default {
     onComment(comment) {
       this.$emit("onComment", comment);
     },
+    getPoliciesRequest() {
+      this.isPoliciesing = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsencePolicies(id);
+      this.$http.get(url).then(res => {
+        this.isPoliciesing = false;
+        this.dataPolicies = res.data;
+      });
+    },
     getHRCardRequest() {
       this.isHRCard = true;
       const { id } = this.absenceDetail;
@@ -212,12 +227,15 @@ export default {
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
-      isApproving: false
+      isApproving: false,
+      dataPolicies: {},
+      isPoliciesing: false
     };
   },
   watch: {
     isShow(val) {
       if (val) {
+        this.getPoliciesRequest();
         this.getHRCardRequest();
       }
     }
