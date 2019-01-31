@@ -87,8 +87,9 @@
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
+                  <v-chip class="headline white black--text" disabled label>Absence Detail</v-chip>
                   <span class="body-1">Submitted</span>
-                  <span>{{formatedDate}}</span>
+                  <span>{{changeDateSubmitted}}</span>
                   <span class="my-2">Category</span>
                   <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
@@ -151,7 +152,7 @@ export default {
     }
   },
   computed: {
-    formatedDate() {
+    changeDateSubmitted() {
       return (
         moment(this.absenceDetail.submittedDate).format("MMM D, YYYY ") +
         "at " +
