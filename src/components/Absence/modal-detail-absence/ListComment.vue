@@ -1,12 +1,12 @@
 <template>
-  <v-flex xs12 class="mt-2">
+  <v-flex xs12 class="mt-2" >
     <v-layout row style="height: 40px;">
       <v-layout row>
         <v-flex xs0>
           <div class="v-image-user">
             <user-avatar
-              :imageUrl="(absenceDetail.avatar||{}).imageUrl"
-              :name="absenceDetail.employeeName"
+              :imageUrl="(comment.user.avatar||{}).imageUrl"
+              :name="comment.user.lastName + ' ' + comment.user.firstName "
               width="unset"
             />
           </div>
@@ -15,9 +15,9 @@
           <v-list-tile style="position: absolute; left: 35px">
             <span class="body-1">
               <a>
-                <u>John Mayers</u>
+                <u>{{ comment.user.lastName }} {{ comment.user.firstName }}</u>
               </a> replied on
-              <b>May 27th, 2017 at 7:42am</b>
+              <b>{{ dateFormatComment }}</b>
             </span>
           </v-list-tile>
         </v-flex>
@@ -37,12 +37,12 @@
       </v-flex>
     </v-layout>
 
+    <v-layout xs12>
+      <v-flex class="text-xs-left ml-2 mt-2">
+        <span class="caption">{{comment.comment}}</span>
+      </v-flex>
+    </v-layout>
     <v-flex xs12>
-      <div class="text-xs-left ml-2 mt-2">
-        <span class="caption">{{absenceDetail.leaveDescription}}</span>
-      </div>
-    </v-flex>
-    <!-- <v-flex xs12>
       <v-flex right xs4>
         <v-btn flat small color="primary">
           <v-icon>attach_file</v-icon>Bug Report.xml
@@ -53,18 +53,25 @@
           <v-icon>image</v-icon>SytemInformation.txt
         </v-btn>
       </v-flex>
-    </v-flex> -->
+    </v-flex>
   </v-flex>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";
+import moment from "moment";
 export default {
   components: {
     UserAvatar
   },
   props: {
     itemsComment: Array,
+    comment: Object,
     absenceDetail: Object
+  },
+  computed: {
+    dateFormatComment(){
+      return moment(this.comment.submittedDate).format("MMM DD, YYYY") + " at " + moment(this.comment.submittedDate).format("h:mm A");
+    }
   }
 };
 </script>

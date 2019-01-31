@@ -24,8 +24,8 @@
       </v-layout>
     </v-flex>
     <v-flex xs12>
-      <v-layout row wrap>
-        <v-checkbox class="mt-0" color="primary" label="Mark Public" v-model="checkbox"></v-checkbox>
+      <v-layout row wrap right>
+        <v-checkbox class="mt-2" color="primary" label="Mark Public" v-model="checkbox"></v-checkbox>
         <v-btn flat icon>
           <v-icon>attach_file</v-icon>
         </v-btn>

@@ -8,7 +8,7 @@
               <v-layout row>
                 <v-flex d-flex>
                   <v-card tile flat>
-                    <v-layout row wrap>
+                    <v-layout wrap>
                       <v-flex xs12>
                         <v-card color="primary">
                           <v-flex right>
@@ -76,8 +76,8 @@
                         <InputComment @onComment="onComment" :avatar="absenceDetail"/>
                       </v-flex>
 
-                      <v-layout column>
-                        <ListComment :comments="dataCommentAbsence" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      <v-layout xs12 wrap column v-for="a in dataCommentAbsence" :key="a.id" class="showComment">
+                        <ListComment :comment="a" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -235,6 +235,9 @@ export default {
 };
 </script>
 <style scoped>
+.showComment{
+  width: 100%;
+}
 .v-image-user-2 {
   width: 100px;
   height: 100px;
