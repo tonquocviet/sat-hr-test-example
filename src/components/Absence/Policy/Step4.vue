@@ -79,7 +79,7 @@ export default {
       },
       prevDataInput: {},
       object2: [],
-      prevSelected: [],
+      prevSelected2: [],
       prevObject2: []
     };
   },
