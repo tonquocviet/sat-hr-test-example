@@ -18,11 +18,7 @@
                               color="success"
                             >
                               <span>Approve</span>
-                              <v-progress-circular
-                                v-if="isApproving"
-                                class="ml-2"
-                                indeterminate
-                              ></v-progress-circular>
+                              <v-progress-circular v-if="isApproving" class="ml-2" indeterminate></v-progress-circular>
                             </v-btn>
                             <v-btn
                               @click="rejectRequest"
@@ -30,11 +26,7 @@
                               color="error"
                             >
                               <span>Reject</span>
-                              <v-progress-circular
-                                v-if="isRejecting"
-                                class="ml-2"
-                                indeterminate
-                              ></v-progress-circular>
+                              <v-progress-circular v-if="isRejecting" class="ml-2" indeterminate></v-progress-circular>
                             </v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
@@ -242,7 +234,7 @@ export default {
       infoSnackbar: false,
       savedMessage: "",
       isApproving: false,
-      isRejecting: false,
+      isRejecting: false
     };
   },
   watch: {

@@ -16,7 +16,9 @@ export default {
       apiAbsence: {
         getReason: `${baseUrl}/absence/get-reasons`,
         filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
-        filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`
+        filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
+        getAbsenceHRApprovers: absenceId =>
+          `${baseUrl}/absence/${absenceId}/approvers`
       }
     };
   }
