@@ -51,7 +51,7 @@
                         </v-layout>
                       </v-flex>
                       <v-flex xs12>
-                        <div v-if="isPolicies" class="text-xs-center">
+                        <div v-if="isFetchingPolicies" class="text-xs-center">
                           <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
                         </div>
                         <v-layout v-else row>
@@ -172,11 +172,11 @@ export default {
       this.$emit("onComment", comment);
     },
     getPoliciesRequest() {
-      this.isPolicies = true;
+      this.isFetchingPolicies = true;
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getAbsencePolicies(id);
       this.$http.get(url).then(res => {
-        this.isPolicies = false;
+        this.isFetchingPolicies = false;
         this.dataPolicies = res.data;
       });
     },
@@ -229,7 +229,7 @@ export default {
       savedMessage: "",
       isApproving: false,
       dataPolicies: {},
-      isPolicies: false
+      isFetchingPolicies: false
     };
   },
   watch: {
