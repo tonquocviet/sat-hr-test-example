@@ -24,7 +24,18 @@
                                 indeterminate
                               ></v-progress-circular>
                             </v-btn>
-                            <v-btn color="error">Reject</v-btn>
+                            <v-btn
+                              @click="rejectRequest"
+                              :disabled="absenceDetail.status === 'rejected' ? true : false "
+                              color="error"
+                            >
+                              <span>Reject</span>
+                              <v-progress-circular
+                                v-if="isRejecting"
+                                class="ml-2"
+                                indeterminate
+                              ></v-progress-circular>
+                            </v-btn>
                             <v-btn color="primary">Reassign</v-btn>
                             <v-btn>Request Information</v-btn>
                           </v-flex>
@@ -191,6 +202,24 @@ export default {
           this.infoSnackbar = true;
           this.savedMessage = "Approve failed !!";
         });
+    },
+    rejectRequest() {
+      this.isRejecting = true;
+      this.$http
+        .post(`${this.apiAbsence.rejectRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isRejecting = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject success !!";
+        })
+        .catch(() => {
+          this.isRejecting = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject failed !!";
+        });
     }
   },
   computed: {
@@ -212,7 +241,8 @@ export default {
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
-      isApproving: false
+      isApproving: false,
+      isRejecting: false,
     };
   },
   watch: {
