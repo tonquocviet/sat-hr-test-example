@@ -221,6 +221,24 @@ export default {
           this.infoSnackbar = true;
           this.savedMessage = "Approve failed !!";
         });
+    },
+    rejectRequest() {
+      this.isRejecting = true;
+      this.$http
+        .post(`${this.apiAbsence.rejectRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isRejecting = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject success !!";
+        })
+        .catch(() => {
+          this.isRejecting = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject failed !!";
+        });
     }
   },
   computed: {
@@ -245,7 +263,8 @@ export default {
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
-      isApproving: false
+      isApproving: false,
+      isRejecting: false,
     };
   },
   watch: {
