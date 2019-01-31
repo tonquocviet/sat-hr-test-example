@@ -15,6 +15,7 @@
             absolute
             right
             v-if="readonly"
+            v-show="isShowEdit"
             @click="edit"
           >
             <v-icon>edit</v-icon>
@@ -36,6 +37,7 @@ export default {
   props: {
     panelTitle: String,
     panelSubTitle: String,
+    isShowEdit: Boolean,
     readonly: Boolean
   },
   methods: {

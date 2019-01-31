@@ -6,6 +6,7 @@
     @cancel="cancel"
     @edit="edit"
     :readonly="readonly"
+    :isShowEdit="true"
   >
     <v-progress-linear v-if="isLoading" class="pb-4" :indeterminate="true"></v-progress-linear>
     <v-form v-else ref="form" v-model="object.valid" lazy-validation>
