@@ -9,9 +9,9 @@
           :key="itemLeaveCard.id"
         >
           <v-card
-            :style="`border-top:7px solid ${itemLeaveCard.type === 1 ? `blue` : null || 
-              itemLeaveCard.type === 2 ? `green` : null || 
-              itemLeaveCard.type === 3 ? `red` : null || 
+            :style="`border-top:7px solid ${itemLeaveCard.type === 1 ? `blue` : null ||
+              itemLeaveCard.type === 2 ? `green` : null ||
+              itemLeaveCard.type === 3 ? `red` : null ||
               itemLeaveCard.type === 4 ? `purple` : null
             };border-radius:6px`"
           >
@@ -19,10 +19,10 @@
               <div style="width:100%">
                 <h3>{{itemLeaveCard.name}}</h3>
                 <span
-                  :class="`font-weight-bold display-1 
-                  ${itemLeaveCard.type === 1 ? `blue--text` : null || 
-                    itemLeaveCard.type === 2 ? `green--text` : null || 
-                    itemLeaveCard.type === 3 ? `red--text` : null || 
+                  :class="`font-weight-bold display-1
+                  ${itemLeaveCard.type === 1 ? `blue--text` : null ||
+                    itemLeaveCard.type === 2 ? `green--text` : null ||
+                    itemLeaveCard.type === 3 ? `red--text` : null ||
                     itemLeaveCard.type === 4 ? `purple--text` : null}`"
                 >{{itemLeaveCard.numberAbsence}}</span>
                 <br>
@@ -38,9 +38,9 @@
               <v-btn
                 flat
                 :color="`${
-                  itemLeaveCard.type === 1 ? `blue` : null || 
-                  itemLeaveCard.type === 2 ? `green` : null || 
-                  itemLeaveCard.type === 3 ? `red` : null || 
+                  itemLeaveCard.type === 1 ? `blue` : null ||
+                  itemLeaveCard.type === 2 ? `green` : null ||
+                  itemLeaveCard.type === 3 ? `red` : null ||
                   itemLeaveCard.type === 4 ? `purple` : null}`"
               >
                 <span>ADJUST</span>
