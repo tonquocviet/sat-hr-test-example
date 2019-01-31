@@ -3,7 +3,7 @@
     <v-dialog :value="isShow" @input="cancel" max-width="700">
       <v-card>
         <v-card-title class="headline">Add User Approvers</v-card-title>
-        <v-card-text class="vuong">
+        <v-card-text>
           <v-layout>
             <v-flex xs12>
               <v-autocomplete
