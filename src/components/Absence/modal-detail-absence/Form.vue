@@ -96,7 +96,7 @@
                   <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
-                    <div class="text-xs-center" v-if="isLoadingHRCard">
+                    <div class="text-xs-center" v-if="isHRCard">
                       <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
                     </div>
                     <v-flex v-else v-for="(item,index) in dataHRCard" :key="index">
@@ -150,11 +150,11 @@ export default {
       this.$emit("onComment", comment);
     },
     getHRCardRequest() {
-      this.isLoadingHRCard = true;
+      this.isHRCard = true;
       const { id } = this.absenceDetail;
       const url = `${this.apiAbsence.absences}/${id}/approvers`;
       this.$http.get(url).then(res => {
-        this.isLoadingHRCard = false;
+        this.isHRCard = false;
         this.dataHRCard = res.data;
       });
     }
@@ -166,7 +166,7 @@ export default {
       typeId: 4,
       imgActive: true,
       dataHRCard: [],
-      isLoadingHRCard: false
+      isHRCard: false
     };
   },
   watch: {
