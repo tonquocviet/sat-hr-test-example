@@ -11,7 +11,7 @@
                     <v-layout wrap>
                       <v-flex xs12>
                         <v-card color="primary">
-                          <v-flex right>
+                          <v-flex right v-if="!isViewOnly">
                             <v-btn
                               @click="approveRequest"
                               :disabled="!checkDueDate || absenceDetail.status === 'approved'"
@@ -30,6 +30,16 @@
                             </v-btn>
                             <v-btn :disabled="!checkDueDate" color="primary">Reassign</v-btn>
                             <v-btn :disabled="!checkDueDate">Request Information</v-btn>
+                          </v-flex>
+                          <v-flex right v-else>
+                            <v-btn :disabled="absenceDetail.status === 'rejected'" color="success">
+                              <span>Approve</span>
+                            </v-btn>
+                            <v-btn :disabled="absenceDetail.status === 'approved'" color="error">
+                              <span>Reject</span>
+                            </v-btn>
+                            <v-btn disabled color="primary">Reassign</v-btn>
+                            <v-btn disabled>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
