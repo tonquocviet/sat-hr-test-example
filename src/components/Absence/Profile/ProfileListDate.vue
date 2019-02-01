@@ -1,20 +1,21 @@
 <template>
   <v-layout wrap>
     <v-flex xs12 sm12 md4 lg3 class="pt-2">
-      <v-card>
-        <v-date-picker
-          :value="dates"
+      <v-card class="colorful-calendar">
+        <VDatePickerExtend
+          :value="dates.map(x=>x.date)"
+          :pickerDate="pickerDate"
+          :titleDateFormat="titleDateFormat"
+          :selectedColor="getColorByLeaveDate"
+          disabled
           multiple
           width="100%"
           @input="changeDates"
-          :pickerDate="pickerDate"
           @update:pickerDate="changePickerDate"
-          :titleDateFormat="titleDateFormat"
-          disabled
-        ></v-date-picker>
+        ></VDatePickerExtend>
       </v-card>
       <v-card class="mt-3">
-        <v-layout row wrap> 
+        <v-layout row wrap>
           <v-flex v-for="item in tags" :key="item.name" lg6 sm4 xs6 class="pa-1">
             <LeaveTypeChip :leaveType="item.name"/>
           </v-flex>
@@ -29,8 +30,18 @@
           class="xs12 sm4 lg3 xl2 month-absence h-100 pa-2"
           @click="selectedIndex = index"
         >
-          <v-card :class="`card-date-of-month ${index===selectedIndex ? 'elevation-10':''}`">
-            <v-date-picker :value="month" multiple no-title disabled width="100%"></v-date-picker>
+          <v-card
+            :class="`card-date-of-month colorful-calendar ${index===selectedIndex ? 'elevation-10':''}`"
+          >
+            <VDatePickerExtend
+              :value="month.dates"
+              :pickerDate="month.month"
+              multiple
+              no-title
+              disabled
+              :selectedColor="getColorByLeaveDate"
+              width="100%"
+            ></VDatePickerExtend>
           </v-card>
         </v-flex>
       </v-layout>
@@ -39,9 +50,12 @@
 </template>
 <script>
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
+import VDatePickerExtend from "../../vuetify/VDatePickerExtend/VDatePickerExtend";
+import { leaveTypes } from "../../../config";
 export default {
   components: {
-    LeaveTypeChip
+    LeaveTypeChip,
+    VDatePickerExtend
   },
   props: {
     dates: Array,
@@ -66,35 +80,48 @@ export default {
         return month === this.selectedIndex + 1;
       }).length;
       return `${count} day(s)`;
+    },
+    getColorByLeaveDate(date) {
+      const leaveType = (
+        this.dates.filter(x => x.date === date)[0] || { leaveType: "" }
+      ).leaveType;
+      return (
+        leaveTypes.filter(x => x.name === leaveType)[0] || { color: "primary" }
+      ).color;
     }
   },
   computed: {
     to12Months() {
       let months = [];
       const defaultYear =
-        new Date(this.dates[0] || new Date()).getFullYear() + "";
+        new Date((this.dates[0] || {}).date || new Date()).getFullYear() + "";
       for (var i = 0; i < 12; i++) {
         const datesInMonth = this.dates.filter(
-          x => new Date(x).getMonth() === i
+          x => new Date(x.date).getMonth() === i
         );
-        if (!datesInMonth.length) {
-          datesInMonth.push(`${defaultYear}-${i + 1}`);
-        }
-        months.push(datesInMonth);
+        months.push({
+          dates: datesInMonth.map(x => x.date),
+          month: `${defaultYear}-${i + 1}`
+        });
       }
       return months;
     },
     pickerDate() {
       const defaultYear =
-        new Date(this.dates[0] || new Date()).getFullYear() + "";
+        new Date(
+          (this.dates[0] || { date: null }).date || new Date()
+        ).getFullYear() + "";
       return `${defaultYear}-${this.selectedIndex + 1}`;
     }
   }
 };
 </script>
-<style scopes>
+<style scoped>
 .month-absence {
   cursor: pointer;
+}
+.colorful-calendar /deep/ .theme--light.v-btn.v-btn--disabled {
+  color: white !important;
 }
 @media only screen and (max-width: 868px) {
   .card-date-of-month {
