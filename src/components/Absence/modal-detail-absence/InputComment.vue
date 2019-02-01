@@ -1,8 +1,8 @@
 <template>
-  <v-flex>
+  <v-layout column wrap>
     <v-flex xs12>
       <v-layout row>
-        <v-flex xs0>
+        <v-flex xs1>
           <div class="v-image-user">
             <UserAvatar
               :imageUrl="(avatar.avatar||{}).imageUrl"
@@ -11,11 +11,10 @@
             />
           </div>
         </v-flex>
-        <v-flex xs12 style="z-index: 1;">
+        <v-flex xs11 style="z-index: 1;">
           <v-textarea
             type="text"
             solo
-            style="height: 50px"
             name="input-7-4"
             label="Comment"
             v-model="comment"
@@ -24,17 +23,15 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex>
-      <v-flex xs3 right style="height: 20px" class="mt-5">
-        <v-checkbox color="primary" label="Mark Public" v-model="checkbox"></v-checkbox>
-      </v-flex>
-      <v-flex xs3 right style="height: 20px" class="mt-5">
-        <v-btn flat icon class="mt-3">
+    <v-flex xs12>
+      <v-layout row wrap right>
+        <v-checkbox class="mt-2" color="primary" label="Mark Public" v-model="checkbox"></v-checkbox>
+        <v-btn flat icon>
           <v-icon>attach_file</v-icon>
         </v-btn>
-      </v-flex>
+      </v-layout>
     </v-flex>
-  </v-flex>
+  </v-layout>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";

@@ -20,6 +20,7 @@ export default {
         getReason: `${baseUrl}/absence/get-reasons`,
         approveRequest: `${baseUrl}/absence/approve-request`,
         getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers`,
+        getCommentAbsence: absenceId => `${baseUrl}/absence/${absenceId}/comments`,
         getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
         rejectRequest: `${baseUrl}/absence/reject-request`
       },
