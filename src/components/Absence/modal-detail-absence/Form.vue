@@ -11,7 +11,7 @@
                     <v-layout wrap>
                       <v-flex xs12>
                         <v-card color="primary">
-                          <v-flex right>
+                          <v-flex right v-if="!isViewOnly">
                             <v-btn
                               @click="approveRequest"
                               :disabled="!checkDueDate || absenceDetail.status === 'approved'"
@@ -30,6 +30,16 @@
                             </v-btn>
                             <v-btn :disabled="!checkDueDate" color="primary">Reassign</v-btn>
                             <v-btn :disabled="!checkDueDate">Request Information</v-btn>
+                          </v-flex>
+                          <v-flex right v-else>
+                            <v-btn :disabled="absenceDetail.status !== 'approved'" color="success">
+                              <span>Approve</span>
+                            </v-btn>
+                            <v-btn :disabled="absenceDetail.status !== 'rejected'" color="error">
+                              <span>Reject</span>
+                            </v-btn>
+                            <v-btn disabled color="primary">Reassign</v-btn>
+                            <v-btn disabled>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
@@ -170,6 +180,10 @@ export default {
     itemsComment: {
       type: Array,
       default: () => itemsComment
+    },
+    isViewOnly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -266,7 +280,7 @@ export default {
       dataPolicies: {},
       isFetchingPolicies: false,
       isRejecting: false,
-      isFetchingComments: false, 
+      isFetchingComments: false
     };
   },
   watch: {
@@ -281,7 +295,7 @@ export default {
 };
 </script>
 <style scoped>
-.showComment{
+.showComment {
   width: 100%;
 }
 .v-image-user-2 {
