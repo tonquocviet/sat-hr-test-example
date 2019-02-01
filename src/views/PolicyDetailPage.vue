@@ -14,7 +14,8 @@ export default {
       "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
     return {
       apiPolicy: {
-        getCountries: `${baseUrl}/get-countries`
+        getCountries: `${baseUrl}/get-countries`,
+        filterPolicy: `${baseUrl}/absence/filter`
       }
     };
   }
