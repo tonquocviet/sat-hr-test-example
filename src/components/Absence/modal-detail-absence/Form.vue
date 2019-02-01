@@ -162,7 +162,6 @@ export default {
   },
   props: {
     isShow: Boolean,
-    apiAbsence: Object,
     absenceDetail: Object,
     dataApproved: {
       type: Array,
