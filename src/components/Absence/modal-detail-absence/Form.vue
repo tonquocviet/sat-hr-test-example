@@ -180,6 +180,10 @@ export default {
     itemsComment: {
       type: Array,
       default: () => itemsComment
+    },
+    isViewOnly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -276,7 +280,7 @@ export default {
       dataPolicies: {},
       isFetchingPolicies: false,
       isRejecting: false,
-      isFetchingComments: false, 
+      isFetchingComments: false
     };
   },
   watch: {
@@ -291,7 +295,7 @@ export default {
 };
 </script>
 <style scoped>
-.showComment{
+.showComment {
   width: 100%;
 }
 .v-image-user-2 {
