@@ -10,7 +10,15 @@
           :pickerDate="pickerDate"
           @update:pickerDate="changePickerDate"
           :titleDateFormat="titleDateFormat"
+          disabled
         ></v-date-picker>
+      </v-card>
+      <v-card class="mt-3">
+        <v-layout row wrap> 
+          <v-flex v-for="item in tags" :key="item.name" lg6 sm4 xs6 class="pa-1">
+            <LeaveTypeChip :leaveType="item.name"/>
+          </v-flex>
+        </v-layout>
       </v-card>
     </v-flex>
     <v-flex xs12 sm12 md8 lg9>
@@ -30,9 +38,14 @@
   </v-layout>
 </template>
 <script>
+import LeaveTypeChip from "../../chips/LeaveTypeChip";
 export default {
+  components: {
+    LeaveTypeChip
+  },
   props: {
-    dates: Array
+    dates: Array,
+    tags: Array,
   },
   data() {
     return {
