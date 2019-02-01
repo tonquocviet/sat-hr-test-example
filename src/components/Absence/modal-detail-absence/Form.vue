@@ -32,10 +32,10 @@
                             <v-btn :disabled="!checkDueDate">Request Information</v-btn>
                           </v-flex>
                           <v-flex right v-else>
-                            <v-btn :disabled="absenceDetail.status === 'rejected'" color="success">
+                            <v-btn :disabled="absenceDetail.status !== 'approved'" color="success">
                               <span>Approve</span>
                             </v-btn>
-                            <v-btn :disabled="absenceDetail.status === 'approved'" color="error">
+                            <v-btn :disabled="absenceDetail.status !== 'rejected'" color="error">
                               <span>Reject</span>
                             </v-btn>
                             <v-btn disabled color="primary">Reassign</v-btn>
