@@ -47,19 +47,19 @@ export default {
   data () {
     return {
       daysOff: [
-        "2019-01-25",
-        "2019-01-26",
-        "2019-02-02",
-        "2019-02-05",
-        "2019-02-15",
-        "2019-03-15",
-        "2019-04-05",
-        "2019-05-12",
-        "2019-06-15",
-        "2019-07-13",
-        "2019-08-23",
-        "2019-09-21",
-        "2019-11-10"
+        { date: "2019-01-25", leaveType: "Military Leave" },
+        { date: "2019-01-26", leaveType: "Jury Duty" },
+        { date: "2019-02-02", leaveType: "Religious Observance" },
+        { date: "2019-02-05", leaveType: "Bereavement" },
+        { date: "2019-02-15", leaveType: "Pregnancy" },
+        { date: "2019-03-10", leaveType: "Vacation" },
+        { date: "2019-03-15", leaveType: "Holiday" },
+        { date: "2019-04-05", leaveType: "Sick Leave" },
+        { date: "2019-05-12", leaveType: "Business Trip" },
+        { date: "2019-06-15", leaveType: "Maternity/Paternity" },
+        { date: "2019-07-13", leaveType: "Temporary Disability" },
+        { date: "2019-09-21", leaveType: "Childbirth" },
+        { date: "2019-11-10", leaveType: "Administrative Leave" }
       ],
       items: [
         {
