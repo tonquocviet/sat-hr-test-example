@@ -148,7 +148,6 @@
   </v-layout>
 </template>
 <script>
-import moment from "moment";
 import PolicyAlert from "../alerts/PolicyAlert";
 import { dataApproved } from "./data";
 export default {
@@ -184,9 +183,9 @@ export default {
   computed: {
     hours() {
       if (this.timeFrom && this.timeTo) {
-        const [h1, m1] = this.timeFrom.split(':').map(t => +t);
-        const [h2, m2] = this.timeTo.split(':').map(t => +t);
-        return ((h2 - h1) + (m2 - m1) / 60).toFixed(1);
+        const [h1, m1] = this.timeFrom.split(":").map(t => +t);
+        const [h2, m2] = this.timeTo.split(":").map(t => +t);
+        return (h2 - h1 + (m2 - m1) / 60).toFixed(1);
       }
       return 0;
     }
