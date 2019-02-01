@@ -267,7 +267,7 @@ export default {
       dataPolicies: {},
       isFetchingPolicies: false,
       isRejecting: false,
-      isisFetchingComments: false, 
+      isFetchingComments: false, 
     };
   },
   watch: {
