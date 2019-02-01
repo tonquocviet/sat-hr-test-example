@@ -103,7 +103,7 @@
                       :imageUrl="(absenceDetail.avatar||{}).imageUrl"
                       :name="absenceDetail.employeeName"
                       class="user-img"
-                      :imgActive="imgActive"
+                      avatarSize="100px"
                     />
                   </div>
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
@@ -258,7 +258,6 @@ export default {
       leaveReason: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true,
       dataHRCard: [],
       dataCommentAbsence: [],
       isHRCard: false,
