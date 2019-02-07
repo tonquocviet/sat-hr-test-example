@@ -7,10 +7,15 @@
           :key="item"
           class="primary--text"
           ripple
-        >{{ item }}</v-tab>
-        <v-tab-item v-for="item in Object.keys(settings)" :key="item">
+        >
+          {{ item }}
+        </v-tab>
+        <v-tab-item
+          v-for="item in Object.keys(settings)"
+          :key="item"
+        >
           <Baselines v-if="item === 'Baselines'" :data="settings[item]"/>
-          <Holiday v-if="item === 'Holiday'" :data="settings[item]" @addHoliday="addHoliday"/>
+          <Holiday v-if="item === 'Holiday'" :data="settings[item]" :add="addHoliday"/>
         </v-tab-item>
       </v-tabs>
     </v-container>
@@ -59,21 +64,21 @@ export default {
           }
         ]
       }
-    };
+    }
   },
   methods: {
-    addHoliday: function({ name, date }) {
+    addHoliday: function (name, date) {
       const id = this.settings.Holiday.length + 1;
-      this.settings.Holiday.push({
+      this.settings.Holiday.push({ 
         id,
         name,
         date
       });
     },
-    updateBaseline: function(id, answer) {
+    updateBaseline: function (id, answer) {
       let index = this.settings.Baselines.findIndex(q => q.id === id);
       this.settings.Baselines[index].answer = answer;
     }
   }
-};
+}
 </script>
