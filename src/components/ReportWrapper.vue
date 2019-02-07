@@ -39,10 +39,11 @@ export default {
         {
           id: 1,
           name: "Employee 1",
+          employeeType: "notEmployed",
           daysOff: [
             {
               from: "11/15/2016",
-              to: "11/15/2016",
+              to: "11/17/2016",
               name: "Sick Leave"
             }
           ]
@@ -56,7 +57,8 @@ export default {
               to: "11/19/2016",
               name: "Vacation"
             }
-          ]
+          ],
+          employeeType: "notApplicable",
         },
         {
           id: 3,

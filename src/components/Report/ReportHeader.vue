@@ -1,6 +1,6 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs4 md2>
+  <v-layout row>
+    <v-flex xs12 md2>
       <v-menu
         ref="menu"
         v-model="menu"
@@ -16,23 +16,44 @@
         <v-date-picker v-model="picker" type="month" no-title scrollable></v-date-picker>
       </v-menu>
     </v-flex>
-    <v-spacer></v-spacer>
-    <template v-for="item in colors">
-      <LeaveTypeChip :key="item.name" :leaveType="item.name" is-responsive/>
-    </template>
+    <v-flex xs12 md8>
+      <LeaveTypeChip v-for="item in colors" :key="item.name" :leaveType="item.name" is-responsive/>
+    </v-flex>
+    <v-flex xs12 md2 class="d-flex">
+      <v-layout column>
+        <v-flex class="d-flex" shrink>
+          <v-layout>
+            <v-flex shrink class="pr-3">
+              <ReportCell dateType="weekend" employeeType="notEmployed"/>
+            </v-flex>
+            <v-flex grow class="font-weight-bold">Not employed</v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex class="d-flex">
+          <v-layout>
+            <v-flex shrink class="pr-3">
+              <ReportCell dateType="weekend" employeeType="notApplicable"/>
+            </v-flex>
+            <v-flex grow class="font-weight-bold">Not applicable</v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-flex>
   </v-layout>
 </template>
 
 <script>
 import LeaveTypeChip from "../chips/LeaveTypeChip";
+import ReportCell from "./ReportCell";
 
 export default {
+  components: {
+    LeaveTypeChip,
+    ReportCell
+  },
   props: {
     date: String,
     colors: Array
-  },
-  components: {
-    LeaveTypeChip
   },
   data() {
     return {
