@@ -5,7 +5,7 @@
         <v-tab class="primary--text" ripple>Employee List</v-tab>
         <v-tab class="primary--text" ripple>Summary</v-tab>
         <v-tab-item>
-          <ReportHeader :date="date" @changeDate="changeDate" :colors="leaveTypes"/>
+          <ReportHeader :date="date" @changeDate="changeDate"/>
           <ReportTable :data="employees" :date="getMonth" :holidays="holidays"/>
         </v-tab-item>
         <v-tab-item>Summary</v-tab-item>
@@ -17,7 +17,6 @@
 <script>
 import ReportTable from "./Report/ReportTable";
 import ReportHeader from "./Report/ReportHeader";
-import { leaveTypes } from "../config";
 
 export default {
   components: {
@@ -26,7 +25,6 @@ export default {
   },
   data() {
     return {
-      leaveTypes,
       date: "2016-11",
       holidays: [
         {

@@ -2,7 +2,6 @@
   <v-layout row>
     <v-flex xs12 md2>
       <v-menu
-        ref="menu"
         v-model="menu"
         :nudge-right="40"
         lazy
@@ -17,7 +16,12 @@
       </v-menu>
     </v-flex>
     <v-flex xs12 md8>
-      <LeaveTypeChip v-for="item in colors" :key="item.name" :leaveType="item.name" is-responsive/>
+      <LeaveTypeChip
+        v-for="item in leaveTypes"
+        :key="item.name"
+        :leaveType="item.name"
+        is-responsive
+      />
     </v-flex>
     <v-flex xs12 md2 class="d-flex">
       <v-layout column>
@@ -45,6 +49,7 @@
 <script>
 import LeaveTypeChip from "../chips/LeaveTypeChip";
 import ReportCell from "./ReportCell";
+import { leaveTypes } from "../../config";
 
 export default {
   components: {
@@ -52,14 +57,14 @@ export default {
     ReportCell
   },
   props: {
-    date: String,
-    colors: Array
+    date: String
   },
   data() {
     return {
       menu: false,
       modal: false,
-      picker: this.date
+      picker: this.date,
+      leaveTypes
     };
   },
   watch: {

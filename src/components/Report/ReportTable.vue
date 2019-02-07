@@ -6,22 +6,22 @@
           <th rowspan="2">
             <div :style="{width: firstColumnWidth}">EMPLOYEE NAME</div>
           </th>
-          <th v-for="(date, index) in getHeaders" :key="index" class="text-xs-center">
+          <th v-for="(date, index) in tableHeaders" :key="index" class="text-xs-center">
             <ReportCell is-header>{{date.weekDate}}</ReportCell>
           </th>
         </tr>
         <tr>
-          <th v-for="(date, index) in getHeaders" :key="index" class="text-xs-center">
+          <th v-for="(date, index) in tableHeaders" :key="index" class="text-xs-center">
             <ReportCell is-header>{{date.date}}</ReportCell>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in getItems" :key="item.id">
+        <tr v-for="row in tableRows" :key="row.id">
           <td>
-            <div class="text-xs-right pr-2 font-weight-bold" :style="{width: firstColumnWidth}">{{item.name}}</div>
+            <div class="text-xs-right pr-2 font-weight-bold" :style="{width: firstColumnWidth}">{{row.name}}</div>
           </td>
-          <td v-for="cell in item.styles" :key="cell.id">
+          <td v-for="cell in row.cells" :key="cell.id">
             <ReportCell
               :leaveType="cell.leaveType"
               :dateType="cell.dateType"
@@ -60,19 +60,19 @@ export default {
     gridWidth() {
       return this.dates.length * 40 + "px";
     },
-    getHeaders() {
+    tableHeaders() {
       return range(0, this.daysInMonth, 1).map(d => ({
         weekDate: `${getDateInWeek(this.dateInWeek + d)}`,
         date: d + 1
       }));
     },
-    getItems() {
+    tableRows() {
       const { year, month } = this.date;
       return this.data.map(e => {
         const { id, name, daysOff = [] } = e;
 
         const daysOffInMomentFormat = daysOff.map(dateToMoment);
-        const styles = range(1, this.daysInMonth + 1, 1).map(d => {
+        const cells = range(1, this.daysInMonth + 1, 1).map(d => {
           const mDay = moment(`${month}/${d}/${year}`, "MM/DD/YYYY");
           const leaveType = daysOffInMomentFormat.filter(v =>
             mDay.isBetween(v.from, v.to, null, "[]")
@@ -92,7 +92,7 @@ export default {
         return {
           id,
           name,
-          styles
+          cells
         };
       });
     },
@@ -107,9 +107,6 @@ export default {
 };
 </script>
 <style scoped>
-.cell {
-  width: 40px;
-}
 .report-table {
   background: white;
   border-collapse: collapse;
