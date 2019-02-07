@@ -37,7 +37,6 @@
 <script>
 import moment from "moment";
 import ReportCell from "./ReportCell";
-import { leaveTypes } from "../../config";
 
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
