@@ -27,7 +27,7 @@
                     <UserAvatar
                       :imageUrl="data.item.avatar"
                       :name="data.item.name"
-                      unsetImgAvatar="unset-img-avatar"
+                      width="unset"
                       backgroundColor="grey"
                     />
                     {{ data.item.name }}
@@ -42,6 +42,7 @@
                       <UserAvatar
                         :imageUrl="data.item.avatar"
                         :name="data.item.name"
+                        width="unset"
                         backgroundColor="grey"
                       />
                     </v-list-tile-avatar>

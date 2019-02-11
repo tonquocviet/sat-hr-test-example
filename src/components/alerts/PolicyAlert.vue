@@ -2,8 +2,8 @@
   <v-flex>
     <v-layout v-for="item in dataAlerts" :key="item.id" row justify-center align-center>
       <v-flex xs1>
-        <v-icon v-if="item.type === 'error'" color="black">error</v-icon>
-        <v-icon v-if="item.type === 'info'" color="error">cancel</v-icon>
+        <v-icon v-if="item.type === 'info'" color="default">info</v-icon>
+        <v-icon v-if="item.type === 'error'" color="error">cancel</v-icon>
         <v-icon v-if="item.type === 'success'" color="success">check_circle</v-icon>
       </v-flex>
       <v-flex xs10>

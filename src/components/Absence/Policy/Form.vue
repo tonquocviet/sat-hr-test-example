@@ -13,15 +13,22 @@
         <v-tabs color="transparent" dark slider-color="primary">
           <v-tab v-for="item in tabs" :key="item" ripple class="primary--text">
             {{ item }}
-            <v-chip v-if="item == 'all'" color="primary" text-color="white" small>{{ active + inactive }}</v-chip>
+            <v-chip
+              v-if="item == 'all'"
+              color="primary"
+              text-color="white"
+              small
+            >{{ active + inactive }}</v-chip>
             <v-chip v-if="item == 'active'" color="primary" text-color="white" small>{{ active }}</v-chip>
-            <v-chip v-if="item == 'inactive'" color="primary" text-color="white" small>{{ inactive }}</v-chip>
+            <v-chip
+              v-if="item == 'inactive'"
+              color="primary"
+              text-color="white"
+              small
+            >{{ inactive }}</v-chip>
           </v-tab>
           <v-tab-item>
-            <PolicyTable
-              v-if="viewMode === 'list'"
-              :apiPolicy="apiPolicy"
-            />
+            <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
             <PolicyCard
               @showMoreView="showMoreView"
               :dataFilterPolicy="dataFilterPolicy"
@@ -106,12 +113,10 @@ export default {
       });
     },
     getCountPolicy() {
-      this.$http
-        .get(`${this.apiPolicy.filterCountPolicy}`)
-        .then(data => {
-          this.active = data.data.active
-          this.inactive = data.data.inactive
-        });
+      this.$http.get(`${this.apiPolicy.filterCountPolicy}`).then(data => {
+        this.active = data.data.active;
+        this.inactive = data.data.inactive;
+      });
     }
   },
   data() {
@@ -124,11 +129,9 @@ export default {
       isShowCreate: false,
       inactive: 0,
       active: 0,
-      tabs: [
-        "all", "active", "inactive"
-      ]
+      tabs: ["all", "active", "inactive"]
     };
-  },
+  }
 };
 </script>
 <style scoped>

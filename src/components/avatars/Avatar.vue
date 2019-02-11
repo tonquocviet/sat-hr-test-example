@@ -1,14 +1,10 @@
 <template>
   <v-list-tile-avatar
     :size="avatarSize"
-    :color="`${backgroundColor} img-avatar ${unsetImgAvatar}`"
-    :style="{zIndex:index, width, justifyContent}"
+    :color="`${backgroundColor}`"
+    :style="{zIndex:index, width, justifyContent, minWidth:width}"
   >
-    <v-img
-      v-if="!!imageUrl"
-      :class="imgActive ? 'v-profile' : (typeId === 4 ? 'v-img' : 'elevation-6')"
-      :src="imageUrl"
-    ></v-img>
+    <v-img v-if="!!imageUrl" :src="imageUrl"></v-img>
     <span v-if="!imageUrl" class="white--text headline">{{nameSymbol}}</span>
   </v-list-tile-avatar>
 </template>
@@ -16,15 +12,12 @@
 export default {
   props: {
     avatarSize: String,
+    backgroundColor: String,
     width: String,
     justifyContent: String,
     imageUrl: String,
     name: String,
-    backgroundColor: String,
-    index: Number,
-    typeId: Number,
-    imgActive: Boolean,
-    unsetImgAvatar: String
+    index: Number
   },
   computed: {
     nameSymbol: function() {
@@ -39,23 +32,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.img-avatar {
-  min-width: 40px;
-}
-.unset-img-avatar {
-  min-width: unset;
-}
-.v-list__tile__avatar {
-  width: 24px;
-  min-width: 24px;
-}
-.v-profile {
-  width: 100px;
-  height: 100px;
-}
-.v-img {
-  width: 130px;
-  height: 130px;
-}
-</style>
