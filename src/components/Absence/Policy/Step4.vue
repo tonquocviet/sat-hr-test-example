@@ -9,65 +9,75 @@
     @edit="edit"
   >
     <v-progress-linear v-if="isLoading" class="pb-4" :indeterminate="true"></v-progress-linear>
-    <v-layout v-else row wrap class="px-3 py-2">
-      <v-flex xs12 sm12 lg6 v-for="item in data.items" :key="item.id" class="px-2 pb-3 pt-2">
-        <h3 class="pb-3">{{item.name}}</h3>
-        <div v-for="item in item.data" :key="item.id">
-          <v-checkbox
-            :readonly="readonly"
-            class="pa-0 ma-0 mt-1 step4-fontSize-checkbox"
-            v-model="selected"
-            :label="item.text"
-            :value="item.text"
-          ></v-checkbox>
-        </div>
-      </v-flex>
-      <v-flex xs12 sm12 lg6>
-        <v-flex xs12 class="px-2">
-          <v-text-field
-            class="step4-fontSize-label"
-            v-model="dataInput.balances"
-            label="FMLA Balances"
-            :readonly="readonly"
-          ></v-text-field>
+    <v-form v-else ref="form" v-model="object.valid" lazy-validation>
+      <v-layout row wrap class="px-3 py-2">
+        <v-flex xs12 sm12 lg6 v-for="item in data.items" :key="item.id" class="px-2 pb-3 pt-2">
+          <h3 class="pb-3">{{item.name}}</h3>
+          <div v-for="item in item.data" :key="item.id">
+            <v-checkbox
+              :readonly="readonly"
+              class="pa-0 ma-0 mt-1 step4-fontSize-checkbox"
+              v-model="selected"
+              :label="item.text"
+              :value="item.text"
+            ></v-checkbox>
+          </div>
         </v-flex>
-        <v-flex xs12 class="px-2">
-          <v-text-field
-            class="step4-fontSize-label"
-            v-model="dataInput.available"
-            label="Leave Available"
-            :readonly="readonly"
-          ></v-text-field>
+        <v-flex xs12 sm12 lg6>
+          <v-flex xs12 class="px-2">
+            <v-text-field
+              class="step4-fontSize-label"
+              v-model="dataInput.balances"
+              :rules="[v => !!v || 'Balances is required']"
+              label="FMLA Balances"
+              :readonly="readonly"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 class="px-2">
+            <v-text-field
+              class="step4-fontSize-label"
+              v-model="dataInput.available"
+              :rules="[v => !!v || 'Available is required']"
+              label="Leave Available"
+              :readonly="readonly"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 class="px-2">
+            <v-text-field
+              class="step4-fontSize-label"
+              v-model="dataInput.leaveTaken"
+              :rules="[v => !!v || 'LeavaTaken is required']"
+              label="Leave Taken"
+              :readonly="readonly"
+            ></v-text-field>
+          </v-flex>
         </v-flex>
-        <v-flex xs12 class="px-2">
-          <v-text-field
-            class="step4-fontSize-label"
-            v-model="dataInput.leaveTaken"
-            label="Leave Taken"
-            :readonly="readonly"
-          ></v-text-field>
+        <v-flex xs12 lg6 v-for="item in data.items3" :key="item.id" class="px-2 pb-3 pt-2">
+          <h3 class="pb-3">{{item.name}}</h3>
+          <div v-for="item in item.data" :key="item.id">
+            <v-layout row wrap>
+              <v-flex xs9 sm11>
+                <v-checkbox
+                  :readonly="readonly"
+                  class="pa-0 ma-0 mt-1"
+                  v-model="selected2"
+                  :label="item.text"
+                  :value="item.text"
+                ></v-checkbox>
+              </v-flex>
+              <v-flex xs3 sm1 class="px-1">
+                <v-text-field
+                  :readonly="readonly"
+                  :rules="[v => !!v || 'required']"
+                  :label="item.date"
+                  v-model="item.number"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+          </div>
         </v-flex>
-      </v-flex>
-      <v-flex xs12 lg6 v-for="item in data.items3" :key="item.id" class="px-2 pb-3 pt-2">
-        <h3 class="pb-3">{{item.name}}</h3>
-        <div v-for="item in item.data" :key="item.id">
-          <v-layout row wrap>
-            <v-flex xs9 sm11>
-              <v-checkbox
-                :readonly="readonly"
-                class="pa-0 ma-0 mt-1"
-                v-model="selected2"
-                :label="item.text"
-                :value="item.text"
-              ></v-checkbox>
-            </v-flex>
-            <v-flex xs3 sm1 class="px-1">
-              <v-text-field :readonly="readonly" :label="item.date" v-model="item.number"></v-text-field>
-            </v-flex>
-          </v-layout>
-        </div>
-      </v-flex>
-    </v-layout>
+      </v-layout>
+    </v-form>
   </MaterialPanel>
 </template>
 
@@ -81,6 +91,9 @@ export default {
   },
   data() {
     return {
+      object: {
+        valid: true
+      },
       isLoading: false,
       isShow: false,
       readonly: true,
@@ -130,7 +143,9 @@ export default {
       this.readonly = true;
     },
     save() {
-      this.readonly = true;
+      if (this.$refs.form.validate()) {
+        this.readonly = true;
+      }
     }
   },
   mounted() {
@@ -139,11 +154,11 @@ export default {
 };
 </script>
 
-<style>
-.step4-fontSize-label .v-label {
+<style scoped>
+.step4-fontSize-label /deep/ label {
   font-size: 1.2em;
 }
-.step4-fontSize-checkbox .v-label {
+.step4-fontSize-checkbox /deep/ label {
   font-size: 15px;
 }
 </style>
