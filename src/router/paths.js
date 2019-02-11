@@ -2,6 +2,7 @@ import Absence from "../views/AbsencePage";
 import Profile from "../views/ProfilePage";
 import OrgChart from "../views/OrgChartPage";
 import SettingPage from "../views/SettingPage";
+import ReportPage from "../views/ReportPage";
 import PolicyAbsencePage from "../views/PolicyAbsencePage";
 import EmployListView from "../views/EmployListView";
 import PolicyDetailPage from "../views/PolicyDetailPage";
@@ -48,5 +49,10 @@ export default [
     path: "/settings",
     name: "Settings",
     component: SettingPage
+  },
+  {
+    path: '/report',
+    name: 'Report',
+    component: ReportPage
   }
 ];
