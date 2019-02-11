@@ -10,7 +10,7 @@
       <v-flex xs12 class="px-2 pb-3 pt-2">
         <v-layout row wrap>
           <div v-for="item in dataUsers" :key="item.id" class="ma-1 approvers-step3">
-            <UserAvatar :imageUrl="item.avatar" :name="item.name" width="unset" class="user-img"/>
+            <UserAvatar :imageUrl="item.avatar" :name="item.name" width="unset"/>
             <span aria-label="Active Now" class="status-approvar"></span>
           </div>
           <v-layout style="flex: unset" justify-center align-center class="ma-1 approvers-step3">
@@ -68,7 +68,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .approvers-step3 {
   position: relative;
   width: 40px;

@@ -1,7 +1,7 @@
 <template>
   <v-list-tile-avatar
     :size="avatarSize"
-    :color="`${backgroundColor} img-avatar`"
+    :color="`${backgroundColor} img-avatar ${unsetImgAvatar}`"
     :style="{zIndex:index, width, justifyContent}"
   >
     <v-img
@@ -23,7 +23,8 @@ export default {
     backgroundColor: String,
     index: Number,
     typeId: Number,
-    imgActive: Boolean
+    imgActive: Boolean,
+    unsetImgAvatar: String
   },
   computed: {
     nameSymbol: function() {
@@ -41,6 +42,9 @@ export default {
 <style scoped>
 .img-avatar {
   min-width: 40px;
+}
+.unset-img-avatar {
+  min-width: unset;
 }
 .v-list__tile__avatar {
   width: 24px;

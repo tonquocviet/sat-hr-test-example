@@ -2,7 +2,7 @@
   <v-layout row justify-center>
     <v-dialog :value="isShow" @input="cancel" max-width="700">
       <v-card>
-        <v-card-title class="headline">Add User Approvers</v-card-title>
+        <v-card-title class="headline">Add HR Approvers</v-card-title>
         <v-card-text>
           <v-layout>
             <v-flex xs12>
@@ -24,9 +24,12 @@
                     class="chip--select-multi"
                     @input="remove(data.item)"
                   >
-                    <v-avatar>
-                      <img :src="data.item.avatar">
-                    </v-avatar>
+                    <UserAvatar
+                      :imageUrl="data.item.avatar"
+                      :name="data.item.name"
+                      unsetImgAvatar="unset-img-avatar"
+                      backgroundColor="grey"
+                    />
                     {{ data.item.name }}
                   </v-chip>
                 </template>
@@ -36,7 +39,11 @@
                   </template>
                   <template v-else>
                     <v-list-tile-avatar>
-                      <img :src="data.item.avatar">
+                      <UserAvatar
+                        :imageUrl="data.item.avatar"
+                        :name="data.item.name"
+                        backgroundColor="grey"
+                      />
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                       <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
@@ -50,8 +57,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="cancel">Cancel</v-btn>
-          <v-btn color="green darken-1" @click="add">Add</v-btn>
+          <v-btn color="default" flat="flat" @click="cancel">Cancel</v-btn>
+          <v-btn color="green" flat="flat" @click="add">Create</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,7 +66,12 @@
 </template>
 
 <script>
+import UserAvatar from "../../avatars/Avatar";
+
 export default {
+  components: {
+    UserAvatar
+  },
   props: {
     isShow: Boolean
   },
@@ -75,7 +87,7 @@ export default {
     return {
       users: [],
       people: [
-        { name: "Sandra Adams", group: "Group 1", avatar: srcs[1] },
+        { name: "Sandra Adams", group: "Group 1", avatar: null },
         { name: "Ali Connors", group: "Group 1", avatar: srcs[2] },
         { name: "Trevor Hansen", group: "Group 1", avatar: srcs[3] },
         { name: "Tucker Smith", group: "Group 1", avatar: srcs[2] },
