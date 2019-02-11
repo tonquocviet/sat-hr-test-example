@@ -58,38 +58,18 @@
                 </v-flex>
               </v-layout>
               <div class="mt-4">
-                <v-layout row wrap>
+                <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
-                    <span>On May 28 there's a shortage of IOS developers</span>
+                    <span>You have selected </span>
+                    <span v-if="absenceInfo[day].fullDay"> {{ changeDateFormatAbsenceRegister(day) }} full day</span>
+                    <span v-else> {{ hourInfo(day) }}</span>
                   </v-flex>
-                  <v-flex xs2 class="mr-2">
-                    <v-btn fab dark small color="black">
-                      <v-icon class="mb-4" large>minimize</v-icon>
-                    </v-btn>
-                  </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                  <v-flex class="mt-3">
-                    <span>On May 28 there's a shortage of IOS developers</span>
-                  </v-flex>
-                  <v-flex xs2 class="mr-2">
-                    <v-btn fab dark small color="black">
-                      <v-icon class="mb-4" large>minimize</v-icon>
-                    </v-btn>
-                  </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                  <v-flex class="mt-3">
-                    <span>On May 28 there's a shortage of IOS developers</span>
-                  </v-flex>
-                  <v-flex xs2 class="mr-2">
-                    <v-btn fab dark small color="black">
-                      <v-icon class="mb-4" large>minimize</v-icon>
-                    </v-btn>
+                  <v-flex class="mr-2">
+                    <v-icon @click="deleteDatebsenceSelect(index, day)" class="mt-3 remove-select-day" color="black">remove_circle</v-icon>
                   </v-flex>
                 </v-layout>
               </div>
-              <v-flex>
+              <v-flex class="mt-4">
                 <v-layout column style="height: 200px">
                   <PolicyAlert :dataApproved="dataApproved"/>
                 </v-layout>
@@ -150,6 +130,7 @@
 <script>
 import PolicyAlert from "../alerts/PolicyAlert";
 import { dataApproved } from "./data";
+import moment from "moment";
 export default {
   components: {
     PolicyAlert
@@ -178,6 +159,61 @@ export default {
           });
         });
       });
+    },
+    changeDateFormatAbsenceRegister(date){
+      return moment(date).format("MM/DD/YYYY");
+    },
+    deleteDatebsenceSelect(index, day){
+      this.dates.splice(index, 1);
+
+      delete this.absenceInfo[day];
+    },
+    hourInfo(date){
+      return `${date} from ${this.absenceInfo[date].timeFrom} to ${this.absenceInfo[date].timeTo}`;
+    },
+    clearInfo() {
+      this.fullDay = true;
+      this.timeFrom = this.timeTo = "";
+    }
+  },
+  watch: {
+    dates(val) {
+      if (val.length > Object.keys(this.absenceInfo).length) {
+        this.absenceInfo[val[val.length - 1]] = {
+          fullDay: this.fullDay,
+          timeFrom: this.timeFrom,
+          timeTo: this.timeTo
+        }
+        this.clearInfo();
+      } else {
+        Object.keys(this.absenceInfo).forEach(v => {
+          if (!val.includes(v)) delete this.absenceInfo[v];
+        })
+        if (val.length) {
+          const info = this.absenceInfo[val[val.length - 1]];
+          this.fullDay = info.fullDay;
+          this.timeFrom = info.timeFrom;
+          this.timeTo = info.timeTo;
+        }
+        else {
+          this.clearInfo();
+        }
+      }
+    },
+    timeFrom(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].timeFrom = val;
+      }
+    },
+    timeTo(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].timeTo = val;
+      }
+    },
+    fullDay(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].fullDay = val;
+      }
     }
   },
   computed: {
@@ -185,7 +221,7 @@ export default {
       if (this.timeFrom && this.timeTo) {
         const [h1, m1] = this.timeFrom.split(":").map(t => +t);
         const [h2, m2] = this.timeTo.split(":").map(t => +t);
-        return (h2 - h1 + (m2 - m1) / 60).toFixed(1);
+        return (((h2 * 60 + m2) - (h1 * 60 + m1)) / 60).toFixed(1);
       }
       return 0;
     }
@@ -197,11 +233,12 @@ export default {
       name_employer: null,
       type_absence: null,
       reason_employer: null,
-      fullDay: false,
+      absenceInfo: {},
+      fullDay: true,
       timeFrom: "",
       timeTo: ""
     };
-  }
+  },
 };
 </script>
 
@@ -213,5 +250,8 @@ export default {
 }
 .ic-status {
   z-index: 1;
+}
+.remove-select-day{
+  cursor: pointer;
 }
 </style>
