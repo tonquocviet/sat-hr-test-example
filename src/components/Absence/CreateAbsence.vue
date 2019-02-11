@@ -71,7 +71,7 @@
               </div>
               <v-flex class="mt-4">
                 <v-layout column style="height: 200px">
-                  <PolicyAlert :dataApproved="dataApproved"/>
+                  <PolicyAlert :dataAlerts="dataApproved"/>
                 </v-layout>
               </v-flex>
               <v-checkbox color="black" label="Full Day" v-model="fullDay"></v-checkbox>
