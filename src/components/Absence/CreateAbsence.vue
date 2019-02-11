@@ -30,13 +30,9 @@
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
-                <v-card>
-                  <v-date-picker 
-                    v-model="dates"
-                    multiple
-                    width="100%"
-                  ></v-date-picker>
-                </v-card>
+              <v-card>
+                <v-date-picker v-model="dates" multiple width="100%"></v-date-picker>
+              </v-card>
             </v-flex>
             <v-flex xs5 offset-xs1>
               <v-layout row wrap>
@@ -53,21 +49,21 @@
               </v-layout>
               <div class="mt-5">
                 <span>You've selected</span>
-                <span class="font-weight-bold"> May 24 - 30 .</span>
+                <span class="font-weight-bold">May 24 - 30 .</span>
                 <span>That's a total of</span>
                 <span class="font-weight-bold">$ working days</span>
-                <span> spanning over</span>
-                <span class="font-weight-bold"> 7 days</span>
+                <span>spanning over</span>
+                <span class="font-weight-bold">7 days</span>
               </div>
               <v-layout row wrap class="mt-5">
                 <v-flex xs2 class="pt-3 mr-2">
                   <v-btn color="error" class="ic-status" fab>
-                    <v-icon >clear</v-icon>
+                    <v-icon>clear</v-icon>
                   </v-btn>
                 </v-flex>
                 <v-flex xs9>
                   <v-card class="blockquote">
-                    <span class="body-1">On May 28 there's a shortage of IOS developers </span>
+                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -119,7 +115,6 @@
 export default {
   props: {
     popup: Object,
-    getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
     items: Array
   },
@@ -131,9 +126,9 @@ export default {
   methods: {
     getAbsenceReasonsRequest() {
       return new Promise(resolve => {
-        this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
+        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
           resolve({
-            items: res.data,
+            items: res.data
           });
         });
       });
@@ -145,9 +140,9 @@ export default {
       dates: [],
       name_employer: null,
       type_absence: null,
-      reason_employer: null,
+      reason_employer: null
     };
-  },
+  }
 };
 </script>
 
@@ -157,7 +152,7 @@ export default {
   background-color: grey;
   line-height: 50px;
 }
-.ic-status{
+.ic-status {
   z-index: 1;
 }
 </style>

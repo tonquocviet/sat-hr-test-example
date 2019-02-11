@@ -29,9 +29,6 @@ export default {
     FormStep1,
     TableStep2,
     UserStep3
-  },
-  props: {
-    apiPolicy: Object
   }
 };
 </script>

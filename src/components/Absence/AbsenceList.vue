@@ -57,7 +57,6 @@ import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
     needRenderApproveAction: Boolean,
-    apiAbsence: Object,
     detailLink: String,
     absenceStatus: {
       type: String,

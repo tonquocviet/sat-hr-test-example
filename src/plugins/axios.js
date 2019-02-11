@@ -14,3 +14,7 @@ Vue.prototype.apiAbsence = {
     getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
     rejectRequest: `${baseUrl}/absence/reject-request`
 };
+Vue.prototype.apiPolicy = {
+    filterPolicy: `${baseUrl}/absence-policy/filter`,
+    filterCountPolicy: `${baseUrl}/absence-policy/count`
+}

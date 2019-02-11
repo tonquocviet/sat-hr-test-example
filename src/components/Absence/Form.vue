@@ -16,27 +16,20 @@
           <AbsenceList
             v-if="viewMode === 'list'"
             @showDetailModal="showDetailModal"
-            :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
             :needRenderApproveAction="true"
           />
-          <AbsenceCardContainer
-            v-else
-            @showDetailModal="showDetailModal"
-            :filterApiUrl="apiAbsence.filterAbsences"
-          />
+          <AbsenceCardContainer v-else @showDetailModal="showDetailModal"/>
         </v-tab-item>
         <v-tab-item>
           <AbsenceList
             v-if="viewMode === 'list'"
             @showDetailModal="showDetailModal"
-            :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
           />
           <AbsenceCardContainer
             v-else
             @showDetailModal="showDetailModal"
-            :filterApiUrl="apiAbsence.filterAbsences"
             absence-status="approved"
           />
         </v-tab-item>
@@ -44,14 +37,12 @@
           <AbsenceList
             v-if="viewMode === 'list'"
             @showDetailModal="showDetailModal"
-            :apiAbsence="apiAbsence"
             :detailLink="detailLinks.forAbsenceProfile"
             absence-status="rejected"
           />
           <AbsenceCardContainer
             v-else
             @showDetailModal="showDetailModal"
-            :filterApiUrl="apiAbsence.filterAbsences"
             absence-status="rejected"
           />
         </v-tab-item>
@@ -75,16 +66,10 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate
-        :items="data1"
-        :getAbsenceReasonsApiUrl="apiAbsence.getReason"
-        :leaveTypes="leaveTypes"
-        :popup="popup"
-      />
+      <AbsenceCreate :items="data1" :leaveTypes="leaveTypes" :popup="popup"/>
     </v-flex>
     <ModalDetailAbsence
       :isShow="isShowAbsenceDetailsModal"
-      :apiAbsence="apiAbsence"
       :absenceDetail="absenceDetail"
       @closeDialog="isShowAbsenceDetailsModal = false"
     />
@@ -122,7 +107,6 @@ export default {
   },
   props: {
     viewMode: String,
-    apiAbsence: Object,
     detailLinks: Object
   },
   mounted() {

@@ -37,9 +37,6 @@
 <script>
 import moment from "moment";
 export default {
-  props: {
-    apiPolicy: Object
-  },
   methods: {
     getDataFromApi() {
       this.loading = true;
