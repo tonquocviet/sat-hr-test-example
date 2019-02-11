@@ -10,6 +10,10 @@
           <EmployeeList></EmployeeList>
         </v-tab-item>
         <v-tab-item>Performance</v-tab-item>
+        <v-tab-item>Employee List</v-tab-item>
+        <v-tab-item>
+          <ChartPolicy :apiPolicy="apiPolicy"/>
+        </v-tab-item>
         <v-tab-item>Settings</v-tab-item>
       </v-tabs>
     </v-flex>
@@ -18,11 +22,13 @@
 <script>
 import Overview from "./Overview";
 import EmployeeList from "./EmployeeList";
+import ChartPolicy from "./chart-policy/Form";
 
 export default {
   components: {
     Overview,
-    EmployeeList
+    EmployeeList,
+    ChartPolicy
   },
   props: {
     viewMode: String,

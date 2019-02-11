@@ -1,44 +1,37 @@
 <template>
-  <div class="px-4 py-4">
+  <div class="pa-3">
     <v-layout row wrap>
-      <v-flex xs12>
-        <v-layout column wrap>
-          <v-layout>
-            <h2>Desciption</h2>
-            <v-icon style="cursor: pointer;" size="20">edit</v-icon>
-          </v-layout>
-          <v-textarea solo v-model="description" name="input-7-4"></v-textarea>
-        </v-layout>
+      <v-flex xs12 class="mb-3">
+        <Description/>
       </v-flex>
-      <v-flex xs12>
-        <Step1 @openDialog="isShowModalStep1 = true"/>
+      <v-flex xs12 class="mb-3">
+        <FormStep1 :getCountriesApiUrl="apiPolicy.getCountries"/>
       </v-flex>
-      <ModalFormStep1
-        :isShow="isShowModalStep1"
-        :apiUrl="apiPolicy.getCountries"
-        @closeDialog="isShowModalStep1 = false"
-      />
+      <v-flex xs12 class="mb-3">
+        <TableStep2 />
+      </v-flex>
+      <v-flex xs12 class="mb-3">
+        <UserStep3 />
+      </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-import Step1 from "./Step1";
-import ModalFormStep1 from "./ModalFormStep1";
+import Description from "./Description";
+import FormStep1 from "./FormStep1";
+import TableStep2 from "./TableStep2";
+import UserStep3 from "./UserStep3";
 
 export default {
   components: {
-    Step1,
-    ModalFormStep1
+    Description,
+    FormStep1,
+    TableStep2,
+    UserStep3
   },
   props: {
     apiPolicy: Object
-  },
-  data() {
-    return {
-      description: "",
-      isShowModalStep1: false
-    };
   }
 };
 </script>
