@@ -14,6 +14,7 @@
       @closeDialog="isShowAbsenceDetailsModal = false"
       :absenceDetail="absenceDetail"
       :isShow="isShowAbsenceDetailsModal"
+      :apiAbsence="apiAbsence"
       isViewOnly
     />
     <AbsenceCreate
