@@ -9,7 +9,7 @@
     @edit="edit"
   >
     <v-progress-linear v-if="isLoading" class="pb-4" :indeterminate="true"></v-progress-linear>
-    <v-form v-else ref="form" v-model="object.valid" lazy-validation>
+    <v-form v-else ref="form" v-model="valid" lazy-validation>
       <v-layout row wrap class="px-3 py-2">
         <v-flex xs12 sm12 lg6 v-for="item in data.items" :key="item.id" class="px-2 pb-3 pt-2">
           <h3 class="pb-3">{{item.name}}</h3>
@@ -91,9 +91,7 @@ export default {
   },
   data() {
     return {
-      object: {
-        valid: true
-      },
+      valid: true,
       isLoading: false,
       isShow: false,
       readonly: true,
@@ -157,6 +155,9 @@ export default {
 <style scoped>
 .step4-fontSize-label /deep/ label {
   font-size: 1.2em;
+}
+.step4-fontSize-label /deep/ input {
+  font-size: 15px;
 }
 .step4-fontSize-checkbox /deep/ label {
   font-size: 15px;
