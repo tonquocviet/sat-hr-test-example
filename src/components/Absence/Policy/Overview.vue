@@ -11,6 +11,9 @@
         <TableStep2 />
       </v-flex>
       <v-flex xs12 class="mb-3">
+        <UserStep3 />
+      </v-flex>
+      <v-flex xs12 class="mb-3">
         <Step4 />
       </v-flex>
     </v-layout>
@@ -21,14 +24,16 @@
 import Description from "./Description";
 import FormStep1 from "./FormStep1";
 import TableStep2 from "./TableStep2";
-import Step4 from "./Step4"
+import Step4 from "./Step4";
+import UserStep3 from "./UserStep3";
 
 export default {
   components: {
     Description,
     FormStep1,
     TableStep2,
-    Step4
+    Step4,
+    UserStep3
   },
   props: {
     apiPolicy: Object
