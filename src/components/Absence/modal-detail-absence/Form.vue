@@ -8,10 +8,10 @@
               <v-layout row>
                 <v-flex d-flex>
                   <v-card tile flat>
-                    <v-layout row wrap>
+                    <v-layout wrap>
                       <v-flex xs12>
                         <v-card color="primary">
-                          <v-flex right>
+                          <v-flex right v-if="!isViewOnly">
                             <v-btn
                               @click="approveRequest"
                               :disabled="!checkDueDate || absenceDetail.status === 'approved'"
@@ -30,6 +30,16 @@
                             </v-btn>
                             <v-btn :disabled="!checkDueDate" color="primary">Reassign</v-btn>
                             <v-btn :disabled="!checkDueDate">Request Information</v-btn>
+                          </v-flex>
+                          <v-flex right v-else>
+                            <v-btn :disabled="absenceDetail.status !== 'approved'" color="success">
+                              <span>Approve</span>
+                            </v-btn>
+                            <v-btn :disabled="absenceDetail.status !== 'rejected'" color="error">
+                              <span>Reject</span>
+                            </v-btn>
+                            <v-btn disabled color="primary">Reassign</v-btn>
+                            <v-btn disabled>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
@@ -81,12 +91,14 @@
                         </v-layout>
                       </v-flex>
 
-                      <v-layout column>
+                      <v-flex xs12>
                         <InputComment @onComment="onComment" :avatar="absenceDetail"/>
-                      </v-layout>
-
-                      <v-layout>
-                        <ListComment :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      </v-flex>
+                      <v-flex v-if="isFetchingComments" xs12 class="text-xs-center">
+                        <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                      </v-flex>
+                      <v-layout v-else xs12 wrap column v-for="item in dataCommentAbsence" :key="item.id" class="showComment">
+                        <ListComment :comment="item" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -101,7 +113,7 @@
                       :imageUrl="(absenceDetail.avatar||{}).imageUrl"
                       :name="absenceDetail.employeeName"
                       class="user-img"
-                      :imgActive="imgActive"
+                      avatarSize="100px"
                     />
                   </div>
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
@@ -147,6 +159,7 @@ import CardHRApprover from "./CardHRApprover";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { itemsComment, dataApproved } from "../data";
 import moment from "moment";
+
 export default {
   components: {
     UserAvatar,
@@ -159,7 +172,6 @@ export default {
   },
   props: {
     isShow: Boolean,
-    apiAbsence: Object,
     absenceDetail: Object,
     dataApproved: {
       type: Array,
@@ -168,6 +180,10 @@ export default {
     itemsComment: {
       type: Array,
       default: () => itemsComment
+    },
+    isViewOnly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -190,6 +206,15 @@ export default {
       this.$http.get(url).then(res => {
         this.isHRCard = false;
         this.dataHRCard = res.data;
+      });
+    },
+    getCommentAbsence(){
+      this.isFetchingComments = true
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getCommentAbsence(id);
+      this.$http.get(url).then(res => {
+        this.isFetchingComments = false;
+        this.dataCommentAbsence = res.data;
       });
     },
     approveRequest() {
@@ -246,15 +271,16 @@ export default {
       leaveReason: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true,
       dataHRCard: [],
+      dataCommentAbsence: [],
       isHRCard: false,
       infoSnackbar: false,
       savedMessage: "",
       isApproving: false,
       dataPolicies: {},
       isFetchingPolicies: false,
-      isRejecting: false
+      isRejecting: false,
+      isFetchingComments: false
     };
   },
   watch: {
@@ -262,12 +288,16 @@ export default {
       if (val) {
         this.getPoliciesRequest();
         this.getHRCardRequest();
+        this.getCommentAbsence();
       }
     }
   }
 };
 </script>
 <style scoped>
+.showComment {
+  width: 100%;
+}
 .v-image-user-2 {
   width: 100px;
   height: 100px;
