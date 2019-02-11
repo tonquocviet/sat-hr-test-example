@@ -28,5 +28,20 @@ export const leaveTypes = [{ name: "Family and Medical Leave", color: "primary" 
 { name: "Administrative Leave", color: "indigo" },
 { name: "Personal Leave", color: "orange" },
 { name: "Adverse Weather", color: "pink" },
-{ name: "Work from Home", color: "purple " }
+{ name: "Work from Home", color: "purple" }
 ];
+export const dateTypeStyles = {
+    ["weekend"]: {
+        'background-color': "grey !important"
+    }
+};
+export const employeeTypeStyles = {
+    ['notEmployed']: {
+        backgroundImage: "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHUlEQVQYV2NkwAIY8Qr+////PyMjI1gRfpXIxgAA05QEBvMAkekAAAAASUVORK5CYII=)",
+        backgroundRepeat: "repeat"
+    },
+    ['notApplicable']: {
+        backgroundImage: "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQYV2NkQAL/////zwjjgzkgABKAcUBsRmQOSAAAIAYQASyLe4sAAAAASUVORK5CYII=)",
+        backgroundRepeat: "repeat"
+    }
+}

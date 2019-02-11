@@ -7,7 +7,9 @@
           <Overview :apiPolicy="apiPolicy"/>
         </v-tab-item>
         <v-tab-item>Employee List</v-tab-item>
-        <v-tab-item>Performance</v-tab-item>
+        <v-tab-item>
+          <ChartPolicy :apiPolicy="apiPolicy"/>
+        </v-tab-item>
         <v-tab-item>Settings</v-tab-item>
       </v-tabs>
     </v-flex>
@@ -15,10 +17,11 @@
 </template>
 <script>
 import Overview from "./Overview";
-
+import ChartPolicy from "./chart-policy/Form";
 export default {
   components: {
-    Overview
+    Overview,
+    ChartPolicy
   },
   props: {
     viewMode: String,
