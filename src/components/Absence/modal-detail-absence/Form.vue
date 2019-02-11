@@ -22,21 +22,11 @@
                       <v-flex xs12>
                         <v-layout row style="height: 130px;">
                           <v-flex xs6>
-                            <CardCountAbsence
-                              :startDate="absenceDetail.startDate"
-                              :endDate="absenceDetail.endDate"
-                              v-if="absenceDetail.type === 1"
-                            />
-                            <CardCountTimeAbsence
-                              :startDate="absenceDetail.startDate"
-                              :endDate="absenceDetail.endDate"
-                              v-if="absenceDetail.type === 2"
-                            />
-                            <CardAbsenceForManyDays
-                              :startDate="absenceDetail.startDate"
-                              :endDate="absenceDetail.endDate"
-                              v-if="absenceDetail.type === 3"
-                            />
+                            <div class="elevation-1">
+                              <div style="height: 117px" class="text-xs-center pl-3 pr-3 pt-2 pb-2">
+                                <AbsenceInfoCard :leaveData="absenceDetail.leaveData"/>
+                              </div>
+                            </div>
                           </v-flex>
                           <v-flex xs6>
                             <v-textarea
@@ -121,9 +111,7 @@
 </template>
 
 <script>
-import CardCountAbsence from "../../cards/CardCountAbsence";
-import CardCountTimeAbsence from "../../cards/CardCountTimeAbsence";
-import CardAbsenceForManyDays from "../../cards/CardAbsenceForManyDays";
+import AbsenceInfoCard from "../../cards/AbsenceInfoCard";
 import PolicyAlert from "../../alerts/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
@@ -133,9 +121,7 @@ import { dataHRCard, itemsComment, dataApproved } from "../data";
 export default {
   components: {
     UserAvatar,
-    CardCountAbsence,
-    CardCountTimeAbsence,
-    CardAbsenceForManyDays,
+    AbsenceInfoCard,
     PolicyAlert,
     InputComment,
     ListComment,

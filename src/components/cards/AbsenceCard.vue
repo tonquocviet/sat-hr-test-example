@@ -30,26 +30,7 @@
     </div>
     <div class="elevation-3">
       <div class="text-xs-center pl-3 pr-3 pt-2 pb-2">
-        <v-layout>
-          <v-flex xs3>
-            <h3>{{formatMonth(item.startDate)}}</h3>
-            <h1>{{formatDate(item.startDate)}}</h1>
-            <h3 class="grey--text">{{formatDay(item.startDate)}}</h3>
-          </v-flex>
-          <v-flex xs6 class="user-date-arrow">
-            <v-layout class="justify-center">
-              <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
-              <h4
-                style="position: absolute;bottom: 0px;"
-              >{{countDay(item.startDate, item.endDate)}} days Annual leave</h4>
-            </v-layout>
-          </v-flex>
-          <v-flex xs3>
-            <h3>{{formatMonth(item.endDate)}}</h3>
-            <h1>{{formatDate(item.endDate)}}</h1>
-            <h3 class="grey--text">{{formatDay(item.endDate)}}</h3>
-          </v-flex>
-        </v-layout>
+        <AbsenceInfoCard :leaveData="item.leaveData"/>
       </div>
       <v-flex class="user-description">
         <div class="pl-3 pr-3 pt-2 pb-2">{{item.leaveDescription}}</div>
@@ -69,11 +50,13 @@
 import moment from "moment";
 import LeaveTypeChip from "../chips/LeaveTypeChip";
 import UserAvatar from "../avatars/Avatar";
+import AbsenceInfoCard from "./AbsenceInfoCard";
 
 export default {
   components: {
     UserAvatar,
-    LeaveTypeChip
+    LeaveTypeChip,
+    AbsenceInfoCard
   },
   props: {
     item: Object,

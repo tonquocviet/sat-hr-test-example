@@ -54,10 +54,10 @@
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
-      <AbsenceCreate 
+      <AbsenceCreate
         :items="data1"
         :leaveTypes="leaveTypes"
-        :popup="popup" 
+        :popup="popup"
       />
     </v-flex>
     <ModalDetailAbsence
