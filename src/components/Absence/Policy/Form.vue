@@ -29,35 +29,25 @@
           </v-tab>
           <v-tab-item>
             <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
-            <PolicyCard
-              @showMoreView="showMoreView"
-              :dataFilterPolicy="dataFilterPolicy"
-              :loading="loading"
-              :isShowMore="isShowMore"
-              :hasShowMore="hasShowMore"
-              v-else
+            <PolicyCardContainer 
+              v-else 
+              :filterApiUrl="apiPolicy.filterPolicy" 
             />
           </v-tab-item>
           <v-tab-item>
-            <PolicyActive v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
-            <PolicyCard
-              @showMoreView="showMoreView"
-              :dataFilterPolicy="dataFilterPolicy"
-              :loading="loading"
-              :isShowMore="isShowMore"
-              :hasShowMore="hasShowMore"
-              v-else
+            <PolicyTable v-if="viewMode === 'list'" status="active" :apiPolicy="apiPolicy"/>
+            <PolicyCardContainer 
+              v-else 
+              :filterApiUrl="apiPolicy.filterPolicy"
+              status="active"
             />
           </v-tab-item>
           <v-tab-item>
-            <PolicyInActive v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
-            <PolicyCard
-              @showMoreView="showMoreView"
-              :dataFilterPolicy="dataFilterPolicy"
-              :loading="loading"
-              :isShowMore="isShowMore"
-              :hasShowMore="hasShowMore"
-              v-else
+            <PolicyTable v-if="viewMode === 'list'" status="inactive" :apiPolicy="apiPolicy"/>
+            <PolicyCardContainer 
+              v-else 
+              :filterApiUrl="apiPolicy.filterPolicy"
+              status="inactive"
             />
           </v-tab-item>
         </v-tabs>
@@ -71,18 +61,14 @@
 </template>
 <script>
 import PolicyTable from "./PolicyTable";
-import PolicyCard from "./PolicyCard";
 import CreatePolicy from "./CreatePolicy";
-import PolicyActive from "./PolicyActiveTable";
-import PolicyInActive from "./PolicyInActiveTable"
+import PolicyCardContainer from "./PolicyCardContainer";
 
 export default {
   components: {
     PolicyTable,
-    PolicyCard,
     CreatePolicy,
-    PolicyActive,
-    PolicyInActive
+    PolicyCardContainer
   },
   props: {
     viewMode: String,

@@ -30,7 +30,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
-      <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination :total-visible="7" light v-model="pagination.page" :length="pages"></v-pagination>
     </div>
   </div>
 </template>
@@ -38,7 +38,8 @@
 import moment from "moment";
 export default {
   props: {
-    apiPolicy: Object
+    apiPolicy: Object,
+    status: String
   },
   methods: {
     getDataFromApi() {
@@ -50,7 +51,8 @@ export default {
         sort: {
           isAsc: !descending,
           columnName: sortBy
-        }
+        },
+        status: this.status || ""
       };
       return new Promise(resolve => {
         this.$http
