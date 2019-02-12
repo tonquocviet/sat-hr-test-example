@@ -49,21 +49,21 @@
               </v-layout>
               <div class="mt-5">
                 <span>You've selected</span>
-                <span class="font-weight-bold">May 24 - 30 .</span>
+                <span class="font-weight-bold"> May 24 - 30 .</span>
                 <span>That's a total of</span>
                 <span class="font-weight-bold">$ working days</span>
-                <span>spanning over</span>
-                <span class="font-weight-bold">7 days</span>
+                <span> spanning over</span>
+                <span class="font-weight-bold"> 7 days</span>
               </div>
               <v-layout row wrap class="mt-5">
                 <v-flex xs2 class="pt-3 mr-2">
                   <v-btn color="error" class="ic-status" fab>
-                    <v-icon>clear</v-icon>
+                    <v-icon >clear</v-icon>
                   </v-btn>
                 </v-flex>
                 <v-flex xs9>
                   <v-card class="blockquote">
-                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
+                    <span class="body-1">On May 28 there's a shortage of IOS developers </span>
                   </v-card>
                 </v-flex>
               </v-layout>
