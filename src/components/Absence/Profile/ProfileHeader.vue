@@ -29,7 +29,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="blue" @click="openModalAdjust">
+              <v-btn flat color="blue" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -52,7 +52,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="green" @click="openModalAdjust">
+              <v-btn flat color="green" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -75,7 +75,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="red" @click="openModalAdjust">
+              <v-btn flat color="red" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -97,7 +97,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="purple" @click="openModalAdjust">
+              <v-btn flat color="purple" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -121,11 +121,6 @@ export default {
     return {
       isShowModalAdjust: false
     };
-  },
-  methods: {
-    openModalAdjust() {
-      this.isShowModalAdjust = true;
-    }
   }
 };
 </script>
