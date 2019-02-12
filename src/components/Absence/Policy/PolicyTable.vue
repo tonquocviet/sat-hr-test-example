@@ -70,12 +70,6 @@ export default {
       return moment(date).format("MM/DD/YYYY");
     }
   },
-  mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterPolicy = data.items;
-      this.totalRecords = data.totalRecords;
-    });
-  },
   data() {
     return {
       dataFilterPolicy: [],
