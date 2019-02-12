@@ -21,7 +21,7 @@ export default [
     component: Absence
   },
   {
-    path: "/profile",
+    path: "/absence-profile/:id",
     name: "Profile",
     component: Profile
   },
