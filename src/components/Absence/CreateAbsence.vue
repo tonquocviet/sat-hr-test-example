@@ -6,7 +6,7 @@
           <v-layout row wrap>
             <v-flex xs5>
               <v-autocomplete
-                v-model="name_employer"
+                v-model="employeeName"
                 item-text="name"
                 item-value="id"
                 :items="items"
@@ -14,7 +14,7 @@
                 return-object
               ></v-autocomplete>
               <v-autocomplete
-                v-model="type_absence"
+                v-model="absenceType"
                 item-text="name"
                 item-value="id"
                 :items="leaveTypes"
@@ -22,7 +22,7 @@
                 return-object
               ></v-autocomplete>
               <v-autocomplete
-                v-model="reason_employer"
+                v-model="employeeReason"
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
@@ -60,12 +60,17 @@
               <div class="mt-4">
                 <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
-                    <span>You have selected </span>
-                    <span v-if="absenceInfo[day].fullDay"> {{ changeDateFormatAbsenceRegister(day) }} full day</span>
-                    <span v-else> {{ hourInfo(day) }}</span>
+                    <span>You have selected</span>
+                    <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
+                    <span v-else>{{ formatHour(day) }}</span>
                   </v-flex>
-                  <v-flex class="mr-2">
-                    <v-icon @click="deleteDatebsenceSelect(index, day)" class="mt-3 remove-select-day" color="black">remove_circle</v-icon>
+                  <v-spacer/>
+                  <v-flex class="text-xs-right">
+                    <v-icon
+                      @click="removeSelectDay(index, day)"
+                      class="mt-3 remove-select-day"
+                      color="black"
+                    >remove_circle</v-icon>
                   </v-flex>
                 </v-layout>
               </div>
@@ -160,16 +165,18 @@ export default {
         });
       });
     },
-    changeDateFormatAbsenceRegister(date){
-      return moment(date).format("MM/DD/YYYY");
-    },
-    deleteDatebsenceSelect(index, day){
+    removeSelectDay(index, day) {
       this.dates.splice(index, 1);
 
       delete this.absenceInfo[day];
     },
-    hourInfo(date){
-      return `${date} from ${this.absenceInfo[date].timeFrom} to ${this.absenceInfo[date].timeTo}`;
+    formatDay(date) {
+      return moment(date).format("MM/DD/YYYY");
+    },
+    formatHour(date) {
+      return `${date} from ${this.absenceInfo[date].timeFrom} to ${
+        this.absenceInfo[date].timeTo
+      }`;
     },
     clearInfo() {
       this.fullDay = true;
@@ -183,19 +190,18 @@ export default {
           fullDay: this.fullDay,
           timeFrom: this.timeFrom,
           timeTo: this.timeTo
-        }
+        };
         this.clearInfo();
       } else {
         Object.keys(this.absenceInfo).forEach(v => {
           if (!val.includes(v)) delete this.absenceInfo[v];
-        })
+        });
         if (val.length) {
           const info = this.absenceInfo[val[val.length - 1]];
           this.fullDay = info.fullDay;
           this.timeFrom = info.timeFrom;
           this.timeTo = info.timeTo;
-        }
-        else {
+        } else {
           this.clearInfo();
         }
       }
@@ -221,7 +227,7 @@ export default {
       if (this.timeFrom && this.timeTo) {
         const [h1, m1] = this.timeFrom.split(":").map(t => +t);
         const [h2, m2] = this.timeTo.split(":").map(t => +t);
-        return (((h2 * 60 + m2) - (h1 * 60 + m1)) / 60).toFixed(1);
+        return ((h2 * 60 + m2 - (h1 * 60 + m1)) / 60).toFixed(1);
       }
       return 0;
     }
@@ -230,15 +236,15 @@ export default {
     return {
       dataAbsenceReasons: [],
       dates: [],
-      name_employer: null,
-      type_absence: null,
-      reason_employer: null,
+      employeeName: null,
+      absenceType: null,
+      employeeReason: null,
       absenceInfo: {},
       fullDay: true,
       timeFrom: "",
       timeTo: ""
     };
-  },
+  }
 };
 </script>
 
@@ -251,7 +257,7 @@ export default {
 .ic-status {
   z-index: 1;
 }
-.remove-select-day{
+.remove-select-day {
   cursor: pointer;
 }
 </style>
