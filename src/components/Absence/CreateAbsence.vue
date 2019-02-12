@@ -60,7 +60,7 @@
               <div class="mt-4">
                 <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
-                    <span>You have selected</span>
+                    <span>You have selected </span>
                     <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
                     <span v-else>{{ formatHour(day) }}</span>
                   </v-flex>
