@@ -66,10 +66,10 @@ export default {
       if (leaveData.length === 0) return 0;
       if (leaveData.length > 1) return 3;
       if (
-        leaveData.from &&
-        leaveData.to &&
-        leaveData.fromHours &&
-        leaveData.toHours
+        leaveData[0].from &&
+        leaveData[0].to &&
+        leaveData[0].fromHours &&
+        leaveData[0].toHours
       )
         return 2;
       return 1;
