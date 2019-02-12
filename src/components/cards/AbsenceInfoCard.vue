@@ -8,7 +8,7 @@
     <v-flex xs6 class="user-date-arrow">
       <v-layout class="justify-center">
         <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
-        <h4 style="position: absolute;bottom: 0px;">{{info.diffDay}} days Annual leave</h4>
+        <h4 style="position: absolute;bottom: 0px;">{{info.diffDay}} day{{ info.diffDay > 1 ? 's' : '' }} Annual leave</h4>
       </v-layout>
     </v-flex>
     <v-flex xs3>
@@ -34,7 +34,7 @@
   </v-layout>
   <v-layout column v-else-if="type === 3" class="text-xs-left" justify-center>
     <v-flex xs12 :key="index" v-for="(item, index) in leaveData">
-      <h3 v-if="Object.keys(item).length === 4" class="subheading font-weight-bold my-1">
+      <h3 v-if="hasHours(item)" class="subheading font-weight-bold my-1">
         {{item.from}}
         <span class="subheading font-weight-bold orange--text">from</span>
         {{item.fromHours}}
@@ -55,11 +55,23 @@ export default {
       default: () => []
     }
   },
+  methods: {
+    hasHours(day) {
+      return day.from && day.to && day.fromHours && day.toHours;
+    }
+  },
   computed: {
     type() {
-      if (this.leaveData.length === 0) return 0;
-      if (this.leaveData.length > 1) return 3;
-      if (Object.keys(this.leaveData) > 2) return 2;
+      const { leaveData } = this;
+      if (leaveData.length === 0) return 0;
+      if (leaveData.length > 1) return 3;
+      if (
+        leaveData.from &&
+        leaveData.to &&
+        leaveData.fromHours &&
+        leaveData.toHours
+      )
+        return 2;
       return 1;
     },
     info() {
@@ -75,7 +87,7 @@ export default {
             dateEnd: mTo.format("DD"),
             dayStart: mFrom.format("ddd"),
             dayEnd: mTo.format("ddd"),
-            diffDay: mTo.diff(mFrom, "days")
+            diffDay: mTo.diff(mFrom, "days") + 1
           };
         }
         case 2: {
@@ -86,7 +98,7 @@ export default {
             timeStart: fromHours,
             timeEnd: toHours,
             dayOff: mFrom,
-            diffHours: mTo.diff(mFrom, "hours")
+            diffHours: mTo.diff(mFrom, "hours", true)
           };
         }
       }
@@ -95,3 +107,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.user-date-arrow {
+  position: relative;
+}
+</style>
