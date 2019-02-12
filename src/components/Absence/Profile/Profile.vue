@@ -131,12 +131,9 @@ export default {
       });
     },
     getDataAbsenceDaysOff() {
-      const paramsId = 118771;
+      const id = this.$route.params.id;
       const year = new Date().getFullYear();
-      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(
-        paramsId,
-        year
-      );
+      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(id, year);
       this.$http.get(apiAbsenceDaysOff).then(res => {
         this.daysOff = res.data.leaveData;
       });
