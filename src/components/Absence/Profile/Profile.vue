@@ -1,67 +1,156 @@
 <template>
   <div class="px-3 py-3">
     <ProfileHeader></ProfileHeader>
-    <ProfileListDate :dates.sync="daysOff"></ProfileListDate>
+    <ProfileListDate :dates.sync="daysOff" :tags="tags"></ProfileListDate>
     <v-layout column>
-      <ProfileFooter :items="items"></ProfileFooter>
+      <ProfileFooter
+        :dataUpcommingAbsence="dataUpcommingAbsence"
+        :dataAbsenceList="dataAbsenceList"
+        @receivePopupAbsenceApproved="receivePopupAbsenceApproved"
+        @receivePopupAbsenceRequest="receivePopupAbsenceRequest"
+      />
     </v-layout>
+    <ModalDetailAbsence
+      @closeDialog="isShowAbsenceDetailsModal = false"
+      :absenceDetail="absenceDetail"
+      :isShow="isShowAbsenceDetailsModal"
+      :apiAbsence="apiAbsence"
+      isViewOnly
+    />
+    <AbsenceCreate
+      :getAbsenceReasonsApiUrl="apiAbsence.getReason"
+      :items="dataCardCreate"
+      :leaveTypes="leaveTypes"
+      :popup="popup"
+    />
   </div>
 </template>
 <script>
-  import ProfileHeader from "./ProfileHeader"
-  import ProfileListDate from "./ProfileListDate"
-  import ProfileFooter from "./ProfileFooter"
+import ProfileHeader from "./ProfileHeader"
+import ProfileListDate from "./ProfileListDate"
+import ProfileFooter from "./ProfileFooter"
+import ModalDetailAbsence from "../modal-detail-absence/Form";
+import AbsenceCreate from "../CreateAbsence";
+import { leaveTypes } from "../../../config.js";
+import { dataCardCreate } from "../data";
 
-  export default {
-    data () {
-      return {
-        daysOff: [
-          "2019-01-25",
-          "2019-01-26",
-          "2019-02-02",
-          "2019-02-05",
-          "2019-02-15",
-          "2019-03-15",
-          "2019-04-05",
-          "2019-05-12",
-          "2019-06-15",
-          "2019-07-13",
-          "2019-08-23",
-          "2019-09-21",
-          "2019-11-10"
-        ],
-        items: [
-          {
-            startDate: "25 Aug, Sun",
-            endDate: "25 Aug, Sun",
-            leaveType: "Nguyễn",
-            approvedBy: "Văn",
-            status: "approved",
-            address: "Duy Sơn"
-          },
-          {
-            startDate: "25 Aug, Sun",
-            endDate: "25 Aug, Sun",
-            leaveType: "Nguyễn",
-            approvedBy: "Văn",
-            status: "pending",
-            address: "Duy Sơn"
-          },
-          {
-            startDate: "25 Aug, Sun",
-            endDate: "25 Aug, Sun",
-            leaveType: "Nguyễn",
-            approvedBy: "Văn",
-            status: "canceled",
-            address: "Duy Sơn"
-          }
-        ]
-      }
+export default {
+  props: {
+    apiAbsence: Object,
+    leaveTypes: {
+      type: Array,
+      default: () => leaveTypes
     },
-    components: {
-      ProfileHeader,
-      ProfileListDate,
-      ProfileFooter
+    dataCardCreate: {
+      type: Array,
+      default: () => dataCardCreate
+    }
+  },
+  data () {
+    return {
+      daysOff: [
+        { date: "2019-01-25", leaveType: "Military Leave" },
+        { date: "2019-01-26", leaveType: "Jury Duty" },
+        { date: "2019-02-02", leaveType: "Religious Observance" },
+        { date: "2019-02-05", leaveType: "Bereavement" },
+        { date: "2019-02-15", leaveType: "Pregnancy" },
+        { date: "2019-03-10", leaveType: "Vacation" },
+        { date: "2019-03-15", leaveType: "Holiday" },
+        { date: "2019-04-05", leaveType: "Sick Leave" },
+        { date: "2019-05-12", leaveType: "Business Trip" },
+        { date: "2019-06-15", leaveType: "Maternity/Paternity" },
+        { date: "2019-07-13", leaveType: "Temporary Disability" },
+        { date: "2019-09-21", leaveType: "Childbirth" },
+        { date: "2019-11-10", leaveType: "Administrative Leave" }
+      ],
+      items: [
+        {
+          startDate: "25 Aug, Sun",
+          endDate: "25 Aug, Sun",
+          leaveType: "Nguyễn",
+          approvedBy: "Văn",
+          status: "approved",
+          address: "Duy Sơn"
+        },
+        {
+          startDate: "25 Aug, Sun",
+          endDate: "25 Aug, Sun",
+          leaveType: "Nguyễn",
+          approvedBy: "Văn",
+          status: "pending",
+          address: "Duy Sơn"
+        },
+        {
+          startDate: "25 Aug, Sun",
+          endDate: "25 Aug, Sun",
+          leaveType: "Nguyễn",
+          approvedBy: "Văn",
+          status: "canceled",
+          address: "Duy Sơn"
+        }
+      ],
+      tags: [
+        { name: "Military Leave"},
+        { name: "Jury Duty"},
+        { name: "Religious Observance"},
+        { name: "Bereavement"},
+        { name: "Pregnancy"},
+        { name: "Vacation"},
+        { name: "Holiday"},
+        { name: "Sick Leave"},
+        { name: "Business Trip"},
+        { name: "Maternity/Paternity"},
+        { name: "Temporary Disability "},
+        { name: "Childbirth"},
+        { name: "Administrative Leave"},
+      ],
+      dataAbsenceList: [],
+      dataUpcommingAbsence: [],
+      isShowAbsenceDetailsModal: false,
+      absenceDetail: null,
+      popup: {
+        showCreate: false
+      },
+    }
+  },
+  components: {
+    ProfileHeader,
+    ProfileListDate,
+    ProfileFooter,
+    ModalDetailAbsence,
+    AbsenceCreate
+    
+  },
+  mounted() {
+    const apiFilterWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const apiFilterUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    this.getDataAbsenceFromApi(apiFilterWhoAbsencing).then(data => {
+      const { items } = data;
+      this.dataAbsenceList = items;
+    });
+    this.getDataAbsenceFromApi(apiFilterUpcommingAbsence).then(data => {
+      const { items } = data;
+      this.dataUpcommingAbsence = items;
+    });
+  },
+  methods: {
+    getDataAbsenceFromApi(apiUrl) {
+      return new Promise(resolve => {
+        this.$http.post(`${apiUrl}`).then(res => {
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
+    },
+    receivePopupAbsenceApproved() {
+      this.popup.showCreate = true;
+    },
+    receivePopupAbsenceRequest(absenceDetail) {
+      this.absenceDetail = absenceDetail;
+      this.isShowAbsenceDetailsModal = true;
     }
   }
+};
 </script>

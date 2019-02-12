@@ -10,8 +10,8 @@
         <user-avatar
           :imageUrl="nodeData.avatar.imageUrl"
           :name="nodeData.avatar.name"
-          class="v-image-user"
-          :typeId="typeId"
+          class="v-image-user elevation-6"
+          avatarSize="130px"
         />
       </v-card-actions>
       <v-card-title class="success--text">

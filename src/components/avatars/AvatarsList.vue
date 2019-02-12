@@ -7,6 +7,8 @@
       :name="member.name"
       :backgroundColor="colorsListForAvatars[index]"
       :index="members.lenght-index"
+      width="24px"
+      class="d-block"
     />
   </v-list-tile>
 </template>

@@ -8,14 +8,38 @@
               <v-layout row>
                 <v-flex d-flex>
                   <v-card tile flat>
-                    <v-layout row wrap>
+                    <v-layout wrap>
                       <v-flex xs12>
                         <v-card color="primary">
-                          <v-flex right>
-                            <v-btn color="success">Approve</v-btn>
-                            <v-btn color="error">Reject</v-btn>
-                            <v-btn color="primary">Reassign</v-btn>
-                            <v-btn>Request Information</v-btn>
+                          <v-flex right v-if="!isViewOnly">
+                            <v-btn
+                              @click="approveRequest"
+                              :disabled="!checkDueDate || absenceDetail.status === 'approved'"
+                              color="success"
+                            >
+                              <span>Approve</span>
+                              <v-progress-circular v-if="isApproving" class="ml-2" indeterminate></v-progress-circular>
+                            </v-btn>
+                            <v-btn
+                              @click="rejectRequest"
+                              :disabled="!checkDueDate || absenceDetail.status === 'rejected'"
+                              color="error"
+                            >
+                              <span>Reject</span>
+                              <v-progress-circular v-if="isRejecting" class="ml-2" indeterminate></v-progress-circular>
+                            </v-btn>
+                            <v-btn :disabled="!checkDueDate" color="primary">Reassign</v-btn>
+                            <v-btn :disabled="!checkDueDate">Request Information</v-btn>
+                          </v-flex>
+                          <v-flex right v-else>
+                            <v-btn :disabled="absenceDetail.status !== 'approved'" color="success">
+                              <span>Approve</span>
+                            </v-btn>
+                            <v-btn :disabled="absenceDetail.status !== 'rejected'" color="error">
+                              <span>Reject</span>
+                            </v-btn>
+                            <v-btn disabled color="primary">Reassign</v-btn>
+                            <v-btn disabled>Request Information</v-btn>
                           </v-flex>
                         </v-card>
                       </v-flex>
@@ -32,22 +56,29 @@
                             <v-textarea
                               solo
                               light
+                              disabled
                               name="input-7-4"
-                              label="Reason"
-                              v-model="description"
+                              label="Reason for absence"
+                              v-model="absenceDetail.leaveReason"
                             ></v-textarea>
                           </v-flex>
                         </v-layout>
                       </v-flex>
                       <v-flex xs12>
-                        <v-layout row>
+                        <div v-if="isFetchingPolicies" class="text-xs-center">
+                          <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                        </div>
+                        <v-layout v-else row>
                           <v-flex xs6>
                             <v-card dark color="secondary">
                               <v-expansion-panel light>
-                                <v-expansion-panel-content>
-                                  <div slot="header">Absence Policy Group</div>
+                                <v-expansion-panel-content
+                                  v-for="item in dataPolicies.policies"
+                                  :key="item.id"
+                                >
+                                  <div slot="header">{{ item.name }}</div>
                                   <v-card>
-                                    <v-card-text>{{absenceDetail.leaveDescription}}</v-card-text>
+                                    <v-card-text>{{item.description}}</v-card-text>
                                   </v-card>
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -55,18 +86,20 @@
                           </v-flex>
                           <v-flex xs6>
                             <v-layout column style="height: 200px">
-                              <PolicyAlert :dataApproved="dataApproved"/>
+                              <PolicyAlert :dataAlerts="dataPolicies.alerts"/>
                             </v-layout>
                           </v-flex>
                         </v-layout>
                       </v-flex>
 
-                      <v-layout column>
+                      <v-flex xs12>
                         <InputComment @onComment="onComment" :avatar="absenceDetail"/>
-                      </v-layout>
-
-                      <v-layout>
-                        <ListComment :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      </v-flex>
+                      <v-flex v-if="isFetchingComments" xs12 class="text-xs-center">
+                        <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                      </v-flex>
+                      <v-layout v-else xs12 wrap column v-for="item in dataCommentAbsence" :key="item.id" class="showComment">
+                        <ListComment :comment="item" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -81,22 +114,25 @@
                       :imageUrl="(absenceDetail.avatar||{}).imageUrl"
                       :name="absenceDetail.employeeName"
                       class="user-img"
-                      :imgActive="imgActive"
+                      avatarSize="100px"
                     />
                   </div>
                   <span class="headline font-weight-bold">{{absenceDetail.employeeName}}</span>
                   <span class="body-1">12 Tickets</span>
                   <hr class="my-2" size="1" color="#E7EAED" width="80%">
-                  <v-chip class="headline" label>Absen Detail</v-chip>
-                  <span class="body-1">Created</span>
-                  <span>Jan 24th, 8:15am</span>
+                  <v-chip class="headline white black--text" disabled label>Absence Detail</v-chip>
+                  <span class="body-1">Submitted</span>
+                  <span>{{changeDateSubmitted}}</span>
                   <span class="my-2">Category</span>
-                  <v-chip color="primary" text-color="white">Photobok</v-chip>
+                  <LeaveTypeChip :leaveType="absenceDetail.leaveType.name"/>
                   <hr class="my-3" size="1" color="#E7EAED" width="80%">
-                  <v-chip class="my-1 headline" label>HR Approvers</v-chip>
+                  <v-chip class="my-1 headline white black--text" disabled label>HR Approvers</v-chip>
 
                   <v-layout row wrap class="ml-2">
-                    <v-flex v-for="item in dataHRCard" :key="item.id">
+                    <div class="text-xs-center" v-if="isHRCard">
+                      <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
+                    </div>
+                    <v-flex v-else v-for="(item,index) in dataHRCard" :key="index">
                       <CardHRApprover :item="item"/>
                     </v-flex>
                   </v-layout>
@@ -107,6 +143,10 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="infoSnackbar" :bottom="true" :left="true" :timeout="6000">
+      {{ savedMessage }}
+      <v-btn color="primary" flat @click="infoSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -117,7 +157,10 @@ import InputComment from "./InputComment";
 import ListComment from "./ListComment";
 import UserAvatar from "../../avatars/Avatar";
 import CardHRApprover from "./CardHRApprover";
-import { dataHRCard, itemsComment, dataApproved } from "../data";
+import LeaveTypeChip from "../../chips/LeaveTypeChip";
+import { itemsComment, dataApproved } from "../data";
+import moment from "moment";
+
 export default {
   components: {
     UserAvatar,
@@ -125,15 +168,12 @@ export default {
     PolicyAlert,
     InputComment,
     ListComment,
-    CardHRApprover
+    CardHRApprover,
+    LeaveTypeChip
   },
   props: {
     isShow: Boolean,
     absenceDetail: Object,
-    dataHRCard: {
-      type: Array,
-      default: () => dataHRCard
-    },
     dataApproved: {
       type: Array,
       default: () => dataApproved
@@ -141,24 +181,124 @@ export default {
     itemsComment: {
       type: Array,
       default: () => itemsComment
+    },
+    isViewOnly: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     onComment(comment) {
       this.$emit("onComment", comment);
+    },
+    getPoliciesRequest() {
+      this.isFetchingPolicies = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsencePolicies(id);
+      this.$http.get(url).then(res => {
+        this.isFetchingPolicies = false;
+        this.dataPolicies = res.data;
+      });
+    },
+    getHRCardRequest() {
+      this.isHRCard = true;
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getAbsenceHRApprovers(id);
+      this.$http.get(url).then(res => {
+        this.isHRCard = false;
+        this.dataHRCard = res.data;
+      });
+    },
+    getCommentAbsence(){
+      this.isFetchingComments = true
+      const { id } = this.absenceDetail;
+      const url = this.apiAbsence.getCommentAbsence(id);
+      this.$http.get(url).then(res => {
+        this.isFetchingComments = false;
+        this.dataCommentAbsence = res.data;
+      });
+    },
+    approveRequest() {
+      this.isApproving = true;
+      this.$http
+        .post(`${this.apiAbsence.approveRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isApproving = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve success !!";
+        })
+        .catch(() => {
+          this.isApproving = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Approve failed !!";
+        });
+    },
+    rejectRequest() {
+      this.isRejecting = true;
+      this.$http
+        .post(`${this.apiAbsence.rejectRequest}`, {
+          id: this.absenceDetail.id
+        })
+        .then(() => {
+          this.isRejecting = false;
+          this.$emit("updatedAbsenceDetail");
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject success !!";
+        })
+        .catch(() => {
+          this.isRejecting = false;
+          this.infoSnackbar = true;
+          this.savedMessage = "Reject failed !!";
+        });
+    }
+  },
+  computed: {
+    changeDateSubmitted() {
+      return (
+        moment(this.absenceDetail.submittedDate).format("MMM D, YYYY ") +
+        "at " +
+        moment(this.absenceDetail.submittedDate).format("hh:mm:ss A")
+      );
+    },
+    checkDueDate() {
+      return moment(this.absenceDetail.dueDate) >= moment();
     }
   },
   data() {
     return {
-      description: "",
+      leaveReason: "",
       typeComment: 1,
       typeId: 4,
-      imgActive: true
+      dataHRCard: [],
+      dataCommentAbsence: [],
+      isHRCard: false,
+      infoSnackbar: false,
+      savedMessage: "",
+      isApproving: false,
+      dataPolicies: {},
+      isFetchingPolicies: false,
+      isRejecting: false,
+      isFetchingComments: false
     };
+  },
+  watch: {
+    isShow(val) {
+      if (val) {
+        this.getPoliciesRequest();
+        this.getHRCardRequest();
+        this.getCommentAbsence();
+      }
+    }
   }
 };
 </script>
 <style scoped>
+.showComment {
+  width: 100%;
+}
 .v-image-user-2 {
   width: 100px;
   height: 100px;

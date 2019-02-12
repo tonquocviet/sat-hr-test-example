@@ -123,5 +123,3 @@ import UserAvatar from "../../avatars/Avatar";
     }
   }
 </style>
-
-
