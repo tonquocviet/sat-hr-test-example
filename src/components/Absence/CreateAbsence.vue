@@ -6,7 +6,7 @@
           <v-layout row wrap>
             <v-flex xs5>
               <v-autocomplete
-                v-model="name_employer"
+                v-model="employeeName"
                 item-text="name"
                 item-value="id"
                 :items="items"
@@ -14,7 +14,7 @@
                 return-object
               ></v-autocomplete>
               <v-autocomplete
-                v-model="type_absence"
+                v-model="absenceType"
                 item-text="name"
                 item-value="id"
                 :items="leaveTypes"
@@ -22,7 +22,7 @@
                 return-object
               ></v-autocomplete>
               <v-autocomplete
-                v-model="reason_employer"
+                v-model="employeeReason"
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
@@ -30,69 +30,86 @@
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
-                <v-card>
-                  <v-date-picker 
-                    v-model="dates"
-                    multiple
-                    width="100%"
-                  ></v-date-picker>
-                </v-card>
+              <v-card>
+                <v-date-picker v-model="dates" multiple width="100%"></v-date-picker>
+              </v-card>
             </v-flex>
             <v-flex xs5 offset-xs1>
               <v-layout row wrap>
                 <v-flex xs6>
+                  <v-flex class="text-md-center">
+                    <v-chip color="teal darken-1">
+                      <span class="white--text">Current Balance</span>
+                    </v-chip>
+                  </v-flex>
                   <div class="show-note text-md-center white--text">
                     <span>10 out of 22 used</span>
                   </div>
                 </v-flex>
                 <v-flex xs6>
+                  <v-flex class="text-md-center">
+                    <v-chip color="red darken-2">
+                      <span class="white--text">New Balance</span>
+                    </v-chip>
+                  </v-flex>
                   <div class="show-note text-md-center white--text">
                     <span>10 out of 22 used</span>
                   </div>
                 </v-flex>
               </v-layout>
-              <div class="mt-5">
-                <span>You've selected</span>
-                <span class="font-weight-bold"> May 24 - 30 .</span>
-                <span>That's a total of</span>
-                <span class="font-weight-bold">$ working days</span>
-                <span> spanning over</span>
-                <span class="font-weight-bold"> 7 days</span>
+              <div class="mt-4">
+                <v-layout row wrap v-for="(day, index) in dates" :key="index">
+                  <v-flex class="mt-3">
+                    <span>You have selected</span>
+                    <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
+                    <span v-else>{{ formatHour(day) }}</span>
+                  </v-flex>
+                  <v-spacer/>
+                  <v-flex class="text-xs-right">
+                    <v-icon
+                      @click="removeSelectDay(index, day)"
+                      class="mt-3 remove-select-day"
+                      color="black"
+                    >remove_circle</v-icon>
+                  </v-flex>
+                </v-layout>
               </div>
-              <v-layout row wrap class="mt-5">
-                <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="error" class="ic-status" fab>
-                    <v-icon >clear</v-icon>
-                  </v-btn>
+              <v-flex class="mt-4">
+                <v-layout column style="height: 200px">
+                  <PolicyAlert :dataAlerts="dataApproved"/>
+                </v-layout>
+              </v-flex>
+              <v-checkbox color="black" label="Full Day" v-model="fullDay"></v-checkbox>
+              <v-flex sm6 md3>
+                <span>Or</span>
+                <v-text-field :value="hours" label="hours" readonly></v-text-field>
+              </v-flex>
+              <v-layout>
+                <v-flex>
+                  <v-flex>
+                    <span>From</span>
+                  </v-flex>
+                  <v-time-picker
+                    format="24hr"
+                    :width="200"
+                    v-model="timeFrom"
+                    :max="timeTo"
+                    color="blue darken-2"
+                    :readonly="fullDay"
+                  ></v-time-picker>
                 </v-flex>
-                <v-flex xs9>
-                  <v-card class="blockquote">
-                    <span class="body-1">On May 28 there's a shortage of IOS developers </span>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap class="mt-5">
-                <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="grey" class="ic-status" fab dark>
-                    <v-icon>priority_high</v-icon>
-                  </v-btn>
-                </v-flex>
-                <v-flex xs9>
-                  <v-card class="blockquote">
-                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap class="mt-5">
-                <v-flex xs2 class="pt-3 mr-2">
-                  <v-btn color="success" class="ic-status" fab>
-                    <v-icon>done</v-icon>
-                  </v-btn>
-                </v-flex>
-                <v-flex xs9>
-                  <v-card class="blockquote">
-                    <span class="body-1">On May 28 there's a shortage of IOS developers</span>
-                  </v-card>
+                <v-flex>
+                  <v-flex>
+                    <span>To</span>
+                  </v-flex>
+                  <v-time-picker
+                    format="24hr"
+                    :width="200"
+                    v-model="timeTo"
+                    :min="timeFrom"
+                    color="blue darken-2"
+                    :readonly="fullDay"
+                  ></v-time-picker>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -116,12 +133,22 @@
   </v-layout>
 </template>
 <script>
+import PolicyAlert from "../alerts/PolicyAlert";
+import { dataApproved } from "./data";
+import moment from "moment";
 export default {
+  components: {
+    PolicyAlert
+  },
   props: {
     popup: Object,
     getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
-    items: Array
+    items: Array,
+    dataApproved: {
+      type: Array,
+      default: () => dataApproved
+    }
   },
   mounted() {
     this.getAbsenceReasonsRequest().then(data => {
@@ -133,21 +160,91 @@ export default {
       return new Promise(resolve => {
         this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
           resolve({
-            items: res.data,
+            items: res.data
           });
         });
       });
+    },
+    removeSelectDay(index, day) {
+      this.dates.splice(index, 1);
+
+      delete this.absenceInfo[day];
+    },
+    formatDay(date) {
+      return moment(date).format("MM/DD/YYYY");
+    },
+    formatHour(date) {
+      return `${date} from ${this.absenceInfo[date].timeFrom} to ${
+        this.absenceInfo[date].timeTo
+      }`;
+    },
+    clearInfo() {
+      this.fullDay = true;
+      this.timeFrom = this.timeTo = "";
+    }
+  },
+  watch: {
+    dates(val) {
+      if (val.length > Object.keys(this.absenceInfo).length) {
+        this.absenceInfo[val[val.length - 1]] = {
+          fullDay: this.fullDay,
+          timeFrom: this.timeFrom,
+          timeTo: this.timeTo
+        };
+        this.clearInfo();
+      } else {
+        Object.keys(this.absenceInfo).forEach(v => {
+          if (!val.includes(v)) delete this.absenceInfo[v];
+        });
+        if (val.length) {
+          const info = this.absenceInfo[val[val.length - 1]];
+          this.fullDay = info.fullDay;
+          this.timeFrom = info.timeFrom;
+          this.timeTo = info.timeTo;
+        } else {
+          this.clearInfo();
+        }
+      }
+    },
+    timeFrom(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].timeFrom = val;
+      }
+    },
+    timeTo(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].timeTo = val;
+      }
+    },
+    fullDay(val) {
+      if (this.dates.length) {
+        this.absenceInfo[this.dates[this.dates.length - 1]].fullDay = val;
+      }
+    }
+  },
+  computed: {
+    hours() {
+      if (this.timeFrom && this.timeTo) {
+        const [h1, m1] = this.timeFrom.split(":").map(t => +t);
+        const [h2, m2] = this.timeTo.split(":").map(t => +t);
+        return ((h2 * 60 + m2 - (h1 * 60 + m1)) / 60).toFixed(1);
+      }
+      return 0;
     }
   },
   data() {
     return {
       dataAbsenceReasons: [],
       dates: [],
-      name_employer: null,
-      type_absence: null,
-      reason_employer: null,
+      employeeName: null,
+      absenceType: null,
+      employeeReason: null,
+      absenceInfo: {},
+      fullDay: true,
+      timeFrom: "",
+      timeTo: ""
     };
-  },
+  }
 };
 </script>
 
@@ -157,7 +254,10 @@ export default {
   background-color: grey;
   line-height: 50px;
 }
-.ic-status{
+.ic-status {
   z-index: 1;
+}
+.remove-select-day {
+  cursor: pointer;
 }
 </style>
