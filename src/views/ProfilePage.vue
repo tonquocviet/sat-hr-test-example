@@ -18,7 +18,9 @@ export default {
         filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
         filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
         getAbsenceHRApprovers: absenceId =>
-          `${baseUrl}/absence/${absenceId}/approvers`
+          `${baseUrl}/absence/${absenceId}/approvers`,
+        getAbsenceDaysOff: (id, year) =>
+          `${baseUrl}/absence-profile/${id}/leave-data?year=${year}`
       }
     };
   }

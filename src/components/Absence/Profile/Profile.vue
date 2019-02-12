@@ -26,9 +26,9 @@
   </div>
 </template>
 <script>
-import ProfileHeader from "./ProfileHeader"
-import ProfileListDate from "./ProfileListDate"
-import ProfileFooter from "./ProfileFooter"
+import ProfileHeader from "./ProfileHeader";
+import ProfileListDate from "./ProfileListDate";
+import ProfileFooter from "./ProfileFooter";
 import ModalDetailAbsence from "../modal-detail-absence/Form";
 import AbsenceCreate from "../CreateAbsence";
 import { leaveTypes } from "../../../config.js";
@@ -46,23 +46,9 @@ export default {
       default: () => dataCardCreate
     }
   },
-  data () {
+  data() {
     return {
-      daysOff: [
-        { date: "2019-01-25", leaveType: "Military Leave" },
-        { date: "2019-01-26", leaveType: "Jury Duty" },
-        { date: "2019-02-02", leaveType: "Religious Observance" },
-        { date: "2019-02-05", leaveType: "Bereavement" },
-        { date: "2019-02-15", leaveType: "Pregnancy" },
-        { date: "2019-03-10", leaveType: "Vacation" },
-        { date: "2019-03-15", leaveType: "Holiday" },
-        { date: "2019-04-05", leaveType: "Sick Leave" },
-        { date: "2019-05-12", leaveType: "Business Trip" },
-        { date: "2019-06-15", leaveType: "Maternity/Paternity" },
-        { date: "2019-07-13", leaveType: "Temporary Disability" },
-        { date: "2019-09-21", leaveType: "Childbirth" },
-        { date: "2019-11-10", leaveType: "Administrative Leave" }
-      ],
+      daysOff: [],
       items: [
         {
           startDate: "25 Aug, Sun",
@@ -90,19 +76,19 @@ export default {
         }
       ],
       tags: [
-        { name: "Military Leave"},
-        { name: "Jury Duty"},
-        { name: "Religious Observance"},
-        { name: "Bereavement"},
-        { name: "Pregnancy"},
-        { name: "Vacation"},
-        { name: "Holiday"},
-        { name: "Sick Leave"},
-        { name: "Business Trip"},
-        { name: "Maternity/Paternity"},
-        { name: "Temporary Disability "},
-        { name: "Childbirth"},
-        { name: "Administrative Leave"},
+        { name: "Military Leave" },
+        { name: "Jury Duty" },
+        { name: "Religious Observance" },
+        { name: "Bereavement" },
+        { name: "Pregnancy" },
+        { name: "Vacation" },
+        { name: "Holiday" },
+        { name: "Sick Leave" },
+        { name: "Business Trip" },
+        { name: "Maternity/Paternity" },
+        { name: "Temporary Disability " },
+        { name: "Childbirth" },
+        { name: "Administrative Leave" }
       ],
       dataAbsenceList: [],
       dataUpcommingAbsence: [],
@@ -110,8 +96,8 @@ export default {
       absenceDetail: null,
       popup: {
         showCreate: false
-      },
-    }
+      }
+    };
   },
   components: {
     ProfileHeader,
@@ -119,7 +105,6 @@ export default {
     ProfileFooter,
     ModalDetailAbsence,
     AbsenceCreate
-    
   },
   mounted() {
     const apiFilterWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
@@ -132,6 +117,7 @@ export default {
       const { items } = data;
       this.dataUpcommingAbsence = items;
     });
+    this.getDataAbsenceDaysOff();
   },
   methods: {
     getDataAbsenceFromApi(apiUrl) {
@@ -142,6 +128,17 @@ export default {
             totalRecords: res.data.totalRecords
           });
         });
+      });
+    },
+    getDataAbsenceDaysOff() {
+      const paramsId = 118771;
+      const year = new Date().getFullYear();
+      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(
+        paramsId,
+        year
+      );
+      this.$http.get(apiAbsenceDaysOff).then(res => {
+        this.daysOff = res.data.leaveData;
       });
     },
     receivePopupAbsenceApproved() {
