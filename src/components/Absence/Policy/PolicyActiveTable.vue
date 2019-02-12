@@ -28,7 +28,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
-      <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination light v-model="pagination.page" :total-visible="7" :length="pages"></v-pagination>
     </div>
   </div>
 </template>
@@ -48,11 +48,12 @@ export default {
         sort: {
           isAsc: !descending,
           columnName: sortBy
-        }
+        },
+        status: "active"
       };
       return new Promise(resolve => {
         this.$http
-          .post(`${this.apiPolicy.filterPolicyActive}`, filterRequest)
+          .post(`${this.apiPolicy.filterPolicy}`, filterRequest)
           .then(res => {
             this.loading = false;
             resolve({
@@ -104,7 +105,6 @@ export default {
         this.getDataFromApi().then(data => {
           this.dataFilterPolicy = data.items;
           this.totalRecords = data.totalRecords;
-          this.$emit("lengthPolicy", data.items.length);
         });
       },
       deep: true

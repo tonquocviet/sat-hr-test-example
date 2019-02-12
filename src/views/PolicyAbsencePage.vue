@@ -16,7 +16,6 @@ export default {
       apiPolicy: {
         filterPolicy: `${baseUrl}/absence-policy/filter`,
         filterCountPolicy: `${baseUrl}/absence-policy/count`,
-        filterPolicyActive: `${baseUrl}/absence-policy/filter`,
       },
     };
   }

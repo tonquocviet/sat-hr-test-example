@@ -16,13 +16,7 @@
           class="text-xs-left"
         >{{ props.item.createdBy.firstName }} {{ props.item.createdBy.lastName }}</td>
         <td class="text-xs-left">
-          <v-chip
-            v-if="props.item.status == 'active'"
-            small
-            color="success"
-            text-color="white"
-          >{{ props.item.status }}</v-chip>
-          <v-chip v-else small color="default">{{ props.item.status }}</v-chip>
+          <v-chip small color="default">{{ props.item.status }}</v-chip>
         </td>
         <td
           class="text-xs-left"
@@ -30,7 +24,7 @@
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
-      <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination light v-model="pagination.page" :total-visible="7" :length="pages"></v-pagination>
     </div>
   </div>
 </template>
@@ -50,7 +44,8 @@ export default {
         sort: {
           isAsc: !descending,
           columnName: sortBy
-        }
+        },
+        status: "inactive"
       };
       return new Promise(resolve => {
         this.$http

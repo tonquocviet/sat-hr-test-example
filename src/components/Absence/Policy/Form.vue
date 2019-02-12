@@ -49,7 +49,17 @@
               v-else
             />
           </v-tab-item>
-          <v-tab-item>Page In active</v-tab-item>
+          <v-tab-item>
+            <PolicyInActive v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
+            <PolicyCard
+              @showMoreView="showMoreView"
+              :dataFilterPolicy="dataFilterPolicy"
+              :loading="loading"
+              :isShowMore="isShowMore"
+              :hasShowMore="hasShowMore"
+              v-else
+            />
+          </v-tab-item>
         </v-tabs>
       </v-flex>
     </v-flex>
@@ -64,13 +74,15 @@ import PolicyTable from "./PolicyTable";
 import PolicyCard from "./PolicyCard";
 import CreatePolicy from "./CreatePolicy";
 import PolicyActive from "./PolicyActiveTable";
+import PolicyInActive from "./PolicyInActiveTable"
 
 export default {
   components: {
     PolicyTable,
     PolicyCard,
     CreatePolicy,
-    PolicyActive
+    PolicyActive,
+    PolicyInActive
   },
   props: {
     viewMode: String,
