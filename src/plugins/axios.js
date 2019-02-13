@@ -15,7 +15,8 @@ Vue.prototype.apiAbsence = {
     getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
     rejectRequest: `${baseUrl}/absence/reject-request`,
     getAbsenceReportUrl: month => `${baseUrl}/absence/report/${month}`,
-    getAbsenceEmployeeProfileApi: employeeId => `${baseUrl}/employee/${employeeId}/profile`
+    getAbsenceEmployeeProfileApi: employeeId => `${baseUrl}/employee/${employeeId}/profile`,
+    getEmployees: `${baseUrl}/get-employees`
 };
 Vue.prototype.apiPolicy = {
     filterPolicy: `${baseUrl}/absence-policy/filter`,
