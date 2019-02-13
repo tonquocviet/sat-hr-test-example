@@ -36,7 +36,7 @@
           <v-icon size="15">av_timer</v-icon>
           <span>
             Expired date
-            <span class="red--text">{{formatDateTime(item.expiredDate)}}</span>
+            <span class="red--text">{{item.expiredDate | formatFullDay}}</span>
           </span>
         </div>
         <div>
@@ -49,17 +49,12 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   props: {
     item: Object,
     isClickable: Boolean
   },
   methods: {
-    formatDateTime(date) {
-      return moment(date).format("DD MMM YYYY");
-    },
     showModalDetail() {
       this.$emit("showDetailModal", this.item);
     }

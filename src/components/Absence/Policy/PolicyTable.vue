@@ -26,7 +26,7 @@
         </td>
         <td
           class="text-xs-left"
-        >{{ props.item.expiredDate != null ? expiredDate(props.item.expiredDate) : 'N/A' }}</td>
+        >{{ props.item.expiredDate != null ? (props.item.expiredDate | formatFullDay) : 'N/A' }}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
@@ -35,7 +35,6 @@
   </div>
 </template>
 <script>
-import moment from "moment";
 export default {
   methods: {
     getDataFromApi() {
@@ -60,9 +59,6 @@ export default {
             });
           });
       });
-    },
-    expiredDate(date) {
-      return moment(date).format("MM/DD/YYYY");
     }
   },
   mounted() {

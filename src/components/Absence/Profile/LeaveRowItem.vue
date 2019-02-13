@@ -5,11 +5,11 @@
       <v-layout class="py-4">
         <v-flex xs2 column text-md-left class="pl-3">
           <h4 class="primary--text">Start Date</h4>
-          <h3>{{ startDate(item.startDate) }}</h3>
+          <h3>{{ item.startDate | formatFullDay }}</h3>
         </v-flex>
         <v-flex xs2 column text-md-left class="pl-3">
           <h4 class="primary--text">End Date</h4>
-          <h3>{{ endDate(item.endDate)}}</h3>
+          <h3>{{ item.endDate | formatFullDay }}</h3>
         </v-flex>
         <v-flex xs2 column text-md-left class="pl-3">
           <h4 class="primary--text">Leave Type</h4>
@@ -53,7 +53,6 @@
   </v-flex>
 </template>
 <script>
-import moment from "moment";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 
 export default {
@@ -70,14 +69,6 @@ export default {
     },
     openPopupAbsenceRequest(absenceDetail) {
       this.$emit("emitPopupAbsenceRequest", absenceDetail);
-    }
-  },
-  computed: {
-    startDate() {
-      return date => moment(date).format("MM-DD-YYYY");
-    },
-    endDate() {
-      return date => moment(date).format("MM-DD-YYYY");
     }
   }
 };

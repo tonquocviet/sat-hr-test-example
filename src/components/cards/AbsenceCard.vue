@@ -80,9 +80,6 @@ export default {
       const end = moment(endDate);
       return end.diff(start, "days");
     },
-    submittedDate(date) {
-      return moment(date).format("MM-DD-YYYY");
-    },
     showModalDetail() {
       this.$emit("showDetailModal", this.item);
     }
