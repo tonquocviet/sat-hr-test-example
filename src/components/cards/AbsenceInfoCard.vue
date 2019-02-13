@@ -22,7 +22,7 @@
       <h1>{{info.timeStart}}</h1>
       <h3 class="subheading font-weight-bold">{{info.dayOff}}</h3>
     </v-flex>
-    <v-flex xs6 class="user-date-arrow">
+    <v-flex xs6 class="user-date-arrow my-2">
       <v-layout justify-center>
         <v-icon size="67" color="orange darken-2">arrow_right_alt</v-icon>
       </v-layout>
@@ -97,7 +97,7 @@ export default {
           return {
             timeStart: fromHours,
             timeEnd: toHours,
-            dayOff: mFrom,
+            dayOff: mFrom.format("MM-DD-YYYY"),
             diffHours: mTo.diff(mFrom, "hours", true)
           };
         }
