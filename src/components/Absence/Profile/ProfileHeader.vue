@@ -11,116 +11,23 @@
       />
     </v-flex>
     <v-flex sm12 md9>
-      <h2>Deavax Leave</h2>
+      <h2>Regular Leave</h2>
       <v-layout row wrap>
-        <v-flex md3 class="px-1 py-1">
-          <v-card style="border-top:7px solid blue;border-radius:6px">
-            <v-card-title>
-              <div style="width:100%">
-                <h3>A Leave Of Absence</h3>
-                <span class="font-weight-bold display-1 blue--text">7/7</span>
-                <br>
-                <b>Absence</b>
-                <br>
-                <v-layout>
-                  <v-flex xs6 class="grey--text">Number</v-flex>
-                  <v-flex xs6 class="grey--text text-xs-right">2</v-flex>
-                </v-layout>
-              </div>
-            </v-card-title>
-            <v-card-actions class="px-0">
-              <v-btn flat color="blue" @click="isShowModalAdjust = true">
-                <span>ADJUST</span>
-                <v-icon size="15">arrow_forward</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex md3 class="px-1 py-1">
-          <v-card style="border-top:7px solid green;border-radius:6px">
-            <v-card-title>
-              <div style="width:100%">
-                <h3>A Leave Of Absence</h3>
-                <span class="font-weight-bold display-1 green--text">16/16</span>
-                <br>
-                <b>Absence</b>
-                <br>
-                <v-layout>
-                  <v-flex xs6 class="grey--text">Number</v-flex>
-                  <v-flex xs6 class="grey--text text-xs-right">2</v-flex>
-                </v-layout>
-              </div>
-            </v-card-title>
-            <v-card-actions class="px-0">
-              <v-btn flat color="green" @click="isShowModalAdjust = true">
-                <span>ADJUST</span>
-                <v-icon size="15">arrow_forward</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex md3 class="px-1 py-1">
-          <v-card style="border-top:7px solid red;border-radius:6px">
-            <v-card-title>
-              <div style="width:100%">
-                <h3>A Leave Of Absence</h3>
-                <span class="font-weight-bold display-1 red--text">7/7</span>
-                <br>
-                <b>Absence</b>
-                <br>
-                <v-layout>
-                  <v-flex xs6 class="grey--text">Number</v-flex>
-                  <v-flex xs6 class="grey--text text-xs-right">2</v-flex>
-                </v-layout>
-              </div>
-            </v-card-title>
-            <v-card-actions class="px-0">
-              <v-btn flat color="red" @click="isShowModalAdjust = true">
-                <span>ADJUST</span>
-                <v-icon size="15">arrow_forward</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-        <v-flex md3 class="px-1 py-1">
-          <v-card style="border-top:7px solid purple;border-radius:6px">
-            <v-card-title>
-              <div style="width:100%">
-                <h3>A Leave Of Absence</h3>
-                <span class="grey--text">Absence</span>
-                <br>
-                <span class="grey--text">Absence</span>
-                <br>
-                <span class="grey--text">Absence</span>
-                <br>
-                <span class="grey--text">Absence</span>
-              </div>
-            </v-card-title>
-            <v-card-actions class="px-0">
-              <v-btn flat color="purple" @click="isShowModalAdjust = true">
-                <span>ADJUST</span>
-                <v-icon size="15">arrow_forward</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
+        <LeaveTypeCard v-for="(item, index) in absenceBalance.slice(0, 4)" :leaveData="item" :key="index" type="AJUST" />
       </v-layout>
     </v-flex>
-    <ModalAdjust :isShowModalAdjust="isShowModalAdjust" @closeDialog="isShowModalAdjust = false"/>
   </v-layout>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";
-import ModalAdjust from "./ModalAdjust";
+import LeaveTypeCard from '@/components/cards/LeaveTypeCard';
 export default {
   components: {
     UserAvatar,
-    ModalAdjust
+    LeaveTypeCard
   },
-  data() {
-    return {
-      isShowModalAdjust: false
-    };
+  props: {
+    absenceBalance: Array
   }
 };
 </script>
