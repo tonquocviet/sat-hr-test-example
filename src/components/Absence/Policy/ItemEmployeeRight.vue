@@ -7,16 +7,16 @@
           <v-icon class="subheading mr-1">av_timer</v-icon>
           <span>{{ item.date }}, at 20:20:01</span>
         </v-layout>
-        <v-layout colum class="mx-2 pt-2">
-          <a href="#">{{ item.eraser }}</a>
-          <h4 class="success--text mx-2" v-if="item.status ==='added'">add</h4>
-          <h4 class="error--text mx-2" v-else>removed</h4>
+        <v-flex>
+          <a href="#">{{ item.eraser }}</a> 
+          <span class="success--text mx-2 font-weight-bold" v-if="item.status ==='added'">add</span>
+          <span class="error--text mx-2 font-weight-bold" v-else>removed</span>
           <a href="#">{{ item.employee[0].employee || item.employee }}</a>
-          <div v-if="Array.isArray(item.employee)" class="px-2">
-            <span>along with</span>
+          <span v-if="Array.isArray(item.employee)">
+            along with
             <a href="" class="ml-2">{{nameEmployee(item.employee)}}</a>
-          </div>
-        </v-layout>
+          </span>
+        </v-flex>
       </div>
     </v-card>
     <v-card flat>
