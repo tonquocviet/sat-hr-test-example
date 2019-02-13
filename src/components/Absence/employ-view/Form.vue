@@ -8,7 +8,7 @@
         <v-flex xs10></v-flex>
       </v-layout>
       <v-flex xs2 row>
-        <v-btn color="primary">
+        <v-btn color="primary" @click="popup.showCreate = true">
           <v-icon>add_circle</v-icon>Add New Absence
         </v-btn>
       </v-flex>
