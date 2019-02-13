@@ -16,10 +16,13 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="data !== null">
         <tr v-for="row in tableRows" :key="row.id">
           <td>
-            <div class="text-xs-right pr-2 font-weight-bold" :style="{width: firstColumnWidth}">{{row.name}}</div>
+            <div
+              class="text-xs-right pr-2 font-weight-bold"
+              :style="{width: firstColumnWidth}"
+            >{{row.name}}</div>
           </td>
           <td v-for="cell in row.cells" :key="cell.id">
             <ReportCell
@@ -31,6 +34,7 @@
         </tr>
       </tbody>
     </table>
+    <v-progress-linear v-if="data === null" height="2" :indeterminate="true"></v-progress-linear>
   </v-container>
 </template>
 
@@ -40,10 +44,10 @@ import ReportCell from "./ReportCell";
 
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
-const dateToMoment = ({ from, to, name }) => ({
+const dateToMoment = ({ from, to, leaveType }) => ({
   from: moment(from, "MM/DD/YYYY"),
   to: moment(to, "MM/DD/YYYY"),
-  name
+  leaveType
 });
 const getDateInWeek = date =>
   ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date % 7];
@@ -53,8 +57,7 @@ export default {
   },
   props: {
     data: Array,
-    date: Object,
-    holidays: Array
+    date: Object
   },
   computed: {
     gridWidth() {
@@ -69,7 +72,10 @@ export default {
     tableRows() {
       const { year, month } = this.date;
       return this.data.map(e => {
-        const { id, name, daysOff = [] } = e;
+        const { employee = { firstName: "", lastName: "" }, daysOff = [] } = e;
+        const id = employee.id;
+
+        const name = `${employee.firstName} ${employee.lastName}`;
 
         const daysOffInMomentFormat = daysOff.map(dateToMoment);
         const cells = range(1, this.daysInMonth + 1, 1).map(d => {
@@ -83,9 +89,9 @@ export default {
           return {
             id: d,
             text: "",
-            leaveType: (leaveType || {}).name,
+            leaveType: (leaveType || {}).leaveType,
             dateType: isWeekend ? "weekend" : "",
-            employeeType: e.employeeType
+            employeeType: employee.employeeType
           };
         });
 

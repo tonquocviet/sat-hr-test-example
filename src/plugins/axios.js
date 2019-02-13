@@ -12,7 +12,8 @@ Vue.prototype.apiAbsence = {
     getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers`,
     getCommentAbsence: absenceId => `${baseUrl}/absence/${absenceId}/comments`,
     getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
-    rejectRequest: `${baseUrl}/absence/reject-request`
+    rejectRequest: `${baseUrl}/absence/reject-request`,
+    getAbsenceReportUrl: month => `${baseUrl}/absence/report/${month}`
 };
 Vue.prototype.apiPolicy = {
     filterPolicy: `${baseUrl}/absence-policy/filter`,
