@@ -26,7 +26,9 @@
         </td>
         <td
           class="text-xs-left"
-        >{{ props.item.expiredDate != null ? (props.item.expiredDate | formatFullDay) : 'N/A' }}</td>
+          v-if="props.item.expiredDate"
+        >{{props.item.expiredDate | formatFullDay}}</td>
+        <td class="text-xs-left" v-else>N/A</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
