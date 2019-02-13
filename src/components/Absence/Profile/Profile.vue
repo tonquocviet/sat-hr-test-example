@@ -1,7 +1,11 @@
 <template>
   <div class="px-3 py-3">
     <ProfileHeader></ProfileHeader>
-    <ProfileListDate :dates.sync="daysOff" :tags="tags"></ProfileListDate>
+    <ProfileListDate
+      :dates.sync="daysOff"
+      :tags="tags"
+      @getDataAbsenceDaysOff="getDataAbsenceDaysOff"
+    ></ProfileListDate>
     <v-layout column>
       <ProfileFooter
         :dataUpcommingAbsence="dataUpcommingAbsence"
@@ -117,7 +121,6 @@ export default {
       const { items } = data;
       this.dataUpcommingAbsence = items;
     });
-    this.getDataAbsenceDaysOff();
   },
   methods: {
     getDataAbsenceFromApi(apiUrl) {
@@ -130,13 +133,18 @@ export default {
         });
       });
     },
-    getDataAbsenceDaysOff() {
+    getDataAbsenceDaysOff(year) {
       const id = this.$route.params.id;
-      const year = new Date().getFullYear();
-      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(id, year);
-      this.$http.get(apiAbsenceDaysOff).then(res => {
-        this.daysOff = res.data.leaveData;
-      });
+      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(id);
+      this.$http
+        .get(apiAbsenceDaysOff, {
+          params: {
+            year
+          }
+        })
+        .then(res => {
+          this.daysOff = res.data.leaveData;
+        });
     },
     receivePopupAbsenceApproved() {
       this.popup.showCreate = true;
