@@ -153,7 +153,6 @@ export default {
       this.$http
         .get(this.apiAbsence.getAbsenceEmployeeProfileApi(id))
         .then(res => {
-          debugger;
           this.employeeProfile = res.data;
         });
     }
