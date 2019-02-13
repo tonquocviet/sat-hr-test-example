@@ -30,7 +30,7 @@
           <h3 class="subheading">
             To lower
             <span class="subheading font-weight-bold">{{employeeName}} <LeaveTypeChip :leaveType="leaveType" is-responsive/></span>
-            balance, please maje an absence request with
+            balance, please make an absence request with
             <span
               class="subheading font-weight-bold"
             ><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> as reason and then approve it.
