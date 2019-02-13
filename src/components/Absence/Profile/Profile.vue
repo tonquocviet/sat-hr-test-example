@@ -1,6 +1,6 @@
 <template>
   <div class="px-3 py-3">
-    <ProfileHeader :employeeProfile="employeeProfile"></ProfileHeader>
+    <ProfileHeader :absenceBalance="dataAbsenceBalance" :employeeProfile="employeeProfile"/>
     <ProfileListDate
       :dates.sync="daysOff"
       :tags="tags"
@@ -90,6 +90,7 @@ export default {
       ],
       dataAbsenceList: [],
       dataUpcommingAbsence: [],
+      dataAbsenceBalance: [],
       isShowAbsenceDetailsModal: false,
       absenceDetail: null,
       popup: {
@@ -115,6 +116,7 @@ export default {
       const { items } = data;
       this.dataUpcommingAbsence = items;
     });
+    this.getAbsenceBalance();
     this.getEmployeeProfile();
   },
   methods: {
@@ -140,6 +142,13 @@ export default {
         .then(res => {
           this.daysOff = res.data.leaveData;
         });
+    },
+    getAbsenceBalance() {
+      const { id } = this.$route.params;
+      const apiAbsenceBalance = this.apiAbsence.getAbsenceBalance(id);
+      this.$http.get(apiAbsenceBalance).then(res => {
+        this.dataAbsenceBalance = res.data;
+      });
     },
     receivePopupAbsenceApproved() {
       this.popup.showCreate = true;
