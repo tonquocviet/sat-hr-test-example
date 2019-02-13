@@ -18,7 +18,7 @@
       />
     </v-flex>
     <v-flex xs12>
-      <ListTableForChart :apiPolicy="apiPolicy"/>
+      <ListTableForChart/>
     </v-flex>
   </v-layout>
 </template>
@@ -50,7 +50,6 @@ export default {
     }
   },
   props: {
-    apiPolicy: Object,
     dataChartBar: {
       type: Array,
       default: () => dataChartBar

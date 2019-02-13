@@ -1,19 +1,13 @@
 <template>
-  <ReportWrapper />
+  <ReportWrapper/>
 </template>
 
 <script>
-import ReportWrapper from "../components/ReportWrapper"
+import ReportWrapper from "../components/ReportWrapper";
 
 export default {
   components: {
-    ReportWrapper,
-  },
-  data() {
-    return {
-      apiEndPoints: {
-      },
-    };
+    ReportWrapper
   }
 };
 </script>

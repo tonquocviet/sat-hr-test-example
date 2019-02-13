@@ -14,11 +14,9 @@
       @closeDialog="isShowAbsenceDetailsModal = false"
       :absenceDetail="absenceDetail"
       :isShow="isShowAbsenceDetailsModal"
-      :apiAbsence="apiAbsence"
       isViewOnly
     />
     <AbsenceCreate
-      :getAbsenceReasonsApiUrl="apiAbsence.getReason"
       :items="dataCardCreate"
       :leaveTypes="leaveTypes"
       :popup="popup"
@@ -36,7 +34,6 @@ import { dataCardCreate } from "../data";
 
 export default {
   props: {
-    apiAbsence: Object,
     leaveTypes: {
       type: Array,
       default: () => leaveTypes

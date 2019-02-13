@@ -13,7 +13,7 @@
         <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
         <td class="text-xs-left">{{ props.item.employeeId }}</td>
         <td class="text-xs-left">
-          <router-link :to="detailLink + '/' + props.item.id">{{ props.item.employeeName }}</router-link>
+          <router-link :to="detailLink + '/' + props.item.employeeId">{{ props.item.employeeName }}</router-link>
         </td>
         <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
         <td class="text-xs-left">
@@ -57,7 +57,6 @@ import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
     needRenderApproveAction: Boolean,
-    apiAbsence: Object,
     detailLink: String,
     absenceStatus: {
       type: String,

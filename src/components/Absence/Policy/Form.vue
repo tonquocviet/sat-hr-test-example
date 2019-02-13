@@ -28,7 +28,7 @@
             >{{ inactive }}</v-chip>
           </v-tab>
           <v-tab-item>
-            <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
+            <PolicyTable v-if="viewMode === 'list'"/>
             <PolicyCard
               @showMoreView="showMoreView"
               :dataFilterPolicy="dataFilterPolicy"
@@ -60,8 +60,7 @@ export default {
     CreatePolicy
   },
   props: {
-    viewMode: String,
-    apiPolicy: Object
+    viewMode: String
   },
   computed: {
     hasShowMore() {
