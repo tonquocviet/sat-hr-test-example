@@ -16,7 +16,8 @@ Vue.prototype.apiAbsence = {
   rejectRequest: `${baseUrl}/absence/reject-request`
 };
 Vue.prototype.apiPolicy = {
-  filterPolicy: `${baseUrl}/absence/filter`,
+  filterPolicy: `${baseUrl}/absence-policy/filter`,
+  filterTablePerformance: `${baseUrl}/absence/filter`,
   filterCountPolicy: `${baseUrl}/absence-policy/count`,
   getCountries: `${baseUrl}/get-countries`
 };
