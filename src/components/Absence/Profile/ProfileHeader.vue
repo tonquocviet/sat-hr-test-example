@@ -2,32 +2,52 @@
   <v-layout row wrap>
     <v-flex sm12 md3>
       <UserAvatar
-        imageUrl="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png"
-        name="Vuong Phan"
+        :imageUrl="employeeProfileImageUrl"
+        :name="employeeProfileFullname"
         width="unset"
         justifyContent="flex-start"
         avatarSize="250px"
         class="user-img"
+        backgroundColor="primary"
       />
     </v-flex>
     <v-flex sm12 md9>
       <h2>Regular Leave</h2>
       <v-layout row wrap>
-        <LeaveTypeCard v-for="(item, index) in absenceBalance.slice(0, 4)" :leaveData="item" :key="index" type="AJUST" />
+        <LeaveTypeCard
+          v-for="(item, index) in absenceBalance.slice(0, 4)"
+          :leaveData="item"
+          :key="index"
+          type="AJUST"
+          :employeeName="employeeProfileFullname"
+        />
       </v-layout>
     </v-flex>
   </v-layout>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";
-import LeaveTypeCard from '@/components/cards/LeaveTypeCard';
+import LeaveTypeCard from "@/components/cards/LeaveTypeCard";
 export default {
   components: {
     UserAvatar,
     LeaveTypeCard
   },
   props: {
-    absenceBalance: Array
+    absenceBalance: Array,
+    employeeProfile: Object
+  },
+  computed: {
+    employeeProfileImageUrl() {
+      return this.employeeProfile && this.employeeProfile.avatar
+        ? this.employeeProfile.avatar.imageUrl
+        : null;
+    },
+    employeeProfileFullname() {
+      return this.employeeProfile
+        ? `${this.employeeProfile.firstName} ${this.employeeProfile.lastName}`
+        : "";
+    }
   }
 };
 </script>

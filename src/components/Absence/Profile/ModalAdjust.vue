@@ -10,7 +10,7 @@
         </v-card-title>
         <v-card-text>
           <h3 class="subheading">
-            <span class="subheading font-weight-bold">William birkin</span> has been in
+            <span class="subheading font-weight-bold">{{employeeName}}</span> has been in
             <span class="subheading font-weight-bold"><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> policy since
             <span class="subheading font-weight-bold">{{effectiveDate | formatFullDay}}</span>
           </h3>
@@ -22,14 +22,14 @@
               class="subheading font-weight-bold"
               @click="removeEmployName"
             >here</a> to remove
-            <span class="subheading font-weight-bold">William birkin</span> out of this
+            <span class="subheading font-weight-bold">{{employeeName}}</span> out of this
             <span class="subheading font-weight-bold"><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> policy.
           </h3>
         </v-card-text>
         <v-card-text>
           <h3 class="subheading">
             To lower
-            <span class="subheading font-weight-bold">William birkin <LeaveTypeChip :leaveType="leaveType" is-responsive/></span>
+            <span class="subheading font-weight-bold">{{employeeName}} <LeaveTypeChip :leaveType="leaveType" is-responsive/></span>
             balance, please maje an absence request with
             <span
               class="subheading font-weight-bold"
@@ -61,7 +61,8 @@ export default {
   props: {
     isShowModalAdjust: Boolean,
     leaveType: String,
-    effectiveDate: String
+    effectiveDate: String,
+    employeeName: String
   },
   methods: {
     removeEmployName() {

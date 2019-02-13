@@ -1,6 +1,6 @@
 <template>
   <div class="px-3 py-3">
-    <ProfileHeader :absenceBalance="dataAbsenceBalance"/>
+    <ProfileHeader :absenceBalance="dataAbsenceBalance" :employeeProfile="employeeProfile"/>
     <ProfileListDate
       :dates.sync="daysOff"
       :tags="tags"
@@ -20,11 +20,7 @@
       :isShow="isShowAbsenceDetailsModal"
       isViewOnly
     />
-    <AbsenceCreate
-      :items="dataCardCreate"
-      :leaveTypes="leaveTypes"
-      :popup="popup"
-    />
+    <AbsenceCreate :items="dataCardCreate" :leaveTypes="leaveTypes" :popup="popup"/>
   </div>
 </template>
 <script>
@@ -50,6 +46,7 @@ export default {
   data() {
     return {
       daysOff: [],
+      employeeProfile: null,
       items: [
         {
           startDate: "25 Aug, Sun",
@@ -120,6 +117,7 @@ export default {
       this.dataUpcommingAbsence = items;
     });
     this.getAbsenceBalance();
+    this.getEmployeeProfile();
   },
   methods: {
     getDataAbsenceFromApi(apiUrl) {
@@ -148,11 +146,9 @@ export default {
     getAbsenceBalance() {
       const { id } = this.$route.params;
       const apiAbsenceBalance = this.apiAbsence.getAbsenceBalance(id);
-      this.$http
-        .get(apiAbsenceBalance)
-        .then(res => {
-          this.dataAbsenceBalance = res.data;
-        });
+      this.$http.get(apiAbsenceBalance).then(res => {
+        this.dataAbsenceBalance = res.data;
+      });
     },
     receivePopupAbsenceApproved() {
       this.popup.showCreate = true;
@@ -160,6 +156,14 @@ export default {
     receivePopupAbsenceRequest(absenceDetail) {
       this.absenceDetail = absenceDetail;
       this.isShowAbsenceDetailsModal = true;
+    },
+    getEmployeeProfile() {
+      const id = this.$route.params.id;
+      this.$http
+        .get(this.apiAbsence.getAbsenceEmployeeProfileApi(id))
+        .then(res => {
+          this.employeeProfile = res.data;
+        });
     }
   }
 };
