@@ -97,8 +97,20 @@
                       <v-flex v-if="isFetchingComments" xs12 class="text-xs-center">
                         <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
                       </v-flex>
-                      <v-layout v-else xs12 wrap column v-for="item in dataCommentAbsence" :key="item.id" class="showComment">
-                        <ListComment :comment="item" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      <v-layout
+                        v-else
+                        xs12
+                        wrap
+                        column
+                        v-for="item in dataCommentAbsence"
+                        :key="item.id"
+                        class="showComment"
+                      >
+                        <ListComment
+                          :comment="item"
+                          :itemsComment="itemsComment"
+                          :absenceDetail="absenceDetail"
+                        />
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -208,8 +220,8 @@ export default {
         this.dataHRCard = res.data;
       });
     },
-    getCommentAbsence(){
-      this.isFetchingComments = true
+    getCommentAbsence() {
+      this.isFetchingComments = true;
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getCommentAbsence(id);
       this.$http.get(url).then(res => {

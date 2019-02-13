@@ -57,14 +57,14 @@ export const itemsComment = [
 export const dataApproved = [
   {
     id: 1,
-    type: 1,
-    text: "On May 28, there's a shortage of iOS developer"
+    type: "error",
+    alert: "On May 28, there's a shortage of iOS developer"
   },
-  { id: 2, type: 2, text: "On May 25, there's a shortage of project B" },
+  { id: 2, type: "info", alert: "On May 25, there's a shortage of project B" },
   {
     id: 3,
-    type: 3,
-    text: "You're within your Casual Leave qoute, which will reduce to 10 days"
+    type: "success",
+    alert: "You're within your Casual Leave qoute, which will reduce to 10 days"
   }
 ];
 
