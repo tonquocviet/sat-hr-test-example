@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12 sm12>
     <v-card flat>
-      <h3 class="ml-2 pt-2">Employee activity</h3>
+      <h3 class="ml-2 pt-2">Ativities</h3>
       <div class="ml-4 pt-2" v-for="item in items" :key="item.id">
         <v-layout colum class="mx-2 mt-3">
           <v-icon class="subheading mr-1">av_timer</v-icon>
