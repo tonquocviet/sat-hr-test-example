@@ -9,8 +9,6 @@
         <v-tab-item>
           <EmployeeList></EmployeeList>
         </v-tab-item>
-        <v-tab-item>Performance</v-tab-item>
-        <v-tab-item>Employee List</v-tab-item>
         <v-tab-item>
           <ChartPolicy/>
         </v-tab-item>
