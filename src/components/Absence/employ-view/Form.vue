@@ -39,6 +39,7 @@
       :items="dataCardCreate"
       :leaveTypes="leaveTypes"
       :popup="popup"
+      employee-view
     />
   </div>
 </template>
