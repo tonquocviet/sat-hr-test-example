@@ -6,13 +6,13 @@
           class="headline info lighten-2 text-xs-center"
           primary-title
         >
-          <LeaveTypeChip leaveType="Military Leave" is-responsive/> Adjustment
+          <LeaveTypeChip :leaveType="leaveType" is-responsive/> Adjustment
         </v-card-title>
         <v-card-text>
           <h3 class="subheading">
-            <span class="subheading font-weight-bold">William birkin</span> has been in
-            <span class="subheading font-weight-bold"><LeaveTypeChip leaveType="Military Leave" is-responsive/></span> policy since
-            <span class="subheading font-weight-bold">31/01/2019</span>
+            <span class="subheading font-weight-bold">{{employeeName}}</span> has been in
+            <span class="subheading font-weight-bold"><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> policy since
+            <span class="subheading font-weight-bold">{{effectiveDate | formatFullDay}}</span>
           </h3>
         </v-card-text>
         <v-card-text>
@@ -22,18 +22,18 @@
               class="subheading font-weight-bold"
               @click="removeEmployName"
             >here</a> to remove
-            <span class="subheading font-weight-bold">William birkin</span> out of this
-            <span class="subheading font-weight-bold"><LeaveTypeChip leaveType="Military Leave" is-responsive/></span> policy.
+            <span class="subheading font-weight-bold">{{employeeName}}</span> out of this
+            <span class="subheading font-weight-bold"><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> policy.
           </h3>
         </v-card-text>
         <v-card-text>
           <h3 class="subheading">
             To lower
-            <span class="subheading font-weight-bold">William birkin <LeaveTypeChip leaveType="Military Leave" is-responsive/></span>
-            balance, please maje an absence request with
+            <span class="subheading font-weight-bold">{{employeeName}} <LeaveTypeChip :leaveType="leaveType" is-responsive/></span>
+            balance, please make an absence request with
             <span
               class="subheading font-weight-bold"
-            ><LeaveTypeChip leaveType="Military Leave" is-responsive/></span> as reason and then approve it.
+            ><LeaveTypeChip :leaveType="leaveType" is-responsive/></span> as reason and then approve it.
           </h3>
         </v-card-text>
         <v-divider></v-divider>
@@ -59,7 +59,10 @@ export default {
     LeaveTypeChip
   },
   props: {
-    isShowModalAdjust: Boolean
+    isShowModalAdjust: Boolean,
+    leaveType: String,
+    effectiveDate: String,
+    employeeName: String
   },
   methods: {
     removeEmployName() {

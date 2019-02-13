@@ -54,6 +54,20 @@ export const itemsComment = [
   }
 ];
 
+export const dataApproved = [
+  {
+    id: 1,
+    type: "info",
+    alert: "On May 28, there's a shortage of iOS developer"
+  },
+  { id: 2, type: "error", alert: "On May 25, there's a shortage of project B" },
+  {
+    id: 3,
+    type: "success",
+    alert: "You're within your Casual Leave qoute, which will reduce to 10 days"
+  }
+];
+
 export const dataEmployCard = [
   {
     id: 1,

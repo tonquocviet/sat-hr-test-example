@@ -12,6 +12,7 @@
                 :items="dataEmployees"
                 label="Choose name employer"
                 return-object
+                :disabled="employeeView"
               ></v-autocomplete>
               <v-autocomplete
                 v-model="absenceType"
@@ -61,7 +62,7 @@
                 <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
                     <span>You have selected&nbsp;</span>
-                    <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
+                    <span v-if="absenceInfo[day].fullDay">{{ day | formatFullDay }} full day</span>
                     <span v-else>{{ formatHour(day) }}</span>
                   </v-flex>
                   <v-spacer/>
@@ -135,7 +136,6 @@
 <script>
 import PolicyAlert from "../alerts/PolicyAlert";
 import { dataApproved } from "./data";
-import moment from "moment";
 export default {
   components: {
     PolicyAlert
@@ -147,6 +147,10 @@ export default {
     dataApproved: {
       type: Array,
       default: () => dataApproved
+    },
+    employeeView: {
+      type: Boolean,
+      default: () => false
     }
   },
   mounted() {
@@ -168,9 +172,6 @@ export default {
       this.dates.splice(index, 1);
 
       delete this.absenceInfo[day];
-    },
-    formatDay(date) {
-      return moment(date).format("MM/DD/YYYY");
     },
     formatHour(date) {
       return `${date} from ${this.absenceInfo[date].timeFrom} to ${
