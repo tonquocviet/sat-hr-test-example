@@ -53,7 +53,6 @@
 import PolicyTable from "./PolicyTable";
 import PolicyCard from "./PolicyCard";
 import CreatePolicy from "./CreatePolicy";
-
 export default {
   components: {
     PolicyTable,

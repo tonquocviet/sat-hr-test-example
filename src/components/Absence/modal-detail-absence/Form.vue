@@ -46,10 +46,11 @@
                       <v-flex xs12>
                         <v-layout row style="height: 130px;">
                           <v-flex xs6>
-                            <CardCountAbsence
-                              :startDate="absenceDetail.startDate"
-                              :endDate="absenceDetail.endDate"
-                            />
+                            <div class="elevation-1">
+                              <div style="height: 117px" class="text-xs-center pl-3 pr-3 pt-2 pb-2">
+                                <AbsenceInfoCard :leaveData="absenceDetail.leaveData"/>
+                              </div>
+                            </div>
                           </v-flex>
                           <v-flex xs6>
                             <v-textarea
@@ -162,7 +163,7 @@
 </template>
 
 <script>
-import CardCountAbsence from "../../cards/CardCountAbsence";
+import AbsenceInfoCard from "../../cards/AbsenceInfoCard";
 import PolicyAlert from "../../alerts/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
@@ -175,7 +176,7 @@ import moment from "moment";
 export default {
   components: {
     UserAvatar,
-    CardCountAbsence,
+    AbsenceInfoCard,
     PolicyAlert,
     InputComment,
     ListComment,

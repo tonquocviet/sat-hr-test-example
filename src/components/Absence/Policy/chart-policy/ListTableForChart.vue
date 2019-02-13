@@ -53,7 +53,7 @@ export default {
       };
       return new Promise(resolve => {
         this.$http
-          .post(`${this.apiPolicy.filterPolicy}`, filterRequest)
+          .post(`${this.apiPolicy.filterTablePerformance}`, filterRequest)
           .then(res => {
             this.loading = false;
             resolve({
