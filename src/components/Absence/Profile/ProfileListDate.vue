@@ -59,7 +59,7 @@ export default {
   },
   props: {
     dates: Array,
-    tags: Array,
+    tags: Array
   },
   data() {
     return {
@@ -113,6 +113,9 @@ export default {
         ).getFullYear() + "";
       return `${defaultYear}-${this.selectedIndex + 1}`;
     }
+  },
+  mounted() {
+    this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
   }
 };
 </script>
