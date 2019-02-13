@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      date: "2016-11",
+      date: new Date().toISOString().substr(0, 7),
       employees: null
     };
   },
