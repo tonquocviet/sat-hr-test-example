@@ -21,9 +21,7 @@
     </v-flex>
     <v-flex md3 sx12 class="pl-3">
       <v-layout wrap>
-        <ItemEmployeeRight :title="title.removed" :items="items" :status="removed"></ItemEmployeeRight>
-        <v-divider></v-divider>
-        <ItemEmployeeRight :title="title.created" :items="items" :status="added"></ItemEmployeeRight>
+        <ItemEmployeeRight :items="items"></ItemEmployeeRight>
       </v-layout>
     </v-flex>
     <CreateEmployee :employees="desserts" @closeDialog="isShowCreate= false" :isShowCreate="isShowCreate"></CreateEmployee>
@@ -62,42 +60,54 @@ export default {
           designation: 159,
           joined: 6.0,
           contact: 24,
-          email: "vanphong250895@gmail.com"
+          email: "vanphong250895@gmail.com",
+          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg"
         },
         {
           name: "Frozen Yogurt2",
           designation: 159,
           joined: 6.0,
           contact: 24,
-          email: "vanphong250895@gmail.com"
+          email: "vanphong250895@gmail.com",
+          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg"
         },
         {
           name: "Frozen Yogurt3",
           designation: 159,
           joined: 6.0,
           contact: 24,
-          email: "vanphong250895@gmail.com"
+          email: "vanphong250895@gmail.com",
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg"
         }
       ],
-      title: {
-        removed: "Removed Employee",
-        created: "Created Employee",
-      },
       items: [
         {
           eraser: "Frozen Yogurt",
           employee: "John",
           date: "25 Aug 2019",
+          status: "added"
         },
         {
           eraser: "Frozen Yogurt",
           employee: "John",
           date: "25 Aug 2019",
+          status: "removed"
         },
         {
           eraser: "Frozen Yogurt",
-          employee: "John",
+          employee: [
+            {
+              employee: "John",
+            },
+            {
+              employee: "John",
+            },
+            {
+              employee: "John",
+            }
+          ],
           date: "25 Aug 2019",
+          status: "added"
         }
       ],
     };
