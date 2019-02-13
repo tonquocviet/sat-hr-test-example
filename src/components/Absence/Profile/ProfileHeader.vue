@@ -2,12 +2,13 @@
   <v-layout row wrap>
     <v-flex sm12 md3>
       <UserAvatar
-        imageUrl="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png"
-        name="Vuong Phan"
+        :imageUrl="employeeProfileImageUrl"
+        :name="employeeProfileFullname"
         width="unset"
         justifyContent="flex-start"
         avatarSize="250px"
         class="user-img"
+        backgroundColor="primary"
       />
     </v-flex>
     <v-flex sm12 md9>
@@ -116,6 +117,21 @@ export default {
   components: {
     UserAvatar,
     ModalAdjust
+  },
+  props: {
+    employeeProfile: Object
+  },
+  computed: {
+    employeeProfileImageUrl() {
+      return this.employeeProfile && this.employeeProfile.avatar
+        ? this.employeeProfile.avatar.imageUrl
+        : null;
+    },
+    employeeProfileFullname() {
+      return this.employeeProfile
+        ? `${this.employeeProfile.firstName} ${this.employeeProfile.lastName}`
+        : "";
+    }
   },
   data() {
     return {
