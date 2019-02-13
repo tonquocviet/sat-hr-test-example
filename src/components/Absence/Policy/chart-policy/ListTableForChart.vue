@@ -39,9 +39,6 @@ export default {
   components: {
     UserAvatar
   },
-  props: {
-    apiPolicy: Object
-  },
   methods: {
     getDataFromApi() {
       this.loading = true;

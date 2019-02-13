@@ -60,7 +60,7 @@
               <div class="mt-4">
                 <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
-                    <span>You have selected</span>
+                    <span>You have selected&nbsp;</span>
                     <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
                     <span v-else>{{ formatHour(day) }}</span>
                   </v-flex>
@@ -142,7 +142,6 @@ export default {
   },
   props: {
     popup: Object,
-    getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
     items: Array,
     dataApproved: {
@@ -158,7 +157,7 @@ export default {
   methods: {
     getAbsenceReasonsRequest() {
       return new Promise(resolve => {
-        this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
+        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
           resolve({
             items: res.data
           });

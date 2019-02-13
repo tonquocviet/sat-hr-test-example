@@ -4,7 +4,6 @@
       <Absence
         :viewMode="viewMode"
         @changeViewMode="onViewModeChange"
-        :apiAbsence="apiAbsence"
         :detailLinks="detailLinks"
       />
     </v-container>
@@ -14,7 +13,6 @@
 import Absence from "./Absence/Form";
 export default {
   props: {
-    apiAbsence: Object,
     detailLinks: Object
   },
   components: {

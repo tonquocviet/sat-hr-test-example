@@ -6,7 +6,12 @@
     :isShowEdit="false"
   >
     <template>
-      <v-layout class="px-3 py-2">
+      <v-layout class="px-3 pt-3">
+        <v-flex xs12 class="text-xs-right">
+          <ModalAddNewReason :editedItem="editedItem" @save="save" @close="close"/>
+        </v-flex>
+      </v-layout>
+      <v-layout class="px-3">
         <v-flex xs12 class="px-2 pb-3 pt-2">
           <v-data-table :headers="headers" :items="desserts" class="elevation-1 custom-table-step2">
             <template slot="items" slot-scope="props">
@@ -54,10 +59,12 @@
 
 <script>
 import MaterialPanel from "../../panels/MaterialPanel";
+import ModalAddNewReason from "./ModalAddStep2";
 
 export default {
   components: {
-    MaterialPanel
+    MaterialPanel,
+    ModalAddNewReason
   },
   data: () => ({
     dialog: false,
@@ -161,7 +168,14 @@ export default {
       this.editId = "";
     },
     save() {
-      Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      } else {
+        this.desserts.unshift({
+          id: this.desserts.length + 1,
+          ...this.editedItem
+        });
+      }
       this.close();
     }
   }

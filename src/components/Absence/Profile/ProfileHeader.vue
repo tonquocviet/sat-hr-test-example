@@ -29,7 +29,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="blue">
+              <v-btn flat color="blue" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -52,7 +52,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="green">
+              <v-btn flat color="green" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -75,7 +75,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="red">
+              <v-btn flat color="red" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -97,7 +97,7 @@
               </div>
             </v-card-title>
             <v-card-actions class="px-0">
-              <v-btn flat color="purple">
+              <v-btn flat color="purple" @click="isShowModalAdjust = true">
                 <span>ADJUST</span>
                 <v-icon size="15">arrow_forward</v-icon>
               </v-btn>
@@ -106,20 +106,28 @@
         </v-flex>
       </v-layout>
     </v-flex>
+    <ModalAdjust :isShowModalAdjust="isShowModalAdjust" @closeDialog="isShowModalAdjust = false"/>
   </v-layout>
 </template>
 <script>
 import UserAvatar from "../../avatars/Avatar";
-  export default {
-    components: {
-      UserAvatar
-    }
-  };
-</script>
-<style>
-  @media only screen and (max-width: 960px) {
-    .user-img {
-      justify-content: center !important;
-    }
+import ModalAdjust from "./ModalAdjust";
+export default {
+  components: {
+    UserAvatar,
+    ModalAdjust
+  },
+  data() {
+    return {
+      isShowModalAdjust: false
+    };
   }
+};
+</script>
+<style scoped>
+@media only screen and (max-width: 960px) {
+  .user-img {
+    justify-content: center !important;
+  }
+}
 </style>
