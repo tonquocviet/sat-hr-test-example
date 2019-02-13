@@ -35,7 +35,7 @@
   <v-layout column v-else-if="type === 3" class="text-xs-left" justify-center>
     <v-flex xs12 :key="index" v-for="(item, index) in leaveData">
       <h3 v-if="hasHours(item)" class="subheading font-weight-bold my-1">
-        {{item.from | formatDay}}
+        {{item.from | formatFullDay}}
         <span class="subheading font-weight-bold orange--text">from</span>
         {{item.fromHours}}
         <span class="subheading font-weight-bold orange--text">to</span>
@@ -43,11 +43,11 @@
       </h3>
       <h3 v-else-if="hasManyDays(item)" class="subheading font-weight-bold my-1">
         <span class="subheading font-weight-bold orange--text">from</span>
-        {{item.from | formatDay}}
+        {{item.from | formatFullDay}}
         <span class="subheading font-weight-bold orange--text">to</span>
-        {{item.to | formatDay}} full day
+        {{item.to | formatFullDay}} full day
       </h3>
-      <h3 v-else class="subheading font-weight-bold my-1">{{item.from | formatDay}} full day</h3>
+      <h3 v-else class="subheading font-weight-bold my-1">{{item.from | formatFullDay}} full day</h3>
     </v-flex>
   </v-layout>
 </template>
@@ -67,11 +67,6 @@ export default {
     },
     hasManyDays(day) {
       return day.from !== day.to;
-    }
-  },
-  filters: {
-    formatDay(day) {
-      return moment(day, "YYYY-MM-DD").format("MM-DD-YYYY");
     }
   },
   computed: {
