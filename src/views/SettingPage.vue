@@ -1,19 +1,13 @@
 <template>
-  <SettingWrapper />
+  <SettingWrapper/>
 </template>
 
 <script>
-import SettingWrapper from "../components/SettingWrapper"
+import SettingWrapper from "../components/SettingWrapper";
 
 export default {
   components: {
-    SettingWrapper,
-  },
-  data() {
-    return {
-      apiEndPoints: {
-      },
-    };
+    SettingWrapper
   }
 };
 </script>

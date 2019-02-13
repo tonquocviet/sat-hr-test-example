@@ -1,5 +1,5 @@
 <template>
-  <AbsenceWrapper :apiAbsence="apiAbsence" :detailLinks="detailLinks"/>
+  <AbsenceWrapper :detailLinks="detailLinks"/>
 </template>
 
 <script>
@@ -11,7 +11,6 @@ export default {
   },
   data() {
     return {
-      apiAbsence: this.apiAbsence,
       detailLinks: {
         forAbsenceProfile: "/absence-profile"
       }

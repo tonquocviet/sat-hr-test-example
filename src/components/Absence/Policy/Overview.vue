@@ -34,9 +34,6 @@ export default {
     TableStep2,
     UserStep3,
     Step4
-  },
-  props: {
-    apiPolicy: Object
   }
 };
 </script>

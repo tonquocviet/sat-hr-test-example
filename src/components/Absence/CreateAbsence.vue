@@ -142,7 +142,6 @@ export default {
   },
   props: {
     popup: Object,
-    getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
     items: Array,
     dataApproved: {
@@ -158,7 +157,7 @@ export default {
   methods: {
     getAbsenceReasonsRequest() {
       return new Promise(resolve => {
-        this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
+        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
           resolve({
             items: res.data
           });
