@@ -9,7 +9,7 @@
         </v-layout>
         <v-flex>
           <a href="#">{{ item.eraser }}</a> 
-          <span class="success--text mx-2 font-weight-bold" v-if="item.status ==='added'">add</span>
+          <span class="success--text mx-2 font-weight-bold" v-if="item.status ==='added'">added</span>
           <span class="error--text mx-2 font-weight-bold" v-else>removed</span>
           <a href="#">{{ item.employee[0].employee || item.employee }}</a>
           <span v-if="Array.isArray(item.employee)">
