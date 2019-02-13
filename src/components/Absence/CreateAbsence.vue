@@ -12,6 +12,7 @@
                 :items="items"
                 label="Choose name employer"
                 return-object
+                :disabled="employeeView"
               ></v-autocomplete>
               <v-autocomplete
                 v-model="absenceType"
@@ -147,6 +148,10 @@ export default {
     dataApproved: {
       type: Array,
       default: () => dataApproved
+    },
+    employeeView: {
+      type: Boolean,
+      default: () => false
     }
   },
   mounted() {
