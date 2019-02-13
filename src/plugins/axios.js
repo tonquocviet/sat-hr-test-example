@@ -10,6 +10,7 @@ Vue.prototype.apiAbsence = {
     getReason: `${baseUrl}/absence/get-reasons`,
     approveRequest: `${baseUrl}/absence/approve-request`,
     getAbsenceHRApprovers: absenceId => `${baseUrl}/absence/${absenceId}/approvers`,
+    getAbsenceDaysOff: id => `${baseUrl}/absence-profile/${id}/leave-data`,
     getCommentAbsence: absenceId => `${baseUrl}/absence/${absenceId}/comments`,
     getAbsencePolicies: absenceId => `${baseUrl}/absence/${absenceId}/policies`,
     rejectRequest: `${baseUrl}/absence/reject-request`
