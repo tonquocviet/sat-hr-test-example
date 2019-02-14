@@ -14,7 +14,7 @@
           <VDatePickerExtend
             :value="dates.map(x=>x.date)"
             :pickerDate="pickerDate"
-            :titleDateFormat="dateTimeColor"
+            :titleDateFormat="titleDateFormat"
             :selectedColor="getColorByLeaveDate"
             multiple
             width="100%"
@@ -76,7 +76,6 @@ export default {
   },
   data() {
     return {
-      dateTimeColor: () => moment(new Date()).format("dddd MMM YYYY"),
       selectedIndex: new Date().getMonth(),
       isShowEmployeeModal: false,
       isShowAbsenceDetailsModal: false,
@@ -98,6 +97,13 @@ export default {
       return (
         leaveTypes.filter(x => x.name === leaveType)[0] || { color: "primary" }
       ).color;
+    },
+    titleDateFormat(dates) {
+      const count = dates.filter(x => {
+        const [, month] = x.split("-").map(Number);
+        return month === this.selectedIndex + 1;
+      }).length;
+      return `${count} day(s)`;
     },
     showDetailModal(item) {
       this.isShowAbsenceDetailsModal = true;
