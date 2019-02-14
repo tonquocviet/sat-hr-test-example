@@ -5,25 +5,34 @@
       <v-card-title>
         <div style="width:100%">
           <h3>{{ leaveData.name }}</h3>
-          <v-chip class="font-weight-bold white--text" :color="leaveTypeColor(leaveData.name)">{{ leaveData.available }}/{{ leaveData.totals }}</v-chip>
+          <v-chip
+            class="font-weight-bold white--text"
+            :color="leaveTypeColor(leaveData.name)"
+          >{{ leaveData.available }}/{{ leaveData.totals }}</v-chip>
           <br>
           <b>Available</b>
           <br>
         </div>
       </v-card-title>
       <v-card-actions class="px-0">
-        <v-btn flat :color="leaveTypeColor(leaveData.name)" @click="isShowModalAdjust = true">
+        <v-btn flat :color="leaveTypeColor(leaveData.name)" @click="isShowModalAdjust = showModal">
           <span>{{ type }}</span>
           <v-icon size="15">arrow_forward</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
-    <ModalAdjust :leaveType="leaveData.name" :employeeName="employeeName" :effectiveDate="leaveData.effectiveDate" :isShowModalAdjust="isShowModalAdjust" @closeDialog="isShowModalAdjust = false"/>
+    <ModalAdjust
+      :leaveType="leaveData.name"
+      :employeeName="employeeName"
+      :effectiveDate="leaveData.effectiveDate"
+      :isShowModalAdjust="isShowModalAdjust"
+      @closeDialog="isShowModalAdjust = false"
+    />
   </v-flex>
 </template>
 <script>
-import { leaveTypes } from '@/config.js';
-import ModalAdjust from '@/components/Absence/Profile/ModalAdjust';
+import { leaveTypes } from "@/config.js";
+import ModalAdjust from "@/components/Absence/Profile/ModalAdjust";
 export default {
   components: {
     ModalAdjust
@@ -31,12 +40,16 @@ export default {
   props: {
     leaveData: Object,
     type: String,
-    employeeName: String
+    employeeName: String,
+    showModal: {
+      type: Boolean,
+      default: () => false
+    }
   },
   data() {
     return {
       isShowModalAdjust: false
-    }
+    };
   },
   methods: {
     leaveTypeColor(name) {
@@ -46,8 +59,8 @@ export default {
         }
       ).color;
     }
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
