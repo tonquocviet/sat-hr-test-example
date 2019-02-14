@@ -9,8 +9,8 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
-        <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
+        <td class="text-xs-left">{{ props.item.startDate | formatFullDay }}</td>
+        <td class="text-xs-left">{{ props.item.endDate | formatFullDay }}</td>
         <td class="text-xs-left">{{ props.item.employeeId }}</td>
         <td class="text-xs-left">
           <router-link :to="detailLink + '/' + props.item.employeeId">{{ props.item.employeeName }}</router-link>
@@ -25,7 +25,14 @@
             <v-btn flat icon @click="absenceClick(props.item)" class="ma-0" color="grey">
               <v-icon>remove_red_eye</v-icon>
             </v-btn>
-            <v-btn v-if="needRenderApproveAction" flat icon @click="openModalConfirm(props.item)" class="ma-0" color="success">
+            <v-btn
+              v-if="needRenderApproveAction"
+              flat
+              icon
+              @click="openModalConfirm(props.item)"
+              class="ma-0"
+              color="success"
+            >
               <v-icon>check_circle_outline</v-icon>
             </v-btn>
           </v-layout>
@@ -57,7 +64,6 @@ import LeaveTypeChip from "../chips/LeaveTypeChip";
 export default {
   props: {
     needRenderApproveAction: Boolean,
-    apiAbsence: Object,
     detailLink: String,
     absenceStatus: {
       type: String,
@@ -112,14 +118,7 @@ export default {
               totalRecords: res.data.totalRecords
             });
           });
-          
       });
-    },
-    startDate(date) {
-      return moment(date).format("MM/DD/YYYY");
-    },
-    endDate(date) {
-      return moment(date).format("MM/DD/YYYY");
     },
     onOffDays(start, end) {
       const startDate = moment(start);

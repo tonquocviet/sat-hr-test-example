@@ -8,7 +8,7 @@
         <v-flex xs10></v-flex>
       </v-layout>
       <v-flex xs2 row>
-        <v-btn color="primary">
+        <v-btn color="primary" @click="popup.showCreate = true">
           <v-icon>add_circle</v-icon>Add New Absence
         </v-btn>
       </v-flex>
@@ -34,13 +34,12 @@
       @closeDialog="isShowAbsenceDetailsModal = false"
       :absenceDetail="absenceDetail"
       :isShow="isShowAbsenceDetailsModal"
-      :apiAbsence="apiEmploy"
     />
     <AbsenceCreate
-      :getAbsenceReasonsApiUrl="apiEmploy.getReason"
       :items="dataCardCreate"
       :leaveTypes="leaveTypes"
       :popup="popup"
+      employee-view
     />
   </div>
 </template>
@@ -77,8 +76,7 @@ export default {
     dataAbsenceList: {
       type: Array,
       default: () => dataAbsenceList
-    },
-    apiEmploy: Object
+    }
   },
   data() {
     return {
@@ -92,8 +90,8 @@ export default {
     };
   },
   mounted() {
-    const apiEmployWhoAbsencing = this.apiEmploy.filterWhoAbsencing;
-    const apiEmployUpcommingAbsence = this.apiEmploy.filterUpcommingAbsence;
+    const apiEmployWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
+    const apiEmployUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
     this.getDataEmployView(apiEmployWhoAbsencing).then(data => {
       const { items } = data;
       this.dataWhoAbsencing = items;

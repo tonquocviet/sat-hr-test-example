@@ -19,9 +19,9 @@
               <span class="font-weight-bold">{{ item.employeeName }}</span>
               <v-layout>
                 <v-icon class="caption">date_range</v-icon>
-                <span class="caption ml-1">{{ submittedDate(item.startDate) }}</span>
+                <span class="caption ml-1">{{ item.startDate | formatFullDay }}</span>
                 <v-icon class="caption ml-4">date_range</v-icon>
-                <span class="caption ml-1">{{ submittedDate(item.endDate) }}</span>
+                <span class="caption ml-1">{{ item.endDate | formatFullDay }}</span>
               </v-layout>
               <v-layout align-center justify-space-between>
                 <span class="date-off error--text">{{countDay(item.startDate)}}</span>
@@ -61,9 +61,6 @@ export default {
     countDay(startDate) {
       const start = moment(startDate);
       return start.startOf("day").fromNow();
-    },
-    submittedDate(date) {
-      return moment(date).format("MM-DD-YYYY");
     },
     viewFull() {
       this.$emit("viewFull", this.name);

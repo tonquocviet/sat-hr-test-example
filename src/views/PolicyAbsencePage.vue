@@ -1,5 +1,5 @@
 <template>
-  <PolicyWrapper :apiPolicy="apiPolicy"/>
+  <PolicyWrapper/>
 </template>
 
 <script>

@@ -4,11 +4,13 @@
       <v-tabs color="cyan" dark slider-color="yellow">
         <v-tab v-for="item in itemList" :key="item.id" ripple>{{item.text}}</v-tab>
         <v-tab-item>
-          <Overview :apiPolicy="apiPolicy"/>
+          <Overview/>
         </v-tab-item>
-        <v-tab-item>Employee List</v-tab-item>
         <v-tab-item>
-          <ChartPolicy :apiPolicy="apiPolicy"/>
+          <EmployeeList></EmployeeList>
+        </v-tab-item>
+        <v-tab-item>
+          <ChartPolicy/>
         </v-tab-item>
         <v-tab-item>Settings</v-tab-item>
       </v-tabs>
@@ -17,15 +19,17 @@
 </template>
 <script>
 import Overview from "./Overview";
+import EmployeeList from "./EmployeeList";
 import ChartPolicy from "./chart-policy/Form";
+
 export default {
   components: {
     Overview,
+    EmployeeList,
     ChartPolicy
   },
   props: {
-    viewMode: String,
-    apiPolicy: Object
+    viewMode: String
   },
   data() {
     return {

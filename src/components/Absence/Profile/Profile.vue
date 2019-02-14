@@ -1,7 +1,11 @@
 <template>
   <div class="px-3 py-3">
-    <ProfileHeader></ProfileHeader>
-    <ProfileListDate :dates.sync="daysOff" :tags="tags"></ProfileListDate>
+    <ProfileHeader :absenceBalance="dataAbsenceBalance" :employeeProfile="employeeProfile"/>
+    <ProfileListDate
+      :dates.sync="daysOff"
+      :tags="tags"
+      @getDataAbsenceDaysOff="getDataAbsenceDaysOff"
+    ></ProfileListDate>
     <v-layout column>
       <ProfileFooter
         :dataUpcommingAbsence="dataUpcommingAbsence"
@@ -14,21 +18,15 @@
       @closeDialog="isShowAbsenceDetailsModal = false"
       :absenceDetail="absenceDetail"
       :isShow="isShowAbsenceDetailsModal"
-      :apiAbsence="apiAbsence"
       isViewOnly
     />
-    <AbsenceCreate
-      :getAbsenceReasonsApiUrl="apiAbsence.getReason"
-      :items="dataCardCreate"
-      :leaveTypes="leaveTypes"
-      :popup="popup"
-    />
+    <AbsenceCreate :items="dataCardCreate" :leaveTypes="leaveTypes" :popup="popup"/>
   </div>
 </template>
 <script>
-import ProfileHeader from "./ProfileHeader"
-import ProfileListDate from "./ProfileListDate"
-import ProfileFooter from "./ProfileFooter"
+import ProfileHeader from "./ProfileHeader";
+import ProfileListDate from "./ProfileListDate";
+import ProfileFooter from "./ProfileFooter";
 import ModalDetailAbsence from "../modal-detail-absence/Form";
 import AbsenceCreate from "../CreateAbsence";
 import { leaveTypes } from "../../../config.js";
@@ -36,7 +34,6 @@ import { dataCardCreate } from "../data";
 
 export default {
   props: {
-    apiAbsence: Object,
     leaveTypes: {
       type: Array,
       default: () => leaveTypes
@@ -46,23 +43,10 @@ export default {
       default: () => dataCardCreate
     }
   },
-  data () {
+  data() {
     return {
-      daysOff: [
-        { date: "2019-01-25", leaveType: "Military Leave" },
-        { date: "2019-01-26", leaveType: "Jury Duty" },
-        { date: "2019-02-02", leaveType: "Religious Observance" },
-        { date: "2019-02-05", leaveType: "Bereavement" },
-        { date: "2019-02-15", leaveType: "Pregnancy" },
-        { date: "2019-03-10", leaveType: "Vacation" },
-        { date: "2019-03-15", leaveType: "Holiday" },
-        { date: "2019-04-05", leaveType: "Sick Leave" },
-        { date: "2019-05-12", leaveType: "Business Trip" },
-        { date: "2019-06-15", leaveType: "Maternity/Paternity" },
-        { date: "2019-07-13", leaveType: "Temporary Disability" },
-        { date: "2019-09-21", leaveType: "Childbirth" },
-        { date: "2019-11-10", leaveType: "Administrative Leave" }
-      ],
+      daysOff: [],
+      employeeProfile: null,
       items: [
         {
           startDate: "25 Aug, Sun",
@@ -90,28 +74,29 @@ export default {
         }
       ],
       tags: [
-        { name: "Military Leave"},
-        { name: "Jury Duty"},
-        { name: "Religious Observance"},
-        { name: "Bereavement"},
-        { name: "Pregnancy"},
-        { name: "Vacation"},
-        { name: "Holiday"},
-        { name: "Sick Leave"},
-        { name: "Business Trip"},
-        { name: "Maternity/Paternity"},
-        { name: "Temporary Disability "},
-        { name: "Childbirth"},
-        { name: "Administrative Leave"},
+        { name: "Military Leave" },
+        { name: "Jury Duty" },
+        { name: "Religious Observance" },
+        { name: "Bereavement" },
+        { name: "Pregnancy" },
+        { name: "Vacation" },
+        { name: "Holiday" },
+        { name: "Sick Leave" },
+        { name: "Business Trip" },
+        { name: "Maternity/Paternity" },
+        { name: "Temporary Disability " },
+        { name: "Childbirth" },
+        { name: "Administrative Leave" }
       ],
       dataAbsenceList: [],
       dataUpcommingAbsence: [],
+      dataAbsenceBalance: [],
       isShowAbsenceDetailsModal: false,
       absenceDetail: null,
       popup: {
         showCreate: false
-      },
-    }
+      }
+    };
   },
   components: {
     ProfileHeader,
@@ -119,7 +104,6 @@ export default {
     ProfileFooter,
     ModalDetailAbsence,
     AbsenceCreate
-    
   },
   mounted() {
     const apiFilterWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
@@ -132,6 +116,8 @@ export default {
       const { items } = data;
       this.dataUpcommingAbsence = items;
     });
+    this.getAbsenceBalance();
+    this.getEmployeeProfile();
   },
   methods: {
     getDataAbsenceFromApi(apiUrl) {
@@ -144,12 +130,40 @@ export default {
         });
       });
     },
+    getDataAbsenceDaysOff(year) {
+      const id = this.$route.params.id;
+      const apiAbsenceDaysOff = this.apiAbsence.getAbsenceDaysOff(id);
+      this.$http
+        .get(apiAbsenceDaysOff, {
+          params: {
+            year
+          }
+        })
+        .then(res => {
+          this.daysOff = res.data.leaveData;
+        });
+    },
+    getAbsenceBalance() {
+      const { id } = this.$route.params;
+      const apiAbsenceBalance = this.apiAbsence.getAbsenceBalance(id);
+      this.$http.get(apiAbsenceBalance).then(res => {
+        this.dataAbsenceBalance = res.data;
+      });
+    },
     receivePopupAbsenceApproved() {
       this.popup.showCreate = true;
     },
     receivePopupAbsenceRequest(absenceDetail) {
       this.absenceDetail = absenceDetail;
       this.isShowAbsenceDetailsModal = true;
+    },
+    getEmployeeProfile() {
+      const id = this.$route.params.id;
+      this.$http
+        .get(this.apiAbsence.getAbsenceEmployeeProfileApi(id))
+        .then(res => {
+          this.employeeProfile = res.data;
+        });
     }
   }
 };

@@ -12,6 +12,7 @@
                 :items="items"
                 label="Choose name employer"
                 return-object
+                :disabled="employeeView"
               ></v-autocomplete>
               <v-autocomplete
                 v-model="absenceType"
@@ -60,8 +61,8 @@
               <div class="mt-4">
                 <v-layout row wrap v-for="(day, index) in dates" :key="index">
                   <v-flex class="mt-3">
-                    <span>You have selected</span>
-                    <span v-if="absenceInfo[day].fullDay">{{ formatDay(day) }} full day</span>
+                    <span>You have selected&nbsp;</span>
+                    <span v-if="absenceInfo[day].fullDay">{{ day | formatFullDay }} full day</span>
                     <span v-else>{{ formatHour(day) }}</span>
                   </v-flex>
                   <v-spacer/>
@@ -135,19 +136,21 @@
 <script>
 import PolicyAlert from "../alerts/PolicyAlert";
 import { dataApproved } from "./data";
-import moment from "moment";
 export default {
   components: {
     PolicyAlert
   },
   props: {
     popup: Object,
-    getAbsenceReasonsApiUrl: String,
     leaveTypes: Array,
     items: Array,
     dataApproved: {
       type: Array,
       default: () => dataApproved
+    },
+    employeeView: {
+      type: Boolean,
+      default: () => false
     }
   },
   mounted() {
@@ -158,7 +161,7 @@ export default {
   methods: {
     getAbsenceReasonsRequest() {
       return new Promise(resolve => {
-        this.$http.get(`${this.getAbsenceReasonsApiUrl}`).then(res => {
+        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
           resolve({
             items: res.data
           });
@@ -169,9 +172,6 @@ export default {
       this.dates.splice(index, 1);
 
       delete this.absenceInfo[day];
-    },
-    formatDay(date) {
-      return moment(date).format("MM/DD/YYYY");
     },
     formatHour(date) {
       return `${date} from ${this.absenceInfo[date].timeFrom} to ${

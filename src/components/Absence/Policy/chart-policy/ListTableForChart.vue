@@ -10,8 +10,8 @@
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td class="text-xs-left">{{ startDate(props.item.startDate) }}</td>
-          <td class="text-xs-left">{{ endDate(props.item.endDate) }}</td>
+          <td class="text-xs-left">{{ props.item.startDate | formatFullDay }}</td>
+          <td class="text-xs-left">{{ props.item.endDate | formatFullDay }}</td>
           <td class="text-xs-left">{{ props.item.employeeId }}</td>
           <td class="text-xs-left">{{ props.item.employeeName }}</td>
           <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
@@ -39,9 +39,6 @@ export default {
   components: {
     UserAvatar
   },
-  props: {
-    apiPolicy: Object
-  },
   methods: {
     getDataFromApi() {
       this.loading = true;
@@ -56,7 +53,7 @@ export default {
       };
       return new Promise(resolve => {
         this.$http
-          .post(`${this.apiPolicy.filterPolicy}`, filterRequest)
+          .post(`${this.apiPolicy.filterTablePerformance}`, filterRequest)
           .then(res => {
             this.loading = false;
             resolve({
@@ -65,12 +62,6 @@ export default {
             });
           });
       });
-    },
-    startDate(date) {
-      return moment(date).format("MM/DD/YYYY");
-    },
-    endDate(date) {
-      return moment(date).format("MM/DD/YYYY");
     },
     onOffDays(start, end) {
       const startDate = moment(start);

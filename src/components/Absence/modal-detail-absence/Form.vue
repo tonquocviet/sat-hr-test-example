@@ -46,10 +46,11 @@
                       <v-flex xs12>
                         <v-layout row style="height: 130px;">
                           <v-flex xs6>
-                            <CardCountAbsence
-                              :startDate="absenceDetail.startDate"
-                              :endDate="absenceDetail.endDate"
-                            />
+                            <div class="elevation-1">
+                              <div style="height: 117px" class="text-xs-center pl-3 pr-3 pt-2 pb-2">
+                                <AbsenceInfoCard :leaveData="absenceDetail.leaveData"/>
+                              </div>
+                            </div>
                           </v-flex>
                           <v-flex xs6>
                             <v-textarea
@@ -97,8 +98,20 @@
                       <v-flex v-if="isFetchingComments" xs12 class="text-xs-center">
                         <v-progress-circular :size="40" color="primary" indeterminate></v-progress-circular>
                       </v-flex>
-                      <v-layout v-else xs12 wrap column v-for="item in dataCommentAbsence" :key="item.id" class="showComment">
-                        <ListComment :comment="item" :itemsComment="itemsComment" :absenceDetail="absenceDetail"/>
+                      <v-layout
+                        v-else
+                        xs12
+                        wrap
+                        column
+                        v-for="item in dataCommentAbsence"
+                        :key="item.id"
+                        class="showComment"
+                      >
+                        <ListComment
+                          :comment="item"
+                          :itemsComment="itemsComment"
+                          :absenceDetail="absenceDetail"
+                        />
                       </v-layout>
                     </v-layout>
                   </v-card>
@@ -150,7 +163,7 @@
 </template>
 
 <script>
-import CardCountAbsence from "../../cards/CardCountAbsence";
+import AbsenceInfoCard from "../../cards/AbsenceInfoCard";
 import PolicyAlert from "../../alerts/PolicyAlert";
 import InputComment from "./InputComment";
 import ListComment from "./ListComment";
@@ -163,7 +176,7 @@ import moment from "moment";
 export default {
   components: {
     UserAvatar,
-    CardCountAbsence,
+    AbsenceInfoCard,
     PolicyAlert,
     InputComment,
     ListComment,
@@ -208,8 +221,8 @@ export default {
         this.dataHRCard = res.data;
       });
     },
-    getCommentAbsence(){
-      this.isFetchingComments = true
+    getCommentAbsence() {
+      this.isFetchingComments = true;
       const { id } = this.absenceDetail;
       const url = this.apiAbsence.getCommentAbsence(id);
       this.$http.get(url).then(res => {
