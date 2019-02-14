@@ -26,12 +26,31 @@
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
 import ListTableForChart from "./ListTableForChart";
-import { dataChartBar, dataPolicySloved } from "./data-chart";
+import { dataPolicySloved } from "./data-chart";
 export default {
   components: {
     BarChart,
     PieChart,
     ListTableForChart
+  },
+  data() {
+    return {
+      dataChartBar: []
+    };
+  },
+  mounted() {
+    const { id } = this.$route.params;
+    const url = this.apiAbsence.getMonthAbsenceStatistic(id);
+
+    this.$http
+      .get(url, {
+        params: {
+          month: (new Date()).toISOString().substr(0, 7).replace('-', '')
+        }
+      })
+      .then(res => {
+        this.dataChartBar = res.data;
+      });
   },
   computed: {
     totalApproved() {
@@ -50,10 +69,6 @@ export default {
     }
   },
   props: {
-    dataChartBar: {
-      type: Array,
-      default: () => dataChartBar
-    },
     dataPolicySloved: {
       type: Array,
       default: () => dataPolicySloved

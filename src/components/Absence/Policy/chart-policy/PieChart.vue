@@ -69,25 +69,7 @@ export default {
   },
   data() {
     return {
-      datacollection: null,
-      options: null
-    };
-  },
-  mounted() {
-    this.getDataChartPie();
-  },
-  methods: {
-    getDataChartPie() {
-      this.datacollection = {
-        labels: ["Approved", "Pending", "Reject"],
-        datasets: [
-          {
-            data: [this.totalApproved, this.totalPending, this.totalReject],
-            backgroundColor: ["#53C5AC", "#EFCC64", "#8C9098"]
-          }
-        ]
-      };
-      this.options = {
+      options: {
         responsive: true,
         legend: {
           position: "top"
@@ -113,6 +95,20 @@ export default {
             }
           }
         }
+      }
+    };
+  },
+  computed: {
+    datacollection() {
+      if (!this.totalApproved && !this.totalPending && !this.totalReject) return null;
+      return {
+        labels: ["Approved", "Pending", "Reject"],
+        datasets: [
+          {
+            data: [this.totalApproved, this.totalPending, this.totalReject],
+            backgroundColor: ["#53C5AC", "#EFCC64", "#8C9098"]
+          }
+        ]
       };
     }
   }

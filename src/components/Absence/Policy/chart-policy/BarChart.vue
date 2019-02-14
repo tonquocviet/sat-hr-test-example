@@ -63,15 +63,36 @@ export default {
   },
   data() {
     return {
-      datacollection: null,
-      options: null
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [
+            {
+              stacked: true,
+              categoryPercentage: 0.5,
+              barPercentage: 1
+            }
+          ],
+          yAxes: [
+            {
+              stacked: true
+            }
+          ]
+        },
+        title: {
+          display: true,
+          text: "Total Absence Days under This Time-off Policy",
+          position: "bottom"
+        },
+        legend: false //hide label chart
+      }
     };
   },
-  mounted() {
-    this.getDataChartBar();
-  },
-  methods: {
-    getDataChartBar() {
+  computed: {
+    datacollection() {
+      if (!this.dataChartBar || this.dataChartBar.length === 0) return null;
+
       const dataBarChart = this.dataChartBar.reduce(
         (prev, curr) => {
           prev.day.push(curr.day);
@@ -82,7 +103,8 @@ export default {
         },
         { day: [], approved: [], reject: [], pending: [] }
       );
-      this.datacollection = {
+
+      return {
         labels: dataBarChart.day,
         datasets: [
           {
@@ -107,30 +129,6 @@ export default {
             borderWidth: 1
           }
         ]
-      };
-      this.options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [
-            {
-              stacked: true,
-              categoryPercentage: 0.5,
-              barPercentage: 1
-            }
-          ],
-          yAxes: [
-            {
-              stacked: true
-            }
-          ]
-        },
-        title: {
-          display: true,
-          text: "Total Absence Days under This Time-off Policy",
-          position: "bottom"
-        },
-        legend: false //hide label chart
       };
     }
   }
