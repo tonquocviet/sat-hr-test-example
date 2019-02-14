@@ -24,11 +24,14 @@ Vue.prototype.apiAbsence = {
   getAbsenceProfileBalance: `${baseUrl}/my-absence-profile/balance`,
   getEmployees: `${baseUrl}/get-employees`,
   availablePolicies: employeeId =>
-    `${baseUrl}/employee/${employeeId}/available-policies`
+    `${baseUrl}/employee/${employeeId}/available-policies`,
+  absencePolicyReasons: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/reasons`
 };
 Vue.prototype.apiPolicy = {
   filterPolicy: `${baseUrl}/absence-policy/filter`,
-  filterTablePerformance: policyId => `${baseUrl}/absence-policy/${policyId}/absences/filter`,
+  filterTablePerformance: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/absences/filter`,
   filterCountPolicy: `${baseUrl}/absence-policy/count`,
   getCountries: `${baseUrl}/get-countries`
 };
