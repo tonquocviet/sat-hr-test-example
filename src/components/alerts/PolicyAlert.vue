@@ -8,7 +8,7 @@
       </v-flex>
       <v-flex xs10>
         <div class="elevation-1">
-          <div class="text-xs-left px-2 pt-1 pb-2" style="height: 50px">{{item.alert}}</div>
+          <div class="text-xs-left px-2 pt-1 pb-2" style="height: auto">{{item.alert}}</div>
         </div>
       </v-flex>
     </v-layout>
