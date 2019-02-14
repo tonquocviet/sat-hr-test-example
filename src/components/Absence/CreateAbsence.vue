@@ -8,6 +8,7 @@
               <v-autocomplete
                 v-model="employeeName"
                 item-text="name"
+                @change="changeEmployeeName"
                 item-value="id"
                 :items="dataEmployees"
                 label="Choose name employer"
@@ -17,8 +18,9 @@
               <v-autocomplete
                 v-model="absenceType"
                 item-text="name"
+                @change="changeAbsenceType"
                 item-value="id"
-                :items="leaveTypes"
+                :items="dataAvailablePolicies"
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
@@ -135,7 +137,6 @@
 </template>
 <script>
 import PolicyAlert from "../alerts/PolicyAlert";
-import { dataApproved } from "./data";
 export default {
   components: {
     PolicyAlert
@@ -144,10 +145,6 @@ export default {
     popup: Object,
     leaveTypes: Array,
     dataEmployees: Array,
-    dataApproved: {
-      type: Array,
-      default: () => dataApproved
-    },
     employeeView: {
       type: Boolean,
       default: () => false
@@ -181,6 +178,20 @@ export default {
     clearInfo() {
       this.fullDay = true;
       this.timeFrom = this.timeTo = "";
+    },
+    changeEmployeeName(e) {
+      this.employeeId = e.id;
+      this.dataApproved = null;
+      this.getAvailablePolicies();
+    },
+    getAvailablePolicies() {
+      const url = this.apiAbsence.availablePolicies(this.employeeId);
+      this.$http.get(url).then(res => {
+        this.dataAvailablePolicies = res.data;
+      });
+    },
+    changeAbsenceType(e) {
+      this.dataApproved = e.alerts;
     }
   },
   watch: {
@@ -236,6 +247,8 @@ export default {
     return {
       dataAbsenceReasons: [],
       dates: [],
+      dataAvailablePolicies: [],
+      dataApproved: [],
       employeeName: null,
       absenceType: null,
       employeeReason: null,
