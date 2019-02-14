@@ -8,12 +8,8 @@
         <v-flex sm6 md6 lg6>
           <v-layout>
             <v-layout class="column pl-1 justify-space-between">
-              <div class="subheading font-weight-bold v-number-of-line-name">
-                {{item.name}}
-              </div>
-              <div class="grey--text">
-                {{ item.createdBy.firstName }} {{ item.createdBy.lastName }}
-              </div>
+              <div class="subheading font-weight-bold v-number-of-line-name">{{item.name}}</div>
+              <div class="grey--text">{{ item.createdBy.firstName }} {{ item.createdBy.lastName }}</div>
             </v-layout>
           </v-layout>
         </v-flex>
@@ -36,7 +32,7 @@
           <v-icon size="15">av_timer</v-icon>
           <span>
             Expired date
-            <span class="red--text">{{item.expiredDate | formatFullDay}}</span>
+            <span class="red--text">{{item.expiredDate | formatFullDayWithNA }}</span>
           </span>
         </div>
         <div>
@@ -64,7 +60,7 @@ export default {
 
 <style scopes>
 .user-infomation-active {
-  border-left: 4px solid #24b314 ;
+  border-left: 4px solid #24b314;
   margin-left: -1px;
 }
 .user-infomation-inactive {

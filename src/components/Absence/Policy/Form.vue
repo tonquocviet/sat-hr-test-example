@@ -29,17 +29,24 @@
           </v-tab>
           <v-tab-item>
             <PolicyTable v-if="viewMode === 'list'"/>
-            <PolicyCard
-              @showMoreView="showMoreView"
-              :dataFilterPolicy="dataFilterPolicy"
-              :loading="loading"
-              :isShowMore="isShowMore"
-              :hasShowMore="hasShowMore"
-              v-else
+            <PolicyCardContainer 
+              v-else 
             />
           </v-tab-item>
-          <v-tab-item>Page active</v-tab-item>
-          <v-tab-item>Page In active</v-tab-item>
+          <v-tab-item>
+            <PolicyTable v-if="viewMode === 'list'" status="active"/>
+            <PolicyCardContainer 
+              v-else 
+              status="active"
+            />
+          </v-tab-item>
+          <v-tab-item>
+            <PolicyTable v-if="viewMode === 'list'" status="inactive"/>
+            <PolicyCardContainer 
+              v-else
+              status="inactive"
+            />
+          </v-tab-item>
         </v-tabs>
       </v-flex>
     </v-flex>
@@ -51,23 +58,17 @@
 </template>
 <script>
 import PolicyTable from "./PolicyTable";
-import PolicyCard from "./PolicyCard";
 import CreatePolicy from "./CreatePolicy";
+import PolicyCardContainer from "./PolicyCardContainer";
+
 export default {
   components: {
     PolicyTable,
-    PolicyCard,
-    CreatePolicy
+    CreatePolicy,
+    PolicyCardContainer
   },
   props: {
-    viewMode: String
-  },
-  computed: {
-    hasShowMore() {
-      return !this.dataFilterPolicy
-        ? 0
-        : this.dataFilterPolicy.length < this.totalRecords;
-    }
+    viewMode: String,
   },
   mounted() {
     this.getCountPolicy();
@@ -102,14 +103,6 @@ export default {
           });
       });
     },
-    showMoreView() {
-      this.pageIndex++;
-      this.isShowMore = true;
-      this.getDataFromApi().then(data => {
-        this.dataFilterPolicy = this.dataFilterPolicy.concat(data.items);
-        this.totalRecords = data.totalRecords;
-      });
-    },
     getCountPolicy() {
       this.$http.get(`${this.apiPolicy.filterCountPolicy}`).then(data => {
         this.active = data.data.active;
@@ -122,7 +115,6 @@ export default {
       dataFilterPolicy: [],
       pageIndex: 0,
       loading: true,
-      isShowMore: false,
       countPolicy: 5,
       isShowCreate: false,
       inactive: 0,

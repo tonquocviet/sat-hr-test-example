@@ -24,20 +24,19 @@
           >{{ props.item.status }}</v-chip>
           <v-chip v-else small color="default">{{ props.item.status }}</v-chip>
         </td>
-        <td
-          class="text-xs-left"
-          v-if="props.item.expiredDate"
-        >{{props.item.expiredDate | formatFullDay}}</td>
-        <td class="text-xs-left" v-else>N/A</td>
+        <td class="text-xs-left">{{props.item.expiredDate | formatFullDayWithNA}}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
-      <v-pagination light v-model="pagination.page" :length="pages"></v-pagination>
+      <v-pagination :total-visible="7" light v-model="pagination.page" :length="pages"></v-pagination>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    status: String
+  },
   methods: {
     getDataFromApi() {
       this.loading = true;
@@ -48,7 +47,8 @@ export default {
         sort: {
           isAsc: !descending,
           columnName: sortBy
-        }
+        },
+        status: this.status || ""
       };
       return new Promise(resolve => {
         this.$http
@@ -62,12 +62,6 @@ export default {
           });
       });
     }
-  },
-  mounted() {
-    this.getDataFromApi().then(data => {
-      this.dataFilterPolicy = data.items;
-      this.totalRecords = data.totalRecords;
-    });
   },
   data() {
     return {
@@ -101,7 +95,6 @@ export default {
         this.getDataFromApi().then(data => {
           this.dataFilterPolicy = data.items;
           this.totalRecords = data.totalRecords;
-          this.$emit("lengthPolicy", data.items.length);
         });
       },
       deep: true
