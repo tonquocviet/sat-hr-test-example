@@ -20,6 +20,7 @@
           :key="index"
           type="AJUST"
           :employeeName="employeeProfileFullname"
+          :showModal="true"
         />
       </v-layout>
     </v-flex>
