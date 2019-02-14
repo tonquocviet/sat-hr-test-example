@@ -8,24 +8,26 @@
         <v-btn small flat color="success">View full</v-btn>
       </v-flex>
     </v-layout>
-    <v-flex xs12 class="ml-2">
-      <v-date-picker
-        width="100%"
-        v-model="dateTimeColor"
-        event-color="date"
-        :events="functionEvents"
-        readonly
-      ></v-date-picker>
-    </v-flex>
-    <v-layout row class="mt-1">
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="blue" size="15">fiber_manual_record</v-icon>Holiday
-      </v-flex>
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="green" size="15">fiber_manual_record</v-icon>Casual Absence
-      </v-flex>
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="red" size="15">fiber_manual_record</v-icon>Sick Absence
+    <v-layout row wrap class="ml-2">
+      <v-flex xs12 class="pt-2">
+        <v-card class="colorful-calendar">
+          <VDatePickerExtend
+            :value="dates.map(x=>x.date)"
+            :pickerDate="pickerDate"
+            :titleDateFormat="titleDateFormat"
+            :selectedColor="getColorByLeaveDate"
+            multiple
+            width="100%"
+            @update:pickerDate="changePickerDate"
+          ></VDatePickerExtend>
+        </v-card>
+        <v-card class="mt-3">
+          <v-layout row wrap>
+            <v-flex v-for="item in tags" :key="item.name" lg6 sm4 xs6 class="pa-1">
+              <LeaveTypeChip :leaveType="item.name"/>
+            </v-flex>
+          </v-layout>
+        </v-card>
       </v-flex>
     </v-layout>
     <v-flex xs12 class="mt-2 ml-2">
@@ -52,47 +54,76 @@
 </template>
 <script>
 import AbsenceDetailList from "../ListDetail";
+import VDatePickerExtend from "../../vuetify/VDatePickerExtend/VDatePickerExtend";
+import LeaveTypeChip from "../../chips/LeaveTypeChip";
+import { leaveTypes } from "../../../config";
 import ModalForSubFilter from "../ModalForSubFilter";
 import ModalDetailAbsence from "../modal-detail-absence/Form";
 
 export default {
   components: {
     AbsenceDetailList,
+    VDatePickerExtend,
+    LeaveTypeChip,
     ModalForSubFilter,
-    ModalDetailAbsence,
+    ModalDetailAbsence
   },
   props: {
+    dates: Array,
+    tags: Array,
     dataTeamPlanned: Array
   },
   data() {
     return {
-      dateTimeColor: new Date().toISOString().substr(0, 10),
-      arrayEvents: null,
+      selectedIndex: new Date().getMonth(),
       isShowEmployeeModal: false,
       isShowAbsenceDetailsModal: false,
-      absenceDetail: null
+      absenceDetail: null,
+      year: new Date().getFullYear()
     };
   },
   methods: {
-    functionEvents(date) {
-      const [, , day] = date.split("-");
-      if ([12, 17, 28].includes(parseInt(day, 10))) return ["red"];
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ["blue"];
-      if ([11, 4, 25].includes(parseInt(day, 10))) return ["green"];
-      return false;
+    changeDates(selectedDates) {
+      this.$emit("update:dates", selectedDates);
+    },
+    changePickerDate(pickerDate) {
+      const [year, month] = pickerDate.split("-").map(Number);
+      this.year = year;
+      this.selectedIndex = month - 1;
+    },
+    getColorByLeaveDate(date) {
+      const leaveType = (
+        this.dates.filter(x => x.date === date)[0] || { leaveType: "" }
+      ).leaveType;
+      return (
+        leaveTypes.filter(x => x.name === leaveType)[0] || { color: "primary" }
+      ).color;
+    },
+    titleDateFormat(dates) {
+      const count = dates.filter(x => {
+        const [, month] = x.split("-").map(Number);
+        return month === this.selectedIndex + 1;
+      }).length;
+      return `${count} day(s)`;
     },
     showDetailModal(item) {
       this.isShowAbsenceDetailsModal = true;
       this.absenceDetail = item;
     }
   },
+  computed: {
+    pickerDate() {
+      const year = this.year;
+      return `${year}-${this.selectedIndex + 1}`;
+    }
+  },
   mounted() {
-    this.arrayEvents = [...Array(6)].map(() => {
-      const day = Math.floor(Math.random() * 30);
-      const d = new Date();
-      d.setDate(day);
-      return d.toISOString().substr(0, 10);
-    });
+    this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
+  },
+  watch: {
+    year() {
+      this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
+    }
   }
 };
 </script>

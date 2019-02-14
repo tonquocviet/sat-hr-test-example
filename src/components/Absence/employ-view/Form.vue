@@ -34,7 +34,12 @@
         </v-flex>
       </v-flex>
       <v-flex xs3>
-        <ListOnTheRight :dataTeamPlanned="dataTeamPlannedAbsences"/>
+        <ListOnTheRight
+          :dates.sync="daysOff"
+          :tags="tags"
+          :dataTeamPlanned="dataTeamPlannedAbsences"
+          @getDataAbsenceDaysOff="getDataAbsenceDaysOff"
+        />
       </v-flex>
     </v-layout>
     <ModalDetailAbsence
@@ -86,7 +91,23 @@ export default {
       popup: {
         showCreate: false
       },
-      dataAbsenceBalance: []
+      dataAbsenceBalance: [],
+      daysOff: [],
+      tags: [
+        { name: "Military Leave" },
+        { name: "Jury Duty" },
+        { name: "Religious Observance" },
+        { name: "Bereavement" },
+        { name: "Pregnancy" },
+        { name: "Vacation" },
+        { name: "Holiday" },
+        { name: "Sick Leave" },
+        { name: "Business Trip" },
+        { name: "Maternity/Paternity" },
+        { name: "Temporary Disability " },
+        { name: "Childbirth" },
+        { name: "Administrative Leave" }
+      ]
     };
   },
   mounted() {
@@ -123,6 +144,18 @@ export default {
       this.$http.get(url).then(res => {
         this.dataAbsenceBalance = res.data;
       });
+    },
+    getDataAbsenceDaysOff(year) {
+      const url = this.apiAbsence.getAbsenceProfileCalendar;
+      this.$http
+        .get(url, {
+          params: {
+            year
+          }
+        })
+        .then(res => {
+          this.daysOff = res.data.leaveData;
+        });
     },
     receivePopupAbsenceApproved() {
       this.popup.showCreate = true;
