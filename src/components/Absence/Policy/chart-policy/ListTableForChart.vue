@@ -16,13 +16,17 @@
           <td class="text-xs-left">{{ props.item.employeeName }}</td>
           <td class="text-xs-left">{{ onOffDays(props.item.startDate,props.item.endDate)}} Days</td>
           <td class="text-xs-left">
-            <div class="v-image-user">
-              <user-avatar
-                :imageUrl="(props.item.avatar||{}).imageUrl"
-                :name="props.item.employeeName"
-                width="unset"
-              />
-            </div>
+            <v-layout row wrap>
+              <v-flex sm3 v-for="item in props.item.approvers" :key="item.id">
+                <div class="v-image-user">
+                  <user-avatar
+                    :imageUrl="(item.avatar||{}).imageUrl"
+                    :name="item.lastName + ' ' + item.firstName"
+                    width="unset"
+                  />
+                </div>
+              </v-flex>
+            </v-layout>
           </td>
         </template>
       </v-data-table>
@@ -45,22 +49,22 @@ export default {
       const { sortBy, descending, page, rowsPerPage } = this.pagination;
       const filterRequest = {
         pageSize: rowsPerPage,
-        pageIndex: page,
+        pageIndex: page - 1,
         sort: {
           isAsc: !descending,
           columnName: sortBy
         }
       };
       return new Promise(resolve => {
-        this.$http
-          .post(`${this.apiPolicy.filterTablePerformance}`, filterRequest)
-          .then(res => {
-            this.loading = false;
-            resolve({
-              items: res.data.list,
-              totalRecords: res.data.totalRecords
-            });
+        const id = this.$route.params.id;
+        const url = this.apiPolicy.filterTablePerformance(id);
+        this.$http.post(url, filterRequest).then(res => {
+          this.loading = false;
+          resolve({
+            items: res.data.list,
+            totalRecords: res.data.totalRecords
           });
+        });
       });
     },
     onOffDays(start, end) {
@@ -86,7 +90,7 @@ export default {
         { text: "Emp Name", align: "left", value: "employeeName" },
         { text: "No Of Days", align: "left", value: "noOfdays" },
         {
-          text: "Avatar",
+          text: "HR Approvers",
           align: "left",
           value: "avatar",
           sortable: false

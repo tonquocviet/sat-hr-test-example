@@ -16,7 +16,14 @@
     <hr>
     <v-layout>
       <v-flex xs9>
-        <AbsenceEmployCard :dataEmployCard="dataEmployCard"/>
+        <v-layout row wrap>
+          <LeaveTypeCard
+            v-for="(item, index) in dataAbsenceBalance.slice(0, 4)"
+            :leaveData="item"
+            :key="index"
+            type="APPLY"
+          />
+        </v-layout>
         <v-flex sm12 md12>
           <EmployViewContent
             :dataUpcommingAbsence="dataUpcommingAbsence"
@@ -35,30 +42,25 @@
       :absenceDetail="absenceDetail"
       :isShow="isShowAbsenceDetailsModal"
     />
-    <AbsenceCreate
-      :items="dataCardCreate"
-      :leaveTypes="leaveTypes"
-      :popup="popup"
-      employee-view
-    />
+    <AbsenceCreate :items="dataCardCreate" :leaveTypes="leaveTypes" :popup="popup" employee-view/>
   </div>
 </template>
 <script>
-import AbsenceEmployCard from "../../cards/AbsenceEmployCard";
 import ListOnTheRight from "./ListOnTheRight";
 import EmployViewContent from "./EmployViewContent";
 import ModalDetailAbsence from "../modal-detail-absence/Form";
 import AbsenceCreate from "../CreateAbsence";
+import LeaveTypeCard from "../../cards/LeaveTypeCard";
 import { leaveTypes } from "../../../config.js";
 import { dataEmployCard, dataCardCreate, dataAbsenceList } from "../data";
 
 export default {
   components: {
-    AbsenceEmployCard,
     EmployViewContent,
     ListOnTheRight,
     ModalDetailAbsence,
-    AbsenceCreate
+    AbsenceCreate,
+    LeaveTypeCard
   },
   props: {
     dataEmployCard: {
@@ -86,7 +88,8 @@ export default {
       absenceDetail: null,
       popup: {
         showCreate: false
-      }
+      },
+      dataAbsenceBalance: []
     };
   },
   mounted() {
@@ -100,6 +103,7 @@ export default {
       const { items } = data;
       this.dataUpcommingAbsence = items;
     });
+    this.getAbsenceBalance();
   },
   methods: {
     getDataEmployView(url) {
@@ -110,6 +114,12 @@ export default {
             totalRecords: res.data.totalRecords
           });
         });
+      });
+    },
+    getAbsenceBalance() {
+      const url = this.apiAbsence.getAbsenceProfileBalance;
+      this.$http.get(url).then(res => {
+        this.dataAbsenceBalance = res.data;
       });
     },
     receivePopupAbsenceApproved() {
