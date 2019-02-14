@@ -29,7 +29,7 @@
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
-                :items="dataAbsenceReasons"
+                :items="dataPolicyReasons"
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
@@ -150,19 +150,11 @@ export default {
       default: () => false
     }
   },
-  mounted() {
-    this.getAbsenceReasonsRequest().then(data => {
-      this.dataAbsenceReasons = data.items;
-    });
-  },
   methods: {
-    getAbsenceReasonsRequest() {
-      return new Promise(resolve => {
-        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
-          resolve({
-            items: res.data
-          });
-        });
+    getAbsencePolicyReasons() {
+      const url = this.apiAbsence.absencePolicyReasons(this.policyId);
+      this.$http.get(url).then(res => {
+        this.dataPolicyReasons = res.data;
       });
     },
     removeSelectDay(index, day) {
@@ -182,7 +174,6 @@ export default {
     changeEmployeeName(e) {
       this.employeeId = e.id;
       this.dataApproved = null;
-      this.dataAvailablePolicies = [];
       this.getAvailablePolicies();
     },
     getAvailablePolicies() {
@@ -193,6 +184,8 @@ export default {
     },
     changeAbsenceType(e) {
       this.dataApproved = e.alerts;
+      this.policyId = e.id;
+      this.getAbsencePolicyReasons();
     }
   },
   watch: {
@@ -249,6 +242,7 @@ export default {
       dataAbsenceReasons: [],
       dates: [],
       dataAvailablePolicies: [],
+      dataPolicyReasons: [],
       dataApproved: [],
       employeeName: null,
       absenceType: null,
