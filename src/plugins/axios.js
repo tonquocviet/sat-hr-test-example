@@ -9,6 +9,7 @@ Vue.prototype.apiAbsence = {
   filterAbsences: `${baseUrl}/absence/filter`,
   filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
   filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
+  filterTeamPlannedAbsencing: `${baseUrl}/absence/filter-absencing`,
   getReason: `${baseUrl}/absence/get-reasons`,
   approveRequest: `${baseUrl}/absence/approve-request`,
   getAbsenceHRApprovers: absenceId =>

@@ -3,13 +3,13 @@
     <LeaveRowItem
       @emitPopupAbsenceApproved="emitPopupAbsenceApproved"
       @emitPopupAbsenceRequest="emitPopupAbsenceRequest"
-      :title="`Upcoming leaves`"
+      title="Upcoming leaves"
       :items="dataAbsenceList"
     />
     <LeaveRowItem
       @emitPopupAbsenceApproved="emitPopupAbsenceApproved"
       @emitPopupAbsenceRequest="emitPopupAbsenceRequest"
-      :title="`Past leaves`"
+      title="Past leaves"
       :items="dataUpcommingAbsence"
     />
   </div>
@@ -26,7 +26,7 @@ export default {
       this.$emit("receivePopupAbsenceApproved");
     },
     emitPopupAbsenceRequest(absenceDetail) {
-       this.$emit("receivePopupAbsenceRequest", absenceDetail);
+      this.$emit("receivePopupAbsenceRequest", absenceDetail);
     }
   },
   components: {

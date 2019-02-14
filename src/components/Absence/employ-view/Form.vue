@@ -34,7 +34,7 @@
         </v-flex>
       </v-flex>
       <v-flex xs3>
-        <ListOnTheRight :dataAbsenceList="dataAbsenceList"/>
+        <ListOnTheRight :dataTeamPlanned="dataTeamPlannedAbsences"/>
       </v-flex>
     </v-layout>
     <ModalDetailAbsence
@@ -52,7 +52,7 @@ import ModalDetailAbsence from "../modal-detail-absence/Form";
 import AbsenceCreate from "../CreateAbsence";
 import LeaveTypeCard from "../../cards/LeaveTypeCard";
 import { leaveTypes } from "../../../config.js";
-import { dataEmployCard, dataCardCreate, dataAbsenceList } from "../data";
+import { dataEmployCard, dataCardCreate } from "../data";
 
 export default {
   components: {
@@ -74,16 +74,13 @@ export default {
     dataCardCreate: {
       type: Array,
       default: () => dataCardCreate
-    },
-    dataAbsenceList: {
-      type: Array,
-      default: () => dataAbsenceList
     }
   },
   data() {
     return {
       dataWhoAbsencing: [],
       dataUpcommingAbsence: [],
+      dataTeamPlannedAbsences: [],
       isShowAbsenceDetailsModal: false,
       absenceDetail: null,
       popup: {
@@ -95,9 +92,14 @@ export default {
   mounted() {
     const apiEmployWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const apiEmployUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
+    const apiTeamPlannedAbsences = this.apiAbsence.filterTeamPlannedAbsencing;
     this.getDataEmployView(apiEmployWhoAbsencing).then(data => {
       const { items } = data;
       this.dataWhoAbsencing = items;
+    });
+    this.getDataEmployView(apiTeamPlannedAbsences).then(data => {
+      const { items } = data;
+      this.dataTeamPlannedAbsences = items;
     });
     this.getDataEmployView(apiEmployUpcommingAbsence).then(data => {
       const { items } = data;
