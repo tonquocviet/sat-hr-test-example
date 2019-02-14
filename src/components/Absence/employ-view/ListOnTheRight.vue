@@ -60,7 +60,6 @@ export default {
     AbsenceDetailList,
     ModalForSubFilter,
     ModalDetailAbsence,
-    items: []
   },
   props: {
     dataTeamPlane: Array
