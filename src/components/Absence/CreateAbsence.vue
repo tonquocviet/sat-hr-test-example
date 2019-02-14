@@ -8,6 +8,7 @@
               <v-autocomplete
                 v-model="employeeName"
                 item-text="name"
+                @change="changeEmployeeName"
                 item-value="id"
                 :items="dataEmployees"
                 label="Choose name employer"
@@ -17,8 +18,9 @@
               <v-autocomplete
                 v-model="absenceType"
                 item-text="name"
+                @change="changeAbsenceType"
                 item-value="id"
-                :items="leaveTypes"
+                :items="dataAvailablePolicies"
                 label="Choose type absence"
                 return-object
               ></v-autocomplete>
@@ -27,7 +29,7 @@
                 item-text="name"
                 item-value="id"
                 label="Choose reason employer"
-                :items="dataAbsenceReasons"
+                :items="dataPolicyReasons"
                 return-object
               ></v-autocomplete>
               <p class="font-weight-bold mt-4">Select days</p>
@@ -135,7 +137,6 @@
 </template>
 <script>
 import PolicyAlert from "../alerts/PolicyAlert";
-import { dataApproved } from "./data";
 export default {
   components: {
     PolicyAlert
@@ -144,28 +145,16 @@ export default {
     popup: Object,
     leaveTypes: Array,
     dataEmployees: Array,
-    dataApproved: {
-      type: Array,
-      default: () => dataApproved
-    },
     employeeView: {
       type: Boolean,
       default: () => false
     }
   },
-  mounted() {
-    this.getAbsenceReasonsRequest().then(data => {
-      this.dataAbsenceReasons = data.items;
-    });
-  },
   methods: {
-    getAbsenceReasonsRequest() {
-      return new Promise(resolve => {
-        this.$http.get(`${this.apiAbsence.getReason}`).then(res => {
-          resolve({
-            items: res.data
-          });
-        });
+    getAbsencePolicyReasons() {
+      const url = this.apiAbsence.absencePolicyReasons(this.policyId);
+      this.$http.get(url).then(res => {
+        this.dataPolicyReasons = res.data;
       });
     },
     removeSelectDay(index, day) {
@@ -181,6 +170,22 @@ export default {
     clearInfo() {
       this.fullDay = true;
       this.timeFrom = this.timeTo = "";
+    },
+    changeEmployeeName(e) {
+      this.employeeId = e.id;
+      this.dataApproved = null;
+      this.getAvailablePolicies();
+    },
+    getAvailablePolicies() {
+      const url = this.apiAbsence.availablePolicies(this.employeeId);
+      this.$http.get(url).then(res => {
+        this.dataAvailablePolicies = res.data;
+      });
+    },
+    changeAbsenceType(e) {
+      this.dataApproved = e.alerts;
+      this.policyId = e.id;
+      this.getAbsencePolicyReasons();
     }
   },
   watch: {
@@ -236,6 +241,9 @@ export default {
     return {
       dataAbsenceReasons: [],
       dates: [],
+      dataAvailablePolicies: [],
+      dataPolicyReasons: [],
+      dataApproved: [],
       employeeName: null,
       absenceType: null,
       employeeReason: null,

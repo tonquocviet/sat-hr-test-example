@@ -31,7 +31,24 @@
       </v-flex>
     </v-layout>
     <v-flex xs12 class="mt-2 ml-2">
-      <AbsenceDetailList :items="dataAbsenceList" :title="`Team's Planned Absence`"/>
+      <AbsenceDetailList
+        name="WhoAbsencing"
+        @absenceClick="showDetailModal"
+        :items="dataTeamPlanned"
+        title="Team's Planned Absence"
+        @viewFull="isShowEmployeeModal = true"
+      />
+      <ModalForSubFilter
+        :isShow="isShowEmployeeModal"
+        :apiUrl="apiAbsence.filterWhoAbsencing"
+        title="Team's Planned Absence"
+        @closeDialog="isShowEmployeeModal = false"
+      />
+      <ModalDetailAbsence
+        :isShow="isShowAbsenceDetailsModal"
+        :absenceDetail="absenceDetail"
+        @closeDialog="isShowAbsenceDetailsModal = false"
+      />
     </v-flex>
   </v-flex>
 </template>
@@ -40,23 +57,30 @@ import AbsenceDetailList from "../ListDetail";
 import VDatePickerExtend from "../../vuetify/VDatePickerExtend/VDatePickerExtend";
 import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { leaveTypes } from "../../../config";
+import ModalForSubFilter from "../ModalForSubFilter";
+import ModalDetailAbsence from "../modal-detail-absence/Form";
 import moment from "moment";
 
 export default {
   components: {
     AbsenceDetailList,
     VDatePickerExtend,
-    LeaveTypeChip
+    LeaveTypeChip,
+    ModalForSubFilter,
+    ModalDetailAbsence
   },
   props: {
-    dataAbsenceList: Array,
     dates: Array,
-    tags: Array
+    tags: Array,
+    dataTeamPlanned: Array
   },
   data() {
     return {
       dateTimeColor: () => moment(new Date()).format("dddd MMM YYYY"),
-      selectedIndex: 0
+      selectedIndex: 0,
+      isShowEmployeeModal: false,
+      isShowAbsenceDetailsModal: false,
+      absenceDetail: null
     };
   },
   methods: {
@@ -74,6 +98,10 @@ export default {
       return (
         leaveTypes.filter(x => x.name === leaveType)[0] || { color: "primary" }
       ).color;
+    },
+    showDetailModal(item) {
+      this.isShowAbsenceDetailsModal = true;
+      this.absenceDetail = item;
     }
   },
   computed: {

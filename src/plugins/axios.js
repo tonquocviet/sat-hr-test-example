@@ -9,6 +9,7 @@ Vue.prototype.apiAbsence = {
   filterAbsences: `${baseUrl}/absence/filter`,
   filterWhoAbsencing: `${baseUrl}/absence/filter-absencing`,
   filterUpcommingAbsence: `${baseUrl}/absence/filter-upcomming`,
+  filterTeamPlannedAbsencing: `${baseUrl}/absence/filter-absencing`,
   getReason: `${baseUrl}/absence/get-reasons`,
   approveRequest: `${baseUrl}/absence/approve-request`,
   getAbsenceHRApprovers: absenceId =>
@@ -23,11 +24,16 @@ Vue.prototype.apiAbsence = {
     `${baseUrl}/employee/${employeeId}/profile`,
   getAbsenceProfileBalance: `${baseUrl}/my-absence-profile/balance`,
   getAbsenceProfileCalendar: `${baseUrl}/my-absence-profile/leave-data`,
-  getEmployees: `${baseUrl}/get-employees`
+  getEmployees: `${baseUrl}/get-employees`,
+  availablePolicies: employeeId =>
+    `${baseUrl}/employee/${employeeId}/available-policies`,
+  absencePolicyReasons: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/reasons`
 };
 Vue.prototype.apiPolicy = {
   filterPolicy: `${baseUrl}/absence-policy/filter`,
-  filterTablePerformance: `${baseUrl}/absence/filter`,
+  filterTablePerformance: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/absences/filter`,
   filterCountPolicy: `${baseUrl}/absence-policy/count`,
   getCountries: `${baseUrl}/get-countries`
 };
