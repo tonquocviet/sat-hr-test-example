@@ -54,7 +54,7 @@
           name="WhoAbsencing"
           @absenceClick="showDetailModal"
           :items="dataAbsenceList"
-          :title="`Who are absencing ?`"
+          title="Who are absencing ?"
           @viewFull="isShowAbsencingModal = true"
         />
         <v-divider/>
@@ -62,7 +62,7 @@
           name="UpcomingAbsence"
           @absenceClick="showDetailModal"
           :items="dataAbsenceList2"
-          :title="`Upcoming absences`"
+          title="Upcoming absences"
           @viewFull="isShowUpcomingAbsenceModal = true"
         />
       </v-container>
@@ -76,13 +76,13 @@
     <ModalForSubFilter
       :isShow="isShowAbsencingModal"
       :apiUrl="apiAbsence.filterWhoAbsencing"
-      :title="`Who is abcensing`"
+      title="Who is abcensing"
       @closeDialog="isShowAbsencingModal = false"
     />
     <ModalForSubFilter
       :isShow="isShowUpcomingAbsenceModal"
       :apiUrl="apiAbsence.filterUpcommingAbsence"
-      :title="`Upcoming absences`"
+      title="Upcoming absences"
       @closeDialog="isShowUpcomingAbsenceModal = false"
     />
   </v-layout>

@@ -98,68 +98,6 @@ export const dataEmployCard = [
   }
 ];
 
-export const dataAbsenceList = [
-  {
-    id: 18725,
-    dueAppliedDate: "2019-02-20T17:00:00.000Z",
-    employeeId: 19896,
-    employeeName: "Eugene Lynch",
-    employeeRole: {
-      id: 1,
-      name: "Family and Medical Leave"
-    },
-    endDate: "2019-01-31T00:00:00.000Z",
-    leaveDescription:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-    location: "Outlook",
-    startDate: "2019-01-28T00:00:00.000Z",
-    submittedDate: "2019-02-18T17:00:00.000Z",
-    leaveType: {
-      id: 1,
-      name: "Family and Medical Absence"
-    }
-  },
-  {
-    id: 54321,
-    dueAppliedDate: "2019-02-20T17:00:00.000Z",
-    employeeId: 12121,
-    employeeName: "Eugene Lynch",
-    employeeRole: {
-      id: 3,
-      name: "Developer"
-    },
-    endDate: "2019-01-31T00:00:00.000Z",
-    leaveDescription:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-    location: "Outlook",
-    startDate: "2019-01-28T00:00:00.000Z",
-    submittedDate: "2019-02-18T17:00:00.000Z",
-    leaveType: {
-      id: 9,
-      name: "Sick Absence"
-    }
-  },
-  {
-    id: 12345,
-    dueAppliedDate: "2019-02-20T17:00:00.000Z",
-    employeeId: 21312,
-    employeeName: "Eugene Lynch",
-    employeeRole: {
-      id: 2,
-      name: "Developer"
-    },
-    endDate: "2019-01-31T00:00:00.000Z",
-    leaveDescription:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-    location: "Outlook",
-    startDate: "2019-01-28T00:00:00.000Z",
-    submittedDate: "2019-02-18T17:00:00.000Z",
-    leaveType: {
-      id: 13,
-      name: "Childbirth"
-    }
-  }
-];
 export const dataCardCreate = [
   {
     avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",

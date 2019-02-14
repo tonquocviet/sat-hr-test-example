@@ -34,7 +34,7 @@
         </v-flex>
       </v-flex>
       <v-flex xs3>
-        <ListOnTheRight :dataTeamPlane="dataTeamPlanedAbsences"/>
+        <ListOnTheRight :dataTeamPlanned="dataTeamPlannedAbsences"/>
       </v-flex>
     </v-layout>
     <ModalDetailAbsence
@@ -80,7 +80,7 @@ export default {
     return {
       dataWhoAbsencing: [],
       dataUpcommingAbsence: [],
-      dataTeamPlanedAbsences: [],
+      dataTeamPlannedAbsences: [],
       isShowAbsenceDetailsModal: false,
       absenceDetail: null,
       popup: {
@@ -92,14 +92,14 @@ export default {
   mounted() {
     const apiEmployWhoAbsencing = this.apiAbsence.filterWhoAbsencing;
     const apiEmployUpcommingAbsence = this.apiAbsence.filterUpcommingAbsence;
-    const apiTeamPlannedAbsences = this.apiAbsence.teamPlannedAbsencesApi;
+    const apiTeamPlannedAbsences = this.apiAbsence.filterTeamPlannedAbsencing;
     this.getDataEmployView(apiEmployWhoAbsencing).then(data => {
       const { items } = data;
       this.dataWhoAbsencing = items;
     });
     this.getDataEmployView(apiTeamPlannedAbsences).then(data => {
       const { items } = data;
-      this.dataTeamPlanedAbsences = items;
+      this.dataTeamPlannedAbsences = items;
     });
     this.getDataEmployView(apiEmployUpcommingAbsence).then(data => {
       const { items } = data;

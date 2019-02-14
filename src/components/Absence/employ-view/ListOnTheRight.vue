@@ -32,14 +32,14 @@
       <AbsenceDetailList
         name="WhoAbsencing"
         @absenceClick="showDetailModal"
-        :items="dataTeamPlane"
-        :title="`Team's Planned Absence`"
+        :items="dataTeamPlanned"
+        title="Team's Planned Absence"
         @viewFull="isShowEmployeeModal = true"
       />
       <ModalForSubFilter
         :isShow="isShowEmployeeModal"
         :apiUrl="apiAbsence.filterWhoAbsencing"
-        :title="`Team's Planned Absence`"
+        title="Team's Planned Absence"
         @closeDialog="isShowEmployeeModal = false"
       />
       <ModalDetailAbsence
@@ -62,7 +62,7 @@ export default {
     ModalDetailAbsence,
   },
   props: {
-    dataTeamPlane: Array
+    dataTeamPlanned: Array
   },
   data() {
     return {
