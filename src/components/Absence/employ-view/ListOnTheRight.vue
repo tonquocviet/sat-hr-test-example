@@ -59,7 +59,6 @@ import LeaveTypeChip from "../../chips/LeaveTypeChip";
 import { leaveTypes } from "../../../config";
 import ModalForSubFilter from "../ModalForSubFilter";
 import ModalDetailAbsence from "../modal-detail-absence/Form";
-import moment from "moment";
 
 export default {
   components: {
