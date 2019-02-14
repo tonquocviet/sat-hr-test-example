@@ -90,7 +90,7 @@ export default {
         { text: "Emp Name", align: "left", value: "employeeName" },
         { text: "No Of Days", align: "left", value: "noOfdays" },
         {
-          text: "Avatar",
+          text: "HR Approvers",
           align: "left",
           value: "avatar",
           sortable: false
