@@ -24,11 +24,7 @@
           >{{ props.item.status }}</v-chip>
           <v-chip v-else small color="default">{{ props.item.status }}</v-chip>
         </td>
-        <td
-          class="text-xs-left"
-          v-if="props.item.expiredDate"
-        >{{props.item.expiredDate | formatFullDay}}</td>
-        <td class="text-xs-left" v-else>N/A</td>
+        <td class="text-xs-left">{{props.item.expiredDate | formatFullDay}}</td>
       </template>
     </v-data-table>
     <div class="text-xs-right pt-2">
@@ -39,7 +35,6 @@
 <script>
 export default {
   props: {
-    apiPolicy: Object,
     status: String
   },
   methods: {

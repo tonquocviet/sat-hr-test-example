@@ -28,25 +28,22 @@
             >{{ inactive }}</v-chip>
           </v-tab>
           <v-tab-item>
-            <PolicyTable v-if="viewMode === 'list'" :apiPolicy="apiPolicy"/>
+            <PolicyTable v-if="viewMode === 'list'"/>
             <PolicyCardContainer 
               v-else 
-              :filterApiUrl="apiPolicy.filterPolicy" 
             />
           </v-tab-item>
           <v-tab-item>
-            <PolicyTable v-if="viewMode === 'list'" status="active" :apiPolicy="apiPolicy"/>
+            <PolicyTable v-if="viewMode === 'list'" status="active"/>
             <PolicyCardContainer 
               v-else 
-              :filterApiUrl="apiPolicy.filterPolicy"
               status="active"
             />
           </v-tab-item>
           <v-tab-item>
-            <PolicyTable v-if="viewMode === 'list'" status="inactive" :apiPolicy="apiPolicy"/>
+            <PolicyTable v-if="viewMode === 'list'" status="inactive"/>
             <PolicyCardContainer 
-              v-else 
-              :filterApiUrl="apiPolicy.filterPolicy"
+              v-else
               status="inactive"
             />
           </v-tab-item>
@@ -72,7 +69,6 @@ export default {
   },
   props: {
     viewMode: String,
-    apiPolicy: Object,
   },
   computed: {
     hasShowMore() {

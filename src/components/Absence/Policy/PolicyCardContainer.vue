@@ -15,7 +15,6 @@ export default {
     PolicyCard
   },
   props: {
-    filterApiUrl: String,
     status: String
   },
   mounted() {
@@ -48,7 +47,7 @@ export default {
         status: this.status || ""
       };
       return new Promise(resolve => {
-        this.$http.post(`${this.filterApiUrl}`, filterRequest).then(res => {
+        this.$http.post(`${this.apiPolicy.filterPolicy}`, filterRequest).then(res => {
           this.loading = false;
           this.isShowMore = false;
           resolve({

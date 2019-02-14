@@ -8,16 +8,6 @@ import PolicyWrapper from "../components/PolicyAbsenceWrapper";
 export default {
   components: {
     PolicyWrapper
-  },
-  data() {
-    const baseUrl =
-      "https://elastic-swanson-9b5efe.netlify.com/.netlify/functions/server/api";
-    return {
-      apiPolicy: {
-        filterPolicy: `${baseUrl}/absence-policy/filter`,
-        filterCountPolicy: `${baseUrl}/absence-policy/count`,
-      },
-    };
   }
 };
 </script>
