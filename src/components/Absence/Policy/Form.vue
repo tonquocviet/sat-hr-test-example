@@ -70,13 +70,6 @@ export default {
   props: {
     viewMode: String,
   },
-  computed: {
-    hasShowMore() {
-      return !this.dataFilterPolicy
-        ? 0
-        : this.dataFilterPolicy.length < this.totalRecords;
-    }
-  },
   mounted() {
     this.getCountPolicy();
   },
@@ -110,14 +103,6 @@ export default {
           });
       });
     },
-    showMoreView() {
-      this.pageIndex++;
-      this.isShowMore = true;
-      this.getDataFromApi().then(data => {
-        this.dataFilterPolicy = this.dataFilterPolicy.concat(data.items);
-        this.totalRecords = data.totalRecords;
-      });
-    },
     getCountPolicy() {
       this.$http.get(`${this.apiPolicy.filterCountPolicy}`).then(data => {
         this.active = data.data.active;
@@ -130,7 +115,6 @@ export default {
       dataFilterPolicy: [],
       pageIndex: 0,
       loading: true,
-      isShowMore: false,
       countPolicy: 5,
       isShowCreate: false,
       inactive: 0,
