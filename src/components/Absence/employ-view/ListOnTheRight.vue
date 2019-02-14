@@ -78,7 +78,8 @@ export default {
       selectedIndex: new Date().getMonth(),
       isShowEmployeeModal: false,
       isShowAbsenceDetailsModal: false,
-      absenceDetail: null
+      absenceDetail: null,
+      year: new Date().getFullYear()
     };
   },
   methods: {
@@ -86,7 +87,8 @@ export default {
       this.$emit("update:dates", selectedDates);
     },
     changePickerDate(pickerDate) {
-      const [, month] = pickerDate.split("-").map(Number);
+      const [year, month] = pickerDate.split("-").map(Number);
+      this.year = year;
       this.selectedIndex = month - 1;
     },
     getColorByLeaveDate(date) {
@@ -111,15 +113,17 @@ export default {
   },
   computed: {
     pickerDate() {
-      const defaultYear =
-        new Date(
-          (this.dates[0] || { date: null }).date || new Date()
-        ).getFullYear() + "";
-      return `${defaultYear}-${this.selectedIndex + 1}`;
+      const year = this.year;
+      return `${year}-${this.selectedIndex + 1}`;
     }
   },
   mounted() {
     this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
+  },
+  watch: {
+    year() {
+      this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
+    }
   }
 };
 </script>
