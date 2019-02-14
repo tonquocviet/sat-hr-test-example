@@ -182,6 +182,7 @@ export default {
     changeEmployeeName(e) {
       this.employeeId = e.id;
       this.dataApproved = null;
+      this.dataAvailablePolicies = [];
       this.getAvailablePolicies();
     },
     getAvailablePolicies() {
