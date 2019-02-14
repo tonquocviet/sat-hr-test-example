@@ -9,7 +9,7 @@
                 v-model="employeeName"
                 item-text="name"
                 item-value="id"
-                :items="items"
+                :items="dataEmployees"
                 label="Choose name employer"
                 return-object
                 :disabled="employeeView"
@@ -143,7 +143,7 @@ export default {
   props: {
     popup: Object,
     leaveTypes: Array,
-    items: Array,
+    dataEmployees: Array,
     dataApproved: {
       type: Array,
       default: () => dataApproved
