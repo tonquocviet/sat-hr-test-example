@@ -4,7 +4,14 @@
       <v-flex xs12 right class="right-button-container mb-1">
         <v-btn @click="isShowCreate = true" color="info">Add New Employee</v-btn>
       </v-flex>
-      <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+      <v-data-table
+        :headers="headers"
+        :items="policies"
+        :pagination.sync="pagination"
+        :total-items="totalRecords"
+        :loading="loading"
+        class="elevation-1"
+      >
         <template slot="items" slot-scope="props">
           <td>
             <v-btn flat icon class="ma-0" color="black">
@@ -13,23 +20,30 @@
           </td>
           <td>{{ props.item.name }}</td>
           <td class="text-xs-left">{{ props.item.designation }}</td>
-          <td class="text-xs-left">{{ props.item.joined }}</td>
-          <td class="text-xs-left">{{ props.item.contact }}</td>
-          <td class="text-xs-left">{{ props.item.email }}</td>
+          <td class="text-xs-left">{{ props.item.joinedDate | formatFullDayWithNA }}</td>
+          <td class="text-xs-left">{{ props.item.contactNumber }}</td>
+          <td class="text-xs-left">{{ props.item.emailAddress }}</td>
         </template>
       </v-data-table>
+      <div class="text-xs-right pt-2">
+        <v-pagination :total-visible="7" light v-model="pagination.page" :length="pages"></v-pagination>
+      </div>
     </v-flex>
     <v-flex md3 sx12 class="pl-3">
       <v-layout wrap>
         <ItemEmployeeRight :items="items"></ItemEmployeeRight>
       </v-layout>
     </v-flex>
-    <CreateEmployee :employees="desserts" @closeDialog="isShowCreate= false" :isShowCreate="isShowCreate"></CreateEmployee>
+    <CreateEmployee
+      :employees="desserts"
+      @closeDialog="isShowCreate= false"
+      :isShowCreate="isShowCreate"
+    ></CreateEmployee>
   </v-layout>
 </template>
 <script>
-import CreateEmployee from './CreateEmployee'
-import ItemEmployeeRight from './ItemEmployeeRight'
+import CreateEmployee from "./CreateEmployee";
+import ItemEmployeeRight from "./ItemEmployeeRight";
 
 export default {
   components: {
@@ -97,20 +111,71 @@ export default {
           eraser: "Frozen Yogurt",
           employee: [
             {
-              employee: "John",
+              employee: "John"
             },
             {
-              employee: "John",
+              employee: "John"
             },
             {
-              employee: "John",
+              employee: "John"
             }
           ],
           date: "25 Aug 2019",
           status: "added"
         }
       ],
+      policies: [],
+      totalRecords: 0,
+      pagination: {},
+      loading: true
     };
+  },
+  methods: {
+    getDataFromApi() {
+      this.loading = true;
+      const { sortBy, descending, page, rowsPerPage } = this.pagination;
+      const filterRequest = {
+        pageSize: rowsPerPage,
+        pageIndex: page - 1,
+        sort: {
+          isAsc: !descending,
+          columnName: sortBy
+        }
+      };
+      return new Promise(resolve => {
+        const id = this.$route.params.id;
+        const url = this.apiPolicy.filterTableEmpoloyee(id);
+        this.$http.post(url, filterRequest).then(res => {
+          this.loading = false;
+          resolve({
+            policies: res.data.list,
+            totalRecords: res.data.totalRecords
+          });
+        });
+      });
+    }
+  },
+  computed: {
+    pages() {
+      if (
+        !this.pagination ||
+        !this.pagination.rowsPerPage ||
+        !this.totalRecords
+      )
+        return 0;
+      return Math.ceil(this.totalRecords / this.pagination.rowsPerPage);
+    }
+  },
+  watch: {
+    pagination: {
+      handler() {
+        this.getDataFromApi().then(data => {
+          this.policies = data.policies;
+          this.totalRecords = data.totalRecords;
+        });
+      },
+      deep: true
+    }
   }
 };
 </script>
