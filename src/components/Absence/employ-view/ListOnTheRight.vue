@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       dateTimeColor: () => moment(new Date()).format("dddd MMM YYYY"),
-      selectedIndex: 0,
+      selectedIndex: new Date().getMonth(),
       isShowEmployeeModal: false,
       isShowAbsenceDetailsModal: false,
       absenceDetail: null
