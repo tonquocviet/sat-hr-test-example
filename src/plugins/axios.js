@@ -28,7 +28,9 @@ Vue.prototype.apiAbsence = {
   availablePolicies: employeeId =>
     `${baseUrl}/employee/${employeeId}/available-policies`,
   absencePolicyReasons: policyId =>
-    `${baseUrl}/absence-policy/${policyId}/reasons`
+    `${baseUrl}/absence-policy/${policyId}/reasons`,
+  getMonthAbsenceStatistic: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/month-absence-statistics`
 };
 Vue.prototype.apiPolicy = {
   filterPolicy: `${baseUrl}/absence-policy/filter`,
