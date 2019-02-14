@@ -8,24 +8,26 @@
         <v-btn small flat color="success">View full</v-btn>
       </v-flex>
     </v-layout>
-    <v-flex xs12 class="ml-2">
-      <v-date-picker
-        width="100%"
-        v-model="dateTimeColor"
-        event-color="date"
-        :events="functionEvents"
-        readonly
-      ></v-date-picker>
-    </v-flex>
-    <v-layout row class="mt-1">
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="blue" size="15">fiber_manual_record</v-icon>Holiday
-      </v-flex>
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="green" size="15">fiber_manual_record</v-icon>Casual Absence
-      </v-flex>
-      <v-flex pa-1 align-center d-flex>
-        <v-icon color="red" size="15">fiber_manual_record</v-icon>Sick Absence
+    <v-layout row wrap class="ml-2">
+      <v-flex xs12 class="pt-2">
+        <v-card class="colorful-calendar">
+          <VDatePickerExtend
+            :value="dates.map(x=>x.date)"
+            :pickerDate="pickerDate"
+            :titleDateFormat="dateTimeColor"
+            :selectedColor="getColorByLeaveDate"
+            multiple
+            width="100%"
+            @update:pickerDate="changePickerDate"
+          ></VDatePickerExtend>
+        </v-card>
+        <v-card class="mt-3">
+          <v-layout row wrap>
+            <v-flex v-for="item in tags" :key="item.name" lg6 sm4 xs6 class="pa-1">
+              <LeaveTypeChip :leaveType="item.name"/>
+            </v-flex>
+          </v-layout>
+        </v-card>
       </v-flex>
     </v-layout>
     <v-flex xs12 class="mt-2 ml-2">
@@ -35,35 +37,56 @@
 </template>
 <script>
 import AbsenceDetailList from "../ListDetail";
+import VDatePickerExtend from "../../vuetify/VDatePickerExtend/VDatePickerExtend";
+import LeaveTypeChip from "../../chips/LeaveTypeChip";
+import { leaveTypes } from "../../../config";
+import moment from "moment";
+
 export default {
   components: {
-    AbsenceDetailList
+    AbsenceDetailList,
+    VDatePickerExtend,
+    LeaveTypeChip
   },
   props: {
-    dataAbsenceList: Array
+    dataAbsenceList: Array,
+    dates: Array,
+    tags: Array
   },
   data() {
     return {
-      dateTimeColor: new Date().toISOString().substr(0, 10),
-      arrayEvents: null
+      dateTimeColor: () => moment(new Date()).format("dddd MMM YYYY"),
+      selectedIndex: 0
     };
   },
   methods: {
-    functionEvents(date) {
-      const [, , day] = date.split("-");
-      if ([12, 17, 28].includes(parseInt(day, 10))) return ["red"];
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ["blue"];
-      if ([11, 4, 25].includes(parseInt(day, 10))) return ["green"];
-      return false;
+    changeDates(selectedDates) {
+      this.$emit("update:dates", selectedDates);
+    },
+    changePickerDate(pickerDate) {
+      const [, month] = pickerDate.split("-").map(Number);
+      this.selectedIndex = month - 1;
+    },
+    getColorByLeaveDate(date) {
+      const leaveType = (
+        this.dates.filter(x => x.date === date)[0] || { leaveType: "" }
+      ).leaveType;
+      return (
+        leaveTypes.filter(x => x.name === leaveType)[0] || { color: "primary" }
+      ).color;
+    }
+  },
+  computed: {
+    pickerDate() {
+      const defaultYear =
+        new Date(
+          (this.dates[0] || { date: null }).date || new Date()
+        ).getFullYear() + "";
+      return `${defaultYear}-${this.selectedIndex + 1}`;
     }
   },
   mounted() {
-    this.arrayEvents = [...Array(6)].map(() => {
-      const day = Math.floor(Math.random() * 30);
-      const d = new Date();
-      d.setDate(day);
-      return d.toISOString().substr(0, 10);
-    });
+    this.$emit("getDataAbsenceDaysOff", this.pickerDate.split("-")[0]);
   }
 };
 </script>
