@@ -35,5 +35,7 @@ Vue.prototype.apiPolicy = {
   filterTablePerformance: policyId =>
     `${baseUrl}/absence-policy/${policyId}/absences/filter`,
   filterCountPolicy: `${baseUrl}/absence-policy/count`,
-  getCountries: `${baseUrl}/get-countries`
+  getCountries: `${baseUrl}/get-countries`,
+  filterTableEmpoloyee: policyId =>
+    `${baseUrl}/absence-policy/${policyId}/employees/filter`,
 };
