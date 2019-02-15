@@ -6,6 +6,8 @@ import ReportPage from "../views/ReportPage";
 import PolicyAbsencePage from "../views/PolicyAbsencePage";
 import EmployListView from "../views/EmployListView";
 import PolicyDetailPage from "../views/PolicyDetailPage";
+import LoginPage from "../views/LoginPage.vue";
+import HomePage from "../views/HomePage.vue";
 
 export default [
   {
@@ -54,5 +56,15 @@ export default [
     path: '/report',
     name: 'Report',
     component: ReportPage
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage
+  },
+  {
+    path: '/homepage',
+    name: 'HomePage',
+    component: HomePage
   }
 ];

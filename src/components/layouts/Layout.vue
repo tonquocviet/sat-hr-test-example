@@ -73,7 +73,9 @@ export default {
       { text: "ABSENCE", link: "/absence" },
       { text: "POLICIES", link: "/absence-policy" },
       { text: "REPORT", link: "/report" },
-      { text: "SETTINGS", link: "/settings" }
+      { text: "SETTINGS", link: "/settings" },
+      { text: "LOGIN", link: "/login" },
+      { text: "HOMEPAGE", link: "/homepage" }
     ],
     items: [
       { title: "Home", icon: "dashboard" },
